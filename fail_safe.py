@@ -15,7 +15,7 @@ class BungieData(object):
 
     def get_playerByTagName(self, gamertag):
         '''gamertag (str): The PSN gamertag a player uses on Destiny 2'''
-        site_call = "https://bungie.net/Platform/Destiny2/SearchDestinyPlayer/2/" + gamertag
+        site_call = "https://bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/" + gamertag
         request = requests.get(site_call,
                                 headers={"X-API-Key":self.api_key})
         return request.json()['Response']
@@ -77,9 +77,9 @@ class BungieData(object):
 if __name__ == '__main__':
     bungie = BungieData(api_key=os.environ["BUNGIE_API_KEY"]) # Never put your keys in code... export 'em!
 
-    # Get Destiny MembershipId by PSN gamertag
-    my_destiny_id = bungie.get_DestinyUserId("BalancedSeeker6")
-    print("BalancedSeeker6's Destiny ID: {}".format(my_destiny_id))
+    # Get Destiny MembershipId by pc gamertag
+    my_destiny_id = bungie.get_DestinyUserId("Javu%232632")
+    print("Javu's Destiny ID: {}".format(my_destiny_id))
     print("-----------------")
 
     # Get User's Profile info and more detailed Character info
