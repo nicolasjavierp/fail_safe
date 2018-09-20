@@ -1,7 +1,7 @@
 import requests
 import os
 
-class BungieData(object):
+class FailSafe(object):
     '''
     For the API calls below, no authentication is needed. You'll just need to have your Bungie API key exported in your bash profile
     and named as BUNGIE_API_KEY to run the script as-is.
@@ -73,20 +73,28 @@ class BungieData(object):
                                 headers={"X-API-Key":self.api_key})
         return request.json()['Response']
 
+    def get_PlayerClanName(self, membership_id):
+            site_call = "https://www.bungie.net/Platform/GroupV2/User/4/{}/0/1/".format(str(membership_id))
+            request = requests.get(site_call,
+                                    headers={"X-API-Key":self.api_key})
+            return request.json()['Response']['results'][0]['group']['name']
 
 if __name__ == '__main__':
-    bungie = BungieData(api_key=os.environ["BUNGIE_API_KEY"]) # Never put your keys in code... export 'em!
+    fs = FailSafe(api_key=os.environ["BUNGIE_API_KEY"]) # Never put your keys in code... export 'em!
 
     # Get Destiny MembershipId by pc gamertag
-    my_destiny_id = bungie.get_DestinyUserId("Javu%232632")
+    my_destiny_id = fs.get_DestinyUserId("Javu%232632")
     print("Javu's Destiny ID: {}".format(my_destiny_id))
     print("-----------------")
     
     # Get User's Profile info and more detailed Character info
-    my_profile = bungie.get_DestinyUserProfile(my_destiny_id, components=[100,200])
-    print("Destiny Profile Info by Charcter: \n{}".format(my_profile))
-    print("-----------------")
-    exit()
+    #my_profile = fs.get_DestinyUserProfile(my_destiny_id, components=[100,200])
+    #print("Destiny Profile Info by Charcter: \n{}".format(my_profile))
+    #print("-----------------")
     # Get a random single game's post carnage stats
-    game_stats = bungie.get_postGameStats(100)
-print("Random Destiny 2 game's post carnage game stats: \n{}".format(game_stats))
+    #game_stats = fs.get_postGameStats(100)
+    #print("Random Destiny 2 game's post carnage game stats: \n{}".format(game_stats))
+
+    # Get players clan
+    my_destiny_clan_name = fs.get_PlayerClanName(my_destiny_id)
+    print("Destiny player Javu is in: {}".format(my_destiny_clan_name))
