@@ -15,13 +15,13 @@ class BungieData(object):
 
     def get_playerByTagName(self, gamertag):
         '''gamertag (str): The PSN gamertag a player uses on Destiny 2'''
-        site_call = "https://bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/" + gamertag
+        site_call = "https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/" + gamertag
         request = requests.get(site_call,
                                 headers={"X-API-Key":self.api_key})
         return request.json()['Response']
 
     def get_DestinyUserId(self, gamertag):
-        '''gamertag (str): The PSN gamertag a player uses on Destiny 2'''
+        '''gamertag (str): The PC gamertag a player uses on Destiny 2'''
         info = self.get_playerByTagName(gamertag)
         return int(info[0]['membershipId'])
 
@@ -43,7 +43,7 @@ class BungieData(object):
         Uses new Destiny 2 endpoint for PSN player using the Destiny membershipId
         '''
         components = "?components=" + ','.join([str(c) for c in components])
-        site_call = "https://bungie.net/Platform/Destiny2/2/Profile/" + str(membership_id) + "/" + components
+        site_call = "https://bungie.net/Platform/Destiny2/4/Profile/" + str(membership_id) + "/" + components
         request = requests.get(site_call,
                                 headers={"X-API-Key":self.api_key})
         return request.json()['Response']
@@ -81,12 +81,12 @@ if __name__ == '__main__':
     my_destiny_id = bungie.get_DestinyUserId("Javu%232632")
     print("Javu's Destiny ID: {}".format(my_destiny_id))
     print("-----------------")
-
+    
     # Get User's Profile info and more detailed Character info
     my_profile = bungie.get_DestinyUserProfile(my_destiny_id, components=[100,200])
     print("Destiny Profile Info by Charcter: \n{}".format(my_profile))
     print("-----------------")
-
+    exit()
     # Get a random single game's post carnage stats
     game_stats = bungie.get_postGameStats(100)
 print("Random Destiny 2 game's post carnage game stats: \n{}".format(game_stats))
