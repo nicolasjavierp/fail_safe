@@ -127,7 +127,8 @@ class FailSafe(object):
             #time.sleep(4)
             #last = fs.get_PlayerLastLogin(key)
             for key in player:
-                last_played = datetime.strptime(fs.get_PlayerLastLogin(key), "%Y-%m-%dT%H:%M:%SZ")
+                last = fs.get_PlayerLastLogin(key)
+                last_played = datetime.strptime(last, "%Y-%m-%dT%H:%M:%SZ")
             now = datetime.utcnow().replace(microsecond=0)
             diff = now - last_played
             #print diff
@@ -164,10 +165,10 @@ class FailSafe(object):
                 print len(self.retrys)
                 for val in self.retrys:
                     time.sleep(4)
-                    profile = fs.get_DestinyUserProfile(val["destinyUserInfo"]["membershipId"])
+                    profile = fs.get_DestinyUserProfile(val)
                     if profile:
-                        print "Retrying:"+val["destinyUserInfo"]["displayName"]+" "+clan[1]+" !!!"
-                        player_dict = { val["destinyUserInfo"]["membershipId"]: [val["destinyUserInfo"]["displayName"],profile, clan[1]] }
+                        print "Retrying:"+profile["destinyUserInfo"]["displayName"]+" "+clan[1]+" !!!"
+                        player_dict = { val: [profile["destinyUserInfo"]["displayName"],profile, clan[1]] }
                         list_of_clan_members.append(player_dict)
                         resolved.append(val["destinyUserInfo"]["displayName"])
                         for value in resolved:
@@ -188,9 +189,15 @@ class FailSafe(object):
             '''Prints the list of blacklisted players'''
             for player in self.blacklist:
                 for key in player:
-                    print player[key][0] + "\t" + player[key][2] + "\t" + player[key][3]
+                    print player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3])
 
-
+    def print_blacklist_file(self):
+            '''Prints the list of blacklisted players'''
+            f = open("inactive_list.txt", "w")
+            for player in self.blacklist:
+                for key in player:
+                    f.write(player[key][0] + "\t" + player[key][2] + "\t" + player[key][3])
+            f.close()
 
             
 
