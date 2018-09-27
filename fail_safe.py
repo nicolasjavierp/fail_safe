@@ -3,7 +3,8 @@ import os
 from datetime import datetime
 from datetime import timedelta
 import time
-
+import humanize
+import smtplib
 
 
 class FailSafe(object):
@@ -18,8 +19,8 @@ class FailSafe(object):
         '''
         self.api_key = api_key
         self.blacklist = []
-        #self.our_clans = [(2943900, "Escuadra 2"), (3084439, "Escuadra 3"), (3111393, "Escuadra 4"), (3144839,"Escuadra 5")]
-        self.our_clans = [(2943900, "Escuadra 2")]
+        self.our_clans = [(2943900, "Escuadra 2"), (3084439, "Escuadra 3"), (3111393, "Escuadra 4"), (3144839,"Escuadra 5")]
+        #self.our_clans = [(2943900, "Escuadra 2")] # for tests
         self.error_members = {}
         self.error_members = set()
         self.retrys = []
@@ -67,11 +68,11 @@ class FailSafe(object):
                 return None
         except Exception as inst:
             self.retrys.append(membership_id)
-            print "----------------------"
+            #print "----------------------"
             print "ERROR:"+membership_id
-            print "----------------------"
-            time.sleep(10)
-            print inst
+            #print "----------------------"
+            time.sleep(5)
+            #print type(inst)
             return None
 
 
@@ -127,10 +128,12 @@ class FailSafe(object):
             #time.sleep(4)
             #last = fs.get_PlayerLastLogin(key)
             for key in player:
-                last = fs.get_PlayerLastLogin(key)
+                #last = fs.get_PlayerLastLogin(key)
+                last = player[key][1]['profile']['data']['dateLastPlayed']
                 last_played = datetime.strptime(last, "%Y-%m-%dT%H:%M:%SZ")
             now = datetime.utcnow().replace(microsecond=0)
             diff = now - last_played
+            human_diff = humanize.naturaltime(diff)
             #print diff
             #test_diff = now - test_last_played
             delta_seconds = diff.total_seconds()
@@ -138,7 +141,7 @@ class FailSafe(object):
             if (delta_seconds > break_point_seconds):
                 #print "Blacklisted"
                 for key in player:
-                    player[key].append(diff)
+                    player[key].append(human_diff)
                 return True
             else:
                 #print "NOT Blacklisted"
@@ -151,56 +154,104 @@ class FailSafe(object):
             site_call = "https://www.bungie.net/Platform/GroupV2/" + str(clan[0]) + "/Members/?currentPage=1"
             request = requests.get(site_call, headers={"X-API-Key":self.api_key})
             clan_request_list = request.json()['Response']['results']
-            del self.retrys[:]
+            del self.retrys[:] #Empty list
             for val in clan_request_list:
-                time.sleep(4)
+                #time.sleep(4)
                 profile = fs.get_DestinyUserProfile(val["destinyUserInfo"]["membershipId"])
                 if profile:
-                    print "Adding:"+val["destinyUserInfo"]["displayName"]+" "+clan[1]+" !!!"
-                    player_dict = { val["destinyUserInfo"]["membershipId"]: [val["destinyUserInfo"]["displayName"],profile, clan[1]] }
+                    #name = val["destinyUserInfo"]["displayName"]
+                    #membership_id = val["destinyUserInfo"]["membershipId"]
+                    name = profile["profile"]["data"]["userInfo"]["displayName"]
+                    membership_id = profile["profile"]["data"]["userInfo"]["membershipId"]
+                    #print "Adding:"+name+" "+clan[1]+" !!!"
+                    player_dict = { membership_id: [name, profile, clan[1]] }
                     list_of_clan_members.append(player_dict)
-            time.sleep(4)
+            time.sleep(1)
             while self.retrys:
-                print "RETIES NOT EMPTY !!"
-                print len(self.retrys)
+                #print "RETIES NOT EMPTY !!"
+                #print len(self.retrys)
                 for val in self.retrys:
-                    time.sleep(4)
+                    #time.sleep(4)
                     profile = fs.get_DestinyUserProfile(val)
                     if profile:
-                        print "Retrying:"+profile["destinyUserInfo"]["displayName"]+" "+clan[1]+" !!!"
-                        player_dict = { val: [profile["destinyUserInfo"]["displayName"],profile, clan[1]] }
-                        list_of_clan_members.append(player_dict)
-                        resolved.append(val["destinyUserInfo"]["displayName"])
-                        for value in resolved:
-                            self.retrys.remove(value)            
+                        #print "Retrying:"+profile[key]["data"]["userInfo"]["displayName"]+" "+clan[1]+" !!!"
+                        name = profile["profile"]["data"]["userInfo"]["displayName"]
+                        membership_id = profile["profile"]["data"]["userInfo"]["membershipId"]
+                        print "Retrying:"+name+" "+clan[1]+" !!!"
+                        player_dict = { membership_id: [name, profile, clan[1]] }
+                        list_of_clan_members.append(player_dict)    
+                        resolved.append(profile["profile"]["data"]["userInfo"]["displayName"])
+                        self.retrys.remove(membership_id)
             return list_of_clan_members
 
     def create_blacklist(self):
             '''Generates a list of  blacklisted players'''
             for clan in self.our_clans:
                 clan_list = self.get_ClanPlayerList(clan)
-                time.sleep(10)
                 for player in clan_list:
                     #key = player.items()[0][0]
                     if self.is_blacklisted(player):
                         self.blacklist.append(player)
     
     def print_blacklist_basic(self):
-            '''Prints the list of blacklisted players'''
+            '''Prints the list of blacklisted players to stdo'''
+            str_list = ""
             for player in self.blacklist:
                 for key in player:
-                    print player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3])
+                    print player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3])+ "\n"
+                    str_list = str_list + str(player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3]) + "\n")
+            return str_list
 
     def print_blacklist_file(self):
-            '''Prints the list of blacklisted players'''
+            '''Prints the list of blacklisted players to text'''
             f = open("inactive_list.txt", "w")
             for player in self.blacklist:
                 for key in player:
-                    f.write(player[key][0] + "\t" + player[key][2] + "\t" + player[key][3])
+                    f.write(player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3]) + "\n")
             f.close()
-
+    
+    def clean_blacklist(self):
+            '''Removes blacklisted players based on a whitelist file'''
+            with open('white_list.txt') as f:
+                lines = f.read().splitlines()
+            for white in lines:
+                for player in self.blacklist:
+                    for key in player:
+                        if player[key][0] == white:
+                            self.blacklist.remove(player)
             
 
+    def send_mail(self):
+            '''Removes blacklisted players based on a whitelist file'''
+            gmail_user = 'nicolasjavierp@gmail.com'  
+            gmail_password = os.environ["NPANTAZIS_GMAIL_PASS"]
+
+            sent_from = gmail_user  
+            to = ['fabricio_sth@hotmail.com', 'npantazis@gigared.com.ar']  
+            subject = "Listado de inactivos automatizado, made in Javu"
+            body = fs.print_blacklist_basic()
+
+            email_text = """  
+            From: %s  
+            To: %s  
+            Subject: %s
+
+            %s
+            """ % (sent_from, ", ".join(to), subject, body)
+
+            print email_text
+
+            try:  
+                server = smtplib.SMTP('smtp.gmail.com', 587)
+                server.ehlo()
+                server.starttls()
+                server.login(gmail_user, gmail_password)
+                server.sendmail(sent_from, to, email_text)
+                server.close()
+
+                print 'Email sent!'
+            except:  
+                print 'Something went wrong...'
 
 if __name__ == '__main__':
     fs = FailSafe(api_key=os.environ["BUNGIE_API_KEY"]) # Never put your keys in code... export 'em!
@@ -225,4 +276,11 @@ if __name__ == '__main__':
     # res = fs.get_ClanPlayerList(3111393)
     
     fs.create_blacklist()
-    fs.print_blacklist_basic()
+    #fs.print_blacklist_basic()
+    
+    fs.clean_blacklist()
+    fs.print_blacklist_file()
+    print "-------------------"
+    #blacklist = fs.print_blacklist_basic()
+    fs.send_mail()
+    exit(0)
