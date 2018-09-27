@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import requests
 import os
 from datetime import datetime
@@ -233,20 +235,19 @@ class FailSafe(object):
 
             email_text = """  
             From: %s  
-            To: %s  
-            Subject: %s
+            To: %s 
 
             %s
-            """ % (sent_from, ", ".join(to), subject, body)
+            """ % (sent_from, ", ".join(to), body)
 
-            print email_text
+            message = 'Subject: {}\n\n{}'.format(subject, email_text)
 
             try:  
                 server = smtplib.SMTP('smtp.gmail.com', 587)
                 server.ehlo()
                 server.starttls()
                 server.login(gmail_user, gmail_password)
-                server.sendmail(sent_from, to, email_text)
+                server.sendmail(sent_from, to, message)
                 server.close()
 
                 print 'Email sent!'
@@ -277,7 +278,6 @@ if __name__ == '__main__':
     
     fs.create_blacklist()
     #fs.print_blacklist_basic()
-    
     fs.clean_blacklist()
     fs.print_blacklist_file()
     print "-------------------"
