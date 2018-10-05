@@ -206,7 +206,7 @@ class FailSafe(object):
 
     def print_blacklist_file(self):
             '''Prints the list of blacklisted players to text'''
-            f = open("inactive_list.txt", "w")
+            f = open("/home/njp/Downloads/clan/fail_safe/inactive_list.txt", "w")
             for player in self.blacklist:
                 for key in player:
                     f.write(player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3]) + "\n")
@@ -214,7 +214,7 @@ class FailSafe(object):
     
     def clean_blacklist(self):
             '''Removes blacklisted players based on a whitelist file'''
-            with open('white_list.txt') as f:
+            with open('/home/njp/Downloads/clan/fail_safe/white_list.txt') as f:
                 lines = f.read().splitlines()
             for white in lines:
                 for player in self.blacklist:
@@ -230,13 +230,13 @@ class FailSafe(object):
 
             sent_from = gmail_user  
             to = ['fabricio_sth@hotmail.com', 'npantazis@gigared.com.ar']  
+            #to = ['npantazis@gigared.com.ar']  
             subject = "Listado de inactivos automatizado, made in Javu"
             body = fs.print_blacklist_basic()
 
             email_text = """  
             From: %s  
             To: %s 
-
             %s
             """ % (sent_from, ", ".join(to), body)
 
