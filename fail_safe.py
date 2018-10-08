@@ -280,7 +280,7 @@ if __name__ == '__main__':
     #fs.print_blacklist_basic()
     fs.clean_blacklist()
     fs.print_blacklist_file()
-    print "-------------------"
+    #print "-------------------"
     #blacklist = fs.print_blacklist_basic()
-    fs.send_mail()
-    exit(0)
+    #fs.send_mail()
+    #exit(0)
