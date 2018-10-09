@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/local/bin/python3.6
 # -*- coding: utf-8 -*-
 import requests
 import os
@@ -7,6 +7,7 @@ from datetime import timedelta
 import time
 import humanize
 import smtplib
+import sys
 
 
 class FailSafe(object):
@@ -65,13 +66,13 @@ class FailSafe(object):
             if request.json()['ErrorCode']==1:
                 return request.json()['Response']
             if request.json()['ErrorCode']==217:
-                print str(request.json()['ErrorCode'])+" For membership_id: "+str(membership_id)
+                print (str(request.json()['ErrorCode'])+" For membership_id: "+str(membership_id))
                 self.error_members.add(membership_id)
                 return None
         except Exception as inst:
             self.retrys.append(membership_id)
             #print "----------------------"
-            print "ERROR:"+membership_id
+            print ("ERROR:"+membership_id)
             #print "----------------------"
             time.sleep(5)
             #print type(inst)
@@ -179,7 +180,7 @@ class FailSafe(object):
                         #print "Retrying:"+profile[key]["data"]["userInfo"]["displayName"]+" "+clan[1]+" !!!"
                         name = profile["profile"]["data"]["userInfo"]["displayName"]
                         membership_id = profile["profile"]["data"]["userInfo"]["membershipId"]
-                        print "Retrying:"+name+" "+clan[1]+" !!!"
+                        print ("Retrying:"+name+" "+clan[1]+" !!!")
                         player_dict = { membership_id: [name, profile, clan[1]] }
                         list_of_clan_members.append(player_dict)    
                         resolved.append(profile["profile"]["data"]["userInfo"]["displayName"])
@@ -200,8 +201,9 @@ class FailSafe(object):
             str_list = ""
             for player in self.blacklist:
                 for key in player:
-                    print player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3])+ "\n"
-                    str_list = str_list + str(player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3]) + "\n")
+                    #print (player)
+                    print (player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3])+ "\n")
+                    str_list = str_list + player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3]) + "\n"
             return str_list
 
     def print_blacklist_file(self):
@@ -250,9 +252,9 @@ class FailSafe(object):
                 server.sendmail(sent_from, to, message)
                 server.close()
 
-                print 'Email sent!'
+                print ('Email sent!')
             except:  
-                print 'Something went wrong...'
+                print ('Something went wrong...')
 
 if __name__ == '__main__':
     fs = FailSafe(api_key=os.environ["BUNGIE_API_KEY"]) # Never put your keys in code... export 'em!
@@ -280,7 +282,7 @@ if __name__ == '__main__':
     #fs.print_blacklist_basic()
     fs.clean_blacklist()
     fs.print_blacklist_file()
-    #print "-------------------"
-    #blacklist = fs.print_blacklist_basic()
+    print("-------------------")
+    fs.print_blacklist_basic()
     #fs.send_mail()
     #exit(0)
