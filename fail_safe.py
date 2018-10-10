@@ -33,12 +33,18 @@ class FailSafe(object):
         site_call = "https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/" + gamertag
         request = requests.get(site_call,
                                 headers={"X-API-Key":self.api_key})
-        return request.json()['Response']
+        if request:
+            return request.json()['Response']
+        else:
+            return None
 
     def get_DestinyUserId(self, gamertag):
         '''gamertag (str): The PC gamertag a player uses on Destiny 2'''
         info = self.get_playerByTagName(gamertag)
-        return int(info[0]['membershipId'])
+        if info:
+            return int(info[0]['membershipId'])
+        else:
+            return None
 
     def get_BungieUserId(self, membership_id):
         '''
@@ -71,11 +77,11 @@ class FailSafe(object):
                 return None
         except Exception as inst:
             self.retrys.append(membership_id)
-            #print "----------------------"
+            #print("----------------------")
             print ("ERROR:"+membership_id)
-            #print "----------------------"
+            #print("----------------------")
             time.sleep(5)
-            #print type(inst)
+            #print(type(inst))
             return None
 
 
@@ -106,10 +112,13 @@ class FailSafe(object):
 
     def get_PlayerClanName(self, membership_id):
             '''Returns the players clan name'''
-            site_call = "https://www.bungie.net/Platform/GroupV2/User/4/{}/0/1/".format(str(membership_id))
-            request = requests.get(site_call,
-                                    headers={"X-API-Key":self.api_key})
-            return request.json()['Response']['results'][0]['group']['name']
+            if membership_id:
+                site_call = "https://www.bungie.net/Platform/GroupV2/User/4/{}/0/1/".format(str(membership_id))
+                request = requests.get(site_call,
+                                        headers={"X-API-Key":self.api_key})
+                return request.json()['Response']['results'][0]['group']['name']
+            else:
+                return None
 
     def get_PlayerLastLogin(self, membership_id):
             '''Last time player logged in to Destiny 2'''
