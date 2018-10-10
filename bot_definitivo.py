@@ -8,14 +8,14 @@ import aiohttp
 import json
 from discord import Game
 from discord.ext.commands import Bot
-
+from fail_safe import FailSafe
+import os
+import discord
 
 BOT_PREFIX = ("+") #("+", "!")
-
+BOT_TOKEN = ''  # Get at discordapp.com/developers/applications/me
 
 client = Bot(command_prefix=BOT_PREFIX)
-
-
 
 
 @client.event
@@ -23,6 +23,33 @@ async def on_member_join(member):
     server = member.server
     fmt = 'Bienvenido {0.mention} a {1.name}!'
     await client.send_message(server, fmt.format(member, server))
+
+@client.event
+async def on_message(message):
+    if message.content.startswith("+rol"):
+        my_server = discord.utils.get(client.servers)
+        #print(dir(my_server))
+        #print(dir(message.author))
+        user_id = message.author.id
+        user=my_server.get_member(user_id)
+        user_roles_names=[]
+        for i in user.roles:
+            user_roles_names.append(i.name)
+
+        role_E2 = discord.utils.get(my_server.roles, name="E2")
+        role_E3 = discord.utils.get(my_server.roles, name="E3")
+        if (role_E2.name and role_E3.name) in user_roles_names:
+            await client.send_message(message.channel, "El Guardian "+message.author.mention+" ya tiene el rol "+role_E2.name+" !" )
+            await client.send_message(message.channel, "El Guardian "+message.author.mention+" ya tiene el rol "+role_E3.name+" !" )
+        else:
+            #print("Adding role_E2")
+            #print("Adding role_E3")
+            await client.add_roles(user, role_E2)
+            await client.add_roles(user, role_E3)
+            await client.send_message(message.channel, "Successfully added role {0}".format(role_E2.name))
+            await client.send_message(message.channel, "Successfully added role {0}".format(role_E3.name))
+
+
 
 
 @client.command(name='Oraculo',
