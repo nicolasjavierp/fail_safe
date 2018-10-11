@@ -5,8 +5,6 @@
 import random
 import asyncio
 import aiohttp
-import json
-from discord import Game
 from discord.ext.commands import Bot
 from fail_safe import FailSafe
 import os
@@ -19,13 +17,24 @@ BOT_TOKEN = ''  # Get at discordapp.com/developers/applications/me
 
 client = Bot(command_prefix=BOT_PREFIX)
 
+
 @client.event
 async def on_member_join(member):
+    
     server = member.server
+    #print(server)
+    #print(dir(server))
+    #print(server.default_channel)
+    #print(dir(server.default_channel))
+    for i in server.channels:
+        #print(i.name)
+        if "invitados" in i.name :
+            canal_bienvenida = i
+            
     fmt = 'Bienvenido {0.mention} a {1.name}!'
-    await client.send_message(server, fmt.format(member, server))
-    await client.send_message(server,"Para autoprovisionarte roles usar el commando: +rol tu_blizard_battletag")
-    await client.send_message(server,"Cualquier duda no dudes en comunicarte con un admin")
+    await client.send_message(canal_bienvenida, fmt.format(member, server))
+    await client.send_message(canal_bienvenida,"Para autoprovisionarte roles usar el commando: +rol tu_blizard_battletag")
+    await client.send_message(canal_bienvenida,"Cualquier duda no dudes en comunicarte con un admin")
 
 @client.command(name='Rol',
                 description="Autoprovisioning de Roles Clan y DJ",
@@ -33,7 +42,9 @@ async def on_member_join(member):
                 aliases=['rol'],
                 pass_context=True)
 async def rol(context):
-        valid_battle_tag_ending = bool(re.match('^.*#[0-9][0-9][0-9][0-9]$', context.message.content))
+        valid_battle_tag_ending = bool(re.match('^.*#[0-9]{4,5}$', context.message.content))
+        #print(context.message.content)
+        #print(valid_battle_tag_ending)
         if len(context.message.content)>=4 and "#" in context.message.content and valid_battle_tag_ending:
             fs = FailSafe(api_key=os.environ["BUNGIE_API_KEY"]) 
             my_server = discord.utils.get(client.servers)
@@ -42,13 +53,22 @@ async def rol(context):
             user_roles_names=[]
             for i in user.roles:
                 user_roles_names.append(i.name)
+            
+            for i in my_server.roles:
+                #print(i.name, i.id)
+                #print((i.name).encode('utf-8'))
+                if "Clan" in i.name:
+                    custom_clan_role_id=i.id
+            #my_roles=discord.utils.get(client.servers.roles)
+            
+            role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
+            #print(role_Clan.name)
+                        
+            role_DJ = discord.utils.get(my_server.roles, name="DJ")
 
-            role_E2 = discord.utils.get(my_server.roles, name="E2")
-            role_E3 = discord.utils.get(my_server.roles, name="E3")
-
-            if (role_E2.name and role_E3.name) in user_roles_names:
-                await client.send_message(context.message.channel, "El Guardian "+context.message.author.mention+" ya tiene el rol "+role_E2.name+" !" )
-                await client.send_message(context.message.channel, "El Guardian "+context.message.author.mention+" ya tiene el rol "+role_E3.name+" !" )
+            if (role_Clan.name and role_DJ.name) in user_roles_names:
+                await client.send_message(context.message.channel, "El Guardian "+context.message.author.mention+" ya tiene el rol "+role_Clan.name+" !" )
+                await client.send_message(context.message.channel, "El Guardian "+context.message.author.mention+" ya tiene el rol "+role_DJ.name+" !" )
             else:
                 battletag = context.message.content.split(' ', 1)[1]
                 user_destiny_id = fs.get_DestinyUserId(fs.format_PlayerBattleTag(battletag))
@@ -57,18 +77,17 @@ async def rol(context):
                 #print(user_clan_name)
                 #print("//////////////")
                 if user_destiny_id and user_clan_name:
-                    if user_clan_name == "Escuadra 5":
-                        await client.add_roles(user, role_E2)
-                        await client.add_roles(user, role_E3)
-                        await client.send_message(context.message.channel, "Successfully added role {0}".format(role_E2.name))
-                        await client.send_message(context.message.channel, "Successfully added role {0}".format(role_E3.name))
+                    if "Escuadra" in user_clan_name:
+                        await client.add_roles(user, role_Clan)
+                        #await client.send_message(context.message.channel, "Rol {0} agregado con exito ".format(role_Clan.name))
+                        await client.add_roles(user, role_DJ)
+                        await client.send_message(context.message.channel, "Rol {0} y {1} agregado con exito ".format(role_Clan.name, role_DJ.name))
                     else:
                         await client.send_message(context.message.channel, "No figuras en el clan, ya van los sicarios para tu casa..." )        
                 else:
                     await client.send_message(context.message.channel, "Battletag Invalido ó Error al conecatr a Bungie, comunique se con un admin por favor" )        
         else:
-            await client.send_message(context.message.channel, "Error de uso! Ejemplo:" )
-            await client.send_message(context.message.channel, "+rol Javu#2632" )
+            await client.send_message(context.message.channel, "Error de uso! Ejemplo: +rol Javu#2632" )
 
 
 @client.command(name='Oraculo',
@@ -109,8 +128,6 @@ async def on_ready():
 async def saludar(context):
     msg = 'Hello {0.author.mention}'.format(context.message)
     await client.send_message(context.message.channel, msg)
-
-
 
 
 async def list_servers():
