@@ -8,6 +8,7 @@ import time
 import humanize
 import smtplib
 import sys
+import json
 
 
 class FailSafe(object):
@@ -34,6 +35,19 @@ class FailSafe(object):
         request = requests.get(site_call,
                                 headers={"X-API-Key":self.api_key})
         if request:
+            return request.json()['Response']
+        else:
+            return None
+
+    def get_battleTag_from_bungieNetUser(self, bungie_id):
+        '''Returns the players battletag from bungieNetUser'''
+        #print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+        #print(bungie_id)
+        site_call = "http://www.bungie.net/platform/User/GetBungieAccount/" + bungie_id + "/254"
+        request = requests.get(site_call,
+                                headers={"X-API-Key":self.api_key})
+        if request:
+            #print(request.json())
             return request.json()['Response']
         else:
             return None
@@ -175,8 +189,24 @@ class FailSafe(object):
                     #membership_id = val["destinyUserInfo"]["membershipId"]
                     name = profile["profile"]["data"]["userInfo"]["displayName"]
                     membership_id = profile["profile"]["data"]["userInfo"]["membershipId"]
-                    #print "Adding:"+name+" "+clan[1]+" !!!"
-                    player_dict = { membership_id: [name, profile, clan[1]] }
+                    #print("@@@@@@@@@@@@@@@@@@")
+                    #print(val)
+                    #print(val["bungieNetUserInfo"])
+                    if "bungieNetUserInfo" in val:
+                        bungie_id = val["bungieNetUserInfo"]["membershipId"]
+                        #print(bungie_id)
+                        bungie_profile = self.get_battleTag_from_bungieNetUser(bungie_id)
+                        #print(bungie_profile["bungieNetUser"]["blizzardDisplayName"])
+                        battletag = bungie_profile["bungieNetUser"]["blizzardDisplayName"]
+                        #print "Adding:"+name+" "+clan[1]+" !!!"
+                    else:
+                        bungie_id = None
+                        bungie_profile = None
+                        battletag = None
+                    player_dict = { membership_id: [name, profile, clan[1], bungie_id, battletag] }
+                    #print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+                    #print(player_dict)
+                    #print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
                     list_of_clan_members.append(player_dict)
             time.sleep(1)
             while self.retrys:
@@ -189,9 +219,25 @@ class FailSafe(object):
                         #print "Retrying:"+profile[key]["data"]["userInfo"]["displayName"]+" "+clan[1]+" !!!"
                         name = profile["profile"]["data"]["userInfo"]["displayName"]
                         membership_id = profile["profile"]["data"]["userInfo"]["membershipId"]
+                        if "bungieNetUserInfo" in val:
+                            bungie_id = val["bungieNetUserInfo"]["membershipId"]
+                            #print(bungie_id)
+                            bungie_profile = self.get_battleTag_from_bungieNetUser(bungie_id)
+                            #print(bungie_profile["bungieNetUser"]["blizzardDisplayName"])
+                            battletag = bungie_profile["bungieNetUser"]["blizzardDisplayName"]
+                            #print "Adding:"+name+" "+clan[1]+" !!!"
+                        else:
+                            bungie_id = None
+                            bungie_profile = None
+                            battletag = None
+                        player_dict = { membership_id: [name, profile, clan[1], bungie_id, battletag] }
+                        
                         print ("Retrying:"+name+" "+clan[1]+" !!!")
-                        player_dict = { membership_id: [name, profile, clan[1]] }
-                        list_of_clan_members.append(player_dict)    
+                        player_dict = { membership_id: [name, profile, clan[1], bungie_id, battletag] }
+                        list_of_clan_members.append(player_dict)
+                        #print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+                        #print(player_dict)
+                        #print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
                         resolved.append(profile["profile"]["data"]["userInfo"]["displayName"])
                         self.retrys.remove(membership_id)
             return list_of_clan_members
@@ -200,28 +246,56 @@ class FailSafe(object):
             '''Generates a list of  blacklisted players'''
             for clan in self.our_clans:
                 clan_list = self.get_ClanPlayerList(clan)
+                self.print_clan_2_file(clan_list)
                 for player in clan_list:
                     #key = player.items()[0][0]
                     if self.is_blacklisted(player):
                         self.blacklist.append(player)
+                    #for key in player:
+                    #    membership_id = player[key][1]['profile']['data']["userInfo"]["membershipId"]
+                    #    player_battletag = 
     
     def print_blacklist_basic(self):
             '''Prints the list of blacklisted players to stdo'''
             str_list = ""
             for player in self.blacklist:
                 for key in player:
-                    #print (player)
-                    print (player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3])+ "\n")
+                    #print (player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3])+ "\n")
                     str_list = str_list + player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3]) + "\n"
             return str_list
 
+    def print_clan_basic(self, clan_list):
+            '''Prints the list of Clanmembers to stdo'''
+            str_list = ""
+            for player in clan_list:
+                for key in player:
+                    #print (player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3])+ "\n")
+                    str_list = str_list + player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3])+ "\n"
+            return str_list
+
     def print_blacklist_file(self):
-            '''Prints the list of blacklisted players to text'''
+            '''Prints the list of blacklisted players to file'''
             f = open("/home/njp/Downloads/clan/fail_safe/inactive_list.txt", "w")
             for player in self.blacklist:
                 for key in player:
-                    f.write(player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3]) + "\n")
+                    f.write(player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][4]) + "\t" + str(player[key][5]) +"\n")
             f.close()
+    
+    def print_clan_2_file(self, clan_list):
+            '''Prints the list of Clanmates to file'''
+            #f = open("/home/njp/Downloads/clan/fail_safe/clan.txt", "w")
+            #for player in clan_list:
+            #    for key in player:
+                    #users[memb.id] = [memb.name, memb.nick]
+                    #f.write(player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][4]) + "\n")
+            #f.close()
+            with open('clan.json', 'r') as f:
+                clanmates = json.load(f)
+                for player in clan_list:
+                    for key in player:
+                        clanmates[player[key][4]] = [player[key][2], player[key][0]]
+            with open('clan.json', 'w') as f:
+                    json.dump(clanmates,f)
     
     def clean_blacklist(self):
             '''Removes blacklisted players based on a whitelist file'''
