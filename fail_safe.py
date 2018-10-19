@@ -10,6 +10,11 @@ import smtplib
 import sys
 import json
 
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+my_config_file = os.path.join(THIS_FOLDER, 'config.json')
+my_clan_file = os.path.join(THIS_FOLDER, 'clan.json')
+my_inactive_file = os.path.join(THIS_FOLDER, 'inactive_list.txt')
+my_whitelist_file = os.path.join(THIS_FOLDER, 'white_list.txt')
 
 class FailSafe(object):
     '''
@@ -149,10 +154,6 @@ class FailSafe(object):
 
     def is_blacklisted(self, player):
             break_point_seconds=1296000
-            #test_last_played = datetime.strptime("2018-04-21 07:21:36","%Y-%m-%d %H:%M:%S")
-            #print test_last_played
-            #time.sleep(4)
-            #last = self.get_PlayerLastLogin(key)
             for key in player:
                 #last = self.get_PlayerLastLogin(key)
                 last = player[key][1]['profile']['data']['dateLastPlayed']
@@ -160,10 +161,7 @@ class FailSafe(object):
             now = datetime.utcnow().replace(microsecond=0)
             diff = now - last_played
             human_diff = humanize.naturaltime(diff)
-            #print diff
-            #test_diff = now - test_last_played
             delta_seconds = diff.total_seconds()
-            #delta_test_seconds = test_diff.total_seconds()
             if (delta_seconds > break_point_seconds):
                 #print "Blacklisted"
                 for key in player:
@@ -182,31 +180,29 @@ class FailSafe(object):
             clan_request_list = request.json()['Response']['results']
             del self.retrys[:] #Empty list
             for val in clan_request_list:
-                #time.sleep(4)
+                time.sleep(2)
                 profile = self.get_DestinyUserProfile(val["destinyUserInfo"]["membershipId"])
                 if profile:
-                    #name = val["destinyUserInfo"]["displayName"]
-                    #membership_id = val["destinyUserInfo"]["membershipId"]
+
                     name = profile["profile"]["data"]["userInfo"]["displayName"]
                     membership_id = profile["profile"]["data"]["userInfo"]["membershipId"]
-                    #print("@@@@@@@@@@@@@@@@@@")
-                    #print(val)
-                    #print(val["bungieNetUserInfo"])
+
                     if "bungieNetUserInfo" in val:
                         bungie_id = val["bungieNetUserInfo"]["membershipId"]
-                        #print(bungie_id)
                         bungie_profile = self.get_battleTag_from_bungieNetUser(bungie_id)
-                        #print(bungie_profile["bungieNetUser"]["blizzardDisplayName"])
                         battletag = bungie_profile["bungieNetUser"]["blizzardDisplayName"]
-                        #print "Adding:"+name+" "+clan[1]+" !!!"
+
                     else:
+                        print(val)
+                        print("----------------------------")
+                        #bungie_id = "IDBungie_Desconocido"
+                        #bungie_profile = "Perfil_Bungie_Desconocido"
+                        #battletag = "battletag_desconocido"
                         bungie_id = None
                         bungie_profile = None
                         battletag = None
                     player_dict = { membership_id: [name, profile, clan[1], bungie_id, battletag] }
-                    #print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
-                    #print(player_dict)
-                    #print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+
                     list_of_clan_members.append(player_dict)
             time.sleep(1)
             while self.retrys:
@@ -227,6 +223,9 @@ class FailSafe(object):
                             battletag = bungie_profile["bungieNetUser"]["blizzardDisplayName"]
                             #print "Adding:"+name+" "+clan[1]+" !!!"
                         else:
+                            #bungie_id = "IDBungie_Desconocido"
+                            #bungie_profile = "Perfil_Bungie_Desconocido"
+                            #battletag = "battletag_desconocido"
                             bungie_id = None
                             bungie_profile = None
                             battletag = None
@@ -235,9 +234,6 @@ class FailSafe(object):
                         print ("Retrying:"+name+" "+clan[1]+" !!!")
                         player_dict = { membership_id: [name, profile, clan[1], bungie_id, battletag] }
                         list_of_clan_members.append(player_dict)
-                        #print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
-                        #print(player_dict)
-                        #print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
                         resolved.append(profile["profile"]["data"]["userInfo"]["displayName"])
                         self.retrys.remove(membership_id)
             return list_of_clan_members
@@ -251,9 +247,7 @@ class FailSafe(object):
                     #key = player.items()[0][0]
                     if self.is_blacklisted(player):
                         self.blacklist.append(player)
-                    #for key in player:
-                    #    membership_id = player[key][1]['profile']['data']["userInfo"]["membershipId"]
-                    #    player_battletag = 
+
     
     def print_blacklist_basic(self):
             '''Prints the list of blacklisted players to stdo'''
@@ -261,7 +255,8 @@ class FailSafe(object):
             for player in self.blacklist:
                 for key in player:
                     #print (player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3])+ "\n")
-                    str_list = str_list + player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3]) + "\n"
+                    #str_list = str_list + player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][4]) + "\t" + str(player[key][5]) +"\n"
+                    str_list = str_list + player[key][0] + "," + player[key][2] + "," + str(player[key][5]) +"\n"
             return str_list
 
     def print_clan_basic(self, clan_list):
@@ -275,7 +270,7 @@ class FailSafe(object):
 
     def print_blacklist_file(self):
             '''Prints the list of blacklisted players to file'''
-            f = open("/home/njp/Downloads/clan/fail_safe/inactive_list.txt", "w")
+            f = open(my_inactive_file, "w")
             for player in self.blacklist:
                 for key in player:
                     f.write(player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][4]) + "\t" + str(player[key][5]) +"\n")
@@ -283,23 +278,22 @@ class FailSafe(object):
     
     def print_clan_2_file(self, clan_list):
             '''Prints the list of Clanmates to file'''
-            #f = open("/home/njp/Downloads/clan/fail_safe/clan.txt", "w")
-            #for player in clan_list:
-            #    for key in player:
-                    #users[memb.id] = [memb.name, memb.nick]
-                    #f.write(player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][4]) + "\n")
-            #f.close()
-            with open('clan.json', 'r') as f:
+            with open(my_clan_file, 'r') as f:
                 clanmates = json.load(f)
                 for player in clan_list:
+                    #print(player)
                     for key in player:
-                        clanmates[player[key][4]] = [player[key][2], player[key][0]]
-            with open('clan.json', 'w') as f:
+                        if key:
+                            clanmates[player[key][4]] = [player[key][2], player[key][0]]
+                        else:
+                            print("ERROR:  "+player)
+                            clanmates[player[key][0]] = [player[key][2], player[key][0]]
+            with open(my_clan_file, 'w') as f:
                     json.dump(clanmates,f)
     
     def clean_blacklist(self):
             '''Removes blacklisted players based on a whitelist file'''
-            with open('/home/njp/Downloads/clan/fail_safe/white_list.txt') as f:
+            with open(my_whitelist_file) as f:
                 lines = f.read().splitlines()
             for white in lines:
                 for player in self.blacklist:
@@ -310,8 +304,11 @@ class FailSafe(object):
 
     def send_mail(self):
             '''Removes blacklisted players based on a whitelist file'''
-            gmail_user = 'nicolasjavierp@gmail.com'  
-            gmail_password = os.environ["NPANTAZIS_GMAIL_PASS"]
+            with open(my_config_file, 'r') as f:
+                config = json.load(f)
+
+            gmail_user = config['DEFAULT']['NPANTAZIS_GMAIL'] # 
+            gmail_password = config['DEFAULT']['NPANTAZIS_GMAIL_PASS'] # 
 
             sent_from = gmail_user  
             to = ['fabricio_sth@hotmail.com', 'npantazis@gigared.com.ar']  

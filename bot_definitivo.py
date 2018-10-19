@@ -15,9 +15,14 @@ import json
 from datetime import datetime
 
 
-BOT_PREFIX = ("+") #("+", "!")
-BOT_TOKEN = ''  # Get at discordapp.com/developers/applications/me
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+my_config_file = os.path.join(THIS_FOLDER, 'config.json')
 
+with open(my_config_file, 'r') as f:
+        config = json.load(f)
+
+BOT_PREFIX = ("+") #("+", "!")
+BOT_TOKEN = config['DEFAULT']['BOT_TOKEN']# Get at discordapp.com/developers/applications/me
 client = Bot(command_prefix=BOT_PREFIX)
 
 @client.event
@@ -216,6 +221,19 @@ async def add_clanmate_to_clan(clanmate_battletag, clan):
             clan[clanmate_battletag] = [clan, None]
     with open('clan.json', 'w') as f:
             json.dump(clan,f)
+
+
+#@client.event
+#async def on_message(message):
+    # we do not want the bot to reply to itself
+    #if message.author == client.user:
+    #    return
+
+    #if message.content.startswith('!hello'):
+    #    msg = 'Hello {0.author.mention}'.format(message)
+    #    await client.send_message(message.channel, msg)
+
+
 #async def populate_clan_data(clan):
 #    our_clans = [(2943900, "Escuadra 2"), (3084439, "Escuadra 3"), (3111393, "Escuadra 4"), (3144839,"Escuadra 5")]
 #    fs = FailSafe(api_key=os.environ["BUNGIE_API_KEY"])

@@ -2,8 +2,21 @@
 # -*- coding: utf-8 -*-
 from fail_safe import FailSafe
 import os
+import json
 
-fs = FailSafe(api_key=os.environ["BUNGIE_API_KEY"]) # Never put your keys in code... export 'em!
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+my_config_file = os.path.join(THIS_FOLDER, 'config.json')
+
+#print(THIS_FOLDER)
+#print(my_file)
+
+with open(my_config_file, 'r') as f:
+        config = json.load(f)
+
+bungie_api_key = config['DEFAULT']['BUNGIE_API_KEY'] # 'secret-bungie-key-of-fail_safe'
+
+#fs = FailSafe(api_key=os.environ["BUNGIE_API_KEY"]) # Never put your keys in code... export 'em!
+fs = FailSafe(api_key=bungie_api_key)
 
 #my_battle_tag="Javu#2632"
 # Get Destiny MembershipId by pc gamertag
@@ -25,10 +38,12 @@ fs = FailSafe(api_key=os.environ["BUNGIE_API_KEY"]) # Never put your keys in cod
 # res = fs.get_ClanPlayerList(3111393)
 
 fs.create_blacklist()
-#fs.print_blacklist_basic()
+
 fs.clean_blacklist()
+
 fs.print_blacklist_file()
-#print("-------------------")
-#fs.print_blacklist_basic()
+
+print(fs.print_blacklist_basic())
+
 fs.send_mail()
 exit(0)

@@ -103,3 +103,8 @@ bot_p3/
 
 # mypy
 .mypy_cache/
+
+# Secret Configs
+config.json
+.gitsecret/keys/random_seed
+password.json
