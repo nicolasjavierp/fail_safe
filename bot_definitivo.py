@@ -57,32 +57,43 @@ async def on_member_join(member):
 async def rol(context):
     valid_battle_tag_ending = bool(re.match('^.*#[0-9]{4,5}$', context.message.content))
     if len(context.message.content)>=4 and valid_battle_tag_ending:
-        fs = FailSafe(api_key=os.environ["BUNGIE_API_KEY"])         #Start Fail_Safe
+        #print("Valid Battletag format!")
+        fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])         #Start Fail_Safe
         user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
         user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
         if user_destiny:
             user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
             real_battletag = user_destiny[0]['displayName']
             #From response extract real_battletag because Bungies api is not case sensitive so it responds to gglol#1234 and to Gglol#1234 we need the latter
+            #print(context.message.author)
+            #print(is_user_in_users(context.message.author))
+            my_server = discord.utils.get(client.servers)
+            user_id = context.message.author.id
+            user=my_server.get_member(user_id)
+            user_roles_names=[]
+            #Get users roles
+            for i in user.roles:
+                user_roles_names.append(i.name)
+            print("User existing roles = "+str(user_roles_names))
+            #Get clan defined roles ids from discord
+            for i in my_server.roles:
+                if "Clan" in i.name:
+                    custom_clan_role_id=i.id
+                if "DJ" in i.name:
+                    custom_dj_role_id=i.id
+
+            role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
+            role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
+
             if is_user_in_users(context.message.author) and is_clanmate_in_clan(real_battletag):
                 #User is in users.json AND clanmate in clan.json
-                name, number = real_battletag.split('\#')
-                await client.send_message(context.message.channel, "El Guardian "+name+" ya fue dado de alta y tiene los roles! ")
+                name = real_battletag.split('\#')
+                #Verification if discord api does not work initialy
+                if not does_user_have_roles(user,role_Clan,role_DJ):
+                    await client.add_roles(user, role_Clan)
+                    await client.add_roles(user, role_DJ)       
+                await client.send_message(context.message.channel, "El Guardian "+str(name[0])+" ya fue dado de alta y tiene los roles! ")
             else:
-                my_server = discord.utils.get(client.servers)
-                user_id = context.message.author.id
-                user=my_server.get_member(user_id)
-                user_roles_names=[]
-                for i in user.roles:
-                    user_roles_names.append(i.name)
-                
-                for i in my_server.roles:
-                    if "Clan" in i.name:
-                        custom_clan_role_id=i.id
-
-                role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
-                role_DJ = discord.utils.get(my_server.roles, name="DJ")
-
                 user_clan_name = fs.get_PlayerClanName(user_destiny_id)
                 #if user_destiny_id and user_clan_name:
                 if user_clan_name:
@@ -92,12 +103,12 @@ async def rol(context):
                         if not is_user_in_users(context.message.author):
                             await add_user_data(context.message.author)
                         else:
-                            #print(context.message.author.name + " is in users.json!!")
+                            print(context.message.author.name + " is in users.json!!")
                             pass
                         if not is_clanmate_in_clan(real_battletag):
                             await add_clanmate_to_clan(real_battletag, user_clan_name)
                         else:
-                            #print(battletag + " is in clan.json!!")
+                            print(real_battletag + " is in clan.json!!")
                             pass
                         await client.send_message(context.message.channel, "Rol {0} y {1} agregado con exito ".format(role_Clan.name, role_DJ.name))
                     else:
@@ -195,7 +206,7 @@ async def populate_user_data(users):
     my_server = discord.utils.get(client.servers)
     for memb in my_server.members:
         if not memb.bot and not memb.id in users:
-            print(memb.name+" is not in users.json ... adding ...")
+            #print(memb.name+" is not in users.json ... adding ...")
             users[memb.id] = [memb.name, memb.nick]
     with open('users.json', 'w') as f:
             json.dump(users,f)
@@ -205,7 +216,7 @@ async def add_user_data(member):
     with open('users.json', 'r') as f:
         users = json.load(f)
         if not member.bot and not member.id in users:
-            #print(member.id+" is not in users.json ... adding ...")
+            print(member.id+" is not in users.json ... adding ...")
             #print(dir(member))
             my_server = discord.utils.get(client.servers)
             user=my_server.get_member(member.id)
@@ -213,12 +224,16 @@ async def add_user_data(member):
     with open('users.json', 'w') as f:
             json.dump(users,f)
 
-async def add_clanmate_to_clan(clanmate_battletag, clan):
+async def add_clanmate_to_clan(clanmate_battletag, his_clan_name):
     with open('clan.json', 'r') as f:
         clan = json.load(f)
+        #name = clanmate_battletag.split('\#')
         if not clanmate_battletag in clan:
-            #print(clanmate_battletag+" battletag is not in clan.json ... adding ...")
-            clan[clanmate_battletag] = [clan, None]
+            print("From "+ his_clan_name + " " + clanmate_battletag+" battletag is not in clan.json ... adding ...")
+            clan[clanmate_battletag] = [his_clan_name, None]
+        #if not str(name[0]) in clan:
+        #    print(str(name[0])+" name is not in clan.json ... ")
+        #    #Do something
     with open('clan.json', 'w') as f:
             json.dump(clan,f)
 
@@ -268,6 +283,14 @@ def is_clanmate_in_clan(clanmate_battletag):
             return True
         else:
             return False
+
+
+def does_user_have_roles(member,clan_rol_id,dj_rol_id):
+    print(dir(member))
+    if clan_rol_id in [member.id for role in member.roles] and dj_rol_id in [member.id for role in member.roles]:
+        return True
+    else:
+        return False
 
 async def list_servers():
     await client.wait_until_ready()

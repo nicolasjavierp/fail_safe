@@ -190,8 +190,13 @@ class FailSafe(object):
                     if "bungieNetUserInfo" in val:
                         bungie_id = val["bungieNetUserInfo"]["membershipId"]
                         bungie_profile = self.get_battleTag_from_bungieNetUser(bungie_id)
-                        battletag = bungie_profile["bungieNetUser"]["blizzardDisplayName"]
-
+                        if bungie_profile:
+                            battletag = bungie_profile["bungieNetUser"]["blizzardDisplayName"]
+                        else:
+                            print("bungie_profile ERROR!! no response from get_battleTag_from_bungieNetUser"+val)
+                            bungie_id = None
+                            bungie_profile = None
+                            battletag = None
                     else:
                         print(val)
                         print("----------------------------")
@@ -219,9 +224,13 @@ class FailSafe(object):
                             bungie_id = val["bungieNetUserInfo"]["membershipId"]
                             #print(bungie_id)
                             bungie_profile = self.get_battleTag_from_bungieNetUser(bungie_id)
-                            #print(bungie_profile["bungieNetUser"]["blizzardDisplayName"])
-                            battletag = bungie_profile["bungieNetUser"]["blizzardDisplayName"]
-                            #print "Adding:"+name+" "+clan[1]+" !!!"
+                            if bungie_profile:
+                                battletag = bungie_profile["bungieNetUser"]["blizzardDisplayName"]
+                            else:
+                                print("bungie_profile Rety ERROR!! no response from get_battleTag_from_bungieNetUser"+val)
+                                bungie_id = None
+                                bungie_profile = None
+                                battletag = None
                         else:
                             #bungie_id = "IDBungie_Desconocido"
                             #bungie_profile = "Perfil_Bungie_Desconocido"
@@ -311,8 +320,8 @@ class FailSafe(object):
             gmail_password = config['DEFAULT']['NPANTAZIS_GMAIL_PASS'] # 
 
             sent_from = gmail_user  
-            to = ['fabricio_sth@hotmail.com', 'npantazis@gigared.com.ar']  
-            #to = ['npantazis@gigared.com.ar']  
+            #to = ['fabricio_sth@hotmail.com', 'npantazis@gigared.com.ar']  
+            to = ['npantazis@gigared.com.ar']  
             subject = "Listado de inactivos automatizado, made in Javu"
             body = self.print_blacklist_basic()
 
@@ -333,5 +342,7 @@ class FailSafe(object):
                 server.close()
 
                 print ('Email sent!')
+                return True
             except:  
                 print ('Something went wrong...')
+                return False

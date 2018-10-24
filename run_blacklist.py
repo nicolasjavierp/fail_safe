@@ -3,6 +3,7 @@
 from fail_safe import FailSafe
 import os
 import json
+from time import sleep
 
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 my_config_file = os.path.join(THIS_FOLDER, 'config.json')
@@ -45,5 +46,9 @@ fs.print_blacklist_file()
 
 print(fs.print_blacklist_basic())
 
-fs.send_mail()
+sendMail = False
+while not sendMail:
+    sendMail = fs.send_mail()
+    sleep(30)
+
 exit(0)
