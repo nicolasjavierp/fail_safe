@@ -13,16 +13,24 @@ import discord
 import re
 import json
 from datetime import datetime
+from boto.s3.connection import S3Connection
 
 
-THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-my_config_file = os.path.join(THIS_FOLDER, 'config.json')
+#THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+#my_config_file = os.path.join(THIS_FOLDER, 'config.json')
 
-with open(my_config_file, 'r') as f:
-        config = json.load(f)
+#s3 = S3Connection(os.environ['BUNGIE_API_KEY'], os.environ['BOT_TOKEN'])
+#print(s3)
+BUNGIE_API_KEY = os.environ['BUNGIE_API_KEY']
+print(BUNGIE_API_KEY)
+BOT_TOKEN = os.environ['BOT_TOKEN']
+print(BOT_TOKEN)
+
+#with open(my_config_file, 'r') as f:
+#        config = json.load(f)
 
 BOT_PREFIX = ("+") #("+", "!")
-BOT_TOKEN = config['DEFAULT']['BOT_TOKEN']# Get at discordapp.com/developers/applications/me
+#BOT_TOKEN = config['DEFAULT']['BOT_TOKEN']# Get at discordapp.com/developers/applications/me
 client = Bot(command_prefix=BOT_PREFIX)
 
 @client.event
@@ -58,7 +66,8 @@ async def rol(context):
     valid_battle_tag_ending = bool(re.match('^.*#[0-9]{4,5}$', context.message.content))
     if len(context.message.content)>=4 and valid_battle_tag_ending:
         #print("Valid Battletag format!")
-        fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])         #Start Fail_Safe
+        #fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])         #Start Fail_Safe
+        fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe
         user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
         user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
         if user_destiny:

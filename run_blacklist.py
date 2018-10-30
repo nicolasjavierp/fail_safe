@@ -46,9 +46,9 @@ fs.print_blacklist_file()
 
 print(fs.print_blacklist_basic())
 
-sendMail = False
-while not sendMail:
-    sendMail = fs.send_mail()
-    sleep(30)
+#sendMail = False
+#while not sendMail:
+#    sendMail = fs.send_mail()
+#    sleep(30)
 
 exit(0)
