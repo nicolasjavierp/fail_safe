@@ -22,9 +22,8 @@ from boto.s3.connection import S3Connection
 #s3 = S3Connection(os.environ['BUNGIE_API_KEY'], os.environ['BOT_TOKEN'])
 #print(s3)
 BUNGIE_API_KEY = os.environ['BUNGIE_API_KEY']
-print(BUNGIE_API_KEY)
 BOT_TOKEN = os.environ['BOT_TOKEN']
-print(BOT_TOKEN)
+
 
 #with open(my_config_file, 'r') as f:
 #        config = json.load(f)
