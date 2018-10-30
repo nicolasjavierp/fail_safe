@@ -172,11 +172,11 @@ async def saludar(context):
     currentTime = datetime.now()
     salute_time = ""
     if currentTime.hour < 12:
-        salute_time = " Buen día"
+        salute_time = " ,buen día!"
     elif 12 <= currentTime.hour < 18:
-        salute_time = " Buenas tardes"
+        salute_time = " ,buenas tardes!"
     else:
-        salute_time = " Buenas noches"
+        salute_time = " ,buenas noches!"
     msg = 'Hola {0.author.mention}'.format(context.message)
     msg = msg + salute_time
     await client.send_message(context.message.channel, msg)
@@ -346,15 +346,15 @@ async def list_servers():
         await asyncio.sleep(600)
 
 
-#@client.event
-#async def on_message(message):
+@client.event
+async def on_message(message):
     # we do not want the bot to reply to itself
-    #if message.author == client.user:
-    #    return
+    if message.author == client.user:
+        return
 
     #if message.content.startswith('!hello'):
-    #    msg = 'Hello {0.author.mention}'.format(message)
-    #    await client.send_message(message.channel, msg)
+    if message.content.startswith('puto'):
+        await client.send_message(message.channel, "Puto el que lee")
 
 
 #async def populate_clan_data(clan):
