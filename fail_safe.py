@@ -180,7 +180,7 @@ class FailSafe(object):
             clan_request_list = request.json()['Response']['results']
             del self.retrys[:] #Empty list
             for val in clan_request_list:
-                time.sleep(2)
+                time.sleep(1)
                 profile = self.get_DestinyUserProfile(val["destinyUserInfo"]["membershipId"])
                 if profile:
 
@@ -193,10 +193,10 @@ class FailSafe(object):
                         if bungie_profile:
                             battletag = bungie_profile["bungieNetUser"]["blizzardDisplayName"]
                         else:
-                            print("bungie_profile ERROR!! no response from get_battleTag_from_bungieNetUser"+val)
+                            print("bungie_profile ERROR!! no response from get_battleTag_from_bungieNetUser "+name)
                             bungie_id = None
                             bungie_profile = None
-                            battletag = None
+                            battletag = name
                     else:
                         print(val)
                         print("----------------------------")
@@ -205,9 +205,13 @@ class FailSafe(object):
                         #battletag = "battletag_desconocido"
                         bungie_id = None
                         bungie_profile = None
-                        battletag = None
+                        battletag = name
+                        #print(membership_id ,name, profile, clan[1], bungie_id, battletag)
+                        #print("----------------------------")
+                        #print("\n")
+                    
+                    #print(membership_id ,name, profile, clan[1], bungie_id, battletag)
                     player_dict = { membership_id: [name, profile, clan[1], bungie_id, battletag] }
-
                     list_of_clan_members.append(player_dict)
             time.sleep(1)
             while self.retrys:
@@ -230,14 +234,14 @@ class FailSafe(object):
                                 print("bungie_profile Rety ERROR!! no response from get_battleTag_from_bungieNetUser"+val)
                                 bungie_id = None
                                 bungie_profile = None
-                                battletag = None
+                                battletag = name
                         else:
                             #bungie_id = "IDBungie_Desconocido"
                             #bungie_profile = "Perfil_Bungie_Desconocido"
                             #battletag = "battletag_desconocido"
                             bungie_id = None
                             bungie_profile = None
-                            battletag = None
+                            battletag = name
                         player_dict = { membership_id: [name, profile, clan[1], bungie_id, battletag] }
                         
                         print ("Retrying:"+name+" "+clan[1]+" !!!")
@@ -249,13 +253,17 @@ class FailSafe(object):
 
     def create_blacklist(self):
             '''Generates a list of  blacklisted players'''
+            full_clan_list=[]
             for clan in self.our_clans:
                 clan_list = self.get_ClanPlayerList(clan)
-                self.print_clan_2_file(clan_list)
+                #print(clan_list)
+                #self.print_clan_2_file(clan_list)
+                full_clan_list = full_clan_list + clan_list
                 for player in clan_list:
                     #key = player.items()[0][0]
                     if self.is_blacklisted(player):
                         self.blacklist.append(player)
+            self.print_clan_2_file(full_clan_list)
 
     
     def print_blacklist_basic(self):
@@ -267,6 +275,7 @@ class FailSafe(object):
                     #str_list = str_list + player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][4]) + "\t" + str(player[key][5]) +"\n"
                     str_list = str_list + player[key][0] + "," + player[key][2] + "," + str(player[key][5]) +"\n"
             return str_list
+    
 
     def print_clan_basic(self, clan_list):
             '''Prints the list of Clanmembers to stdo'''
@@ -277,6 +286,7 @@ class FailSafe(object):
                     str_list = str_list + player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][3])+ "\n"
             return str_list
 
+
     def print_blacklist_file(self):
             '''Prints the list of blacklisted players to file'''
             f = open(my_inactive_file, "w")
@@ -285,20 +295,35 @@ class FailSafe(object):
                     f.write(player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][4]) + "\t" + str(player[key][5]) +"\n")
             f.close()
     
-    def print_clan_2_file(self, clan_list):
+    
+    def print_clan_2_file(self, full_clan_list):
             '''Prints the list of Clanmates to file'''
+            #with open(my_clan_file, 'r') as f:
+            #    clanmates = json.load(f)
+            aux_dict={}
+            for player in full_clan_list:
+                #print(player)
+                for key in player:
+                    if key:
+                        aux_dict[player[key][4]] = [player[key][2], player[key][0]]
+                    else:
+                        print("ERROR writing clanmate to file:  "+player)
+                        aux_dict[player[key][0]] = [player[key][2], player[key][0]]
+            with open(my_clan_file, 'w') as f:
+                    json.dump(aux_dict, f, indent=4)
+
+    def clean_clan_file(self):
+            '''Cleans the list of Clanmates woth null as key'''
             with open(my_clan_file, 'r') as f:
                 clanmates = json.load(f)
-                for player in clan_list:
+                print(clanmates)
+                for player in clanmates:
+                    #print(type(player))
                     #print(player)
-                    for key in player:
-                        if key:
-                            clanmates[player[key][4]] = [player[key][2], player[key][0]]
-                        else:
-                            print("ERROR:  "+player)
-                            clanmates[player[key][0]] = [player[key][2], player[key][0]]
-            with open(my_clan_file, 'w') as f:
-                    json.dump(clanmates,f)
+                    if (player)=="null":
+                            print(player)
+            #with open(my_clan_file, 'w') as f:
+            #        json.dump(clanmates,f)
     
     def clean_blacklist(self):
             '''Removes blacklisted players based on a whitelist file'''

@@ -74,7 +74,7 @@ async def rol(context):
             #Get users roles
             for i in user.roles:
                 user_roles_names.append(i.name)
-            print("User existing roles = "+str(user_roles_names))
+            #print("User existing roles = "+str(user_roles_names))
             #Get clan defined roles ids from discord
             for i in my_server.roles:
                 if "Clan" in i.name:
@@ -110,7 +110,7 @@ async def rol(context):
                         else:
                             print(real_battletag + " is in clan.json!!")
                             pass
-                        await client.send_message(context.message.channel, "Rol {0} y {1} agregado con exito ".format(role_Clan.name, role_DJ.name))
+                        await client.send_message(context.message.channel, "Rol {0} y {1} agregado con exito. Bienvenido al clan ! ".format(role_Clan.name, role_DJ.name))
                     else:
                         await client.send_message(context.message.channel, context.message.content+" no figuras en el clan! No puedo dare los roles si no estas en el clan ¯\\_(ツ)_/¯" )        
                 else:
@@ -160,10 +160,35 @@ async def on_ready():
                 aliases=['hola', 'hello'],
                 pass_context=True)
 async def saludar(context):
-    msg = 'Hello {0.author.mention}'.format(context.message)
+    currentTime = datetime.now()
+    salute_time = ""
+    if currentTime.hour < 12:
+        salute_time = " Buen día"
+    elif 12 <= currentTime.hour < 18:
+        salute_time = " Buenas tardes"
+    else:
+        salute_time = " Buenas noches"
+    msg = 'Hola {0.author.mention}'.format(context.message)
+    msg = msg + salute_time
     await client.send_message(context.message.channel, msg)
 
+@client.command(name='Ayuda',
+                description="Ayuda del bot definitivo",
+                brief="ayuda",
+                aliases=['ayuda'],
+                pass_context=True)
+async def ayuda(context):
+    msg = 'Hola {0.author.mention} estos son mis comandos : \n \
+    +ayuda: Imprime este mensage \n \
+    +rol: auto-otorga roles a la gente que esta en el clan Escusara 2,3,4,5 , ejemplo: +rol CNorris#2234 \n \
+    +oraculo: Pregunta con respuesta si o no al oraculo de la Ciudad Onirica, ejemplo: +oraculo Es Escuadra 2 la mejor? \n \
+    +hola: saluda'.format(context.message)
+    await client.send_message(context.message.channel, msg )
 
+
+#######################################################################
+################## SPECIAL PERMISIONS COMMANDS  #######################
+#######################################################################
 @client.command(name='Poblacion',
                 description="Indica los integrantes de discord",
                 brief="poblacion",
@@ -197,19 +222,47 @@ async def poblacion(context):
         await populate_user_data(users)
     else:
         await client.send_message(context.message.channel, "No tenes permisos para ejecutar este comando")
-    
 
+
+@client.command(name='Inactivos',
+                description="Expone el listado de inactivos en discord",
+                brief="inactivos",
+                aliases=['inactivos','inac'],
+                pass_context=True)
+async def inactivos(context):
+    my_server = discord.utils.get(client.servers)
+    user_id = context.message.author.id
+    user=my_server.get_member(user_id)
+    for i in my_server.roles:
+        if "Admin" in i.name:
+                    admin_id=i.id
+    if admin_id in [role.id for role in user.roles]:
+        await client.send_message(context.message.channel, "Inactivos:")
+        #inactive_list = []
+        with open('inactive_list.txt', 'r') as f:
+            for member in f:
+                #print(member)
+                #inactive_list.append(member)
+                await client.send_message(context.message.channel, member)
+        #await client.send_message(context.message.channel, inactive_list)
+        await client.send_message(context.message.channel, "Fin.")
+    else:
+        await client.send_message(context.message.channel, "No tenes permisos para ejecutar este comando")
+
+#######################################################################
+#######################################################################
+#######################################################################
 
 async def populate_user_data(users):
     with open('users.json', 'r') as f:
-            users = json.load(f)
-    my_server = discord.utils.get(client.servers)
-    for memb in my_server.members:
-        if not memb.bot and not memb.id in users:
-            #print(memb.name+" is not in users.json ... adding ...")
-            users[memb.id] = [memb.name, memb.nick]
+        users = json.load(f)
+        my_server = discord.utils.get(client.servers)
+        for memb in my_server.members:
+            if not memb.bot and not memb.id in users:
+                #print(memb.name+" is not in users.json ... adding ...")
+                users[memb.id] = [memb.name, memb.nick]
     with open('users.json', 'w') as f:
-            json.dump(users,f)
+            json.dump(users,f,indent=4)
 
 
 async def add_user_data(member):
@@ -222,20 +275,66 @@ async def add_user_data(member):
             user=my_server.get_member(member.id)
             users[member.id] = [member.name, user.nick]
     with open('users.json', 'w') as f:
-            json.dump(users,f)
+            json.dump(users,f,indent=4)
+
 
 async def add_clanmate_to_clan(clanmate_battletag, his_clan_name):
     with open('clan.json', 'r') as f:
         clan = json.load(f)
-        #name = clanmate_battletag.split('\#')
+        name = clanmate_battletag.split('\#')
         if not clanmate_battletag in clan:
             print("From "+ his_clan_name + " " + clanmate_battletag+" battletag is not in clan.json ... adding ...")
-            clan[clanmate_battletag] = [his_clan_name, None]
+            clan[clanmate_battletag] = [his_clan_name, name]
         #if not str(name[0]) in clan:
         #    print(str(name[0])+" name is not in clan.json ... ")
         #    #Do something
     with open('clan.json', 'w') as f:
-            json.dump(clan,f)
+            json.dump(clan,f,indent=4)
+
+
+def is_user_in_users(user):
+    with open('users.json', 'r') as f:
+        users = json.load(f)
+        if user.id in users:
+            return True
+        else:
+            return False
+
+def is_clanmate_in_clan(clanmate_battletag):
+    #Patch for those who have no battleTag
+    name = clanmate_battletag.split('\#')
+    with open('clan.json', 'r') as f:
+        clan = json.load(f)
+        if clanmate_battletag in clan or name in clan:
+            return True
+        else:
+            return False
+
+
+def is_special_clanmate_in_clan(clanmate_name):
+    with open('clan.json', 'r') as f:
+        clan = json.load(f)
+        if clanmate_name in clan:
+            return True
+        else:
+            return False
+
+
+def does_user_have_roles(member,clan_rol_id,dj_rol_id):
+    #print(dir(member))
+    if clan_rol_id in [member.id for role in member.roles] and dj_rol_id in [member.id for role in member.roles]:
+        return True
+    else:
+        return False
+
+
+async def list_servers():
+    await client.wait_until_ready()
+    while not client.is_closed:
+        print("Current servers:")
+        for server in client.servers:
+            print(server.name)
+        await asyncio.sleep(600)
 
 
 #@client.event
@@ -265,41 +364,6 @@ async def add_clanmate_to_clan(clanmate_battletag, his_clan_name):
 #                #clan[memb.id] = [memb.name, memb.nick]
 #        with open('clan.json', 'w') as f:
 #                json.dump(clan,f)
-
-
-
-def is_user_in_users(user):
-    with open('users.json', 'r') as f:
-        users = json.load(f)
-        if user.id in users:
-            return True
-        else:
-            return False
-
-def is_clanmate_in_clan(clanmate_battletag):
-    with open('clan.json', 'r') as f:
-        clan = json.load(f)
-        if clanmate_battletag in clan:
-            return True
-        else:
-            return False
-
-
-def does_user_have_roles(member,clan_rol_id,dj_rol_id):
-    print(dir(member))
-    if clan_rol_id in [member.id for role in member.roles] and dj_rol_id in [member.id for role in member.roles]:
-        return True
-    else:
-        return False
-
-async def list_servers():
-    await client.wait_until_ready()
-    while not client.is_closed:
-        print("Current servers:")
-        for server in client.servers:
-            print(server.name)
-        await asyncio.sleep(600)
-
 
 client.loop.create_task(list_servers())
 client.run(BOT_TOKEN)

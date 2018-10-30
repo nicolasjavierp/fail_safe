@@ -107,4 +107,3 @@ bot_p3/
 # Secret Configs
 config.json
 .gitsecret/keys/random_seed
-password.json
