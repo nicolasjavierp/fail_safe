@@ -62,6 +62,7 @@ async def on_member_join(member):
                 aliases=['rol'],
                 pass_context=True)
 async def rol(context):
+    print("Entered command ROL!")
     valid_battle_tag_ending = bool(re.match('^.*#[0-9]{4,5}$', context.message.content))
     if len(context.message.content)>=4 and valid_battle_tag_ending:
         #print("Valid Battletag format!")
@@ -350,6 +351,7 @@ async def on_message(message):
     # we do not want the bot to reply to itself
     if message.author == client.user:
         return
+    print("Entered on message!")
 
     #if message.content.startswith('!hello'):
     if message.content.startswith('puto'):
@@ -358,7 +360,7 @@ async def on_message(message):
         await client.send_message(message.channel, "Nos vemos en Disney")
     if "ASCO" in message.content.upper():
         await client.send_message(message.channel, "A mi tambien " + message.author.mention + " !! Estoy indignado ... ")
-
+    await client.process_commands(message)
 
 
 #async def populate_clan_data(clan):
