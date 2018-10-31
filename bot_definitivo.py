@@ -354,6 +354,11 @@ async def on_message(message):
     #if message.content.startswith('!hello'):
     if message.content.startswith('puto'):
         await client.send_message(message.channel, "Puto el que lee")
+    if message.content.startswith('chau') or message.content.startswith('adios'):
+        await client.send_message(message.channel, "Nos vemos en Disney")
+    if "ASCO" in message.content.upper():
+        await client.send_message(message.channel, "A mi tambien " + message.author.mention + " !! Estoy indignado ... ")
+
 
 
 #async def populate_clan_data(clan):
