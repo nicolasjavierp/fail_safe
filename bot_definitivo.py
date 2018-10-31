@@ -314,7 +314,7 @@ def is_clanmate_in_clan(clanmate_battletag):
     name = clanmate_battletag.split('\#')
     with open('clan.json', 'r') as f:
         clan = json.load(f)
-        if clanmate_battletag in clan or name in clan:
+        if clanmate_battletag in clan or name[0] in clan:
             return True
         else:
             return False
