@@ -135,7 +135,10 @@ class FailSafe(object):
                 site_call = "https://www.bungie.net/Platform/GroupV2/User/4/{}/0/1/".format(str(membership_id))
                 request = requests.get(site_call,
                                         headers={"X-API-Key":self.api_key})
-                return request.json()['Response']['results'][0]['group']['name']
+                if request.json()['Response']['results']:
+                    return request.json()['Response']['results'][0]['group']['name']
+                else:
+                    return None
             else:
                 return None
 

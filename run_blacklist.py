@@ -37,7 +37,7 @@ fs = FailSafe(api_key=bungie_api_key)
 #print("Destiny player Javu last played: {}".format(last_played))
 # fs.is_blacklisted(my_destiny_id)
 # res = fs.get_ClanPlayerList(3111393)
-
+print("Running Blacklist...")
 fs.create_blacklist()
 
 fs.clean_blacklist()
@@ -50,5 +50,4 @@ print(fs.print_blacklist_basic())
 #while not sendMail:
 #    sendMail = fs.send_mail()
 #    sleep(30)
-
-exit(0)
+print("Finnished Blacklist!")

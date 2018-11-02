@@ -7,29 +7,30 @@ import asyncio
 import aiohttp
 from discord.ext.commands import Bot
 from fail_safe import FailSafe
-import os
-from fail_safe import FailSafe
+import os, time
 import discord
 import re
 import json
 from datetime import datetime
 from boto.s3.connection import S3Connection
+import unicodedata
+from urllib.request import urlopen
 
-
-#THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-#my_config_file = os.path.join(THIS_FOLDER, 'config.json')
-
-#s3 = S3Connection(os.environ['BUNGIE_API_KEY'], os.environ['BOT_TOKEN'])
-#print(s3)
+#4 Heroku
 BUNGIE_API_KEY = os.environ['BUNGIE_API_KEY']
 BOT_TOKEN = os.environ['BOT_TOKEN']
 
+#4 Tests
+#THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+#my_config_file = os.path.join(THIS_FOLDER, 'config.json')
 
 #with open(my_config_file, 'r') as f:
-#        config = json.load(f)
+        config = json.load(f)
+
+#BOT_TOKEN = config['DEFAULT']['BOT_TOKEN']# Get at discordapp.com/developers/applications/me
+#END Tests
 
 BOT_PREFIX = ("+") #("+", "!")
-#BOT_TOKEN = config['DEFAULT']['BOT_TOKEN']# Get at discordapp.com/developers/applications/me
 client = Bot(command_prefix=BOT_PREFIX)
 
 @client.event
@@ -53,8 +54,7 @@ async def on_member_join(member):
     fmt = 'Bienvenido {0.mention} a {1.name}!'
 
     await client.send_message(canal_bienvenida, fmt.format(member, server))
-    await client.send_message(canal_bienvenida,"Para obtener roles usar el commando: +rol tu_blizard_battletag")
-    await client.send_message(canal_bienvenida,"Cualquier duda no dudes en comunicarte con un admin")
+    await client.send_message(canal_bienvenida,"Para obtener roles usar el commando: +rol tu_blizard_battletag. \n Cualquier duda no dudes en comunicarte con un admin")
 
 @client.command(name='Rol',
                 description="Autoprovisioning de Roles Clan y DJ",
@@ -62,20 +62,23 @@ async def on_member_join(member):
                 aliases=['rol'],
                 pass_context=True)
 async def rol(context):
-    print("Entered command ROL!")
+    #print("Entered command ROL!")
     valid_battle_tag_ending = bool(re.match('^.*#[0-9]{4,5}$', context.message.content))
     if len(context.message.content)>=4 and valid_battle_tag_ending:
         #print("Valid Battletag format!")
-        #fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])         #Start Fail_Safe
-        fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe
+        #4 tests
+        #fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])         #Start Fail_Safe 4tests
+        #END tests
+        #4 Heroku
+        fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+        #END Heroku
         user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
         user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
         if user_destiny:
+            print("Valid User Destiny= "+str(user_destiny))
             user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
             real_battletag = user_destiny[0]['displayName']
             #From response extract real_battletag because Bungies api is not case sensitive so it responds to gglol#1234 and to Gglol#1234 we need the latter
-            #print(context.message.author)
-            #print(is_user_in_users(context.message.author))
             my_server = discord.utils.get(client.servers)
             user_id = context.message.author.id
             user=my_server.get_member(user_id)
@@ -83,7 +86,6 @@ async def rol(context):
             #Get users roles
             for i in user.roles:
                 user_roles_names.append(i.name)
-            #print("User existing roles = "+str(user_roles_names))
             #Get clan defined roles ids from discord
             for i in my_server.roles:
                 if "Clan" in i.name:
@@ -96,12 +98,20 @@ async def rol(context):
 
             if is_user_in_users(context.message.author) and is_clanmate_in_clan(real_battletag):
                 #User is in users.json AND clanmate in clan.json
-                name = real_battletag.split('\#')
+                print(str(context.message.author.name) +" with BT= "+ str(real_battletag) +" in clan and in users !")
+                name = real_battletag.split('#')[0]
                 #Verification if discord api does not work initialy
-                if not does_user_have_roles(user,role_Clan,role_DJ):
+                user_has_role_clan = await does_user_have_role(user,custom_clan_role_id)
+                user_has_role_dj = await does_user_have_role(user,custom_dj_role_id)
+                
+                #print(user_has_role_clan)
+                #print(user_has_role_dj)
+                
+                if not user_has_role_clan or not user_has_role_dj:
+                    await client.send_message(context.message.channel, "El Guardian "+str(name)+" le falta un rol ... reintentando! ")
                     await client.add_roles(user, role_Clan)
                     await client.add_roles(user, role_DJ)       
-                await client.send_message(context.message.channel, "El Guardian "+str(name[0])+" ya fue dado de alta y tiene los roles! ")
+                await client.send_message(context.message.channel, "El Guardian "+str(name)+" ya fue dado de alta y tiene los roles! ")
             else:
                 user_clan_name = fs.get_PlayerClanName(user_destiny_id)
                 #if user_destiny_id and user_clan_name:
@@ -110,21 +120,25 @@ async def rol(context):
                         await client.add_roles(user, role_Clan)
                         await client.add_roles(user, role_DJ)
                         if not is_user_in_users(context.message.author):
+                            #print(real_battletag + " is NOT in users.json!!")
                             await add_user_data(context.message.author)
                         else:
                             print(context.message.author.name + " is in users.json!!")
                             pass
                         if not is_clanmate_in_clan(real_battletag):
+                            #print(real_battletag + " is NOT in clan.json!!")
                             await add_clanmate_to_clan(real_battletag, user_clan_name)
                         else:
                             print(real_battletag + " is in clan.json!!")
                             pass
                         await client.send_message(context.message.channel, "Rol {0} y {1} agregado con exito. Bienvenido al clan ! ".format(role_Clan.name, role_DJ.name))
                     else:
-                        await client.send_message(context.message.channel, context.message.content+" no figuras en el clan! No puedo dare los roles si no estas en el clan ¯\\_(ツ)_/¯" )        
+                        await client.send_message(context.message.channel, name+" no figuras en el clan! No puedo dare los roles si no estas en el clan ¯\\_(ツ)_/¯" )        
                 else:
-                    await client.send_message(context.message.channel, "Battletag Invalido ó Error al conecatr a Bungie, comunique se con un admin por favor" )        
+                    print("User clan name = "+str(user_clan_name) + "  and  "+ str(user_battletag))
+                    await client.send_message(context.message.channel, "No pude determinar tu clan, comunicate con un admin por favor" )        
         else:
+            print("User Destiny = "+str(user_destiny) + "  and  "+ str(user_battletag))
             await client.send_message(context.message.channel, "Battletag Invalido ó Error al conecatr a Bungie, comunique se con un admin por favor" )
     else:
         await client.send_message(context.message.channel, "Error de uso! Ejemplo: +rol CNorris#2234" )
@@ -133,26 +147,36 @@ async def rol(context):
     #await asyncio.sleep(600)
 
 
-@client.command(name='Oraculo',
-                description="Responde tus dudas existenciales.",
-                brief="Respuestas de mas alla de la Dreaming City!",
-                aliases=['oraculo', 'ora', 'o'],
-                pass_context=True)
-async def oraculo(context):
-    respuestas_posibles = [
-        'Oraculo: El destino indica un fuerte NO',
-        'Oraculo: Es muy probable que no',
-        'Oraculo: Deben definirse los caminos de otros Guardianes antes de que pueda responder',
-        'Oraculo: Veo a través del plano ascendente que es muy probable',
-        'Oraculo: Definitivamente, SI ... aqui tienes un Edge Transit',
-    ]
-    list_split_message = context.message.content.split(' ', 1)[1]
-    if "?" not in context.message.content:
-        await client.say(context.message.author.mention + " eso no es una pregunta ")
-    elif "?" in context.message.content and len(list_split_message) > 4:
-        await client.say(random.choice(respuestas_posibles) + ", " + context.message.author.mention)
-    elif "?" in context.message.content and len(list_split_message) <= 4:
-        await client.say(context.message.author.mention + " eso no es una pregunta que con mis poderes pueda contestar ...")
+#@client.command(name='Oraculo',
+#                description="Responde tus dudas existenciales.",
+#                brief="Respuestas de mas alla de la Dreaming City!",
+#                aliases=['oraculo', 'odc'],
+#                pass_context=True)
+#async def oraculo(context):
+#    respuestas_posibles = [
+#        'Oraculo: El destino indica que NO',
+#        'Oraculo: Es muy probable que no',
+#        'Oraculo: Todavia no esta definido',
+#        #'Oraculo: Preguntame en un rato',
+#        # No cuentes con ello
+#        # Es cierto
+#        # Muy dudoso
+#        # No puedo predecirlo ahora
+#        # En mi opinión, sí
+#        # Sin duda
+#        # No
+#        # Si
+#        'Oraculo: Veo ... que es muy probable',
+#        'Oraculo: Definitivamente, SI ... aqui tienes un Edge Transit'
+#    ]
+#    list_split_message = context.message.content.split(' ', 1)[1]
+#    if "?" not in context.message.content:
+#        await client.say(context.message.author.mention + " eso no es una pregunta ")
+#    elif "?" in context.message.content and len(list_split_message) > 4:
+#        await client.say(random.choice(respuestas_posibles) + ", " + context.message.author.mention)
+#    elif "?" in context.message.content and len(list_split_message) <= 4:
+#        await client.say(context.message.author.mention + " eso no es una pregunta que con mis poderes pueda contestar ...")
+#
 
 
 @client.event
@@ -189,9 +213,8 @@ async def saludar(context):
 async def ayuda(context):
     msg = 'Hola {0.author.mention} estos son mis comandos : \n \
     +ayuda: Imprime este mensage \n \
-    +rol: auto-otorga roles a la gente que esta en el clan Escusara 2,3,4,5 , ejemplo: +rol CNorris#2234 \n \
-    +oraculo: Pregunta con respuesta si o no al oraculo de la Ciudad Onirica, ejemplo: +oraculo Es Escuadra 2 la mejor? \n \
-    +hola: saluda'.format(context.message)
+    +rol: auto-otorga roles a la gente que esta en el clan Escusara 2,3,4,5 , ejemplo: +rol CNorris#2234 \n'.format(context.message)
+    #+oraculo: Pregunta con respuesta si o no al oraculo de la Ciudad Onirica, ejemplo: +oraculo Es Escuadra 2 la mejor? \n \
     await client.send_message(context.message.channel, msg )
 
 
@@ -246,6 +269,7 @@ async def inactivos(context):
         if "Admin" in i.name:
                     admin_id=i.id
     if admin_id in [role.id for role in user.roles]:
+        await client.send_message(context.message.channel,"Fecha de ultima modificacion: %s" % time.ctime(os.path.getmtime("inactive_list.txt")))
         await client.send_message(context.message.channel, "Inactivos:")
         #inactive_list = []
         with open('inactive_list.txt', 'r') as f:
@@ -290,7 +314,7 @@ async def add_user_data(member):
 async def add_clanmate_to_clan(clanmate_battletag, his_clan_name):
     with open('clan.json', 'r') as f:
         clan = json.load(f)
-        name = clanmate_battletag.split('\#')
+        name = clanmate_battletag.split('#')[0]
         if not clanmate_battletag in clan:
             print("From "+ his_clan_name + " " + clanmate_battletag+" battletag is not in clan.json ... adding ...")
             clan[clanmate_battletag] = [his_clan_name, name]
@@ -311,10 +335,11 @@ def is_user_in_users(user):
 
 def is_clanmate_in_clan(clanmate_battletag):
     #Patch for those who have no battleTag
-    name = clanmate_battletag.split('\#')
+    #name = clanmate_battletag.split('#')[0]
     with open('clan.json', 'r') as f:
         clan = json.load(f)
-        if clanmate_battletag in clan or name[0] in clan:
+        #if clanmate_battletag in clan or name[0] in clan:
+        if clanmate_battletag in clan:
             return True
         else:
             return False
@@ -329,13 +354,15 @@ def is_special_clanmate_in_clan(clanmate_name):
             return False
 
 
-def does_user_have_roles(member,clan_rol_id,dj_rol_id):
-    #print(dir(member))
-    if clan_rol_id in [member.id for role in member.roles] and dj_rol_id in [member.id for role in member.roles]:
-        return True
-    else:
-        return False
-
+async def does_user_have_role(member,rol_id):
+    for role in member.roles:
+        #print(str(role.id))
+        if rol_id == role.id:
+            #print(member.name+" tiene rol " + rol_id + "!")
+            return True
+    return False
+    #if rol_id in [member.id for role in member.roles]:
+    #    print(member+" tiene rol " + rol_id + "!")
 
 async def list_servers():
     await client.wait_until_ready()
@@ -351,15 +378,88 @@ async def on_message(message):
     # we do not want the bot to reply to itself
     if message.author == client.user:
         return
-    print("Entered on message!")
+    #print("Entered on message!")
+    msg = message.content
+    #Normalizo el mensaje
+    text = unicodedata.normalize('NFKD', msg).encode('ASCII', 'ignore').decode()
+    #print(text)
+    regex_hola = re.search('^.*H+O+L+A+\s*.*$', text.upper(), re.MULTILINE) 
+    regex_caca = re.search('^C+A+C+A+$', text.upper(), re.MULTILINE)
+    regex_chau = re.search('^.*C+H+A+U+$', text.upper(), re.MULTILINE)
+    regex_buen_dia = re.search('^.*B+U+E+N+\sD+I+A+\s.*$', text.upper(), re.MULTILINE)
+    regex_buenos_dias = re.search('^.*B+U+E+N+O+S+\sD+I+A+S.*$', text.upper(), re.MULTILINE)
+    regex_buenas_tardes = re.search('^.*B+U+E+N+A+S+\sT+A+R+D+E+S+$', text.upper(), re.MULTILINE)
+    regex_buenas_noches = re.search('^.*B+U+E+N+A+S+\sN+O+C+H+E+S+$', text.upper(), re.MULTILINE)
+    regex_buenas = re.search('^B+U+E+N+A+S+$', text.upper(), re.MULTILINE)
+    #print("Regex hola = "+str(regex_hola))
+    if regex_hola or regex_buenas:
+        currentTime = datetime.now()
+        salute_time = ""
+        if currentTime.hour < 12:
+            salute_time = " ,buen día!"
+        elif 12 <= currentTime.hour < 18:
+            salute_time = " ,buenas tardes!"
+        else:
+            salute_time = " ,buenas noches!"
+        msg = 'Hola {0.author.mention}'.format(message)
+        msg = msg + salute_time
+        embed = discord.Embed(title="" , description=msg+" :wave:", color=0x00ff00)
+        await client.send_message(message.channel, embed=embed)
+    
+    if regex_buen_dia:
+        embed = discord.Embed(title="" , description="Buen Dia para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
+        await client.send_message(message.channel, embed=embed)
 
-    #if message.content.startswith('!hello'):
-    if message.content.startswith('puto'):
-        await client.send_message(message.channel, "Puto el que lee")
-    if message.content.startswith('chau') or message.content.startswith('adios'):
-        await client.send_message(message.channel, "Nos vemos en Disney")
-    if "ASCO" in message.content.upper():
-        await client.send_message(message.channel, "A mi tambien " + message.author.mention + " !! Estoy indignado ... ")
+    if regex_buenos_dias:
+        embed = discord.Embed(title="" , description="Buenos Dias para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
+        await client.send_message(message.channel, embed=embed)
+
+    if regex_buenas_tardes:
+        embed = discord.Embed(title="" , description="Buenas tardes para vos"+message.author.mention+" :wave:", color=0x00ff00)
+        await client.send_message(message.channel, embed=embed)
+
+    if regex_buenas_noches:
+            embed = discord.Embed(title="" , description="Buenas noches para vos"+message.author.mention+" :full_moon_with_face: :coffee: ", color=0x00ff00)
+            await client.send_message(message.channel, embed=embed)
+
+    if (regex_caca) or ("mierda".upper() in text.upper()):
+        #embed = discord.Embed(title="", description=":poop:", color=0x00ff00)
+        embed = discord.Embed()
+        #response = json.loads(urlopen("http://api.giphy.com/v1/gifs/search?q=poop&api_key=NONE&limit=25").read())
+        #embed_list = [d['images']['fixed_width']['url'] for d in response['data']]
+        #url = random.choice(embed_list)
+        #print(url)
+        url="https://media.giphy.com/media/tdnUaMuARmi0o/giphy.gif"
+        embed.set_image(url=url)
+        await client.send_message(message.channel, embed=embed)
+
+    if "DANCE" in text.upper():
+        embed = discord.Embed()
+        random_dance=[
+        "https://media.giphy.com/media/143OU9tGwdAEb6/giphy.gif",
+        "https://media.giphy.com/media/YZD7Z4uZlJQe4/giphy.gif",
+        "https://media.giphy.com/media/zWnlBLTbv9QaY/giphy.gif",
+        "https://media.giphy.com/media/3oroUrSVloine9dmmA/giphy.gif"
+        ]
+        url = random.choice(random_dance)
+        embed.set_image(url=url)
+        await client.send_message(message.channel, embed=embed)
+
+    if "PUTO" in text.upper():
+        embed = discord.Embed(title="" , description="Puto el que lee ... :punch:", color=0x00ff00)
+        await client.send_message(message.channel, embed=embed)
+
+    if "PENE" in text.upper() or "CHOTA" in text.upper() or "PIJA" in text.upper():
+        embed = discord.Embed(title="" , description=":eggplant:", color=0x00ff00)
+        await client.send_message(message.channel, embed=embed)
+
+    #if message.content.startswith('chau'.upper()) or message.content.startswith('adios'):
+    #    await client.send_message(message.channel, "Nos vemos en Disney")
+    
+    if (regex_chau) or ("ADIOS" in text.upper()):
+        respuestas_posibles = ["Nos vemos en Disney ", "Hasta prontito ", "Nos re vimos ", "Cuidate, querete, ojito ... ","Hasta la próxima amig@ ", "Chau "]
+        await client.send_message(message.channel, random.choice(respuestas_posibles) + message.author.mention )
+        
     await client.process_commands(message)
 
 
