@@ -25,7 +25,7 @@ BOT_TOKEN = os.environ['BOT_TOKEN']
 #my_config_file = os.path.join(THIS_FOLDER, 'config.json')
 
 #with open(my_config_file, 'r') as f:
-        config = json.load(f)
+#        config = json.load(f)
 
 #BOT_TOKEN = config['DEFAULT']['BOT_TOKEN']# Get at discordapp.com/developers/applications/me
 #END Tests
