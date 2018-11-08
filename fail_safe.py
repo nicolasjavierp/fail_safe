@@ -9,6 +9,7 @@ import humanize
 import smtplib
 import sys
 import json
+from pymongo import MongoClient
 
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 my_config_file = os.path.join(THIS_FOLDER, 'config.json')
@@ -201,8 +202,10 @@ class FailSafe(object):
                             bungie_profile = None
                             battletag = name
                     else:
-                        print(val)
-                        print("----------------------------")
+                        #CASOS PROBLEMATICOS
+                        #print(val)
+                        #print("----------------------------")
+
                         #bungie_id = "IDBungie_Desconocido"
                         #bungie_profile = "Perfil_Bungie_Desconocido"
                         #battletag = "battletag_desconocido"
@@ -254,6 +257,63 @@ class FailSafe(object):
                         self.retrys.remove(membership_id)
             return list_of_clan_members
 
+
+    def push_Blacklist_Record(self, record, blacklisters):
+        blacklisters.insert_one(record)
+
+
+    def push_Clanmate_Record(self, record, clanmates):
+        clanmates.insert_one(record)
+
+
+    def clean_blacklist(self):
+            '''Removes blacklisted players based on a whitelist file'''
+            with open(my_whitelist_file) as f:
+                lines = f.read().splitlines()
+            for white in lines:
+                for player in self.blacklist:
+                    for key in player:
+                        if player[key][0] == white:
+                            self.blacklist.remove(player)
+
+
+    def upload_blacklist(self):
+        with open(my_config_file, 'r') as f:
+            config = json.load(f)
+        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+        db = client.get_database("bot_definitivo")
+        blacklisters = db.blacklist
+        #removes all documents from blacklisters
+        blacklisters.remove({})
+        #Cleans local blacklist with static whitelist file
+        self.clean_blacklist()
+        for blacklister in self.blacklist:
+            my_dict={}
+            date=datetime.datetime.today().strftime('%Y-%m-%d')
+            for key in blacklister:
+                #print(blacklister[key][4] + ":" + "(" + blacklister[key][2] + "\t" + str(blacklister[key][0]) + "\t" + str(blacklister[key][5]) +")")
+                my_dict={"battletag":str(blacklister[key][4]), "clan":str(blacklister[key][2]), "alias":str(blacklister[key][0]), "inactive_time":str(blacklister[key][5]),"date":date}
+                self.push_Blacklist_Record(my_dict, blacklisters)
+    
+
+    def upload_clanmates(self, full_clan_list):
+        with open(my_config_file, 'r') as f:
+            config = json.load(f)
+        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+        db = client.get_database("bot_definitivo")
+        clanmates = db.clan_members
+        #removes all documents from clan_members
+        clanmates.remove({})
+        for clanmate in full_clan_list:
+            clanmate_dict = {}
+            for key in clanmate:
+                if key:
+                    clanmate_dict = {"battletag":clanmate[key][4] , "clan": clanmate[key][2], "alias":clanmate[key][0]}
+                    self.push_Clanmate_Record(clanmate_dict,clanmates)
+
+
     def create_blacklist(self):
             '''Generates a list of  blacklisted players'''
             full_clan_list=[]
@@ -266,9 +326,12 @@ class FailSafe(object):
                     #key = player.items()[0][0]
                     if self.is_blacklisted(player):
                         self.blacklist.append(player)
-            self.print_clan_2_file(full_clan_list)
+                self.upload_blacklist()
+            self.upload_clanmates(full_clan_list)
+            #self.print_clan_2_file(full_clan_list)
+            #return full_clan_list
 
-    
+
     def print_blacklist_basic(self):
             '''Prints the list of blacklisted players to stdo'''
             str_list = ""
@@ -295,6 +358,7 @@ class FailSafe(object):
             f = open(my_inactive_file, "w")
             for player in self.blacklist:
                 for key in player:
+                    print(player[key][0] + "\s" + player[key][2] + "\s" + str(player[key][4]) + "\s" + str(player[key][5]) +"\s")
                     f.write(player[key][0] + "\t" + player[key][2] + "\t" + str(player[key][4]) + "\t" + str(player[key][5]) +"\n")
             f.close()
     
@@ -315,6 +379,7 @@ class FailSafe(object):
             with open(my_clan_file, 'w') as f:
                     json.dump(aux_dict, f, indent=4)
 
+
     def clean_clan_file(self):
             '''Cleans the list of Clanmates woth null as key'''
             with open(my_clan_file, 'r') as f:
@@ -327,16 +392,7 @@ class FailSafe(object):
                             print(player)
             #with open(my_clan_file, 'w') as f:
             #        json.dump(clanmates,f)
-    
-    def clean_blacklist(self):
-            '''Removes blacklisted players based on a whitelist file'''
-            with open(my_whitelist_file) as f:
-                lines = f.read().splitlines()
-            for white in lines:
-                for player in self.blacklist:
-                    for key in player:
-                        if player[key][0] == white:
-                            self.blacklist.remove(player)
+
             
 
     def send_mail(self):

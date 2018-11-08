@@ -17,17 +17,17 @@ import unicodedata
 from urllib.request import urlopen
 
 #4 Heroku
-BUNGIE_API_KEY = os.environ['BUNGIE_API_KEY']
-BOT_TOKEN = os.environ['BOT_TOKEN']
+#BUNGIE_API_KEY = os.environ['BUNGIE_API_KEY']
+#BOT_TOKEN = os.environ['BOT_TOKEN']
 
 #4 Tests
-#THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-#my_config_file = os.path.join(THIS_FOLDER, 'config.json')
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+my_config_file = os.path.join(THIS_FOLDER, 'config.json')
 
-#with open(my_config_file, 'r') as f:
-#        config = json.load(f)
+with open(my_config_file, 'r') as f:
+        config = json.load(f)
 
-#BOT_TOKEN = config['DEFAULT']['BOT_TOKEN']# Get at discordapp.com/developers/applications/me
+BOT_TOKEN = config['DEFAULT']['BOT_TOKEN']# Get at discordapp.com/developers/applications/me
 #END Tests
 
 BOT_PREFIX = ("+") #("+", "!")
@@ -47,14 +47,25 @@ async def on_member_join(member):
     #print(server.default_channel)
     #print(dir(server.default_channel))
     for i in server.channels:
-        #print(i.name)
-        if "invitados" in i.name :
+        if "ɪɴᴠɪᴛᴀᴅᴏs".upper() in i.name.upper() :
+            #print(i.name)
             canal_bienvenida = i
             
-    fmt = 'Bienvenido {0.mention} a {1.name}!'
+    #fmt = 'Bienvenido {0.mention} a {1.name}!'
 
-    await client.send_message(canal_bienvenida, fmt.format(member, server))
-    await client.send_message(canal_bienvenida,"Para obtener roles usar el commando: +rol tu_blizard_battletag. \n Cualquier duda no dudes en comunicarte con un admin")
+    #await client.send_message(canal_bienvenida, fmt.format(member, server))
+    #await client.send_message(canal_bienvenida,"Para obtener roles usar el commando: +rol tu_blizard_battletag.\n\
+    #Ejemplo:\n\
+    #========\n +rol CNorris#2234\n Cualquier duda no dudes en comunicarte con un admin")
+    
+    embed2=discord.Embed()
+    #embed=discord.Embed(title="", description=":wave: **Bienvenido "+member.mention+" a Escuadra 2** \n Necesitas los permisos para usar todos los canales? \n Escribí debajo el comando +rol seguido de tu Battletag!", color=0x00ff00)
+    embed=discord.Embed(title="", description=":wave: **Bienvenido"+member.mention+" a ESCUADRA 2**\n • Necesitas permisos para usar los canales? \n • Escribí debajo el comando **+rol** seguido de tu Battletag!", color=0x00ff00)
+    embed2=discord.Embed(title="", description="Ejemplo:", color=0x00ff00)
+    embed2.set_image(url="https://media.giphy.com/media/fipSNCOjqajUYmHFbC/giphy.gif")
+    await client.send_message(canal_bienvenida, embed=embed)
+    await client.send_message(canal_bienvenida, embed=embed2)
+
 
 @client.command(name='Rol',
                 description="Autoprovisioning de Roles Clan y DJ",
@@ -67,10 +78,10 @@ async def rol(context):
     if len(context.message.content)>=4 and valid_battle_tag_ending:
         #print("Valid Battletag format!")
         #4 tests
-        #fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])         #Start Fail_Safe 4tests
+        fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])         #Start Fail_Safe 4tests
         #END tests
         #4 Heroku
-        fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+        #fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
         #END Heroku
         user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
         user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
@@ -108,10 +119,15 @@ async def rol(context):
                 #print(user_has_role_dj)
                 
                 if not user_has_role_clan or not user_has_role_dj:
-                    await client.send_message(context.message.channel, "El Guardian "+str(name)+" le falta un rol ... reintentando! ")
+                    #await client.send_message(context.message.channel, "El Guardian "+str(name)+" le falta un rol ... reintentando! ")
+                    print(str(name)+" missing role ... adding ... ")
+                    await asyncio.sleep(1)
+                    await client.add_roles(user, role_DJ)
+                    await asyncio.sleep(1)
                     await client.add_roles(user, role_Clan)
-                    await client.add_roles(user, role_DJ)       
-                await client.send_message(context.message.channel, "El Guardian "+str(name)+" ya fue dado de alta y tiene los roles! ")
+                embed = discord.Embed(title="" , description="El Guardian "+str(name)+" ya fue dado de alta y tiene los roles! ", color=0x00ff00)
+                await client.send_message(context.message.channel, embed=embed)
+                #await client.send_message(context.message.channel, "El Guardian "+str(name)+" ya fue dado de alta y tiene los roles! ")
             else:
                 user_clan_name = fs.get_PlayerClanName(user_destiny_id)
                 #if user_destiny_id and user_clan_name:
@@ -131,20 +147,129 @@ async def rol(context):
                         else:
                             print(real_battletag + " is in clan.json!!")
                             pass
-                        await client.send_message(context.message.channel, "Rol {0} y {1} agregado con exito. Bienvenido al clan ! ".format(role_Clan.name, role_DJ.name))
+                        embed = discord.Embed(title="" , description=":white_check_mark: **Listo** {0.mention} \n• Ya podes usar todos los canales!".format(real_battletag), color=0x00ff00)
+                        await client.send_message(context.message.channel, embed=embed)
+                        #await client.send_message(context.message.channel, "Rol {0} y {1} agregado con exito. Bienvenido al clan ! ".format(role_Clan.name, role_DJ.name))
                     else:
-                        await client.send_message(context.message.channel, name+" no figuras en el clan! No puedo dare los roles si no estas en el clan ¯\\_(ツ)_/¯" )        
+                        embed = discord.Embed(title="" , description=":warning: {0.mention} **Parece que no estas en nuestro clan** \n• Unite cuando gustes!".format(real_battletag), color=0x00ff00)
+                        await client.send_message(context.message.channel, embed=embed)
+                        #await client.send_message(context.message.channel, real_battletag+" no figuras en el clan! No puedo dar te los roles si no estas en el clan ¯\\_(ツ)_/¯" )        
                 else:
                     print("User clan name = "+str(user_clan_name) + "  and  "+ str(user_battletag))
-                    await client.send_message(context.message.channel, "No pude determinar tu clan, comunicate con un admin por favor" )        
+                    embed = discord.Embed(title="" , description=":warning: {0.mention} **Parece que no estas en ningún clan** \n• Unite cuando gustes!".format(real_battletag), color=0x00ff00)
+                    await client.send_message(context.message.channel, embed=embed)
+                    #await client.send_message(context.message.channel, "No pude determinar tu clan, comunicate con un admin por favor" )
         else:
             print("User Destiny = "+str(user_destiny) + "  and  "+ str(user_battletag))
-            await client.send_message(context.message.channel, "Battletag Invalido ó Error al conecatr a Bungie, comunique se con un admin por favor" )
+            embed = discord.Embed(title="" , description=":x: **Battletag invalido / Error al conectar con Bungie.net** \n• Comuniquese con un admin por favor", color=0x00ff00)
+            await client.send_message(context.message.channel, embed=embed)
+            #await client.send_message(context.message.channel, "Battletag Invalido ó Error al conecatr a Bungie, comunique se con un admin por favor" )
     else:
-        await client.send_message(context.message.channel, "Error de uso! Ejemplo: +rol CNorris#2234" )
+        embed2=discord.Embed()
+        embed = discord.Embed(title="" , description=":warning: **Error!** \n • Intentalo de nuevo", color=0x00ff00)
+        embed2.set_image(url="https://media.giphy.com/media/fipSNCOjqajUYmHFbC/giphy.gif")
+
+        await client.send_message(context.message.channel, embed=embed)
+        await client.send_message(context.message.channel, embed=embed2)
+        #await client.send_message(context.message.channel, "Error de uso! Ejemplo: +rol CNorris#2234" )
     #delets the message
-    await client.delete_message(context.message)
-    #await asyncio.sleep(600)
+    #await client.delete_message(context.message)
+
+@client.event
+async def on_message(message):
+    # we do not want the bot to reply to itself
+    if message.author == client.user:
+        return
+    #print("Entered on message!")
+    msg = message.content
+    #Normalizo el mensaje
+    text = unicodedata.normalize('NFKD', msg).encode('ASCII', 'ignore').decode()
+    #print(text)
+    regex_hola = re.search('^.*H+O+L+A+\s*.*$', text.upper(), re.MULTILINE) 
+    regex_caca = re.search('^C+A+C+A+$', text.upper(), re.MULTILINE)
+    regex_chau = re.search('^.*C+H+A+U+$', text.upper(), re.MULTILINE)
+    regex_buen_dia = re.search('^.*B+U+E+N+\s+D+I+A+.*$', text.upper(), re.MULTILINE)
+    regex_buenos_dias = re.search('^.*B+U+E+N+O+S+\sD+I+A+S.*$', text.upper(), re.MULTILINE)
+    regex_buenas_tardes = re.search('^.*B+U+E+N+A+S+\sT+A+R+D+E+S+.*$', text.upper(), re.MULTILINE)
+    regex_buenas_noches = re.search('^.*B+U+E+N+A+S+\sN+O+C+H+E+S+.*$', text.upper(), re.MULTILINE)
+    regex_buenas = re.search('^B+U+E+N+A+S+$', text.upper(), re.MULTILINE)
+    regex_jaja = re.search('^.*J+J*A+A*J+J*A+A*$', text.upper(), re.MULTILINE)
+    #print("Regex jjajajaja = "+str(regex_jaja))
+    #print("Regex hola = "+str(regex_hola))
+    #print("Regex Buen dia = "+str(regex_buen_dia))
+    #print("Regex Buenos dias = "+str(regex_buenos_dias))
+    #print("Regex hola = "+str(regex_hola))
+    #print("----")
+    if (regex_hola or regex_buenas):
+        currentTime = datetime.now()
+        salute_time = ""
+        if currentTime.hour < 12:
+            salute_time = " ,buen día!"
+        elif 12 <= currentTime.hour < 18:
+            salute_time = " ,buenas tardes!"
+        else:
+            salute_time = " ,buenas noches!"
+        msg = 'Hola {0.author.mention}'.format(message)
+        msg = msg + salute_time
+        embed = discord.Embed(title="" , description=msg+" :wave:", color=0x00ff00)
+        await client.send_message(message.channel, embed=embed)
+    
+    if regex_buen_dia and not regex_hola:
+        embed = discord.Embed(title="" , description="Buen Dia para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
+        await client.send_message(message.channel, embed=embed)
+
+    if regex_buenos_dias and not regex_hola:
+        embed = discord.Embed(title="" , description="Buenos Dias para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
+        await client.send_message(message.channel, embed=embed)
+
+    if regex_buenas_tardes and not regex_hola:
+        embed = discord.Embed(title="" , description="Buenas tardes para vos"+message.author.mention+" :wave:", color=0x00ff00)
+        await client.send_message(message.channel, embed=embed)
+
+    if regex_buenas_noches and not regex_hola :
+            embed = discord.Embed(title="" , description="Buenas noches para vos"+message.author.mention+" :full_moon_with_face: :coffee: ", color=0x00ff00)
+            await client.send_message(message.channel, embed=embed)
+
+    if (regex_caca) or ("mierda".upper() in text.upper()):
+        #embed = discord.Embed(title="", description=":poop:", color=0x00ff00)
+        embed = discord.Embed()
+        #response = json.loads(urlopen("http://api.giphy.com/v1/gifs/search?q=poop&api_key=NONE&limit=25").read())
+        #embed_list = [d['images']['fixed_width']['url'] for d in response['data']]
+        #url = random.choice(embed_list)
+        #print(url)
+        url="https://media.giphy.com/media/tdnUaMuARmi0o/giphy.gif"
+        embed.set_image(url=url)
+        await client.send_message(message.channel, embed=embed)
+
+    if "DANCE" in text.upper() or "DANCING" in text.upper():
+        embed = discord.Embed()
+        random_dance=[
+        "https://media.giphy.com/media/143OU9tGwdAEb6/giphy.gif",
+        "https://media.giphy.com/media/YZD7Z4uZlJQe4/giphy.gif",
+        "https://media.giphy.com/media/zWnlBLTbv9QaY/giphy.gif",
+        "https://media.giphy.com/media/3oroUrSVloine9dmmA/giphy.gif"
+        ]
+        url = random.choice(random_dance)
+        embed.set_image(url=url)
+        await client.send_message(message.channel, embed=embed)
+
+    if "PUTO" in text.upper():
+        embed = discord.Embed(title="" , description="Puto el que lee ... :punch:", color=0x00ff00)
+        await client.send_message(message.channel, embed=embed)
+
+    if "PENE" in text.upper() or "CHOTA" in text.upper() or "PIJA" in text.upper():
+        embed = discord.Embed(title="" , description=":eggplant:", color=0x00ff00)
+        await client.send_message(message.channel, embed=embed)
+
+    #if message.content.startswith('chau'.upper()) or message.content.startswith('adios'):
+    #    await client.send_message(message.channel, "Nos vemos en Disney")
+    
+    if (regex_chau) or ("ADIOS" in text.upper()):
+        respuestas_posibles = ["Nos vemos en Disney ", "Hasta prontito ", "Nos re vimos ", "Cuidate, querete, ojito ... ","Hasta la próxima amig@ ", "Chau "]
+        await client.send_message(message.channel, random.choice(respuestas_posibles) + message.author.mention )
+        
+    await client.process_commands(message)
+    
 
 
 #@client.command(name='Oraculo',
@@ -213,7 +338,9 @@ async def saludar(context):
 async def ayuda(context):
     msg = 'Hola {0.author.mention} estos son mis comandos : \n \
     +ayuda: Imprime este mensage \n \
-    +rol: auto-otorga roles a la gente que esta en el clan Escusara 2,3,4,5 , ejemplo: +rol CNorris#2234 \n'.format(context.message)
+    +rol: auto-otorga roles a la gente que esta en el clan Escusara 2,3,4,5 , ejemplo: +rol CNorris#2234 \n\
+    +hola: saluda'.format(context.message)
+    
     #+oraculo: Pregunta con respuesta si o no al oraculo de la Ciudad Onirica, ejemplo: +oraculo Es Escuadra 2 la mejor? \n \
     await client.send_message(context.message.channel, msg )
 
@@ -253,7 +380,24 @@ async def poblacion(context):
         users = 'users.json'
         await populate_user_data(users)
     else:
-        await client.send_message(context.message.channel, "No tenes permisos para ejecutar este comando")
+        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
+
+async def populate_user_data(users):
+    #my_server = discord.utils.get(client.servers)
+    #for memb in my_server.members:
+    #    if not memb.bot and not memb.id in users:
+    #        my_dict = {}
+    #        my_dict = {"discord_id":memb.id, "name":memb.name, "nick":memb.nick, "last_activity":""}
+    #        push_Discord_User_Record(my_dict)
+    with open('users.json', 'r') as f:
+        users = json.load(f)
+        my_server = discord.utils.get(client.servers)
+        for memb in my_server.members:
+            if not memb.bot and not memb.id in users:
+                #print(memb.name+" is not in users.json ... adding ...")
+                users[memb.id] = [memb.name, memb.nick]
+    with open('users.json', 'w') as f:
+            json.dump(users,f,indent=4)
 
 
 @client.command(name='Inactivos',
@@ -280,33 +424,23 @@ async def inactivos(context):
         #await client.send_message(context.message.channel, inactive_list)
         await client.send_message(context.message.channel, "Fin.")
     else:
-        await client.send_message(context.message.channel, "No tenes permisos para ejecutar este comando")
+        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
 
 #######################################################################
 #######################################################################
 #######################################################################
-
-async def populate_user_data(users):
-    with open('users.json', 'r') as f:
-        users = json.load(f)
-        my_server = discord.utils.get(client.servers)
-        for memb in my_server.members:
-            if not memb.bot and not memb.id in users:
-                #print(memb.name+" is not in users.json ... adding ...")
-                users[memb.id] = [memb.name, memb.nick]
-    with open('users.json', 'w') as f:
-            json.dump(users,f,indent=4)
-
 
 async def add_user_data(member):
     with open('users.json', 'r') as f:
         users = json.load(f)
         if not member.bot and not member.id in users:
+
             print(member.id+" is not in users.json ... adding ...")
             #print(dir(member))
             my_server = discord.utils.get(client.servers)
             user=my_server.get_member(member.id)
             users[member.id] = [member.name, user.nick]
+            ######
     with open('users.json', 'w') as f:
             json.dump(users,f,indent=4)
 
@@ -345,15 +479,6 @@ def is_clanmate_in_clan(clanmate_battletag):
             return False
 
 
-def is_special_clanmate_in_clan(clanmate_name):
-    with open('clan.json', 'r') as f:
-        clan = json.load(f)
-        if clanmate_name in clan:
-            return True
-        else:
-            return False
-
-
 async def does_user_have_role(member,rol_id):
     for role in member.roles:
         #print(str(role.id))
@@ -371,96 +496,6 @@ async def list_servers():
         for server in client.servers:
             print(server.name)
         await asyncio.sleep(600)
-
-
-@client.event
-async def on_message(message):
-    # we do not want the bot to reply to itself
-    if message.author == client.user:
-        return
-    #print("Entered on message!")
-    msg = message.content
-    #Normalizo el mensaje
-    text = unicodedata.normalize('NFKD', msg).encode('ASCII', 'ignore').decode()
-    #print(text)
-    regex_hola = re.search('^.*H+O+L+A+\s*.*$', text.upper(), re.MULTILINE) 
-    regex_caca = re.search('^C+A+C+A+$', text.upper(), re.MULTILINE)
-    regex_chau = re.search('^.*C+H+A+U+$', text.upper(), re.MULTILINE)
-    regex_buen_dia = re.search('^.*B+U+E+N+\sD+I+A+\s.*$', text.upper(), re.MULTILINE)
-    regex_buenos_dias = re.search('^.*B+U+E+N+O+S+\sD+I+A+S.*$', text.upper(), re.MULTILINE)
-    regex_buenas_tardes = re.search('^.*B+U+E+N+A+S+\sT+A+R+D+E+S+$', text.upper(), re.MULTILINE)
-    regex_buenas_noches = re.search('^.*B+U+E+N+A+S+\sN+O+C+H+E+S+$', text.upper(), re.MULTILINE)
-    regex_buenas = re.search('^B+U+E+N+A+S+$', text.upper(), re.MULTILINE)
-    #print("Regex hola = "+str(regex_hola))
-    if regex_hola or regex_buenas:
-        currentTime = datetime.now()
-        salute_time = ""
-        if currentTime.hour < 12:
-            salute_time = " ,buen día!"
-        elif 12 <= currentTime.hour < 18:
-            salute_time = " ,buenas tardes!"
-        else:
-            salute_time = " ,buenas noches!"
-        msg = 'Hola {0.author.mention}'.format(message)
-        msg = msg + salute_time
-        embed = discord.Embed(title="" , description=msg+" :wave:", color=0x00ff00)
-        await client.send_message(message.channel, embed=embed)
-    
-    if regex_buen_dia:
-        embed = discord.Embed(title="" , description="Buen Dia para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
-        await client.send_message(message.channel, embed=embed)
-
-    if regex_buenos_dias:
-        embed = discord.Embed(title="" , description="Buenos Dias para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
-        await client.send_message(message.channel, embed=embed)
-
-    if regex_buenas_tardes:
-        embed = discord.Embed(title="" , description="Buenas tardes para vos"+message.author.mention+" :wave:", color=0x00ff00)
-        await client.send_message(message.channel, embed=embed)
-
-    if regex_buenas_noches:
-            embed = discord.Embed(title="" , description="Buenas noches para vos"+message.author.mention+" :full_moon_with_face: :coffee: ", color=0x00ff00)
-            await client.send_message(message.channel, embed=embed)
-
-    if (regex_caca) or ("mierda".upper() in text.upper()):
-        #embed = discord.Embed(title="", description=":poop:", color=0x00ff00)
-        embed = discord.Embed()
-        #response = json.loads(urlopen("http://api.giphy.com/v1/gifs/search?q=poop&api_key=NONE&limit=25").read())
-        #embed_list = [d['images']['fixed_width']['url'] for d in response['data']]
-        #url = random.choice(embed_list)
-        #print(url)
-        url="https://media.giphy.com/media/tdnUaMuARmi0o/giphy.gif"
-        embed.set_image(url=url)
-        await client.send_message(message.channel, embed=embed)
-
-    if "DANCE" in text.upper():
-        embed = discord.Embed()
-        random_dance=[
-        "https://media.giphy.com/media/143OU9tGwdAEb6/giphy.gif",
-        "https://media.giphy.com/media/YZD7Z4uZlJQe4/giphy.gif",
-        "https://media.giphy.com/media/zWnlBLTbv9QaY/giphy.gif",
-        "https://media.giphy.com/media/3oroUrSVloine9dmmA/giphy.gif"
-        ]
-        url = random.choice(random_dance)
-        embed.set_image(url=url)
-        await client.send_message(message.channel, embed=embed)
-
-    if "PUTO" in text.upper():
-        embed = discord.Embed(title="" , description="Puto el que lee ... :punch:", color=0x00ff00)
-        await client.send_message(message.channel, embed=embed)
-
-    if "PENE" in text.upper() or "CHOTA" in text.upper() or "PIJA" in text.upper():
-        embed = discord.Embed(title="" , description=":eggplant:", color=0x00ff00)
-        await client.send_message(message.channel, embed=embed)
-
-    #if message.content.startswith('chau'.upper()) or message.content.startswith('adios'):
-    #    await client.send_message(message.channel, "Nos vemos en Disney")
-    
-    if (regex_chau) or ("ADIOS" in text.upper()):
-        respuestas_posibles = ["Nos vemos en Disney ", "Hasta prontito ", "Nos re vimos ", "Cuidate, querete, ojito ... ","Hasta la próxima amig@ ", "Chau "]
-        await client.send_message(message.channel, random.choice(respuestas_posibles) + message.author.mention )
-        
-    await client.process_commands(message)
 
 
 #async def populate_clan_data(clan):

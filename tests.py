@@ -5,35 +5,90 @@ import os
 from urllib.request import urlopen
 import json
 import random
+from pymongo import MongoClient
+from datetime import datetime
+import datetime
 
+
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+my_config_file = os.path.join(THIS_FOLDER, 'config.json')
 
 fs = FailSafe(api_key=os.environ["BUNGIE_API_KEY"]) # Never put your keys in code... export 'em!
-print(fs.get_PlayerClanName("4611686018472677917"))
+#print(fs.get_PlayerClanName("4611686018472677917"))
 
-response = json.loads(urlopen("http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=jhxf3M81M735O3GuMlQmXRtQBJXBXH3Q&limit=5").read())
-embed_list = [d['embed_url'] for d in response['data']]
+with open(my_config_file, 'r') as f:
+            config = json.load(f)
 
-print(random.choice(embed_list))
+MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+db = client.get_database("bot_definitivo")
 
-exit(0)
-
-for key, value in data.items():
-    #print(type(value))
-    for i in value:
-        print(type(i))
-        for key, value in value.items():
-            print(type(i))
-    #print(value['embed_url'])
-
-    
-exit(0)
-fs.clean_clan_file()
-fs.create_blacklist()
-fs.clean_blacklist()
-fs.print_blacklist_file()
+blacklisters = db.blacklist
+clanmates = db.clan_members
 
 
-"Javu#2632": [
-        "Escuadra 4",
-        "Javu"
-    ],
+def get_Blacklist():
+    document = blacklisters.find({})
+    return document
+
+def get_Blacklist_Date():
+    document = blacklisters.find_one()
+    return document["date"]
+
+def get_Clanmates():
+    document = clanmates.find({})
+    return document
+
+def push_Blacklist_Record(record):
+    blacklisters.insert_one(record)
+
+def push_Clanmates_Record(record):
+    clanmates.insert_one(record)
+
+def updateRecord(record, updates):
+    blacklisters.update_one({'_id': record['_id']},{
+                              '$set': updates
+                              }, upsert=False)
+
+
+
+print("Fecha de creacion: "+get_Blacklist_Date())
+document = get_Blacklist()
+
+for record in document:
+          print(record["battletag"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"])
+
+print("Done!")
+
+
+#fs.print_blacklist_file()
+#fs.clean_clan_file()
+#fs.create_blacklist()
+#fs.clean_blacklist()
+#fs.print_blacklist_file()
+
+
+
+#"Javu#2632": [
+#        "Escuadra 4",
+#        "Javu"
+#    ],
+
+#my_battle_tag="Javu#2632"
+# Get Destiny MembershipId by pc gamertag
+#my_destiny_id = fs.get_DestinyUserId(fs.format_PlayerBattleTag(my_battle_tag))
+#print("Javu's Destiny ID is: {}".format(my_destiny_id)) 
+# Get User's Profile info and more detailed Character info
+#my_profile = fs.get_DestinyUserProfile(my_destiny_id, components=[100,200])
+#print("This is Javu's Destiny profile: {}".format(my_profile))
+# Get a random single game's post carnage stats
+# game_stats = fs.get_postGameStats(100)
+# print("Random Destiny 2 game's post carnage game stats: \n{}".format(game_stats))
+
+# Get players clan
+#my_destiny_clan_name = fs.get_PlayerClanName(my_destiny_id)
+#print("Destiny player Javu is in: {}".format(my_destiny_clan_name))
+#last_played = fs.get_PlayerLastLogin(my_destiny_id)
+#print("Destiny player Javu last played: {}".format(last_played))
+# fs.is_blacklisted(my_destiny_id)
+# res = fs.get_ClanPlayerList(3111393)
