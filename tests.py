@@ -5,10 +5,10 @@ import os
 from urllib.request import urlopen
 import json
 import random
+import pymongo
 from pymongo import MongoClient
 from datetime import datetime
-import datetime
-
+import time
 
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 my_config_file = os.path.join(THIS_FOLDER, 'config.json')
@@ -22,44 +22,99 @@ with open(my_config_file, 'r') as f:
 MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
 client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
 db = client.get_database("bot_definitivo")
-
-blacklisters = db.blacklist
 clanmates = db.clan_members
-
-
-def get_Blacklist():
-    document = blacklisters.find({})
-    return document
-
-def get_Blacklist_Date():
-    document = blacklisters.find_one()
-    return document["date"]
-
-def get_Clanmates():
-    document = clanmates.find({})
-    return document
-
-def push_Blacklist_Record(record):
-    blacklisters.insert_one(record)
-
-def push_Clanmates_Record(record):
-    clanmates.insert_one(record)
-
-def updateRecord(record, updates):
-    blacklisters.update_one({'_id': record['_id']},{
-                              '$set': updates
-                              }, upsert=False)
+blacklisters = db.blacklist
+discord_users = db.discord_users
 
 
 
-print("Fecha de creacion: "+get_Blacklist_Date())
-document = get_Blacklist()
 
-for record in document:
-          print(record["battletag"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"])
+def get_one_Clanmate(clanmate_id):
+        document = clanmates.find_one({'battletag':clanmate_id})
+        return document
+
+
+def get_all_Discord_Users_by_last_activity():
+        document = discord_users.find({}).sort('last_activity',pymongo.DESCENDING)
+        return document
+
+
+def get_one_Discord_User(discord_id):
+        document = discord_users.find_one({'discord_id':discord_id})
+        return document
+
+
+def is_Clanmate_in_db(clanmate_id):
+        document = clanmates.find_one({'battletag':clanmate_id})
+        if document:
+                return True
+        else:
+                return False
+
+def is_Discord_User_in_db(discord_id):
+        document = discord_users.find_one({'discord_id':discord_id})
+        if document:
+                return True
+        else:
+                return False
+
+
+def update_Discord_User(record, updates):
+        discord_users.update_one({'_id': record['_id']},{
+                                '$set': updates
+                                }, upsert=False)
+
+
+
+for i in get_all_Discord_Users_by_last_activity():
+        print(i)
+
+exit(0)
+
+print(get_one_Clanmate("Ancona31#1695"))
+print(is_Clanmate_in_db("Ancona31#1695"))
+print(is_Clanmate_in_db("Ancona30001#1695"))
+
+print("///////////////////////////////")
+
+print(get_one_Discord_User("376055309657047040"))
+print(is_Discord_User_in_db("376055309657047040"))
+print(is_Discord_User_in_db("3760553096570470400000"))
+
+print("///////////////////////////////")
+
+currentTime = datetime.now()
+
+update = {
+        "last_activity": currentTime
+}
+original_record = get_one_Discord_User("376055309657047040")
+update_Discord_User(original_record,update)
+print(get_one_Discord_User("376055309657047040"))
+
+time.sleep(5)
+
+currentTime = datetime.now()
+
+update = {
+        "last_activity": currentTime
+}
+original_record = get_one_Discord_User("198516601497059328")
+update_Discord_User(original_record,update)
+print(get_one_Discord_User("198516601497059328"))
+
+exit(0)
+
+
+
+
 
 print("Done!")
 
+#db.posts.find(...).sort([
+#  ('date', pymongo.ASCENDING),
+#  ('other_field', pymongo.DESCENDING)
+#]):
 
 #fs.print_blacklist_file()
 #fs.clean_clan_file()

@@ -1,4 +1,3 @@
-#!/usr/local/bin/python3.6
 # -*- coding: utf-8 -*-
 # Works with Python 3.6
 
@@ -11,10 +10,12 @@ import os, time
 import discord
 import re
 import json
+import pymongo
 from datetime import datetime
 from boto.s3.connection import S3Connection
 import unicodedata
 from urllib.request import urlopen
+from pymongo import MongoClient
 
 #4 Heroku
 #BUNGIE_API_KEY = os.environ['BUNGIE_API_KEY']
@@ -34,13 +35,7 @@ BOT_PREFIX = ("+") #("+", "!")
 client = Bot(command_prefix=BOT_PREFIX)
 
 @client.event
-async def on_member_join(member):
-    #with open('users.json', 'r') as f:
-    #    users = json.load(f)
-    #await update_user_data(users, member)
-    #with open('users.json', 'w') as f:
-    #    json.dump(users,f)
-    
+async def on_member_join(member):  
     server = member.server
     #print(server)
     #print(dir(server))
@@ -59,12 +54,13 @@ async def on_member_join(member):
     #========\n +rol CNorris#2234\n Cualquier duda no dudes en comunicarte con un admin")
     
     embed2=discord.Embed()
-    #embed=discord.Embed(title="", description=":wave: **Bienvenido "+member.mention+" a Escuadra 2** \n Necesitas los permisos para usar todos los canales? \n Escribí debajo el comando +rol seguido de tu Battletag!", color=0x00ff00)
-    embed=discord.Embed(title="", description=":wave: **Bienvenido"+member.mention+" a ESCUADRA 2**\n • Necesitas permisos para usar los canales? \n • Escribí debajo el comando **+rol** seguido de tu Battletag!", color=0x00ff00)
-    embed2=discord.Embed(title="", description="Ejemplo:", color=0x00ff00)
+    #embed=discord.Embed(title="", description=":wave: **Bienvenido {0.mention} a ESCUADRA 2**\n • Necesitas permisos para usar los canales? \n • Escribí debajo el comando **+rol** seguido de tu Battletag!".format(member), color=0x00ff00)
+    #embed2=discord.Embed(title="", description="Ejemplo:", color=0x00ff00)
+    embed2=discord.Embed(title="", description=":wave: **Bienvenido {} a ESCUADRA 2**\n • Necesitas permisos para usar los canales? \n • Escribí debajo el comando **+rol** seguido de tu Battletag! \n **Ejemplo: **\n".format(member.mention), color=0x00ff00)
     embed2.set_image(url="https://media.giphy.com/media/fipSNCOjqajUYmHFbC/giphy.gif")
-    await client.send_message(canal_bienvenida, embed=embed)
+    #await client.send_message(canal_bienvenida, embed=embed)
     await client.send_message(canal_bienvenida, embed=embed2)
+    await asyncio.sleep(0.01)
 
 
 @client.command(name='Rol',
@@ -78,6 +74,8 @@ async def rol(context):
     if len(context.message.content)>=4 and valid_battle_tag_ending:
         #print("Valid Battletag format!")
         #4 tests
+        with open(my_config_file, 'r') as f:
+            config = json.load(f)
         fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])         #Start Fail_Safe 4tests
         #END tests
         #4 Heroku
@@ -107,79 +105,147 @@ async def rol(context):
             role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
             role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
 
-            if is_user_in_users(context.message.author) and is_clanmate_in_clan(real_battletag):
+            #////////////////////////////////////////////////////////////////////////////////
+            #4 tests
+            with open(my_config_file, 'r') as f:
+                config = json.load(f)
+            MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+            #END tests
+            cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+            db = cursor.get_database("bot_definitivo")
+
+            clanmates = db.clan_members
+            discord_users = db.discord_users
+
+            if is_discord_id_in_db(context.message.author.id, discord_users) and is_clanmate_in_db(real_battletag, clanmates):
                 #User is in users.json AND clanmate in clan.json
-                print(str(context.message.author.name) +" with BT= "+ str(real_battletag) +" in clan and in users !")
+                print(str(context.message.author.name) +" with BT = "+ str(real_battletag) +" in clan and in users !")
                 name = real_battletag.split('#')[0]
                 #Verification if discord api does not work initialy
                 user_has_role_clan = await does_user_have_role(user,custom_clan_role_id)
                 user_has_role_dj = await does_user_have_role(user,custom_dj_role_id)
                 
+                if not user_has_role_clan or not user_has_role_dj:
+                    print(str(name)+" missing role ... adding ... ")
+                    addroles = [role_Clan, role_DJ]
+                    await client.add_roles(user, *addroles)
+                
+                embed = discord.Embed(title="" , description="El Guardian "+str(name)+" ya fue dado de alta y tiene los roles! ", color=0x00ff00)
+                await client.send_message(context.message.channel, embed=embed)
+            #////////////////////////////////////////////////////////////////////////////////
+            ################################# TO BE REPLACED ########################################################
+            #if is_user_in_users(context.message.author) and is_clanmate_in_clan(real_battletag):
+                #User is in users.json AND clanmate in clan.json
+                #print(str(context.message.author.name) +" with BT = "+ str(real_battletag) +" in clan and in users !")
+                #name = real_battletag.split('#')[0]
+                #Verification if discord api does not work initialy
+                #user_has_role_clan = await does_user_have_role(user,custom_clan_role_id)
+                #user_has_role_dj = await does_user_have_role(user,custom_dj_role_id)
+                
                 #print(user_has_role_clan)
                 #print(user_has_role_dj)
                 
-                if not user_has_role_clan or not user_has_role_dj:
+                #if not user_has_role_clan or not user_has_role_dj:
                     #await client.send_message(context.message.channel, "El Guardian "+str(name)+" le falta un rol ... reintentando! ")
-                    print(str(name)+" missing role ... adding ... ")
-                    await asyncio.sleep(1)
-                    await client.add_roles(user, role_DJ)
-                    await asyncio.sleep(1)
-                    await client.add_roles(user, role_Clan)
-                embed = discord.Embed(title="" , description="El Guardian "+str(name)+" ya fue dado de alta y tiene los roles! ", color=0x00ff00)
-                await client.send_message(context.message.channel, embed=embed)
-                #await client.send_message(context.message.channel, "El Guardian "+str(name)+" ya fue dado de alta y tiene los roles! ")
+                    #print(str(name)+" missing role ... adding ... ")
+                    #addroles = [role_Clan, role_DJ]
+                    #await client.add_roles(user, *addroles)
+                
+                #embed = discord.Embed(title="" , description="El Guardian "+str(name)+" ya fue dado de alta y tiene los roles! ", color=0x00ff00)
+                #await client.send_message(context.message.channel, embed=embed)
+            ################################# TO BE REPLACED ########################################################
             else:
                 user_clan_name = fs.get_PlayerClanName(user_destiny_id)
                 #if user_destiny_id and user_clan_name:
                 if user_clan_name:
                     if "Escuadra" in user_clan_name:
-                        await client.add_roles(user, role_Clan)
-                        await client.add_roles(user, role_DJ)
-                        if not is_user_in_users(context.message.author):
-                            #print(real_battletag + " is NOT in users.json!!")
-                            await add_user_data(context.message.author)
+                        addroles = [role_Clan, role_DJ]
+                        await client.add_roles(user, *addroles)
+                        ################################# TO BE REPLACED ########################################################
+                        #if not is_user_in_users(context.message.author):
+                            #print(real_battletag + " is NOT in users.json!!")    
+                        #    await add_user_data(context.message.author)
+                        ################################# TO BE REPLACED ########################################################
+                        #////////////////////////////////////////////////////////////////////////////////
+                        if not is_discord_id_in_db(context.message.author.id, discord_users):
+                            print(real_battletag + " is not in discord_users_DB!!")
+                            my_dict = {}
+                            my_dict = {"discord_id":user.id, "name":user.name, "nick":user.nick, "last_activity":""}
+                            await push_discord_user_db(my_dict, discord_users)
+                        #////////////////////////////////////////////////////////////////////////////////
                         else:
                             print(context.message.author.name + " is in users.json!!")
                             pass
-                        if not is_clanmate_in_clan(real_battletag):
+                        ################################# TO BE REPLACED ########################################################
+                        #if not is_clanmate_in_clan(real_battletag):
                             #print(real_battletag + " is NOT in clan.json!!")
-                            await add_clanmate_to_clan(real_battletag, user_clan_name)
+                        #    await add_clanmate_to_clan(real_battletag, user_clan_name)
+                        ################################# TO BE REPLACED ########################################################
+                        #////////////////////////////////////////////////////////////////////////////////
+                        if not is_clanmate_in_db(real_battletag, clanmates):
+                            print(real_battletag + " is not in clan_DB!!")
+                            name = real_battletag.split('#')[0]
+                            my_dict = {}
+                            my_dict = {"battletag":real_battletag, "clan":user_clan_name, "nick":name}
+                            await push_clanmate_to_db(my_dict, clanmates)
+                        #////////////////////////////////////////////////////////////////////////////////
                         else:
                             print(real_battletag + " is in clan.json!!")
                             pass
-                        embed = discord.Embed(title="" , description=":white_check_mark: **Listo** {0.mention} \n• Ya podes usar todos los canales!".format(real_battletag), color=0x00ff00)
+                        embed = discord.Embed(title="" , description=":white_check_mark: **Listo** "+context.message.author.mention+" \n• Ya podes usar todos los canales!", color=0x00ff00)
                         await client.send_message(context.message.channel, embed=embed)
-                        #await client.send_message(context.message.channel, "Rol {0} y {1} agregado con exito. Bienvenido al clan ! ".format(role_Clan.name, role_DJ.name))
                     else:
-                        embed = discord.Embed(title="" , description=":warning: {0.mention} **Parece que no estas en nuestro clan** \n• Unite cuando gustes!".format(real_battletag), color=0x00ff00)
+                        embed = discord.Embed(title="" , description=":warning: "+context.message.author.mention+" **Parece que no estas en nuestro clan** \n• Unite y volve a intentarlo!", color=0x00ff00)
                         await client.send_message(context.message.channel, embed=embed)
                         #await client.send_message(context.message.channel, real_battletag+" no figuras en el clan! No puedo dar te los roles si no estas en el clan ¯\\_(ツ)_/¯" )        
                 else:
                     print("User clan name = "+str(user_clan_name) + "  and  "+ str(user_battletag))
-                    embed = discord.Embed(title="" , description=":warning: {0.mention} **Parece que no estas en ningún clan** \n• Unite cuando gustes!".format(real_battletag), color=0x00ff00)
+                    embed = discord.Embed(title="" , description=":warning: "+context.message.author.mention+" **Parece que no estas en ningún clan** \n• Unite y volve a intentarlo!", color=0x00ff00)
                     await client.send_message(context.message.channel, embed=embed)
                     #await client.send_message(context.message.channel, "No pude determinar tu clan, comunicate con un admin por favor" )
         else:
             print("User Destiny = "+str(user_destiny) + "  and  "+ str(user_battletag))
-            embed = discord.Embed(title="" , description=":x: **Battletag invalido / Error al conectar con Bungie.net** \n• Comuniquese con un admin por favor", color=0x00ff00)
+            embed = discord.Embed(title="" , description=":x: **Battletag invalido / Error al conectar con Bungie.net** \n• Tenes que introducir tu Battletag de Blizzard \n• Si el error sigue persistiendo comuniquese con un admin por favor", color=0x00ff00)
             await client.send_message(context.message.channel, embed=embed)
             #await client.send_message(context.message.channel, "Battletag Invalido ó Error al conecatr a Bungie, comunique se con un admin por favor" )
     else:
         embed2=discord.Embed()
-        embed = discord.Embed(title="" , description=":warning: **Error!** \n • Intentalo de nuevo", color=0x00ff00)
+        embed2 = discord.Embed(title="" , description=":warning: **Error!** \n • Tenes que introducir tu Battletag de Blizzard \n• Intentalo de nuevo", color=0x00ff00)
         embed2.set_image(url="https://media.giphy.com/media/fipSNCOjqajUYmHFbC/giphy.gif")
-
-        await client.send_message(context.message.channel, embed=embed)
+        #await client.send_message(context.message.channel, embed=embed)
         await client.send_message(context.message.channel, embed=embed2)
         #await client.send_message(context.message.channel, "Error de uso! Ejemplo: +rol CNorris#2234" )
     #delets the message
     #await client.delete_message(context.message)
+    await asyncio.sleep(0.01)
+
+
+async def update_discord_user_last_activity(message_author_id):
+    #print("Upadating last activity!!")
+    #4 tests
+    with open(my_config_file, 'r') as f:
+            config = json.load(f)
+    MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+    #END tests
+    cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+    db = cursor.get_database("bot_definitivo")
+    discord_users = db.discord_users
+    currentTime = datetime.now()
+    update = {
+            "last_activity": currentTime
+    }
+    original_record = get_one_discord_user(message_author_id, discord_users)
+    if original_record:
+        update_discord_user(original_record,update,discord_users)
+    await asyncio.sleep(0.01)
+    
 
 @client.event
 async def on_message(message):
     # we do not want the bot to reply to itself
     if message.author == client.user:
         return
+    await update_discord_user_last_activity(message.author.id)
     #print("Entered on message!")
     msg = message.content
     #Normalizo el mensaje
@@ -193,7 +259,8 @@ async def on_message(message):
     regex_buenas_tardes = re.search('^.*B+U+E+N+A+S+\sT+A+R+D+E+S+.*$', text.upper(), re.MULTILINE)
     regex_buenas_noches = re.search('^.*B+U+E+N+A+S+\sN+O+C+H+E+S+.*$', text.upper(), re.MULTILINE)
     regex_buenas = re.search('^B+U+E+N+A+S+$', text.upper(), re.MULTILINE)
-    regex_jaja = re.search('^.*J+J*A+A*J+J*A+A*$', text.upper(), re.MULTILINE)
+    regex_jaja = re.search('^J+J*A+A*J+J*A+A*$', text.upper(), re.MULTILINE)
+    regex_gracias_bot = re.search('^G+R+A+C+I+A+S\s+B+O+T+$', text.upper(), re.MULTILINE)
     #print("Regex jjajajaja = "+str(regex_jaja))
     #print("Regex hola = "+str(regex_hola))
     #print("Regex Buen dia = "+str(regex_buen_dia))
@@ -244,10 +311,10 @@ async def on_message(message):
     if "DANCE" in text.upper() or "DANCING" in text.upper():
         embed = discord.Embed()
         random_dance=[
-        "https://media.giphy.com/media/143OU9tGwdAEb6/giphy.gif",
-        "https://media.giphy.com/media/YZD7Z4uZlJQe4/giphy.gif",
-        "https://media.giphy.com/media/zWnlBLTbv9QaY/giphy.gif",
-        "https://media.giphy.com/media/3oroUrSVloine9dmmA/giphy.gif"
+        "",
+        "",
+        "",
+        ""
         ]
         url = random.choice(random_dance)
         embed.set_image(url=url)
@@ -260,17 +327,21 @@ async def on_message(message):
     if "PENE" in text.upper() or "CHOTA" in text.upper() or "PIJA" in text.upper():
         embed = discord.Embed(title="" , description=":eggplant:", color=0x00ff00)
         await client.send_message(message.channel, embed=embed)
-
-    #if message.content.startswith('chau'.upper()) or message.content.startswith('adios'):
-    #    await client.send_message(message.channel, "Nos vemos en Disney")
     
     if (regex_chau) or ("ADIOS" in text.upper()):
         respuestas_posibles = ["Nos vemos en Disney ", "Hasta prontito ", "Nos re vimos ", "Cuidate, querete, ojito ... ","Hasta la próxima amig@ ", "Chau "]
         await client.send_message(message.channel, random.choice(respuestas_posibles) + message.author.mention )
-        
+    
+    if regex_gracias_bot:
+        embed = discord.Embed(title="" , description="De nada"+message.author.mention+" ! :vulcan:", color=0x00ff00)
+        await client.send_message(message.channel, embed=embed)
+
+    if regex_jaja:
+        embed = discord.Embed(title="" , description=":joy:", color=0x00ff00)
+        await client.send_message(message.channel, embed=embed)
+    await asyncio.sleep(0.01)
     await client.process_commands(message)
     
-
 
 #@client.command(name='Oraculo',
 #                description="Responde tus dudas existenciales.",
@@ -361,13 +432,21 @@ async def poblacion(context):
         if "Admin" in i.name:
                     admin_id=i.id
     if admin_id in [role.id for role in user.roles]:
+        #///////////////////
+        #4 tests
+        with open(my_config_file, 'r') as f:
+                config = json.load(f)
+        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        #END tests
+        cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+        db = cursor.get_database("bot_definitivo")
+        discord_users = db.discord_users
+        discord_users.remove({})
+        #///////////////////
         await client.send_message(context.message.channel, "Populación Discord:")
-        #for memb in my_server.members:
-        #    print(memb)
-        #    print(memb.bot)
-        #    print(dir(memb))
         await client.send_message(context.message.channel, "Total Usuarios: " + str(my_server.member_count))
         bot_num=0
+        member_list = []
         for memb in my_server.members:
                 #if is_user_in_users(memb):
                 #    print(memb.name + " already in users.json !!")
@@ -376,28 +455,16 @@ async def poblacion(context):
                 #    await add_user_data(memb)
                 if memb.bot:
                     bot_num = bot_num+1
+                else:
+                    my_dict = {}
+                    my_dict = {"discord_id":memb.id, "name":memb.name, "nick":memb.nick, "last_activity":""}
+                    member_list.append(my_dict)
+
         await client.send_message(context.message.channel, "Guardianes = "+str(my_server.member_count-bot_num) + "\n" + "Bots = "+str(bot_num))
-        users = 'users.json'
-        await populate_user_data(users)
+        client.loop.create_task(loop_add_discord_users())
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
-
-async def populate_user_data(users):
-    #my_server = discord.utils.get(client.servers)
-    #for memb in my_server.members:
-    #    if not memb.bot and not memb.id in users:
-    #        my_dict = {}
-    #        my_dict = {"discord_id":memb.id, "name":memb.name, "nick":memb.nick, "last_activity":""}
-    #        push_Discord_User_Record(my_dict)
-    with open('users.json', 'r') as f:
-        users = json.load(f)
-        my_server = discord.utils.get(client.servers)
-        for memb in my_server.members:
-            if not memb.bot and not memb.id in users:
-                #print(memb.name+" is not in users.json ... adding ...")
-                users[memb.id] = [memb.name, memb.nick]
-    with open('users.json', 'w') as f:
-            json.dump(users,f,indent=4)
+    await asyncio.sleep(0.01)
 
 
 @client.command(name='Inactivos',
@@ -413,36 +480,148 @@ async def inactivos(context):
         if "Admin" in i.name:
                     admin_id=i.id
     if admin_id in [role.id for role in user.roles]:
-        await client.send_message(context.message.channel,"Fecha de ultima modificacion: %s" % time.ctime(os.path.getmtime("inactive_list.txt")))
-        await client.send_message(context.message.channel, "Inactivos:")
-        #inactive_list = []
-        with open('inactive_list.txt', 'r') as f:
-            for member in f:
-                #print(member)
-                #inactive_list.append(member)
-                await client.send_message(context.message.channel, member)
-        #await client.send_message(context.message.channel, inactive_list)
+        #4 tests
+        with open(my_config_file, 'r') as f:
+            config = json.load(f)
+        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        #END tests
+        cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+        db = cursor.get_database("bot_definitivo")
+        blacklisters = db.blacklist
+        date_blacklist_generated = await get_blacklist_date(blacklisters)
+        await client.send_message(context.message.channel,"Fecha de ultima modificacion: "+date_blacklist_generated)
+        blacklisters_list = await get_blacklist(blacklisters)
+        for record in blacklisters_list:
+            await client.send_message(context.message.channel,record["battletag"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"])
         await client.send_message(context.message.channel, "Fin.")
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
+    await asyncio.sleep(0.01)
+
+
+@client.command(name='Run blacklist and populate clan',
+                description="Genera la lista negra y actualiza la db del clan",
+                brief="run",
+                aliases=['run'],
+                pass_context=True)
+async def run(context):
+    my_server = discord.utils.get(client.servers)
+    user_id = context.message.author.id
+    user=my_server.get_member(user_id)
+    for i in my_server.roles:
+        if "Admin" in i.name:
+                    admin_id=i.id
+    if admin_id in [role.id for role in user.roles]:
+        #4 tests
+        fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])      #Start Fail_Safe 4tests
+        #END tests
+        #4 Heroku
+        #fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+        #END Heroku
+        fs.create_blacklist()
+    else:
+        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
+    await asyncio.sleep(0.01)
 
 #######################################################################
 #######################################################################
 #######################################################################
 
+
+#//////////////////////////////////////////////////////////////////////
+#////////////////   DB SECTION           //////////////////////////////
+#//////////////////////////////////////////////////////////////////////
+
+
+######
+#Blacklist
+######
+async def get_blacklist(blacklisters):
+    document = blacklisters.find({})
+    await asyncio.sleep(0.01)
+    return document
+
+
+async def get_blacklist_date(blacklisters):
+    document = blacklisters.find_one()
+    await asyncio.sleep(0.01)
+    return str(document["date"])
+
+
+######
+#Clanmates
+######
+
+async def push_clanmate_to_db(record, clanmates):
+    clanmates.insert_one(record)
+    await asyncio.sleep(0.01)
+
+
+def get_one_Clanmate(clanmate_id, clanmates):
+        document = clanmates.find_one({'battletag':clanmate_id})
+        return document
+
+def is_clanmate_in_db(clanmate_id, clanmates):
+        document = clanmates.find_one({'battletag':clanmate_id})
+        if document:
+            #await asyncio.sleep(0.01)
+            return True
+        else:
+            #await asyncio.sleep(0.01)
+            return False
+
+
+######
+#Discord
+######
+async def push_discord_user_db(record, discord_users):
+    discord_users.insert_one(record)
+    await asyncio.sleep(0.01)
+
+
+
+def get_all_discord_users_by_last_activity(discord_users):
+        document = discord_users.find({}).sort('last_activity',pymongo.DESCENDING)
+        #await asyncio.sleep(0.01)
+        return document
+
+
+def get_one_discord_user(discord_id, discord_users):
+        document = discord_users.find_one({'discord_id':discord_id})
+        
+        return document
+
+
+def is_discord_id_in_db(discord_id, discord_users):
+        document = discord_users.find_one({'discord_id':discord_id})
+        if document:
+                return True
+        else:
+                return False
+
+
+def update_discord_user(record, updates, discord_users):
+        discord_users.update_one({'_id': record['_id']},{
+                                '$set': updates
+                                }, upsert=False)
+
+
+#//////////////////////////////////////////////////////////////////////
+#//////////////////////////////////////////////////////////////////////
+#//////////////////////////////////////////////////////////////////////
+
+#OLD WITH FILES
 async def add_user_data(member):
     with open('users.json', 'r') as f:
         users = json.load(f)
         if not member.bot and not member.id in users:
-
             print(member.id+" is not in users.json ... adding ...")
-            #print(dir(member))
             my_server = discord.utils.get(client.servers)
             user=my_server.get_member(member.id)
             users[member.id] = [member.name, user.nick]
-            ######
     with open('users.json', 'w') as f:
             json.dump(users,f,indent=4)
+    await asyncio.sleep(0.01)
 
 
 async def add_clanmate_to_clan(clanmate_battletag, his_clan_name):
@@ -452,11 +631,9 @@ async def add_clanmate_to_clan(clanmate_battletag, his_clan_name):
         if not clanmate_battletag in clan:
             print("From "+ his_clan_name + " " + clanmate_battletag+" battletag is not in clan.json ... adding ...")
             clan[clanmate_battletag] = [his_clan_name, name]
-        #if not str(name[0]) in clan:
-        #    print(str(name[0])+" name is not in clan.json ... ")
-        #    #Do something
     with open('clan.json', 'w') as f:
             json.dump(clan,f,indent=4)
+    await asyncio.sleep(0.01)
 
 
 def is_user_in_users(user):
@@ -485,9 +662,30 @@ async def does_user_have_role(member,rol_id):
         if rol_id == role.id:
             #print(member.name+" tiene rol " + rol_id + "!")
             return True
+    await asyncio.sleep(0.01)
     return False
     #if rol_id in [member.id for role in member.roles]:
     #    print(member+" tiene rol " + rol_id + "!")
+
+async def loop_add_discord_users():
+    await client.wait_until_ready()
+    my_server = discord.utils.get(client.servers)
+    #4 tests
+    with open(my_config_file, 'r') as f:
+            config = json.load(f)
+    MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+    #END tests
+    cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+    db = cursor.get_database("bot_definitivo")
+    discord_users = db.discord_users
+    discord_users.remove({})
+    for memb in my_server.members:
+        if not memb.bot :
+            my_dict = {}
+            my_dict = {"discord_id":memb.id, "name":memb.name, "nick":memb.nick, "last_activity":""}
+            await push_discord_user_db(my_dict, discord_users)
+    await asyncio.sleep(0.5)
+
 
 async def list_servers():
     await client.wait_until_ready()
@@ -498,22 +696,5 @@ async def list_servers():
         await asyncio.sleep(600)
 
 
-#async def populate_clan_data(clan):
-#    our_clans = [(2943900, "Escuadra 2"), (3084439, "Escuadra 3"), (3111393, "Escuadra 4"), (3144839,"Escuadra 5")]
-#    fs = FailSafe(api_key=os.environ["BUNGIE_API_KEY"])
-#    with open('clan.json', 'r') as f:
-#        clan = json.load(f)
-#    for clan in our_clans:
-#        #get_ClanPlayerList takes too long split in to many little asyncs
-#        clan_list = fs.get_ClanPlayerList(clan)
-#        for player in clan_list:
-#            print("-+-+-+-+-+-+-+-+-+-+")
-#            for key in player:
-#                print(player[key][0], player[key][1]["profile"]["data"]["userInfo"]["membershipId"])
-#                #print(memb.name+" is not in clan.json ... adding ...")
-#                #clan[memb.id] = [memb.name, memb.nick]
-#        with open('clan.json', 'w') as f:
-#                json.dump(clan,f)
-
-client.loop.create_task(list_servers())
+#client.loop.create_task(list_servers())
 client.run(BOT_TOKEN)

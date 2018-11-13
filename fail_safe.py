@@ -1,4 +1,3 @@
-#!/usr/local/bin/python3.6
 # -*- coding: utf-8 -*-
 import requests
 import os
@@ -258,11 +257,11 @@ class FailSafe(object):
             return list_of_clan_members
 
 
-    def push_Blacklist_Record(self, record, blacklisters):
+    def push_blacklister_to_db(self, record, blacklisters):
         blacklisters.insert_one(record)
 
 
-    def push_Clanmate_Record(self, record, clanmates):
+    def push_clanmate_to_db(self, record, clanmates):
         clanmates.insert_one(record)
 
 
@@ -290,11 +289,11 @@ class FailSafe(object):
         self.clean_blacklist()
         for blacklister in self.blacklist:
             my_dict={}
-            date=datetime.datetime.today().strftime('%Y-%m-%d')
+            date=datetime.today().strftime('%Y-%m-%d')
             for key in blacklister:
                 #print(blacklister[key][4] + ":" + "(" + blacklister[key][2] + "\t" + str(blacklister[key][0]) + "\t" + str(blacklister[key][5]) +")")
                 my_dict={"battletag":str(blacklister[key][4]), "clan":str(blacklister[key][2]), "alias":str(blacklister[key][0]), "inactive_time":str(blacklister[key][5]),"date":date}
-                self.push_Blacklist_Record(my_dict, blacklisters)
+                self.push_blacklister_to_db(my_dict, blacklisters)
     
 
     def upload_clanmates(self, full_clan_list):
@@ -311,7 +310,7 @@ class FailSafe(object):
             for key in clanmate:
                 if key:
                     clanmate_dict = {"battletag":clanmate[key][4] , "clan": clanmate[key][2], "alias":clanmate[key][0]}
-                    self.push_Clanmate_Record(clanmate_dict,clanmates)
+                    self.push_clanmate_to_db(clanmate_dict,clanmates)
 
 
     def create_blacklist(self):
