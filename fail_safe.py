@@ -10,6 +10,7 @@ import sys
 import json
 from pymongo import MongoClient
 
+
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 my_config_file = os.path.join(THIS_FOLDER, 'config.json')
 my_clan_file = os.path.join(THIS_FOLDER, 'clan.json')
@@ -277,9 +278,14 @@ class FailSafe(object):
 
 
     def upload_blacklist(self):
+        #4 tests
         with open(my_config_file, 'r') as f:
             config = json.load(f)
         MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        #END tests
+        #4 Heroku
+        # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        #END Heroku
         client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = client.get_database("bot_definitivo")
         blacklisters = db.blacklist
@@ -297,9 +303,14 @@ class FailSafe(object):
     
 
     def upload_clanmates(self, full_clan_list):
+        #4 tests
         with open(my_config_file, 'r') as f:
             config = json.load(f)
         MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        #END tests
+        #4 Heroku
+        # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        #END Heroku
         client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = client.get_database("bot_definitivo")
         clanmates = db.clan_members

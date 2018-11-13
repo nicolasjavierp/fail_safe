@@ -105,12 +105,14 @@ async def rol(context):
             role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
             role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
 
-            #////////////////////////////////////////////////////////////////////////////////
             #4 tests
             with open(my_config_file, 'r') as f:
                 config = json.load(f)
             MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
             #END tests
+            #4 Heroku
+            # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+            #END Heroku
             cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
             db = cursor.get_database("bot_definitivo")
 
@@ -132,28 +134,6 @@ async def rol(context):
                 
                 embed = discord.Embed(title="" , description="El Guardian "+str(name)+" ya fue dado de alta y tiene los roles! ", color=0x00ff00)
                 await client.send_message(context.message.channel, embed=embed)
-            #////////////////////////////////////////////////////////////////////////////////
-            ################################# TO BE REPLACED ########################################################
-            #if is_user_in_users(context.message.author) and is_clanmate_in_clan(real_battletag):
-                #User is in users.json AND clanmate in clan.json
-                #print(str(context.message.author.name) +" with BT = "+ str(real_battletag) +" in clan and in users !")
-                #name = real_battletag.split('#')[0]
-                #Verification if discord api does not work initialy
-                #user_has_role_clan = await does_user_have_role(user,custom_clan_role_id)
-                #user_has_role_dj = await does_user_have_role(user,custom_dj_role_id)
-                
-                #print(user_has_role_clan)
-                #print(user_has_role_dj)
-                
-                #if not user_has_role_clan or not user_has_role_dj:
-                    #await client.send_message(context.message.channel, "El Guardian "+str(name)+" le falta un rol ... reintentando! ")
-                    #print(str(name)+" missing role ... adding ... ")
-                    #addroles = [role_Clan, role_DJ]
-                    #await client.add_roles(user, *addroles)
-                
-                #embed = discord.Embed(title="" , description="El Guardian "+str(name)+" ya fue dado de alta y tiene los roles! ", color=0x00ff00)
-                #await client.send_message(context.message.channel, embed=embed)
-            ################################# TO BE REPLACED ########################################################
             else:
                 user_clan_name = fs.get_PlayerClanName(user_destiny_id)
                 #if user_destiny_id and user_clan_name:
@@ -161,34 +141,20 @@ async def rol(context):
                     if "Escuadra" in user_clan_name:
                         addroles = [role_Clan, role_DJ]
                         await client.add_roles(user, *addroles)
-                        ################################# TO BE REPLACED ########################################################
-                        #if not is_user_in_users(context.message.author):
-                            #print(real_battletag + " is NOT in users.json!!")    
-                        #    await add_user_data(context.message.author)
-                        ################################# TO BE REPLACED ########################################################
-                        #////////////////////////////////////////////////////////////////////////////////
                         if not is_discord_id_in_db(context.message.author.id, discord_users):
                             print(real_battletag + " is not in discord_users_DB!!")
                             my_dict = {}
                             my_dict = {"discord_id":user.id, "name":user.name, "nick":user.nick, "last_activity":""}
                             await push_discord_user_db(my_dict, discord_users)
-                        #////////////////////////////////////////////////////////////////////////////////
                         else:
                             print(context.message.author.name + " is in users.json!!")
                             pass
-                        ################################# TO BE REPLACED ########################################################
-                        #if not is_clanmate_in_clan(real_battletag):
-                            #print(real_battletag + " is NOT in clan.json!!")
-                        #    await add_clanmate_to_clan(real_battletag, user_clan_name)
-                        ################################# TO BE REPLACED ########################################################
-                        #////////////////////////////////////////////////////////////////////////////////
                         if not is_clanmate_in_db(real_battletag, clanmates):
                             print(real_battletag + " is not in clan_DB!!")
                             name = real_battletag.split('#')[0]
                             my_dict = {}
                             my_dict = {"battletag":real_battletag, "clan":user_clan_name, "nick":name}
                             await push_clanmate_to_db(my_dict, clanmates)
-                        #////////////////////////////////////////////////////////////////////////////////
                         else:
                             print(real_battletag + " is in clan.json!!")
                             pass
@@ -197,17 +163,14 @@ async def rol(context):
                     else:
                         embed = discord.Embed(title="" , description=":warning: "+context.message.author.mention+" **Parece que no estas en nuestro clan** \n• Unite y volve a intentarlo!", color=0x00ff00)
                         await client.send_message(context.message.channel, embed=embed)
-                        #await client.send_message(context.message.channel, real_battletag+" no figuras en el clan! No puedo dar te los roles si no estas en el clan ¯\\_(ツ)_/¯" )        
                 else:
                     print("User clan name = "+str(user_clan_name) + "  and  "+ str(user_battletag))
                     embed = discord.Embed(title="" , description=":warning: "+context.message.author.mention+" **Parece que no estas en ningún clan** \n• Unite y volve a intentarlo!", color=0x00ff00)
                     await client.send_message(context.message.channel, embed=embed)
-                    #await client.send_message(context.message.channel, "No pude determinar tu clan, comunicate con un admin por favor" )
         else:
             print("User Destiny = "+str(user_destiny) + "  and  "+ str(user_battletag))
             embed = discord.Embed(title="" , description=":x: **Battletag invalido / Error al conectar con Bungie.net** \n• Tenes que introducir tu Battletag de Blizzard \n• Si el error sigue persistiendo comuniquese con un admin por favor", color=0x00ff00)
             await client.send_message(context.message.channel, embed=embed)
-            #await client.send_message(context.message.channel, "Battletag Invalido ó Error al conecatr a Bungie, comunique se con un admin por favor" )
     else:
         embed2=discord.Embed()
         embed2 = discord.Embed(title="" , description=":warning: **Error!** \n • Tenes que introducir tu Battletag de Blizzard \n• Intentalo de nuevo", color=0x00ff00)
@@ -227,6 +190,9 @@ async def update_discord_user_last_activity(message_author_id):
             config = json.load(f)
     MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
     #END tests
+    #4 Heroku
+    # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+    #END Heroku
     cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
     db = cursor.get_database("bot_definitivo")
     discord_users = db.discord_users
@@ -432,17 +398,18 @@ async def poblacion(context):
         if "Admin" in i.name:
                     admin_id=i.id
     if admin_id in [role.id for role in user.roles]:
-        #///////////////////
         #4 tests
         with open(my_config_file, 'r') as f:
                 config = json.load(f)
         MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
         #END tests
+        #4 Heroku
+        # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        #END Heroku
         cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = cursor.get_database("bot_definitivo")
         discord_users = db.discord_users
         discord_users.remove({})
-        #///////////////////
         await client.send_message(context.message.channel, "Populación Discord:")
         await client.send_message(context.message.channel, "Total Usuarios: " + str(my_server.member_count))
         bot_num=0
@@ -485,6 +452,9 @@ async def inactivos(context):
             config = json.load(f)
         MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
         #END tests
+        #4 Heroku
+        # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        #END Heroku
         cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = cursor.get_database("bot_definitivo")
         blacklisters = db.blacklist
@@ -502,9 +472,9 @@ async def inactivos(context):
 @client.command(name='Run blacklist and populate clan',
                 description="Genera la lista negra y actualiza la db del clan",
                 brief="run",
-                aliases=['run'],
+                aliases=['run','run_sync'],
                 pass_context=True)
-async def run(context):
+async def run_sync(context):
     my_server = discord.utils.get(client.servers)
     user_id = context.message.author.id
     user=my_server.get_member(user_id)
@@ -518,7 +488,7 @@ async def run(context):
         #4 Heroku
         #fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
         #END Heroku
-        fs.create_blacklist()
+        await fs.create_blacklist()
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
     await asyncio.sleep(0.01)
@@ -526,8 +496,6 @@ async def run(context):
 #######################################################################
 #######################################################################
 #######################################################################
-
-
 #//////////////////////////////////////////////////////////////////////
 #////////////////   DB SECTION           //////////////////////////////
 #//////////////////////////////////////////////////////////////////////
@@ -675,6 +643,9 @@ async def loop_add_discord_users():
             config = json.load(f)
     MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
     #END tests
+    #4 Heroku
+    # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+    #END Heroku
     cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
     db = cursor.get_database("bot_definitivo")
     discord_users = db.discord_users
