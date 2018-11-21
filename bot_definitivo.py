@@ -464,8 +464,8 @@ async def inactivos(context):
         cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = cursor.get_database("bot_definitivo")
         blacklisters = db.blacklist
-        date_blacklist_generated = await get_blacklist_date(blacklisters)
-        await client.send_message(context.message.channel,"Fecha de ultima modificacion: "+date_blacklist_generated)
+        #date_blacklist_generated = await get_blacklist_date(blacklisters)
+        #await client.send_message(context.message.channel,"Fecha de ultima modificacion: "+date_blacklist_generated)
         blacklisters_list = await get_blacklist(blacklisters)
         for record in blacklisters_list:
             #await client.send_message(context.message.channel,record["battletag"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"])
