@@ -4,6 +4,8 @@ from fail_safe import FailSafe
 import os
 import json
 from time import sleep
+import asyncio
+import aiohttp
 
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 my_config_file = os.path.join(THIS_FOLDER, 'config.json')
@@ -15,11 +17,9 @@ bungie_api_key = config['DEFAULT']['BUNGIE_API_KEY'] # 'secret-bungie-key-of-fai
 
 #fs = FailSafe(api_key=os.environ["BUNGIE_API_KEY"]) # Never put your keys in code... export 'em!
 fs = FailSafe(api_key=bungie_api_key)
-
-
 print("Running Blacklist...")
 fs.create_blacklist()
 #fs.clean_blacklist()
 #fs.print_blacklist_file()
-print(fs.print_blacklist_basic())
+#print(fs.print_blacklist_basic())
 print("Finnished Blacklist!")

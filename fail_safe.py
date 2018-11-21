@@ -9,6 +9,8 @@ import smtplib
 import sys
 import json
 from pymongo import MongoClient
+import asyncio
+import aiohttp
 
 
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
@@ -35,6 +37,7 @@ class FailSafe(object):
         self.error_members = set()
         self.retrys = []
 
+
     def get_playerByTagName(self, gamertag):
         '''gamertag (str): The PC gamertag a player uses on Destiny 2'''
         site_call = "https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/" + gamertag
@@ -44,6 +47,7 @@ class FailSafe(object):
             return request.json()['Response']
         else:
             return None
+
 
     def get_battleTag_from_bungieNetUser(self, bungie_id):
         '''Returns the players battletag from bungieNetUser'''
@@ -57,7 +61,8 @@ class FailSafe(object):
             return request.json()['Response']
         else:
             return None
-
+    
+    
     def get_DestinyUserId(self, gamertag):
         '''gamertag (str): The PC gamertag a player uses on Destiny 2'''
         info = self.get_playerByTagName(gamertag)
@@ -65,6 +70,7 @@ class FailSafe(object):
             return int(info[0]['membershipId'])
         else:
             return None
+
 
     def get_BungieUserId(self, membership_id):
         '''
@@ -76,6 +82,8 @@ class FailSafe(object):
                                 headers={"X-API-Key":self.api_key})
         return int(request.json()['Response']['bungieNetUser']['membershipId'])
 
+
+    
     def get_DestinyUserProfile(self, membership_id, components=[100]):
         '''
         membership_id (int): the Destiny membership_id of a player (returned by get_DestinyUserId)
@@ -112,23 +120,28 @@ class FailSafe(object):
                                 headers={"X-API-Key":self.api_key})
         return request.json()['Response']
 
+
     def get_Manifest(self):
         site_call = "https://bungie.net/Platform/Destiny2/Manifest/"
         request = requests.get(site_call,
                                 headers={"X-API-Key":self.api_key})
         return request.json()['Response']
 
+
+  
     def get_PlayerStats(self, membership_id):
         site_call = "https://bungie.net/Platform/Destiny2/2/Account/" + str(membership_id) + "/Stats/"
         request = requests.get(site_call,
                                 headers={"X-API-Key":self.api_key})
         return request.json()['Response']
 
+
     def get_StatDefinitions(self):
         site_call = "https://bungie.net/Platform/Destiny2/Stats/Definition/"
         request = requests.get(site_call,
                                 headers={"X-API-Key":self.api_key})
         return request.json()['Response']
+
 
     def get_PlayerClanName(self, membership_id):
             '''Returns the players clan name'''
@@ -143,6 +156,7 @@ class FailSafe(object):
             else:
                 return None
 
+   
     def get_PlayerLastLogin(self, membership_id):
             '''Last time player logged in to Destiny 2'''
             info = self.get_DestinyUserProfile(membership_id)
@@ -151,10 +165,12 @@ class FailSafe(object):
             else:
                 return None
 
+    
     def format_PlayerBattleTag(self, battle_tag):
             '''Bungie's api does not undertand the symbol # so you have to encode it like %23
             So Javu#2632 is Javu%232632'''
             return battle_tag.replace('#', '%23')
+
 
     def is_blacklisted(self, player):
             break_point_seconds=1296000
@@ -174,7 +190,8 @@ class FailSafe(object):
             else:
                 #print "NOT Blacklisted"
                 return False
-            
+    
+
     def get_ClanPlayerList(self, clan):
             '''Generates list of dicts of all players with membersip id, profile and clan name currently in Clan corresponding with clan id'''
             list_of_clan_members = []
@@ -184,10 +201,8 @@ class FailSafe(object):
             clan_request_list = request.json()['Response']['results']
             del self.retrys[:] #Empty list
             for val in clan_request_list:
-                time.sleep(1)
                 profile = self.get_DestinyUserProfile(val["destinyUserInfo"]["membershipId"])
                 if profile:
-
                     name = profile["profile"]["data"]["userInfo"]["displayName"]
                     membership_id = profile["profile"]["data"]["userInfo"]["membershipId"]
 
@@ -216,23 +231,17 @@ class FailSafe(object):
                         #print("----------------------------")
                         #print("\n")
                     
-                    #print(membership_id ,name, profile, clan[1], bungie_id, battletag)
                     player_dict = { membership_id: [name, profile, clan[1], bungie_id, battletag] }
                     list_of_clan_members.append(player_dict)
-            time.sleep(1)
             while self.retrys:
                 #print "RETIES NOT EMPTY !!"
-                #print len(self.retrys)
                 for val in self.retrys:
-                    #time.sleep(4)
                     profile = self.get_DestinyUserProfile(val)
                     if profile:
-                        #print "Retrying:"+profile[key]["data"]["userInfo"]["displayName"]+" "+clan[1]+" !!!"
                         name = profile["profile"]["data"]["userInfo"]["displayName"]
                         membership_id = profile["profile"]["data"]["userInfo"]["membershipId"]
                         if "bungieNetUserInfo" in val:
                             bungie_id = val["bungieNetUserInfo"]["membershipId"]
-                            #print(bungie_id)
                             bungie_profile = self.get_battleTag_from_bungieNetUser(bungie_id)
                             if bungie_profile:
                                 battletag = bungie_profile["bungieNetUser"]["blizzardDisplayName"]
@@ -255,7 +264,20 @@ class FailSafe(object):
                         list_of_clan_members.append(player_dict)
                         resolved.append(profile["profile"]["data"]["userInfo"]["displayName"])
                         self.retrys.remove(membership_id)
+            #await asyncio.sleep(0.01)
             return list_of_clan_members
+
+
+    async def get_clan_capacity(self):
+            '''Generates Capacity of clans'''
+            capacity = []
+            for clan in self.our_clans:
+                await asyncio.sleep(0.05)
+                site_call = "https://www.bungie.net/Platform/GroupV2/" + str(clan[0]) + "/Members/?currentPage=1"
+                request = requests.get(site_call, headers={"X-API-Key":self.api_key})
+                my_dict={clan[1]:request.json()['Response']['totalResults']}
+                capacity.append(my_dict)
+            return capacity
 
 
     def push_blacklister_to_db(self, record, blacklisters):
@@ -276,7 +298,8 @@ class FailSafe(object):
                         if player[key][0] == white:
                             self.blacklist.remove(player)
 
-
+    
+    
     def upload_blacklist(self):
         #4 tests
         with open(my_config_file, 'r') as f:
@@ -298,7 +321,8 @@ class FailSafe(object):
             date=datetime.today().strftime('%Y-%m-%d')
             for key in blacklister:
                 #print(blacklister[key][4] + ":" + "(" + blacklister[key][2] + "\t" + str(blacklister[key][0]) + "\t" + str(blacklister[key][5]) +")")
-                my_dict={"battletag":str(blacklister[key][4]), "clan":str(blacklister[key][2]), "alias":str(blacklister[key][0]), "inactive_time":str(blacklister[key][5]),"date":date}
+                #my_dict={"battletag":str(blacklister[key][4]), "clan":str(blacklister[key][2]), "alias":str(blacklister[key][0]), "inactive_time":str(blacklister[key][5]),"date":date}
+                my_dict={"displayName":str(blacklister[key][0]), "clan":str(blacklister[key][2]) , "inactive_time":str(blacklister[key][5]),"date":date}
                 self.push_blacklister_to_db(my_dict, blacklisters)
     
 
@@ -320,26 +344,28 @@ class FailSafe(object):
             clanmate_dict = {}
             for key in clanmate:
                 if key:
-                    clanmate_dict = {"battletag":clanmate[key][4] , "clan": clanmate[key][2], "alias":clanmate[key][0]}
+                    clanmate_dict = {"battletag":clanmate[key][4] , "clan": clanmate[key][2], "displayName":clanmate[key][0]}
                     self.push_clanmate_to_db(clanmate_dict,clanmates)
 
-
+    
+    
     def create_blacklist(self):
             '''Generates a list of  blacklisted players'''
             full_clan_list=[]
             for clan in self.our_clans:
+                print("Starting SYNC with "+clan[1])
                 clan_list = self.get_ClanPlayerList(clan)
-                #print(clan_list)
-                #self.print_clan_2_file(clan_list)
                 full_clan_list = full_clan_list + clan_list
+                print("Searching for blacklisters in "+clan[1]+" ... ")
                 for player in clan_list:
-                    #key = player.items()[0][0]
                     if self.is_blacklisted(player):
                         self.blacklist.append(player)
+                
+                print("Uploading blacklisters for "+clan[1])
                 self.upload_blacklist()
+            print("Uploading Full Clan List")
             self.upload_clanmates(full_clan_list)
-            #self.print_clan_2_file(full_clan_list)
-            #return full_clan_list
+            print("Finished SYNC!!")
 
 
     def print_blacklist_basic(self):
@@ -389,54 +415,230 @@ class FailSafe(object):
             with open(my_clan_file, 'w') as f:
                     json.dump(aux_dict, f, indent=4)
 
+    ############################################## ASYNC PART ###############################################################
+    #########################################################################################################################
 
-    def clean_clan_file(self):
-            '''Cleans the list of Clanmates woth null as key'''
-            with open(my_clan_file, 'r') as f:
-                clanmates = json.load(f)
-                print(clanmates)
-                for player in clanmates:
-                    #print(type(player))
-                    #print(player)
-                    if (player)=="null":
-                            print(player)
-            #with open(my_clan_file, 'w') as f:
-            #        json.dump(clanmates,f)
+    async def async_get_ClanPlayerList(self, clan):
+        '''Generates list of dicts of all players with membersip id, profile and clan name currently in Clan corresponding with clan id'''
+        temp_list = []
+        site_call = "https://www.bungie.net/Platform/GroupV2/" + str(clan[0]) + "/Members/?currentPage=1"
+        #request = requests.get(site_call, headers={"X-API-Key":self.api_key})
+        headers={"X-API-Key":self.api_key}
+        async with aiohttp.get(site_call,headers=headers) as request:
+            if request.status == 200:
+                json = await request.json()
+                #print(type(json))
+                #print(json.keys)
+                for item in json['Response']['results']:
+                    #print(item)
+                    #print(str(item['destinyUserInfo']['membershipId']))
+                    #print(item["destinyUserInfo"]["membershipId"], item["destinyUserInfo"]["displayName"])
+                    if 'bungieNetUserInfo' in item:
+                    #if item["bungieNetUserInfo"]["membershipId"]:
+                        clanmate_dict = {'membershipId':item['destinyUserInfo']['membershipId'], 'displayName':item['destinyUserInfo']['displayName'], "bungie_id":item["bungieNetUserInfo"]["membershipId"], "battletag":""}
+                    else:
+                        clanmate_dict = {'membershipId':item['destinyUserInfo']['membershipId'], 'displayName':item['destinyUserInfo']['displayName'], "bungie_id":None, "battletag":item['destinyUserInfo']['displayName']}
+                    #clanmate_dict = {'membershipId':item['destinyUserInfo']['membershipId'], 'displayName':item['destinyUserInfo']['displayName'], "bungie_id":item["bungieNetUserInfo"]["membershipId"]}
+                    temp_list.append(clanmate_dict)
 
-            
+            return temp_list
 
-    def send_mail(self):
-            '''Removes blacklisted players based on a whitelist file'''
-            with open(my_config_file, 'r') as f:
-                config = json.load(f)
 
-            gmail_user = config['DEFAULT']['NPANTAZIS_GMAIL'] # 
-            gmail_password = config['DEFAULT']['NPANTAZIS_GMAIL_PASS'] # 
+    async def async_get_Clanmate_LastPlayed(self, clanmember_membership_id):
+        site_call = "https://bungie.net/Platform/Destiny2/4/Profile/" +clanmember_membership_id+ "/" + "?components=100,200"
+        headers={"X-API-Key":self.api_key}
+        #jar = aiohttp.CookieJar(unsafe=True)
+        #async with aiohttp.ClientSession(cookie_jar=jar) as s:
+        async with aiohttp.get(site_call,headers=headers) as request:
+            if request.status == 200:
+                try:
+                    json = await request.json()
+                    if json['Response']['profile']['data']['dateLastPlayed']:
+                            return json['Response']['profile']['data']['dateLastPlayed']
+                    else:
+                        print("RETRY: Response 200 but no data")
+                        return None
+                except Exception as ex:
+                    print("Console Player:"+clanmember_membership_id)
+                    return None
+                
+                
+    async def async_add_Clanmembers_LastPlayed(self, clan_list):
+        for clanmember in clan_list:
+            await asyncio.sleep(1)
+            last_played = await self.async_get_Clanmate_LastPlayed(clanmember["membershipId"])
+            if last_played:
+                clanmember["platform"] = "PC"
+                clanmember["last_played"] = last_played
+            else:
+                clanmember["platform"] = "Console"
+                clanmember["last_played"] = None
+        return clan_list
 
-            sent_from = gmail_user  
-            #to = ['fabricio_sth@hotmail.com', 'npantazis@gigared.com.ar']  
-            to = ['npantazis@gigared.com.ar']  
-            subject = "Listado de inactivos automatizado, made in Javu"
-            body = self.print_blacklist_basic()
 
-            email_text = """  
-            From: %s  
-            To: %s 
-            %s
-            """ % (sent_from, ", ".join(to), body)
+    async def async_get_Clanmate_ClanName(self, clanmember_membership_id):
+        '''Gets the players clan name'''
+        site_call = "https://www.bungie.net/Platform/GroupV2/User/4/{}/0/1/".format(str(clanmember_membership_id))
+        headers={"X-API-Key":self.api_key}
+        async with aiohttp.get(site_call,headers=headers) as request:
+            if request.status == 200:
+                json = await request.json()
+                if json['Response']['results']:
+                    return json['Response']['results'][0]['group']['name']
+                else:
+                    return None
+            else:
+                return None
 
-            message = 'Subject: {}\n\n{}'.format(subject, email_text)
 
-            try:  
-                server = smtplib.SMTP('smtp.gmail.com', 587)
-                server.ehlo()
-                server.starttls()
-                server.login(gmail_user, gmail_password)
-                server.sendmail(sent_from, to, message)
-                server.close()
+    async def async_add_Clanmembers_ClanName(self, clan_list):
+        '''Adds the players clan name'''
+        for clanmember in clan_list:
+            await asyncio.sleep(1)
+            if clanmember['platform'] is "PC":
+                clan_name = await self.async_get_Clanmate_ClanName(clanmember["membershipId"])
+                clanmember["clan"] = clan_name
+            else:
+                clanmember["clan"] = None
+        return clan_list
 
-                print ('Email sent!')
-                return True
-            except:  
-                print ('Something went wrong...')
-                return False
+
+    async def async_add_Clanmembers_Battletag(self, clan_list):
+        '''Adds the players clan name'''
+        for clanmember in clan_list:
+            await asyncio.sleep(1)
+            if (clanmember['platform'] is "PC") and clanmember['bungie_id']:
+                battletag = await self.async_get_Clanmate_Battletag(clanmember["bungie_id"])
+                if battletag:
+                    clanmember["battletag"] = battletag
+                else:
+                    clanmember["battletag"] = clanmember["displayName"]
+            else:
+                clanmember["battletag"] = clanmember["displayName"]
+        return clan_list
+
+
+    async def async_get_Clanmate_Battletag(self, bungie_id):
+        '''Adds the players battletag'''
+        site_call = "http://www.bungie.net/platform/User/GetBungieAccount/" + bungie_id + "/254"
+        headers={"X-API-Key":self.api_key}
+        async with aiohttp.get(site_call,headers=headers) as request:
+            if request.status == 200:
+                json = await request.json()
+                #print(json)
+                if 'bungieNetUser' in json['Response']:
+                #if json['Response']["bungieNetUser"]["blizzardDisplayName"]:
+                    #print(str(json['Response']["bungieNetUser"]["blizzardDisplayName"]))
+                    return json['Response']["bungieNetUser"]["blizzardDisplayName"]
+                else:
+                    return None
+
+
+    async def async_is_blacklisted(self, player):
+        '''Checks if player is a blacklister'''
+        #print(player)
+        if player['last_played']:
+            break_point_seconds=1296000
+            last = player['last_played']
+            last_played = datetime.strptime(last, "%Y-%m-%dT%H:%M:%SZ")
+            now = datetime.utcnow().replace(microsecond=0)
+            diff = now - last_played
+            human_diff = humanize.naturaltime(diff)
+            delta_seconds = diff.total_seconds()
+            if (delta_seconds > break_point_seconds):
+                #print("Blacklisted")
+                player["inactive_time"] = human_diff
+                return player
+            else:
+                #print "NOT Blacklisted"
+                return None
+        else:
+            return None
+
+
+    async def async_filter_blacklist(self, player_list):
+        '''Filters special players from blacklist'''
+        #4 tests
+        with open(my_config_file, 'r') as f:
+            config = json.load(f)
+        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        #END tests
+        #4 Heroku
+        # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        #END Heroku
+        client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+        db = client.get_database("bot_definitivo")
+        whitelist = db.whitelist
+        definitive_blacklist = []
+        for player in player_list:
+            if not(await self.get_one_Clanmate_Whitelist(player['displayName'], whitelist)):
+                #print("Player"+str(player['displayName'])+" NOT in Whitelist adding to definitive list")
+                definitive_blacklist.append(player)
+            else:
+                print("Player"+str(player['displayName'])+" in Whitelist !! Special player detected.")
+        #print(str(definitive_blacklist))
+        return definitive_blacklist
+
+        
+    async def get_one_Clanmate_Whitelist(self, clanmate_displayName, whitelist):
+        '''Returns whitelister'''
+        document = whitelist.find_one({'displayName':clanmate_displayName})
+        return document
+
+
+    async def async_push_blacklist(self, definitive_blacklist):
+        '''Pushes blacklist to db'''
+        #4 tests
+        with open(my_config_file, 'r') as f:
+            config = json.load(f)
+        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        #END tests
+        #4 Heroku
+        # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        #END Heroku
+        client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+        db = client.get_database("bot_definitivo")
+        blacklist = db.blacklist
+        
+        blacklist.insert_many(definitive_blacklist, ordered=False)
+        #for member in definitive_blacklist:
+        #    print("Pusshing "+str(member))
+        #    self.push_blacklister_to_db(member,blacklist)
+
+
+    async def async_push_clanmates_to_db(self, clan_list):
+        '''Pushes clanmates to db'''
+        #4 tests
+        with open(my_config_file, 'r') as f:
+            config = json.load(f)
+        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        #END tests
+        #4 Heroku
+        # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        #END Heroku
+        client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+        db = client.get_database("bot_definitivo")
+        clanmates = db.clan_members
+
+        clanmates.insert_many(clan_list, ordered=False)
+
+    async def async_clear_clanmates_blacklister_db(self):
+        '''Pushes clanmates to db'''
+        print("Clearing Blacklist and Clanmates ...")
+        #4 tests
+        with open(my_config_file, 'r') as f:
+            config = json.load(f)
+        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        #END tests
+        #4 Heroku
+        # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        #END Heroku
+        client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+        db = client.get_database("bot_definitivo")
+        clanmates = db.clan_members
+        blacklist = db.blacklist
+        #removes all documents from clanmates
+        clanmates.remove({})
+        #removes all documents from blacklisters
+        blacklist.remove({})
+        print("Cleared Blacklist and Clanmates!")

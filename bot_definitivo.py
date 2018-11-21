@@ -34,6 +34,9 @@ BOT_TOKEN = config['DEFAULT']['BOT_TOKEN']# Get at discordapp.com/developers/app
 BOT_PREFIX = ("+") #("+", "!")
 client = Bot(command_prefix=BOT_PREFIX)
 
+number_of_greets = 0
+greet = False
+
 @client.event
 async def on_member_join(member):  
     server = member.server
@@ -47,7 +50,8 @@ async def on_member_join(member):
             canal_bienvenida = i
             
     #fmt = 'Bienvenido {0.mention} a {1.name}!'
-
+    fmt = ':wave: **Bienvenido {0.mention} a ESCUADRA 2!**'
+    await client.send_message(canal_bienvenida, fmt.format(member))
     #await client.send_message(canal_bienvenida, fmt.format(member, server))
     #await client.send_message(canal_bienvenida,"Para obtener roles usar el commando: +rol tu_blizard_battletag.\n\
     #Ejemplo:\n\
@@ -56,7 +60,8 @@ async def on_member_join(member):
     embed2=discord.Embed()
     #embed=discord.Embed(title="", description=":wave: **Bienvenido {0.mention} a ESCUADRA 2**\n • Necesitas permisos para usar los canales? \n • Escribí debajo el comando **+rol** seguido de tu Battletag!".format(member), color=0x00ff00)
     #embed2=discord.Embed(title="", description="Ejemplo:", color=0x00ff00)
-    embed2=discord.Embed(title="", description=":wave: **Bienvenido {} a ESCUADRA 2**\n • Necesitas permisos para usar los canales? \n • Escribí debajo el comando **+rol** seguido de tu Battletag! \n **Ejemplo: **\n".format(member.mention), color=0x00ff00)
+    #embed2=discord.Embed(title="", description=":wave: **Bienvenido {} a ESCUADRA 2**\n • Necesitas permisos para usar los canales? \n • Escribí debajo el comando **+rol** seguido de tu Battletag! \n **Ejemplo: **\n".format(member.mention), color=0x00ff00)
+    embed2=discord.Embed(title="", description="• Necesitas permisos para usar los canales? \n • Escribí debajo el comando **+rol** seguido de tu Battletag! \n **Ejemplo: **\n", color=0x00ff00)
     embed2.set_image(url="https://media.giphy.com/media/fipSNCOjqajUYmHFbC/giphy.gif")
     #await client.send_message(canal_bienvenida, embed=embed)
     await client.send_message(canal_bienvenida, embed=embed2)
@@ -218,14 +223,14 @@ async def on_message(message):
     text = unicodedata.normalize('NFKD', msg).encode('ASCII', 'ignore').decode()
     #print(text)
     regex_hola = re.search('^.*H+O+L+A+\s*.*$', text.upper(), re.MULTILINE) 
-    regex_caca = re.search('^C+A+C+A+$', text.upper(), re.MULTILINE)
+    #regex_caca = re.search('^C+A+C+A+$', text.upper(), re.MULTILINE)
     regex_chau = re.search('^.*C+H+A+U+$', text.upper(), re.MULTILINE)
     regex_buen_dia = re.search('^.*B+U+E+N+\s+D+I+A+.*$', text.upper(), re.MULTILINE)
     regex_buenos_dias = re.search('^.*B+U+E+N+O+S+\sD+I+A+S.*$', text.upper(), re.MULTILINE)
     regex_buenas_tardes = re.search('^.*B+U+E+N+A+S+\sT+A+R+D+E+S+.*$', text.upper(), re.MULTILINE)
     regex_buenas_noches = re.search('^.*B+U+E+N+A+S+\sN+O+C+H+E+S+.*$', text.upper(), re.MULTILINE)
     regex_buenas = re.search('^B+U+E+N+A+S+$', text.upper(), re.MULTILINE)
-    regex_jaja = re.search('^J+J*A+A*J+J*A+A*$', text.upper(), re.MULTILINE)
+    #regex_jaja = re.search('^J+J*A+A*J+J*A+A*$', text.upper(), re.MULTILINE)
     regex_gracias_bot = re.search('^G+R+A+C+I+A+S\s+B+O+T+$', text.upper(), re.MULTILINE)
     #print("Regex jjajajaja = "+str(regex_jaja))
     #print("Regex hola = "+str(regex_hola))
@@ -234,6 +239,8 @@ async def on_message(message):
     #print("Regex hola = "+str(regex_hola))
     #print("----")
     if (regex_hola or regex_buenas):
+        #number_of_greets = number_of_greets + 1
+        #if number_of_greets>=3:   
         currentTime = datetime.now()
         salute_time = ""
         if currentTime.hour < 12:
@@ -263,16 +270,16 @@ async def on_message(message):
             embed = discord.Embed(title="" , description="Buenas noches para vos"+message.author.mention+" :full_moon_with_face: :coffee: ", color=0x00ff00)
             await client.send_message(message.channel, embed=embed)
 
-    if (regex_caca) or ("mierda".upper() in text.upper()):
+    #if (regex_caca) or ("mierda".upper() in text.upper()):
         #embed = discord.Embed(title="", description=":poop:", color=0x00ff00)
-        embed = discord.Embed()
+    #    embed = discord.Embed()
         #response = json.loads(urlopen("http://api.giphy.com/v1/gifs/search?q=poop&api_key=NONE&limit=25").read())
         #embed_list = [d['images']['fixed_width']['url'] for d in response['data']]
         #url = random.choice(embed_list)
         #print(url)
-        url="https://media.giphy.com/media/tdnUaMuARmi0o/giphy.gif"
-        embed.set_image(url=url)
-        await client.send_message(message.channel, embed=embed)
+    #    url="https://media.giphy.com/media/tdnUaMuARmi0o/giphy.gif"
+    #    embed.set_image(url=url)
+    #    await client.send_message(message.channel, embed=embed)
 
     if "DANCE" in text.upper() or "DANCING" in text.upper():
         embed = discord.Embed()
@@ -290,9 +297,9 @@ async def on_message(message):
         embed = discord.Embed(title="" , description="Puto el que lee ... :punch:", color=0x00ff00)
         await client.send_message(message.channel, embed=embed)
 
-    if "PENE" in text.upper() or "CHOTA" in text.upper() or "PIJA" in text.upper():
-        embed = discord.Embed(title="" , description=":eggplant:", color=0x00ff00)
-        await client.send_message(message.channel, embed=embed)
+    #if "PENE" in text.upper() or "CHOTA" in text.upper() or "PIJA" in text.upper():
+    #    embed = discord.Embed(title="" , description=":eggplant:", color=0x00ff00)
+    #    await client.send_message(message.channel, embed=embed)
     
     if (regex_chau) or ("ADIOS" in text.upper()):
         respuestas_posibles = ["Nos vemos en Disney ", "Hasta prontito ", "Nos re vimos ", "Cuidate, querete, ojito ... ","Hasta la próxima amig@ ", "Chau "]
@@ -302,9 +309,9 @@ async def on_message(message):
         embed = discord.Embed(title="" , description="De nada"+message.author.mention+" ! :vulcan:", color=0x00ff00)
         await client.send_message(message.channel, embed=embed)
 
-    if regex_jaja:
-        embed = discord.Embed(title="" , description=":joy:", color=0x00ff00)
-        await client.send_message(message.channel, embed=embed)
+    #if regex_jaja:
+    #    embed = discord.Embed(title="" , description=":joy:", color=0x00ff00)
+    #    await client.send_message(message.channel, embed=embed)
     await asyncio.sleep(0.01)
     await client.process_commands(message)
     
@@ -349,23 +356,23 @@ async def on_ready():
     print('------')
 
 
-@client.command(name='Saludar',
-                description="Saludo al guardian",
-                brief="saludo",
-                aliases=['hola', 'hello'],
-                pass_context=True)
-async def saludar(context):
-    currentTime = datetime.now()
-    salute_time = ""
-    if currentTime.hour < 12:
-        salute_time = " ,buen día!"
-    elif 12 <= currentTime.hour < 18:
-        salute_time = " ,buenas tardes!"
-    else:
-        salute_time = " ,buenas noches!"
-    msg = 'Hola {0.author.mention}'.format(context.message)
-    msg = msg + salute_time
-    await client.send_message(context.message.channel, msg)
+#@client.command(name='Saludar',
+#                description="Saludo al guardian",
+#                brief="saludo",
+#                aliases=['hola', 'hello'],
+#                pass_context=True)
+#async def saludar(context):
+#    currentTime = datetime.now()
+#    salute_time = ""
+#    if currentTime.hour < 12:
+#        salute_time = " ,buen día!"
+#    elif 12 <= currentTime.hour < 18:
+#        salute_time = " ,buenas tardes!"
+#    else:
+#        salute_time = " ,buenas noches!"
+#    msg = 'Hola {0.author.mention}'.format(context.message)
+#    msg = msg + salute_time
+#    await client.send_message(context.message.channel, msg)
 
 @client.command(name='Ayuda',
                 description="Ayuda del bot definitivo",
@@ -375,8 +382,7 @@ async def saludar(context):
 async def ayuda(context):
     msg = 'Hola {0.author.mention} estos son mis comandos : \n \
     +ayuda: Imprime este mensage \n \
-    +rol: auto-otorga roles a la gente que esta en el clan Escusara 2,3,4,5 , ejemplo: +rol CNorris#2234 \n\
-    +hola: saluda'.format(context.message)
+    +rol: auto-otorga roles a la gente que esta en el clan Escusara 2,3,4,5 , ejemplo: +rol CNorris#2234'.format(context.message)
     
     #+oraculo: Pregunta con respuesta si o no al oraculo de la Ciudad Onirica, ejemplo: +oraculo Es Escuadra 2 la mejor? \n \
     await client.send_message(context.message.channel, msg )
@@ -428,7 +434,8 @@ async def poblacion(context):
                     member_list.append(my_dict)
 
         await client.send_message(context.message.channel, "Guardianes = "+str(my_server.member_count-bot_num) + "\n" + "Bots = "+str(bot_num))
-        client.loop.create_task(loop_add_discord_users())
+        task = client.loop.create_task(loop_add_discord_users())
+        #task.cancel()
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
     await asyncio.sleep(0.01)
@@ -462,19 +469,80 @@ async def inactivos(context):
         await client.send_message(context.message.channel,"Fecha de ultima modificacion: "+date_blacklist_generated)
         blacklisters_list = await get_blacklist(blacklisters)
         for record in blacklisters_list:
-            await client.send_message(context.message.channel,record["battletag"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"])
+            #await client.send_message(context.message.channel,record["battletag"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"])
+            await client.send_message(context.message.channel,record["displayName"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"])
         await client.send_message(context.message.channel, "Fin.")
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
-    await asyncio.sleep(0.01)
+    await asyncio.sleep(0.05)
 
 
 @client.command(name='Run blacklist and populate clan',
                 description="Genera la lista negra y actualiza la db del clan",
                 brief="run",
-                aliases=['run','run_sync'],
+                aliases=['run_sync'],
                 pass_context=True)
 async def run_sync(context):
+    my_server = discord.utils.get(client.servers)
+    user_id = context.message.author.id
+    user=my_server.get_member(user_id)
+    for i in my_server.roles:
+        if "Admin" in i.name:
+                    admin_id=i.id
+    if admin_id in [role.id for role in user.roles]:
+        #4 tests
+        fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])      #Start Fail_Safe 4tests
+        #END tests
+
+        #4 Heroku
+        #fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+        #END Heroku
+        t_start = time.perf_counter()
+        await client.send_message(context.message.channel, "**Aguantame la mecha :bomb: ... que estoy creando el listado de inactivos y pisando el listado de clan. **")
+        await fs.async_clear_clanmates_blacklister_db()
+        for clan in fs.our_clans:
+            blacklist_EX = []
+            #clan_list = await fs.async_get_ClanPlayerList(fs.our_clans[0])
+            clan_list = await fs.async_get_ClanPlayerList(clan)
+            #print(clan_list)
+            await asyncio.sleep(0.5)
+            new_clan_list = await fs.async_add_Clanmembers_LastPlayed(clan_list)
+            await asyncio.sleep(0.5)
+            new_clan_list = await fs.async_add_Clanmembers_Battletag(new_clan_list)
+            await asyncio.sleep(0.5)
+            new_clan_list = await fs.async_add_Clanmembers_ClanName(new_clan_list)
+            await asyncio.sleep(0.5)
+            for clanmate in new_clan_list:
+                blacklisted = await fs.async_is_blacklisted(clanmate)
+                if blacklisted:
+                    blacklist_EX.append(blacklisted)
+            await asyncio.sleep(0.5)
+            definitive_blacklist = await fs.async_filter_blacklist(blacklist_EX)
+            await asyncio.sleep(0.5)
+            await fs.async_push_blacklist(definitive_blacklist)
+            await asyncio.sleep(0.5)
+            #print("Pusshing clan_list %s!" % str(clan))
+            for i in new_clan_list:
+                del i['last_played']
+            await fs.async_push_clanmates_to_db(new_clan_list)
+            await asyncio.sleep(0.5)
+            await client.send_message(context.message.channel, "**Termine con %s**" % clan[1])
+            #print(str(new_clan_list))
+            
+        t_stop = time.perf_counter()
+        #print("Elapsed time: %.1f [min]" % ((t_stop-t_start)/60))
+        await client.send_message(context.message.channel, "**Finalizada la generacion de Inactivos y listado de clan, tardé ... %.1f [min]!**"% ((t_stop-t_start)/60))
+    else:
+        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
+    #await asyncio.sleep(0.01)
+
+
+@client.command(name='Get Clans Capacity',
+                description="Genera el listado de capacidad del clan",
+                brief="capacidad",
+                aliases=['clan_capacity','clan_cap'],
+                pass_context=True)
+async def clan_capacity(context):
     my_server = discord.utils.get(client.servers)
     user_id = context.message.author.id
     user=my_server.get_member(user_id)
@@ -488,7 +556,10 @@ async def run_sync(context):
         #4 Heroku
         #fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
         #END Heroku
-        await fs.create_blacklist()
+        capacity = await fs.get_clan_capacity()
+        for c in capacity:
+            for key,val in c.items():
+                await client.send_message(context.message.channel, str(key)+": "+str(val)+"/100" )
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
     await asyncio.sleep(0.01)
@@ -499,7 +570,6 @@ async def run_sync(context):
 #//////////////////////////////////////////////////////////////////////
 #////////////////   DB SECTION           //////////////////////////////
 #//////////////////////////////////////////////////////////////////////
-
 
 ######
 #Blacklist
@@ -532,10 +602,8 @@ def get_one_Clanmate(clanmate_id, clanmates):
 def is_clanmate_in_db(clanmate_id, clanmates):
         document = clanmates.find_one({'battletag':clanmate_id})
         if document:
-            #await asyncio.sleep(0.01)
             return True
         else:
-            #await asyncio.sleep(0.01)
             return False
 
 
@@ -556,7 +624,6 @@ def get_all_discord_users_by_last_activity(discord_users):
 
 def get_one_discord_user(discord_id, discord_users):
         document = discord_users.find_one({'discord_id':discord_id})
-        
         return document
 
 
@@ -651,6 +718,7 @@ async def loop_add_discord_users():
     discord_users = db.discord_users
     discord_users.remove({})
     for memb in my_server.members:
+        await asyncio.sleep(0.5)   
         if not memb.bot :
             my_dict = {}
             my_dict = {"discord_id":memb.id, "name":memb.name, "nick":memb.nick, "last_activity":""}
