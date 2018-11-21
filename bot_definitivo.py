@@ -18,17 +18,16 @@ from urllib.request import urlopen
 from pymongo import MongoClient
 
 #4 Heroku
-#BUNGIE_API_KEY = os.environ['BUNGIE_API_KEY']
-#BOT_TOKEN = os.environ['BOT_TOKEN']
+BUNGIE_API_KEY = os.environ['BUNGIE_API_KEY']
+BOT_TOKEN = os.environ['BOT_TOKEN']
 
 #4 Tests
-THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-my_config_file = os.path.join(THIS_FOLDER, 'config.json')
+#THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+#my_config_file = os.path.join(THIS_FOLDER, 'config.json')
 
-with open(my_config_file, 'r') as f:
-        config = json.load(f)
-
-BOT_TOKEN = config['DEFAULT']['BOT_TOKEN']# Get at discordapp.com/developers/applications/me
+#with open(my_config_file, 'r') as f:
+#        config = json.load(f)
+#BOT_TOKEN = config['DEFAULT']['BOT_TOKEN']# Get at discordapp.com/developers/applications/me
 #END Tests
 
 BOT_PREFIX = ("+") #("+", "!")
@@ -79,12 +78,12 @@ async def rol(context):
     if len(context.message.content)>=4 and valid_battle_tag_ending:
         #print("Valid Battletag format!")
         #4 tests
-        with open(my_config_file, 'r') as f:
-            config = json.load(f)
-        fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])         #Start Fail_Safe 4tests
+        #with open(my_config_file, 'r') as f:
+        #    config = json.load(f)
+        #fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])         #Start Fail_Safe 4tests
         #END tests
         #4 Heroku
-        #fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+        fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
         #END Heroku
         user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
         user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
@@ -111,12 +110,12 @@ async def rol(context):
             role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
 
             #4 tests
-            with open(my_config_file, 'r') as f:
-                config = json.load(f)
-            MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+            #with open(my_config_file, 'r') as f:
+            #    config = json.load(f)
+            #MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
             #END tests
             #4 Heroku
-            # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+            MONGODB_URI = os.environ['MONGO_DB_MLAB']
             #END Heroku
             cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
             db = cursor.get_database("bot_definitivo")
@@ -191,12 +190,12 @@ async def rol(context):
 async def update_discord_user_last_activity(message_author_id):
     #print("Upadating last activity!!")
     #4 tests
-    with open(my_config_file, 'r') as f:
-            config = json.load(f)
-    MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+    #with open(my_config_file, 'r') as f:
+    #        config = json.load(f)
+    #MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
     #END tests
     #4 Heroku
-    # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+    MONGODB_URI = os.environ['MONGO_DB_MLAB']
     #END Heroku
     cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
     db = cursor.get_database("bot_definitivo")
@@ -405,12 +404,12 @@ async def poblacion(context):
                     admin_id=i.id
     if admin_id in [role.id for role in user.roles]:
         #4 tests
-        with open(my_config_file, 'r') as f:
-                config = json.load(f)
-        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        #with open(my_config_file, 'r') as f:
+        #        config = json.load(f)
+        #MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
         #END tests
         #4 Heroku
-        # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
         cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = cursor.get_database("bot_definitivo")
@@ -455,12 +454,12 @@ async def inactivos(context):
                     admin_id=i.id
     if admin_id in [role.id for role in user.roles]:
         #4 tests
-        with open(my_config_file, 'r') as f:
-            config = json.load(f)
-        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        #with open(my_config_file, 'r') as f:
+        #    config = json.load(f)
+        #MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
         #END tests
         #4 Heroku
-        # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
         cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = cursor.get_database("bot_definitivo")
@@ -491,11 +490,11 @@ async def run_sync(context):
                     admin_id=i.id
     if admin_id in [role.id for role in user.roles]:
         #4 tests
-        fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])      #Start Fail_Safe 4tests
+        #fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])      #Start Fail_Safe 4tests
         #END tests
 
         #4 Heroku
-        #fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+        fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
         #END Heroku
         t_start = time.perf_counter()
         await client.send_message(context.message.channel, "**Aguantame la mecha :bomb: ... que estoy creando el listado de inactivos y pisando el listado de clan. **")
@@ -551,10 +550,10 @@ async def clan_capacity(context):
                     admin_id=i.id
     if admin_id in [role.id for role in user.roles]:
         #4 tests
-        fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])      #Start Fail_Safe 4tests
+        #fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])      #Start Fail_Safe 4tests
         #END tests
         #4 Heroku
-        #fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+        fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
         #END Heroku
         capacity = await fs.get_clan_capacity()
         for c in capacity:
@@ -706,12 +705,12 @@ async def loop_add_discord_users():
     await client.wait_until_ready()
     my_server = discord.utils.get(client.servers)
     #4 tests
-    with open(my_config_file, 'r') as f:
-            config = json.load(f)
-    MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+    #with open(my_config_file, 'r') as f:
+    #        config = json.load(f)
+    #MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
     #END tests
     #4 Heroku
-    # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+    MONGODB_URI = os.environ['MONGO_DB_MLAB']
     #END Heroku
     cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
     db = cursor.get_database("bot_definitivo")

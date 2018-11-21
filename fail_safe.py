@@ -302,12 +302,12 @@ class FailSafe(object):
     
     def upload_blacklist(self):
         #4 tests
-        with open(my_config_file, 'r') as f:
-            config = json.load(f)
-        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        #with open(my_config_file, 'r') as f:
+        #    config = json.load(f)
+        #MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
         #END tests
         #4 Heroku
-        # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
         client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = client.get_database("bot_definitivo")
@@ -328,12 +328,12 @@ class FailSafe(object):
 
     def upload_clanmates(self, full_clan_list):
         #4 tests
-        with open(my_config_file, 'r') as f:
-            config = json.load(f)
-        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        #with open(my_config_file, 'r') as f:
+        #    config = json.load(f)
+        #MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
         #END tests
         #4 Heroku
-        # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
         client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = client.get_database("bot_definitivo")
@@ -559,12 +559,12 @@ class FailSafe(object):
     async def async_filter_blacklist(self, player_list):
         '''Filters special players from blacklist'''
         #4 tests
-        with open(my_config_file, 'r') as f:
-            config = json.load(f)
-        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        #with open(my_config_file, 'r') as f:
+        #    config = json.load(f)
+        #MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
         #END tests
         #4 Heroku
-        # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
         client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = client.get_database("bot_definitivo")
@@ -589,12 +589,12 @@ class FailSafe(object):
     async def async_push_blacklist(self, definitive_blacklist):
         '''Pushes blacklist to db'''
         #4 tests
-        with open(my_config_file, 'r') as f:
-            config = json.load(f)
-        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        #with open(my_config_file, 'r') as f:
+        #    config = json.load(f)
+        #MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
         #END tests
         #4 Heroku
-        # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
         client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = client.get_database("bot_definitivo")
@@ -609,12 +609,12 @@ class FailSafe(object):
     async def async_push_clanmates_to_db(self, clan_list):
         '''Pushes clanmates to db'''
         #4 tests
-        with open(my_config_file, 'r') as f:
-            config = json.load(f)
-        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        #with open(my_config_file, 'r') as f:
+        #    config = json.load(f)
+        #MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
         #END tests
         #4 Heroku
-        # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
         client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = client.get_database("bot_definitivo")
@@ -626,12 +626,12 @@ class FailSafe(object):
         '''Pushes clanmates to db'''
         print("Clearing Blacklist and Clanmates ...")
         #4 tests
-        with open(my_config_file, 'r') as f:
-            config = json.load(f)
-        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        #with open(my_config_file, 'r') as f:
+        #    config = json.load(f)
+        #MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
         #END tests
         #4 Heroku
-        # MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
         client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = client.get_database("bot_definitivo")
