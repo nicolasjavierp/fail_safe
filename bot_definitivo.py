@@ -26,13 +26,26 @@ def load_param_from_config(item):
         return config['DEFAULT'][item]
 
 
-#def load_param_from_aux(item):
-#    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-#    my_config_file = os.path.join(THIS_FOLDER, 'aux.json')
-#    with open(my_config_file, 'r') as f:
-#        aux = json.load(f)
-#        return aux[item]
+def read_param_from_aux(item):
+    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+    my_config_file = os.path.join(THIS_FOLDER, 'aux.json')
+    with open(my_config_file, 'r') as f:
+        aux = json.load(f)
+        return aux[item]
+        #return aux
 
+
+def increment_param_in_1_aux(item):
+    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+    my_config_file = os.path.join(THIS_FOLDER, 'aux.json')
+    print("Incrementing item : %s" % item)
+    with open(my_config_file, 'r') as f:
+        aux = json.load(f)
+        tmp = aux[item]
+        aux[item] = tmp+1
+    with open("replayScript.json", "w") as jsonFile:
+        json.dump(aux, jsonFile)
+        
 
 #4 Heroku
 BUNGIE_API_KEY = os.environ['BUNGIE_API_KEY']
@@ -197,52 +210,6 @@ async def update_discord_user_last_activity(message_author_id):
     
 
 
-async def update_antispam_hello():
-    #4 tests
-    #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
-    #END tests
-    #4 Heroku
-    MONGODB_URI = os.environ['MONGO_DB_MLAB']
-    #END Heroku
-    cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
-    db = cursor.get_database("bot_definitivo")
-    antispam = db.antispam
-    original_record = await get_antispam_hellos()
-    print(original_record[0])
-    for document in original_record:
-        value = document["number_of_hellos"]
-    
-    print("Actual number of hellos = %d" % value)
-    value = value + 1 
-    print("New number of hellos = %d" % value)
-    update = {
-            "number_of_hellos": value
-    }
-    if original_record:
-        await update_number_of_hellos(original_record[0],update,antispam)
-    await asyncio.sleep(0.01)
-
-
-async def update_number_of_hellos(record, update, antispam):
-    antispam.update_one({'_id': record['_id']},{'$set': update}, upsert=False)
-
-
-async def get_antispam_hellos():
-    #4 tests
-    #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
-    #END tests
-    #4 Heroku
-    MONGODB_URI = os.environ['MONGO_DB_MLAB']
-    #END Heroku
-    cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
-    db = cursor.get_database("bot_definitivo")
-    antispam = db.antispam
-    return antispam.find()
-    #for document in antispam.find():
-        #print(document["number_of_hellos"])
-        #return document["number_of_hellos"]
-
-
 @client.event
 async def on_message(message):
     # we do not want the bot to reply to itself
@@ -271,8 +238,8 @@ async def on_message(message):
     #print("Regex hola = "+str(regex_hola))
     #print("----")
     if (regex_hola or regex_buenas):
-        for document in await get_antispam_hellos():
-            print("Number of hellos = " + str(document["number_of_hellos"]))
+        print(str(read_param_from_aux("number_of_hellos")))
+        increment_param_in_1_aux("number_of_hellos")
         currentTime = datetime.now()
         #print(str(currentTime))
         salute_time = ""
@@ -286,9 +253,8 @@ async def on_message(message):
         msg = msg + salute_time
         embed = discord.Embed(title="" , description=msg+" :wave:", color=0x00ff00)
         await client.send_message(message.channel, embed=embed)
-        await update_antispam_hello()
-        for document in await get_antispam_hellos():
-            print("NEW Number of hellos = " + str(document["number_of_hellos"]))
+        print(str(read_param_from_aux("number_of_hellos")))
+        
         
     if regex_buen_dia and not regex_hola:
         embed = discord.Embed(title="" , description="Buen Dia para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
