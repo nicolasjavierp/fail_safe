@@ -17,32 +17,30 @@ import unicodedata
 from urllib.request import urlopen
 from pymongo import MongoClient
 
+
+def load_param_from_config(item):
+    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+    my_config_file = os.path.join(THIS_FOLDER, 'config.json')
+    with open(my_config_file, 'r') as f:
+        config = json.load(f)
+        return config['DEFAULT'][item]
+
+
 #4 Heroku
 BUNGIE_API_KEY = os.environ['BUNGIE_API_KEY']
 BOT_TOKEN = os.environ['BOT_TOKEN']
 
-#4 Tests
-#THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-#my_config_file = os.path.join(THIS_FOLDER, 'config.json')
-
-#with open(my_config_file, 'r') as f:
-#        config = json.load(f)
-#BOT_TOKEN = config['DEFAULT']['BOT_TOKEN']# Get at discordapp.com/developers/applications/me
-#END Tests
 
 BOT_PREFIX = ("+") #("+", "!")
 client = Bot(command_prefix=BOT_PREFIX)
 
-number_of_greets = 0
+number_of_hellos = 0
 greet = False
+
 
 @client.event
 async def on_member_join(member):  
     server = member.server
-    #print(server)
-    #print(dir(server))
-    #print(server.default_channel)
-    #print(dir(server.default_channel))
     for i in server.channels:
         if "ɪɴᴠɪᴛᴀᴅᴏs".upper() in i.name.upper() :
             #print(i.name)
@@ -52,17 +50,9 @@ async def on_member_join(member):
     fmt = ':wave: **Bienvenido {0.mention} a ESCUADRA 2!**'
     await client.send_message(canal_bienvenida, fmt.format(member))
     #await client.send_message(canal_bienvenida, fmt.format(member, server))
-    #await client.send_message(canal_bienvenida,"Para obtener roles usar el commando: +rol tu_blizard_battletag.\n\
-    #Ejemplo:\n\
-    #========\n +rol CNorris#2234\n Cualquier duda no dudes en comunicarte con un admin")
-    
     embed2=discord.Embed()
-    #embed=discord.Embed(title="", description=":wave: **Bienvenido {0.mention} a ESCUADRA 2**\n • Necesitas permisos para usar los canales? \n • Escribí debajo el comando **+rol** seguido de tu Battletag!".format(member), color=0x00ff00)
-    #embed2=discord.Embed(title="", description="Ejemplo:", color=0x00ff00)
-    #embed2=discord.Embed(title="", description=":wave: **Bienvenido {} a ESCUADRA 2**\n • Necesitas permisos para usar los canales? \n • Escribí debajo el comando **+rol** seguido de tu Battletag! \n **Ejemplo: **\n".format(member.mention), color=0x00ff00)
     embed2=discord.Embed(title="", description="• Necesitas permisos para usar los canales? \n • Escribí debajo el comando **+rol** seguido de tu Battletag! \n **Ejemplo: **\n", color=0x00ff00)
     embed2.set_image(url="https://media.giphy.com/media/fipSNCOjqajUYmHFbC/giphy.gif")
-    #await client.send_message(canal_bienvenida, embed=embed)
     await client.send_message(canal_bienvenida, embed=embed2)
     await asyncio.sleep(0.01)
 
@@ -216,7 +206,7 @@ async def on_message(message):
     if message.author == client.user:
         return
     await update_discord_user_last_activity(message.author.id)
-    #print("Entered on message!")
+    
     msg = message.content
     #Normalizo el mensaje
     text = unicodedata.normalize('NFKD', msg).encode('ASCII', 'ignore').decode()
@@ -238,8 +228,8 @@ async def on_message(message):
     #print("Regex hola = "+str(regex_hola))
     #print("----")
     if (regex_hola or regex_buenas):
-        #number_of_greets = number_of_greets + 1
-        #if number_of_greets>=3:   
+        #number_of_hellos = number_of_hellos + 1
+        #if number_of_number_of_hellos>=3:   
         currentTime = datetime.now()
         salute_time = ""
         if currentTime.hour < 12:
@@ -431,9 +421,10 @@ async def poblacion(context):
                     my_dict = {}
                     my_dict = {"discord_id":memb.id, "name":memb.name, "nick":memb.nick, "last_activity":""}
                     member_list.append(my_dict)
-
+        await async_add_discord_users_list(member_list)
         await client.send_message(context.message.channel, "Guardianes = "+str(my_server.member_count-bot_num) + "\n" + "Bots = "+str(bot_num))
-        task = client.loop.create_task(loop_add_discord_users())
+
+        #task = client.loop.create_task(loop_add_discord_users())
         #task.cancel()
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
@@ -701,9 +692,8 @@ async def does_user_have_role(member,rol_id):
     #if rol_id in [member.id for role in member.roles]:
     #    print(member+" tiene rol " + rol_id + "!")
 
-async def loop_add_discord_users():
-    await client.wait_until_ready()
-    my_server = discord.utils.get(client.servers)
+
+async def async_add_discord_users_list(discord_users_list):
     #4 tests
     #with open(my_config_file, 'r') as f:
     #        config = json.load(f)
@@ -716,13 +706,7 @@ async def loop_add_discord_users():
     db = cursor.get_database("bot_definitivo")
     discord_users = db.discord_users
     discord_users.remove({})
-    for memb in my_server.members:
-        await asyncio.sleep(0.5)   
-        if not memb.bot :
-            my_dict = {}
-            my_dict = {"discord_id":memb.id, "name":memb.name, "nick":memb.nick, "last_activity":""}
-            await push_discord_user_db(my_dict, discord_users)
-    await asyncio.sleep(0.5)
+    discord_users.insert_many(discord_users_list, ordered=False)
 
 
 async def list_servers():

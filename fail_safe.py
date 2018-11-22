@@ -548,6 +548,7 @@ class FailSafe(object):
             if (delta_seconds > break_point_seconds):
                 #print("Blacklisted")
                 player["inactive_time"] = human_diff
+                player["date"] = datetime.today().strftime('%Y-%m-%d')
                 return player
             else:
                 #print "NOT Blacklisted"
