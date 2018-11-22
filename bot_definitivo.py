@@ -217,6 +217,7 @@ async def on_message(message, number_of_hellos):
     #print("----")
     if (regex_hola or regex_buenas):
         number_of_hellos+=1
+        print("Number of Hellos = %d" % number_of_hellos)
         if number_of_hellos>=3:   
             currentTime = datetime.now()
             salute_time = ""
