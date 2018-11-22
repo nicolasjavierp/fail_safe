@@ -207,11 +207,12 @@ async def update_antispam_hello():
     cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
     db = cursor.get_database("bot_definitivo")
     antispam = db.antispam
-    original_record = await get_antispam_hellos()
+    original_record = get_antispam_hellos()
     for document in original_record:
         value = document["number_of_hellos"]
     print("Actual number of hellos = %d" % value)
     value = value + 1 
+    print("New number of hellos = %d" % value)
     update = {
             "number_of_hellos": value
     }
@@ -223,7 +224,7 @@ async def update_antispam_hello():
 def update_number_of_hellos(record, updates, antispam):
     antispam.update_one({'_id': record['_id']},{'$set': updates}, upsert=False)
 
-async def get_antispam_hellos():
+def get_antispam_hellos():
     #4 tests
     #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
     #END tests
@@ -267,7 +268,7 @@ async def on_message(message):
     #print("Regex hola = "+str(regex_hola))
     #print("----")
     if (regex_hola or regex_buenas):
-        for document in await get_antispam_hellos():
+        for document in get_antispam_hellos():
             print("Number of hellos = " + str(document["number_of_hellos"]))
         currentTime = datetime.now()
         #print(str(currentTime))
@@ -283,7 +284,7 @@ async def on_message(message):
         embed = discord.Embed(title="" , description=msg+" :wave:", color=0x00ff00)
         await client.send_message(message.channel, embed=embed)
         await update_antispam_hello()
-        for document in await get_antispam_hellos():
+        for document in get_antispam_hellos():
             print("NEW Number of hellos = " + str(document["number_of_hellos"]))
         
     if regex_buen_dia and not regex_hola:
