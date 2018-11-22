@@ -229,12 +229,14 @@ async def get_antispam_hello():
     db = cursor.get_database("bot_definitivo")
     antispam = db.antispam
     
-    my_field = antispam['number_of_hellos']
-    print(type(my_field))
-    print(dir(my_field))
+    my_field = antispam.number_of_hellos
+    #print(type(my_field))
+    #print(dir(my_field))
     for x in antispam.find():
-        print(type(x))
-        print(x)
+        #print(type(x))
+        #print(x)
+        pass
+    print(antispam.find()["number_of_hellos"])
     #document = antispam.find_one('number_of_hellos')
     #return document
 
