@@ -34,7 +34,7 @@ BOT_TOKEN = os.environ['BOT_TOKEN']
 BOT_PREFIX = ("+") #("+", "!")
 client = Bot(command_prefix=BOT_PREFIX)
 
-number_of_hellos = 0
+number_of_hellos=0
 greet = False
 
 
@@ -189,7 +189,7 @@ async def update_discord_user_last_activity(message_author_id):
     
 
 @client.event
-async def on_message(message):
+async def on_message(message, number_of_hellos):
     # we do not want the bot to reply to itself
     if message.author == client.user:
         return
@@ -216,21 +216,22 @@ async def on_message(message):
     #print("Regex hola = "+str(regex_hola))
     #print("----")
     if (regex_hola or regex_buenas):
-        #number_of_hellos = number_of_hellos + 1
-        #if number_of_number_of_hellos>=3:   
-        currentTime = datetime.now()
-        salute_time = ""
-        if currentTime.hour < 12:
-            salute_time = " ,buen día!"
-        elif 12 <= currentTime.hour < 18:
-            salute_time = " ,buenas tardes!"
-        else:
-            salute_time = " ,buenas noches!"
-        msg = 'Hola {0.author.mention}'.format(message)
-        msg = msg + salute_time
-        embed = discord.Embed(title="" , description=msg+" :wave:", color=0x00ff00)
-        await client.send_message(message.channel, embed=embed)
-    
+        number_of_hellos+=1
+        if number_of_hellos>=3:   
+            currentTime = datetime.now()
+            salute_time = ""
+            if currentTime.hour < 12:
+                salute_time = " ,buen día!"
+            elif 12 <= currentTime.hour < 18:
+                salute_time = " ,buenas tardes!"
+            else:
+                salute_time = " ,buenas noches!"
+            msg = 'Hola {0.author.mention}'.format(message)
+            msg = msg + salute_time
+            embed = discord.Embed(title="" , description=msg+" :wave:", color=0x00ff00)
+            await client.send_message(message.channel, embed=embed)
+            number_of_hellos=0
+        
     if regex_buen_dia and not regex_hola:
         embed = discord.Embed(title="" , description="Buen Dia para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
         await client.send_message(message.channel, embed=embed)
@@ -381,7 +382,6 @@ async def poblacion(context):
     if admin_id in [role.id for role in user.roles]:
         #4 tests
         #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
-        #END tests
         #4 Heroku
         MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
@@ -422,7 +422,6 @@ async def inactivos(context):
     if admin_id in [role.id for role in user.roles]:
         #4 tests
         #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
-        #END tests
         #4 Heroku
         MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
@@ -523,6 +522,7 @@ async def clan_capacity(context):
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
     await asyncio.sleep(0.01)
 
+
 #######################################################################
 #######################################################################
 #######################################################################
@@ -548,7 +548,6 @@ async def get_blacklist_date(blacklisters):
 ######
 #Clanmates
 ######
-
 async def push_clanmate_to_db(record, clanmates):
     clanmates.insert_one(record)
     await asyncio.sleep(0.01)
