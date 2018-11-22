@@ -37,9 +37,9 @@ def read_param_from_aux(item):
 
 def increment_param_in_1_aux(item):
     THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-    my_config_file = os.path.join(THIS_FOLDER, 'aux.json')
+    my_aux_file = os.path.join(THIS_FOLDER, 'aux.json')
     print("Incrementing item : %s" % item)
-    with open(my_config_file, 'r') as f:
+    with open(my_aux_file, 'r') as f:
         aux = json.load(f)
         tmp = aux[item]
         print("old value:" + str(tmp))
