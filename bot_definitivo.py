@@ -243,7 +243,7 @@ async def on_message(message):
     #print("Regex hola = "+str(regex_hola))
     #print("----")
     if (regex_hola or regex_buenas):
-        if read_param_from_aux("number_of_hellos") >=3:
+        if read_param_from_aux("number_of_hellos") >3:
             currentTime = datetime.now()
             #print(str(currentTime))
             salute_time = ""
