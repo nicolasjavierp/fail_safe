@@ -208,8 +208,10 @@ async def update_antispam_hello():
     db = cursor.get_database("bot_definitivo")
     antispam = db.antispam
     original_record = await get_antispam_hellos()
+    print(original_record[0])
     for document in original_record:
         value = document["number_of_hellos"]
+    
     print("Actual number of hellos = %d" % value)
     value = value + 1 
     print("New number of hellos = %d" % value)
@@ -217,7 +219,7 @@ async def update_antispam_hello():
             "number_of_hellos": value
     }
     if original_record:
-        await update_number_of_hellos(original_record,update,antispam)
+        await update_number_of_hellos(original_record[0],update,antispam)
     await asyncio.sleep(0.01)
 
 
