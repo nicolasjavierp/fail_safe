@@ -66,12 +66,8 @@ async def rol(context):
     #print("Entered command ROL!")
     valid_battle_tag_ending = bool(re.match('^.*#[0-9]{4,5}$', context.message.content))
     if len(context.message.content)>=4 and valid_battle_tag_ending:
-        #print("Valid Battletag format!")
-        #4 tests
-        #with open(my_config_file, 'r') as f:
-        #    config = json.load(f)
-        #fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])         #Start Fail_Safe 4tests
-        #END tests
+        #4 Tests
+        #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
         #4 Heroku
         fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
         #END Heroku
@@ -100,10 +96,7 @@ async def rol(context):
             role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
 
             #4 tests
-            #with open(my_config_file, 'r') as f:
-            #    config = json.load(f)
-            #MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
-            #END tests
+            #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
             #4 Heroku
             MONGODB_URI = os.environ['MONGO_DB_MLAB']
             #END Heroku
@@ -169,20 +162,15 @@ async def rol(context):
         embed2=discord.Embed()
         embed2 = discord.Embed(title="" , description=":warning: **Error!** \n • Tenes que introducir tu Battletag de Blizzard \n• Intentalo de nuevo", color=0x00ff00)
         embed2.set_image(url="https://media.giphy.com/media/fipSNCOjqajUYmHFbC/giphy.gif")
-        #await client.send_message(context.message.channel, embed=embed)
         await client.send_message(context.message.channel, embed=embed2)
-        #await client.send_message(context.message.channel, "Error de uso! Ejemplo: +rol CNorris#2234" )
     #delets the message
     #await client.delete_message(context.message)
     await asyncio.sleep(0.01)
 
 
 async def update_discord_user_last_activity(message_author_id):
-    #print("Upadating last activity!!")
     #4 tests
-    #with open(my_config_file, 'r') as f:
-    #        config = json.load(f)
-    #MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+    #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
     #END tests
     #4 Heroku
     MONGODB_URI = os.environ['MONGO_DB_MLAB']
@@ -372,8 +360,6 @@ async def ayuda(context):
     msg = 'Hola {0.author.mention} estos son mis comandos : \n \
     +ayuda: Imprime este mensage \n \
     +rol: auto-otorga roles a la gente que esta en el clan Escusara 2,3,4,5 , ejemplo: +rol CNorris#2234'.format(context.message)
-    
-    #+oraculo: Pregunta con respuesta si o no al oraculo de la Ciudad Onirica, ejemplo: +oraculo Es Escuadra 2 la mejor? \n \
     await client.send_message(context.message.channel, msg )
 
 
@@ -394,9 +380,7 @@ async def poblacion(context):
                     admin_id=i.id
     if admin_id in [role.id for role in user.roles]:
         #4 tests
-        #with open(my_config_file, 'r') as f:
-        #        config = json.load(f)
-        #MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
         #END tests
         #4 Heroku
         MONGODB_URI = os.environ['MONGO_DB_MLAB']
@@ -410,11 +394,6 @@ async def poblacion(context):
         bot_num=0
         member_list = []
         for memb in my_server.members:
-                #if is_user_in_users(memb):
-                #    print(memb.name + " already in users.json !!")
-                #else:
-                #    print(memb.name + " NOT in users.json !!")
-                #    await add_user_data(memb)
                 if memb.bot:
                     bot_num = bot_num+1
                 else:
@@ -423,9 +402,6 @@ async def poblacion(context):
                     member_list.append(my_dict)
         await async_add_discord_users_list(member_list)
         await client.send_message(context.message.channel, "Guardianes = "+str(my_server.member_count-bot_num) + "\n" + "Bots = "+str(bot_num))
-
-        #task = client.loop.create_task(loop_add_discord_users())
-        #task.cancel()
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
     await asyncio.sleep(0.01)
@@ -445,9 +421,7 @@ async def inactivos(context):
                     admin_id=i.id
     if admin_id in [role.id for role in user.roles]:
         #4 tests
-        #with open(my_config_file, 'r') as f:
-        #    config = json.load(f)
-        #MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
         #END tests
         #4 Heroku
         MONGODB_URI = os.environ['MONGO_DB_MLAB']
@@ -455,11 +429,10 @@ async def inactivos(context):
         cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = cursor.get_database("bot_definitivo")
         blacklisters = db.blacklist
-        #date_blacklist_generated = await get_blacklist_date(blacklisters)
-        #await client.send_message(context.message.channel,"Fecha de ultima modificacion: "+date_blacklist_generated)
+        date_blacklist_generated = await get_blacklist_date(blacklisters)
+        await client.send_message(context.message.channel,"Fecha de ultima modificacion: "+date_blacklist_generated)
         blacklisters_list = await get_blacklist(blacklisters)
         for record in blacklisters_list:
-            #await client.send_message(context.message.channel,record["battletag"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"])
             await client.send_message(context.message.channel,record["displayName"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"])
         await client.send_message(context.message.channel, "Fin.")
     else:
@@ -481,9 +454,7 @@ async def run_sync(context):
                     admin_id=i.id
     if admin_id in [role.id for role in user.roles]:
         #4 tests
-        #fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])      #Start Fail_Safe 4tests
-        #END tests
-
+        #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
         #4 Heroku
         fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
         #END Heroku
@@ -494,7 +465,7 @@ async def run_sync(context):
             blacklist_EX = []
             #clan_list = await fs.async_get_ClanPlayerList(fs.our_clans[0])
             clan_list = await fs.async_get_ClanPlayerList(clan)
-            #print(clan_list)
+            
             await asyncio.sleep(0.5)
             new_clan_list = await fs.async_add_Clanmembers_LastPlayed(clan_list)
             await asyncio.sleep(0.5)
@@ -511,20 +482,19 @@ async def run_sync(context):
             await asyncio.sleep(0.5)
             await fs.async_push_blacklist(definitive_blacklist)
             await asyncio.sleep(0.5)
-            #print("Pusshing clan_list %s!" % str(clan))
+            
             for i in new_clan_list:
                 del i['last_played']
             await fs.async_push_clanmates_to_db(new_clan_list)
             await asyncio.sleep(0.5)
             await client.send_message(context.message.channel, "**Termine con %s**" % clan[1])
-            #print(str(new_clan_list))
             
         t_stop = time.perf_counter()
         #print("Elapsed time: %.1f [min]" % ((t_stop-t_start)/60))
         await client.send_message(context.message.channel, "**Finalizada la generacion de Inactivos y listado de clan, tardé ... %.1f [min]!**"% ((t_stop-t_start)/60))
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
-    #await asyncio.sleep(0.01)
+    await asyncio.sleep(0.01)
 
 
 @client.command(name='Get Clans Capacity',
@@ -541,8 +511,7 @@ async def clan_capacity(context):
                     admin_id=i.id
     if admin_id in [role.id for role in user.roles]:
         #4 tests
-        #fs = FailSafe(config['DEFAULT']['BUNGIE_API_KEY'])      #Start Fail_Safe 4tests
-        #END tests
+        #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
         #4 Heroku
         fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
         #END Heroku
@@ -669,9 +638,9 @@ def is_user_in_users(user):
         else:
             return False
 
+
 def is_clanmate_in_clan(clanmate_battletag):
     #Patch for those who have no battleTag
-    #name = clanmate_battletag.split('#')[0]
     with open('clan.json', 'r') as f:
         clan = json.load(f)
         #if clanmate_battletag in clan or name[0] in clan:
@@ -683,22 +652,17 @@ def is_clanmate_in_clan(clanmate_battletag):
 
 async def does_user_have_role(member,rol_id):
     for role in member.roles:
-        #print(str(role.id))
         if rol_id == role.id:
             #print(member.name+" tiene rol " + rol_id + "!")
             return True
     await asyncio.sleep(0.01)
     return False
-    #if rol_id in [member.id for role in member.roles]:
-    #    print(member+" tiene rol " + rol_id + "!")
+
 
 
 async def async_add_discord_users_list(discord_users_list):
     #4 tests
-    #with open(my_config_file, 'r') as f:
-    #        config = json.load(f)
-    #MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
-    #END tests
+    #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
     #4 Heroku
     MONGODB_URI = os.environ['MONGO_DB_MLAB']
     #END Heroku
