@@ -228,7 +228,7 @@ async def get_antispam_hello():
     cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
     db = cursor.get_database("bot_definitivo")
     antispam = db.antispam
-    document = antispam.find_one({'number_of_hellos'})
+    document = antispam.find_one('number_of_hellos')
     return document
 
 
