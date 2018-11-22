@@ -264,7 +264,7 @@ async def on_message(message):
     #print("Regex hola = "+str(regex_hola))
     #print("----")
     if (regex_hola or regex_buenas):
-        #print(str(await get_antispam_hello()))
+        await get_antispam_hello()
         currentTime = datetime.now()
         salute_time = ""
         if currentTime.hour < 12:
@@ -277,7 +277,6 @@ async def on_message(message):
         msg = msg + salute_time
         embed = discord.Embed(title="" , description=msg+" :wave:", color=0x00ff00)
         await client.send_message(message.channel, embed=embed)
-        #number_of_hellos=0
         #await update_antispam_hello()
         
     if regex_buen_dia and not regex_hola:
