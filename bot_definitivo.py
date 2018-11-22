@@ -47,14 +47,10 @@ def read_param_from_aux(item):
 def increment_param_in_1_aux(item):
     THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
     my_aux_file = os.path.join(THIS_FOLDER, 'aux.json')
-    print("Incrementing item : %s" % item)
     with open(my_aux_file, 'r') as f:
         aux = json.load(f)
         tmp = aux[item]
-        #print("old value:" + str(tmp))
         aux[item] = tmp+1
-        #print("new value:" + str(aux[item]))
-        #print(str(aux))
     with open("aux.json", "w") as f:
         json.dump(aux, f)
 
@@ -62,7 +58,6 @@ def increment_param_in_1_aux(item):
 def reset_param_aux(item):
     THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
     my_aux_file = os.path.join(THIS_FOLDER, 'aux.json')
-    print("Incrementing item : %s" % item)
     with open(my_aux_file, 'r') as f:
         aux = json.load(f)
         aux[item] = 0
@@ -248,24 +243,24 @@ async def on_message(message):
     #print("Regex hola = "+str(regex_hola))
     #print("----")
     if (regex_hola or regex_buenas):
-        print(str(read_param_from_aux("number_of_hellos")))
-        increment_param_in_1_aux("number_of_hellos")
-        currentTime = datetime.now()
-        #print(str(currentTime))
-        salute_time = ""
-        if currentTime.hour < 12+3:# Diferencia con el server US de Heroku
-            salute_time = " ,buen día!"
-        elif 12+3 <= currentTime.hour < 18+3:# Diferencia con el server US de Heroku
-            salute_time = " ,buenas tardes!"
+        if read_param_from_aux("number_of_hellos") >=3:
+            currentTime = datetime.now()
+            #print(str(currentTime))
+            salute_time = ""
+            if currentTime.hour < 12+3:# Diferencia con el server US de Heroku
+                salute_time = " ,buen día!"
+            elif 12+3 <= currentTime.hour < 18+3:# Diferencia con el server US de Heroku
+                salute_time = " ,buenas tardes!"
+            else:
+                salute_time = " ,buenas noches!"
+            
+            msg = 'Hola {0.author.mention}'.format(message)
+            msg = msg + salute_time
+            embed = discord.Embed(title="" , description=msg+" :wave:", color=0x00ff00)
+            await client.send_message(message.channel, embed=embed)
+            reset_param_aux("number_of_hellos")
         else:
-            salute_time = " ,buenas noches!"
-        msg = 'Hola {0.author.mention}'.format(message)
-        msg = msg + salute_time
-        embed = discord.Embed(title="" , description=msg+" :wave:", color=0x00ff00)
-        await client.send_message(message.channel, embed=embed)
-        print(str(read_param_from_aux("number_of_hellos")))
-        reset_param_aux("number_of_hellos")
-        print(str(read_param_from_aux("number_of_hellos")))
+            increment_param_in_1_aux("number_of_hellos")
         
         
     if regex_buen_dia and not regex_hola:
