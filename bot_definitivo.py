@@ -42,9 +42,9 @@ def increment_param_in_1_aux(item):
     with open(my_config_file, 'r') as f:
         aux = json.load(f)
         tmp = aux[item]
-        print("old value:" + tmp)
+        print("old value:" + str(tmp))
         aux[item] = tmp+1
-        print("new value:" + aux[item])
+        print("new value:" + str(aux[item]))
     with open("replayScript.json", "w") as f:
         json.dump(aux, f)
         
