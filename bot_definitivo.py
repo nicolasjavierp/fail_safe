@@ -228,13 +228,13 @@ async def get_antispam_hello():
     cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
     db = cursor.get_database("bot_definitivo")
     antispam = db.antispam
-
-    print(type(antispam))
-    print(dir(antispam))
-
+    
+    my_field = antispam['number_of_hellos']
+    print(type(my_field))
+    print(dir(my_field))
     for x in antispam.find():
-        if x is 'number_of_hellos':
-            print(x)
+        print(type(x))
+        print(x)
     #document = antispam.find_one('number_of_hellos')
     #return document
 
@@ -271,9 +271,9 @@ async def on_message(message):
         currentTime = datetime.now()
         print(str(currentTime))
         salute_time = ""
-        if currentTime.hour < 12-3:# Diferencia con el server US de Heroku
+        if currentTime.hour < 12+3:# Diferencia con el server US de Heroku
             salute_time = " ,buen día!"
-        elif 12-3 <= currentTime.hour < 18-3:# Diferencia con el server US de Heroku
+        elif 12+3 <= currentTime.hour < 18+3:# Diferencia con el server US de Heroku
             salute_time = " ,buenas tardes!"
         else:
             salute_time = " ,buenas noches!"
