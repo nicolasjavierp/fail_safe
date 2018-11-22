@@ -207,7 +207,7 @@ async def update_antispam_hello():
     cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
     db = cursor.get_database("bot_definitivo")
     antispam = db.antispam
-    original_record = get_antispam_hellos()
+    original_record = await get_antispam_hellos()
     for document in original_record:
         value = document["number_of_hellos"]
     print("Actual number of hellos = %d" % value)
