@@ -18,6 +18,15 @@ from urllib.request import urlopen
 from pymongo import MongoClient
 
 
+#4 Heroku
+BUNGIE_API_KEY = os.environ['BUNGIE_API_KEY']
+BOT_TOKEN = os.environ['BOT_TOKEN']
+
+
+BOT_PREFIX = ("+") #("+", "!")
+client = Bot(command_prefix=BOT_PREFIX)
+
+
 def load_param_from_config(item):
     THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
     my_config_file = os.path.join(THIS_FOLDER, 'config.json')
@@ -42,24 +51,23 @@ def increment_param_in_1_aux(item):
     with open(my_aux_file, 'r') as f:
         aux = json.load(f)
         tmp = aux[item]
-        print("old value:" + str(tmp))
+        #print("old value:" + str(tmp))
         aux[item] = tmp+1
-        print("new value:" + str(aux[item]))
-        print(str(aux))
+        #print("new value:" + str(aux[item]))
+        #print(str(aux))
     with open("aux.json", "w") as f:
         json.dump(aux, f)
-        
-
-#4 Heroku
-BUNGIE_API_KEY = os.environ['BUNGIE_API_KEY']
-BOT_TOKEN = os.environ['BOT_TOKEN']
 
 
-BOT_PREFIX = ("+") #("+", "!")
-client = Bot(command_prefix=BOT_PREFIX)
-
-number_of_hellos=0
-greet = False
+def reset_param_aux(item):
+    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+    my_aux_file = os.path.join(THIS_FOLDER, 'aux.json')
+    print("Incrementing item : %s" % item)
+    with open(my_aux_file, 'r') as f:
+        aux = json.load(f)
+        aux[item] = 0
+    with open("aux.json", "w") as f:
+        json.dump(aux, f)
 
 
 @client.event
@@ -68,8 +76,7 @@ async def on_member_join(member):
     for i in server.channels:
         if "ɪɴᴠɪᴛᴀᴅᴏs".upper() in i.name.upper() :
             #print(i.name)
-            canal_bienvenida = i
-            
+            canal_bienvenida = i            
     #fmt = 'Bienvenido {0.mention} a {1.name}!'
     fmt = ':wave: **Bienvenido {0.mention} a ESCUADRA 2!**'
     await client.send_message(canal_bienvenida, fmt.format(member))
@@ -256,6 +263,8 @@ async def on_message(message):
         msg = msg + salute_time
         embed = discord.Embed(title="" , description=msg+" :wave:", color=0x00ff00)
         await client.send_message(message.channel, embed=embed)
+        print(str(read_param_from_aux("number_of_hellos")))
+        reset_param_aux("number_of_hellos")
         print(str(read_param_from_aux("number_of_hellos")))
         
         
