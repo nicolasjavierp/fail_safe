@@ -26,6 +26,14 @@ def load_param_from_config(item):
         return config['DEFAULT'][item]
 
 
+#def load_param_from_aux(item):
+#    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+#    my_config_file = os.path.join(THIS_FOLDER, 'aux.json')
+#    with open(my_config_file, 'r') as f:
+#        aux = json.load(f)
+#        return aux[item]
+
+
 #4 Heroku
 BUNGIE_API_KEY = os.environ['BUNGIE_API_KEY']
 BOT_TOKEN = os.environ['BOT_TOKEN']
@@ -188,8 +196,45 @@ async def update_discord_user_last_activity(message_author_id):
     await asyncio.sleep(0.01)
     
 
+
+async def update_antispam_hello():
+    #4 tests
+    #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
+    #END tests
+    #4 Heroku
+    MONGODB_URI = os.environ['MONGO_DB_MLAB']
+    #END Heroku
+    cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+    db = cursor.get_database("bot_definitivo")
+    antispam = db.antispam
+    original_record = get_antispam_hello()
+    print("Actual number of hellos = %d" % original_record)
+    new_value = original_record + 1 
+    update = {
+            "number_of_hellos": new_value
+    }
+    if original_record:
+        update_discord_user(original_record,update,antispam)
+    await asyncio.sleep(0.01)
+
+
+async def get_antispam_hello():
+    #4 tests
+    #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
+    #END tests
+    #4 Heroku
+    MONGODB_URI = os.environ['MONGO_DB_MLAB']
+    #END Heroku
+    cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+    db = cursor.get_database("bot_definitivo")
+    antispam = db.antispam
+    document = antispam.find_one({'number_of_hellos'})
+    return document
+
+
+
 @client.event
-async def on_message(message, number_of_hellos):
+async def on_message(message):
     # we do not want the bot to reply to itself
     if message.author == client.user:
         return
@@ -216,22 +261,21 @@ async def on_message(message, number_of_hellos):
     #print("Regex hola = "+str(regex_hola))
     #print("----")
     if (regex_hola or regex_buenas):
-        number_of_hellos+=1
-        print("Number of Hellos = %d" % number_of_hellos)
-        if number_of_hellos>=3:   
-            currentTime = datetime.now()
-            salute_time = ""
-            if currentTime.hour < 12:
-                salute_time = " ,buen día!"
-            elif 12 <= currentTime.hour < 18:
-                salute_time = " ,buenas tardes!"
-            else:
-                salute_time = " ,buenas noches!"
-            msg = 'Hola {0.author.mention}'.format(message)
-            msg = msg + salute_time
-            embed = discord.Embed(title="" , description=msg+" :wave:", color=0x00ff00)
-            await client.send_message(message.channel, embed=embed)
-            number_of_hellos=0
+        print(str(await get_antispam_hello()))
+        currentTime = datetime.now()
+        salute_time = ""
+        if currentTime.hour < 12:
+            salute_time = " ,buen día!"
+        elif 12 <= currentTime.hour < 18:
+            salute_time = " ,buenas tardes!"
+        else:
+            salute_time = " ,buenas noches!"
+        msg = 'Hola {0.author.mention}'.format(message)
+        msg = msg + salute_time
+        embed = discord.Embed(title="" , description=msg+" :wave:", color=0x00ff00)
+        await client.send_message(message.channel, embed=embed)
+        #number_of_hellos=0
+        update_antispam_hello()
         
     if regex_buen_dia and not regex_hola:
         embed = discord.Embed(title="" , description="Buen Dia para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
