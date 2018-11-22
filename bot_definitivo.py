@@ -45,6 +45,7 @@ def increment_param_in_1_aux(item):
         print("old value:" + str(tmp))
         aux[item] = tmp+1
         print("new value:" + str(aux[item]))
+        print(str(aux))
     with open("replayScript.json", "w") as f:
         json.dump(aux, f)
         
