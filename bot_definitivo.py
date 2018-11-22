@@ -221,8 +221,9 @@ async def update_antispam_hello():
     await asyncio.sleep(0.01)
 
 
-async def update_number_of_hellos(record, updates, antispam):
-    antispam.update({'_id': record['_id']},{'$set': updates}, upsert=False)
+async def update_number_of_hellos(record, update, antispam):
+    antispam.update_one({'_id': record['_id']},{'$set': update}, upsert=False)
+
 
 async def get_antispam_hellos():
     #4 tests
