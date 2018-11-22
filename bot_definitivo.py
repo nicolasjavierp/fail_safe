@@ -228,8 +228,11 @@ async def get_antispam_hello():
     cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
     db = cursor.get_database("bot_definitivo")
     antispam = db.antispam
-    document = antispam.find_one('number_of_hellos')
-    return document
+    for x in antispam.find():
+        print(x) 
+    print(antispam.find('number_of_hellos'))
+    #document = antispam.find_one('number_of_hellos')
+    #return document
 
 
 
@@ -261,7 +264,7 @@ async def on_message(message):
     #print("Regex hola = "+str(regex_hola))
     #print("----")
     if (regex_hola or regex_buenas):
-        print(str(await get_antispam_hello()))
+        #print(str(await get_antispam_hello()))
         currentTime = datetime.now()
         salute_time = ""
         if currentTime.hour < 12:
@@ -275,7 +278,7 @@ async def on_message(message):
         embed = discord.Embed(title="" , description=msg+" :wave:", color=0x00ff00)
         await client.send_message(message.channel, embed=embed)
         #number_of_hellos=0
-        update_antispam_hello()
+        #await update_antispam_hello()
         
     if regex_buen_dia and not regex_hola:
         embed = discord.Embed(title="" , description="Buen Dia para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
