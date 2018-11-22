@@ -228,9 +228,10 @@ async def get_antispam_hello():
     cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
     db = cursor.get_database("bot_definitivo")
     antispam = db.antispam
-    for x in antispam.find():
-        print(x) 
-    print(antispam.find('number_of_hellos'))
+    my_col = antispam['number_of_hellos']
+    #for x in antispam.find():
+    #    print(x) 
+    print(my_col.find_one())
     #document = antispam.find_one('number_of_hellos')
     #return document
 
@@ -266,6 +267,7 @@ async def on_message(message):
     if (regex_hola or regex_buenas):
         await get_antispam_hello()
         currentTime = datetime.now()
+        print(str(currentTime))
         salute_time = ""
         if currentTime.hour < 12:
             salute_time = " ,buen día!"
