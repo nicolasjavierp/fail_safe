@@ -732,7 +732,7 @@ async def async_add_discord_users_list(discord_users_list):
                 aliases=['cal_asc'],
                 pass_context=True)
 async def calendario_ascendente(context):
-    msg = "```+---------+---------------------------------------------------------+\n\
+    msg = "**:calendar: CALENDARIO - ASCENDENTE**\n```+---------+---------------------------------------------------------+\n\
 | NOV 6*  | KEEP OF HONED EDGES IN HARBINGER SECLUDE                |\n\
 +---------+---------------------------------------------------------+\n\
 | NOV 13  | AGONARCH ABYSS IN BAY OF DROWNED WISHES                 |\n\
