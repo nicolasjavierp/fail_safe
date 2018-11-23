@@ -482,6 +482,7 @@ async def inactivos(context):
         blacklisters_list = await get_blacklist(blacklisters)
         for record in blacklisters_list:
             await client.send_message(context.message.channel,record["displayName"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"])
+        await asyncio.sleep(2.5)       
         await client.send_message(context.message.channel, "Fin.")
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
@@ -721,6 +722,29 @@ async def async_add_discord_users_list(discord_users_list):
     discord_users.insert_many(discord_users_list, ordered=False)
 
 
+
+@client.command(name='Desafío Ascendente',
+                description="Indica el calendario del Desafío ascendente",
+                brief="Indica el calendario del Desafío ascendente",
+                aliases=['cal_asc'],
+                pass_context=True)
+async def calendario_ascendente(context):
+    msg = " ```OCT 30    SHATTERED RUINS IN SPINE OF KERES \n\
+            NOV 6*    KEEP OF HONED EDGES IN HARBINGER SECLUDE\n\
+            NOV 13        AGONARCH ABYSS IN BAY OF DROWNED WISHES\n\
+            NOV 20     CIMMERIAN GARRISON IN CHAMBER OF STARLIGHT\n\
+            NOV 27*    OUROBOREA IN APHELIONS REST\n\
+            DEC 4    FORFEIT SHRINE IN GARDENS OF ESILA\n\
+            DEC 11        SHATTERED RUINS IN SPINE OF KERES\n\
+            DEC 18*    KEEP OF HONED EDGES IN HARBINGER SECLUDE\n\
+            DEC 25    AGONARCH ABYSS IN BAY OF DROWNED WISHES\n\
+            JAN 1    CIMMERIAN GARRISON IN CHAMBER OF STARLIGHT ```"
+    embed = discord.Embed(title=":calendar: CALENDARIO - ASCENDENTE" , description=msg, color=0x00ff00)
+    await client.send_message(context.message.channel, embed=embed)
+
+
+
+
 async def list_servers():
     await client.wait_until_ready()
     while not client.is_closed:
@@ -728,6 +752,9 @@ async def list_servers():
         for server in client.servers:
             print(server.name)
         await asyncio.sleep(600)
+
+
+
 
 
 #client.loop.create_task(list_servers())
