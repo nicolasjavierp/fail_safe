@@ -247,9 +247,9 @@ async def on_message(message):
             currentTime = datetime.now()
             #print(str(currentTime))
             salute_time = ""
-            if currentTime.hour < 12+3:# Diferencia con el server US de Heroku
+            if currentTime.hour < 12+3:# Agrego diferencia de horario con el server US de Heroku
                 salute_time = " ,buen día!"
-            elif 12+3 <= currentTime.hour < 18+3:# Diferencia con el server US de Heroku
+            elif 12+3 <= currentTime.hour < 18+3:# Agrego diferencia de horario con el server US de Heroku
                 salute_time = " ,buenas tardes!"
             else:
                 salute_time = " ,buenas noches!"
@@ -264,20 +264,38 @@ async def on_message(message):
         
         
     if regex_buen_dia and not regex_hola:
-        embed = discord.Embed(title="" , description="Buen Dia para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
-        await client.send_message(message.channel, embed=embed)
+        if read_param_from_aux("number_of_good_mornings") >=2:
+            embed = discord.Embed(title="" , description="Buen Dia para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
+            await client.send_message(message.channel, embed=embed)
+            reset_param_aux("number_of_good_mornings")
+        else:
+            increment_param_in_1_aux("number_of_good_mornings")
 
     if regex_buenos_dias and not regex_hola:
-        embed = discord.Embed(title="" , description="Buenos Dias para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
-        await client.send_message(message.channel, embed=embed)
+        if read_param_from_aux("number_of_good_mornings") >=2:
+            embed = discord.Embed(title="" , description="Buenos Dias para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
+            await client.send_message(message.channel, embed=embed)
+            reset_param_aux("number_of_good_mornings")
+        else:
+            increment_param_in_1_aux("number_of_good_mornings")
+
 
     if regex_buenas_tardes and not regex_hola:
-        embed = discord.Embed(title="" , description="Buenas tardes para vos"+message.author.mention+" :wave:", color=0x00ff00)
-        await client.send_message(message.channel, embed=embed)
+        #if read_param_from_aux("number_of_good_evenings") >=2:
+            embed = discord.Embed(title="" , description="Buenas tardes para vos"+message.author.mention+" :wave:", color=0x00ff00)
+            await client.send_message(message.channel, embed=embed)
+        #    reset_param_aux("number_of_good_evenings")
+        #else:
+        #    increment_param_in_1_aux("number_of_good_evenings")
 
     if regex_buenas_noches and not regex_hola :
+        #if read_param_from_aux("number_of_good_nights") >=2:
             embed = discord.Embed(title="" , description="Buenas noches para vos"+message.author.mention+" :full_moon_with_face: :coffee: ", color=0x00ff00)
             await client.send_message(message.channel, embed=embed)
+        #    reset_param_aux("number_of_good_nights")
+        #else:
+        #    increment_param_in_1_aux("number_of_good_nights")
+        
 
     #if (regex_caca) or ("mierda".upper() in text.upper()):
         #embed = discord.Embed(title="", description=":poop:", color=0x00ff00)
