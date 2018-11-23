@@ -732,25 +732,25 @@ async def async_add_discord_users_list(discord_users_list):
                 aliases=['cal_asc'],
                 pass_context=True)
 async def calendario_ascendente(context):
-    msg = "```+---------+---------------------------------------------------------+\
-| NOV 6*  | KEEP OF HONED EDGES IN HARBINGER SECLUDE                |\
-+---------+---------------------------------------------------------+\
-| NOV 13  | AGONARCH ABYSS IN BAY OF DROWNED WISHES                 |\
-+---------+---------------------------------------------------------+\
-| NOV 20  | CIMMERIAN GARRISON IN CHAMBER OF STARLIGHT              |\
-+---------+---------------------------------------------------------+\
-| NOV 27* | OUROBOREA IN APHELIONS REST                             |\
-+---------+---------------------------------------------------------+\
-| DEC 4   | FORFEIT SHRINE IN GARDENS OF ESILA                      |\
-+---------+---------------------------------------------------------+\
-| DEC 11  | SHATTERED RUINS IN SPINE OF KERES                       |\
-+---------+---------------------------------------------------------+\
-| DEC 18* | KEEP OF HONED EDGES IN HARBINGER SECLUDE                |\
-+---------+---------------------------------------------------------+\
-| DEC 25  | AGONARCH ABYSS IN BAY OF DROWNED WISHES                 |\
-+---------+---------------------------------------------------------+\
-| JAN 1   | CIMMERIAN GARRISON IN CHAMBER OF STARLIGHT</code></pre> |\
-+---------+---------------------------------------------------------+```"
+    msg = "```+---------+---------------------------------------------------------+\n\
+| NOV 6*  | KEEP OF HONED EDGES IN HARBINGER SECLUDE                |\n\
++---------+---------------------------------------------------------+\n\
+| NOV 13  | AGONARCH ABYSS IN BAY OF DROWNED WISHES                 |\n\
++---------+---------------------------------------------------------+\n\
+| NOV 20  | CIMMERIAN GARRISON IN CHAMBER OF STARLIGHT              |\n\
++---------+---------------------------------------------------------+\n\
+| NOV 27* | OUROBOREA IN APHELIONS REST                             |\n\
++---------+---------------------------------------------------------+\n\
+| DEC 4   | FORFEIT SHRINE IN GARDENS OF ESILA                      |\n\
++---------+---------------------------------------------------------+\n\
+| DEC 11  | SHATTERED RUINS IN SPINE OF KERES                       |\n\
++---------+---------------------------------------------------------+\n\
+| DEC 18* | KEEP OF HONED EDGES IN HARBINGER SECLUDE                |\n\
++---------+---------------------------------------------------------+\n\
+| DEC 25  | AGONARCH ABYSS IN BAY OF DROWNED WISHES                 |\n\
++---------+---------------------------------------------------------+\n\
+| JAN 1   | CIMMERIAN GARRISON IN CHAMBER OF STARLIGHT              |\n\
++---------+---------------------------------------------------------+\n```"
     #embed = discord.Embed(title=":calendar: CALENDARIO - ASCENDENTE" , description=msg, color=0x00ff00)
     #await client.send_message(context.message.channel, embed=embed)
     await client.send_message(context.message.channel, msg)
