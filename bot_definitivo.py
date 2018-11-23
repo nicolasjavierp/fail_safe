@@ -732,7 +732,7 @@ async def async_add_discord_users_list(discord_users_list):
                 aliases=['cal_asc'],
                 pass_context=True)
 async def calendario_ascendente(context):
-    msg = "\
+    msg = "```\
 +---------+---------------------------------------------------------+\n\
 | NOV 6*  | KEEP OF HONED EDGES IN HARBINGER SECLUDE                |\n\
 +---------+---------------------------------------------------------+\n\
@@ -751,7 +751,7 @@ async def calendario_ascendente(context):
 | DEC 25  | AGONARCH ABYSS IN BAY OF DROWNED WISHES                 |\n\
 +---------+---------------------------------------------------------+\n\
 | JAN 1   | CIMMERIAN GARRISON IN CHAMBER OF STARLIGHT</code></pre> |\n\
-+---------+---------------------------------------------------------+"
++---------+---------------------------------------------------------+```"
     embed = discord.Embed(title=":calendar: CALENDARIO - ASCENDENTE" , description=msg, color=0x00ff00)
     await client.send_message(context.message.channel, embed=embed)
 
