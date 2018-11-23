@@ -221,6 +221,9 @@ async def on_message(message):
     if message.author == client.user:
         return
     await update_discord_user_last_activity(message.author.id)
+
+    if message.isMentioned(client.users.get(client.user.id)):
+        await client.send_message(message.channel, "Estoy arriba KPO, que necesitas !?")
     
     msg = message.content
     #Normalizo el mensaje
