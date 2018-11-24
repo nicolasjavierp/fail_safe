@@ -222,7 +222,7 @@ async def on_message(message):
         return
     await update_discord_user_last_activity(message.author.id)
 
-    #if client.user.mentioned_in(message):
+    #if (client.user.mentioned_in(message)) and not (message.author.mentioned_in(message)):
     #    await client.send_message(message.channel, "Estoy arriba KPO, que necesitas !?")
     
     msg = message.content
@@ -733,23 +733,23 @@ async def async_add_discord_users_list(discord_users_list):
                 pass_context=True)
 async def calendario_ascendente(context):
     msg = "**:calendar: CALENDARIO - ASCENDENTE**\n```+---------+---------------------------------------------------------+\n\
-| NOV 6*  | KEEP OF HONED EDGES IN HARBINGER SECLUDE                |\n\
+| NOV 6*  | FORTALEZA DE FILOS CORTANTES - RETIRO DEL HERALDO       |\n\
 +---------+---------------------------------------------------------+\n\
-| NOV 13  | AGONARCH ABYSS IN BAY OF DROWNED WISHES                 |\n\
+| NOV 13  | ABISMO AGONARCH – BAHIA DE LOS DESEOS AHOGADOS          |\n\
 +---------+---------------------------------------------------------+\n\
-| NOV 20  | CIMMERIAN GARRISON IN CHAMBER OF STARLIGHT              |\n\
+| NOV 20  | GUARNICION CIMERA - CAMARA DE LUZ DE ESTRELLAS          |\n\
 +---------+---------------------------------------------------------+\n\
-| NOV 27* | OUROBOREA IN APHELIONS REST                             |\n\
+| NOV 27* | OUROBOREA – REPOSO DEL AFELIO                           |\n\
 +---------+---------------------------------------------------------+\n\
-| DEC 4   | FORFEIT SHRINE IN GARDENS OF ESILA                      |\n\
+| DEC 4   | ALTAR ABANDONADO - JARDINES DE ESILA                    |\n\
 +---------+---------------------------------------------------------+\n\
-| DEC 11  | SHATTERED RUINS IN SPINE OF KERES                       |\n\
+| DEC 11  | RUINAS QUESBRAJADAS – ESPINA DE KERES                   |\n\
 +---------+---------------------------------------------------------+\n\
-| DEC 18* | KEEP OF HONED EDGES IN HARBINGER SECLUDE                |\n\
+| DEC 18* | FORTALEZA DE FILOS CORTANTES - RETIRO DEL HERALDO       |\n\
 +---------+---------------------------------------------------------+\n\
-| DEC 25  | AGONARCH ABYSS IN BAY OF DROWNED WISHES                 |\n\
+| DEC 25  | ABISMO AGONARCH – BAHIA DE LOS DESEOS AHOGADOS          |\n\
 +---------+---------------------------------------------------------+\n\
-| JAN 1   | CIMMERIAN GARRISON IN CHAMBER OF STARLIGHT              |\n\
+| JAN 1   | GUARNICION CIMERA - CAMARA DE LUZ DE ESTRELLAS          |\n\
 +---------+---------------------------------------------------------+\n```"
     #embed = discord.Embed(title=":calendar: CALENDARIO - ASCENDENTE" , description=msg, color=0x00ff00)
     #await client.send_message(context.message.channel, embed=embed)
