@@ -552,7 +552,7 @@ async def run_sync(context):
 @client.command(name='Get Clans Capacity',
                 description="Genera el listado de capacidad del clan",
                 brief="capacidad",
-                aliases=['clan_capacity','clan_cap'],
+                aliases=['cap','clan_cap'],
                 pass_context=True)
 async def clan_capacity(context):
     my_server = discord.utils.get(client.servers)
