@@ -728,7 +728,7 @@ async def async_add_discord_users_list(discord_users_list):
 
 @client.command(name='Desafío Ascendente',
                 description="Indica el calendario del Desafío ascendente",
-                brief="Indica el calendario del Desafío ascendente",
+                brief="Muestra el calendario del Desafío ascendente",
                 aliases=['cal_asc'],
                 pass_context=True)
 async def calendario_ascendente(context):
@@ -755,6 +755,42 @@ async def calendario_ascendente(context):
     #await client.send_message(context.message.channel, embed=embed)
     await client.send_message(context.message.channel, msg)
 
+
+
+@client.command(name='Armas de Protocolo',
+                description="Muestra el calendario de las armas de Protocolo",
+                brief="Muestra el calendario de las armas de Protocolo",
+                aliases=['cal_pro'],
+                pass_context=True)
+async def calendario_protocolo(context):
+    msg = "**:calendar: CALENDARIO - PROTOCOLO**\n```+-----------------+---+---+---+-----------------------+\n\
+|                 | E | S | F |                       |\n\
++-----------------+---+---+---+-----------------------+\n\
+| 23 de Octubre   | O | O | O |                       |\n\
++-----------------+---+---+---+-----------------------+\n\
+| 30 de Octubre   | O | ─ | ─ |                       |\n\
++-----------------+---+---+---+-----------------------+\n\
+| 6 de Noviembre  | ─ | O | ─ | ┌───────────────────┐ |\n\
++-----------------+---+---+---+-----------------------+\n\
+| 13 de Noviembre | ─ | ─ | O | │ (E) Escopeta      | |\n\
++-----------------+---+---+---+-----------------------+\n\
+| 20 de Noviembre | O | O | O | │ (S) Subfusil      | |\n\
++-----------------+---+---+---+-----------------------+\n\
+| 27 de Noviembre | O | O | O | │ (F) Francotirador │ |\n\
++-----------------+---+---+---+-----------------------+\n\
+| 4 de Diciembre  | O | ─ | ─ | └───────────────────┘ |\n\
++-----------------+---+---+---+-----------------------+\n\
+| 11 de Diciembre | ─ | O | ─ |                       |\n\
++-----------------+---+---+---+-----------------------+\n\
+| 18 de Diciembre | ─ | ─ | O |                       |\n\
++-----------------+---+---+---+-----------------------+\n\
+| 25 de Diciembre | O | O | O |                       |\n\
++-----------------+---+---+---+-----------------------+\n\
+| 1 de Enero      | O | O | O |                       |\n\
++-----------------+---+---+---+-----------------------+\n```"
+    #embed = discord.Embed(title=":calendar: CALENDARIO - ASCENDENTE" , description=msg, color=0x00ff00)
+    #await client.send_message(context.message.channel, embed=embed)
+    await client.send_message(context.message.channel, msg)
 
 
 
