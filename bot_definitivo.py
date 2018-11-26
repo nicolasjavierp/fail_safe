@@ -412,6 +412,8 @@ async def on_ready():
 async def ayuda(context):
     msg = 'Hola {0.author.mention} estos son mis comandos : \n \
     +ayuda: Imprime este mensage \n \
+    +cal_pro (Calendario Armas Protocolo)\n\
+    +cal_asc (Calendario Desafío Ascendente)\n\
     +rol: auto-otorga roles a la gente que esta en el clan Escusara 2,3,4,5 , ejemplo: +rol CNorris#2234'.format(context.message)
     await client.send_message(context.message.channel, msg )
 
@@ -764,7 +766,7 @@ async def calendario_ascendente(context):
                 pass_context=True)
 async def calendario_protocolo(context):
     msg = "**:calendar: CALENDARIO - PROTOCOLO**\n```+-----------------+---+---+---+-----------------------+\n\
-|                 | E | S | F |                       |\n\
+|    SEMANA       | E | S | F |                       |\n\
 +-----------------+---+---+---+-----------------------+\n\
 | 23 de Octubre   | O | O | O |                       |\n\
 +-----------------+---+---+---+-----------------------+\n\
