@@ -172,7 +172,7 @@ async def rol(context):
                             print(real_battletag + " is in clan.json!!")
                             pass
                         clan_alias=user_clan_name[0]+user_clan_name[-1]
-                        client.change_nickname(context.message.author.id, str(real_battletag)+"["+clan_alias+"]")
+                        client.change_nickname(context.message.author.id, str(real_battletag)+" ["+clan_alias+"]")
                         embed = discord.Embed(title="" , description=":white_check_mark: **Listo** "+context.message.author.mention+" \n• Ya podes usar todos los canales!", color=0x00ff00)
                         await client.send_message(context.message.channel, embed=embed)
                     else:
