@@ -177,8 +177,8 @@ async def rol(context):
                         embed = discord.Embed(title="" , description=":white_check_mark: **Listo** "+context.message.author.mention+" \n• Ya podes usar todos los canales!", color=0x00ff00)
                         await client.send_message(context.message.channel, embed=embed)
                         print(clan_alias)
-                        print(type(client.id))
-                        print(client.id)
+                        #print(type(client.id))
+                        #print(client.id)
                         print(type(context.message.author.id))
                         print(context.message.author.id)
                     else:
