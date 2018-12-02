@@ -173,14 +173,15 @@ async def rol(context):
                             pass
                         clan_alias=user_clan_name[0]+user_clan_name[-1]
                         
-                        #await client.change_nickname(context.message.author.id, str(real_battletag)+" ["+clan_alias+"]")
+                        
                         embed = discord.Embed(title="" , description=":white_check_mark: **Listo** "+context.message.author.mention+" \n• Ya podes usar todos los canales!", color=0x00ff00)
                         await client.send_message(context.message.channel, embed=embed)
-                        print(clan_alias)
                         #print(type(client.id))
                         #print(client.id)
-                        print(type(context.message.author.id))
-                        print(context.message.author.id)
+                        #print(type(context.message.author.id))
+                        #print(context.message.author)
+                        user=my_server.get_member(context.message.author.id)
+                        await client.change_nickname(context.message.author, str(real_battletag)+" ["+clan_alias+"]")
                     else:
                         embed = discord.Embed(title="" , description=":warning: "+context.message.author.mention+" **Parece que no estas en nuestro clan** \n• Unite y volve a intentarlo!", color=0x00ff00)
                         await client.send_message(context.message.channel, embed=embed)
@@ -527,27 +528,35 @@ async def run_sync(context):
             blacklist_EX = []
             #clan_list = await fs.async_get_ClanPlayerList(fs.our_clans[0])
             clan_list = await fs.async_get_ClanPlayerList(clan)
-            
+            if not clan_list:
+                print("Could not load CLAN LIST!!!!!")
             await asyncio.sleep(0.5)
             new_clan_list = await fs.async_add_Clanmembers_LastPlayed(clan_list)
+            print("Got last Played for" + str(clan))
             await asyncio.sleep(0.5)
             new_clan_list = await fs.async_add_Clanmembers_Battletag(new_clan_list)
+            print("Got Battletags for" + str(clan))
             await asyncio.sleep(0.5)
             new_clan_list = await fs.async_add_Clanmembers_ClanName(new_clan_list)
+            print("Got ClanNames for" + str(clan))
             await asyncio.sleep(0.5)
+            
             for clanmate in new_clan_list:
                 blacklisted = await fs.async_is_blacklisted(clanmate)
                 if blacklisted:
                     blacklist_EX.append(blacklisted)
+            print("Got Blacklisters for" + str(clan))
             await asyncio.sleep(0.5)
-            definitive_blacklist = await fs.async_filter_blacklist(blacklist_EX)
+            if definitive_blacklist:
+                definitive_blacklist = await fs.async_filter_blacklist(blacklist_EX)
+                await asyncio.sleep(0.5)
+                await fs.async_push_blacklist(definitive_blacklist)
             await asyncio.sleep(0.5)
-            await fs.async_push_blacklist(definitive_blacklist)
-            await asyncio.sleep(0.5)
-            
+            print("Filtered Blacklisters for" + str(clan))
             for i in new_clan_list:
                 del i['last_played']
             await fs.async_push_clanmates_to_db(new_clan_list)
+            print("Pushed ClanMates for" + str(clan))
             await asyncio.sleep(0.5)
             await client.send_message(context.message.channel, "**Termine con %s**" % clan[1])
             
