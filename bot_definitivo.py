@@ -775,15 +775,15 @@ async def async_add_discord_users_list(discord_users_list):
                 pass_context=True)
 async def calendario_ascendente(context):
     msg = "**:calendar: CALENDARIO - ASCENDENTE**\n \
-NOV 6*  FORTALEZA DE FILOS CORTANTES - RETIRO DEL HERALDO       \n\
-NOV 13  ABISMO AGONARCH – BAHIA DE LOS DESEOS AHOGADOS          \n\
-NOV 20  GUARNICION CIMERA - CAMARA DE LUZ DE ESTRELLAS          \n\
-NOV 27* OUROBOREA – REPOSO DEL AFELIO                           \n\
-DEC 4   ALTAR ABANDONADO - JARDINES DE ESILA                    \n\
-DEC 11  RUINAS QUESBRAJADAS – ESPINA DE KERES                   \n\
-DEC 18* FORTALEZA DE FILOS CORTANTES - RETIRO DEL HERALDO       \n\
-DEC 25  ABISMO AGONARCH – BAHIA DE LOS DESEOS AHOGADOS          \n\
-JAN 1   GUARNICION CIMERA - CAMARA DE LUZ DE ESTRELLAS          \n"
+`NOV 6*  FORTALEZA DE FILOS CORTANTES - RETIRO DEL HERALDO  \n\
+NOV 13  ABISMO AGONARCH – BAHIA DE LOS DESEOS AHOGADOS     \n\
+NOV 20  GUARNICION CIMERA - CAMARA DE LUZ DE ESTRELLAS     \n\
+NOV 27* OUROBOREA – REPOSO DEL AFELIO                      \n\
+DEC 4   ALTAR ABANDONADO - JARDINES DE ESILA               \n\
+DEC 11  RUINAS QUESBRAJADAS – ESPINA DE KERES              \n\
+DEC 18* FORTALEZA DE FILOS CORTANTES - RETIRO DEL HERALDO  \n\
+DEC 25  ABISMO AGONARCH – BAHIA DE LOS DESEOS AHOGADOS     \n\
+JAN 1   GUARNICION CIMERA - CAMARA DE LUZ DE ESTRELLAS`     \n"
     #embed = discord.Embed(title=":calendar: CALENDARIO - ASCENDENTE" , description=msg, color=0x00ff00)
     #await client.send_message(context.message.channel, embed=embed)
     await client.send_message(context.message.channel, msg)
