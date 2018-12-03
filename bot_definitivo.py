@@ -547,8 +547,8 @@ async def run_sync(context):
                     blacklist_EX.append(blacklisted)
             print("Got Blacklisters for" + str(clan))
             await asyncio.sleep(0.5)
+            definitive_blacklist = await fs.async_filter_blacklist(blacklist_EX)
             if definitive_blacklist:
-                definitive_blacklist = await fs.async_filter_blacklist(blacklist_EX)
                 await asyncio.sleep(0.5)
                 await fs.async_push_blacklist(definitive_blacklist)
             await asyncio.sleep(0.5)
