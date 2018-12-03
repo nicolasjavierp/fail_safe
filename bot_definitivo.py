@@ -508,13 +508,18 @@ async def inactivos(context):
                 my_dict[record["clan"]] += record["displayName"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"] +" \n"
             else:
                 my_dict[record["clan"]] = record["displayName"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"] +" \n"
-        print(str(my_dict))
+        #print(str(my_dict))
         print(dir(client.user))
+        print(client.user.avatar)
+        print(client.user.avatar_url)
+        for key, value in my_dict.items():
+            await client.send_message(context.message.channel,"Inactivos "+key+":\n"+"`"+value+"`")
         for key, value in my_dict.items():
             embed = discord.Embed(
                 title = "Inactivos"+str(key),
                 description=value,
-                color=0x00ff00
+                color=0x00ff00,
+                inline=False
             )
             #embed.set_footer(text='Tis is a footer!')
             #embed.set_image(url=client.user.avatar_url)
@@ -777,10 +782,10 @@ async def async_add_discord_users_list(discord_users_list):
 @client.command(name='Desafío Ascendente',
                 description="Indica el calendario del Desafío ascendente",
                 brief="Muestra el calendario del Desafío ascendente",
-                aliases=['cal_asc'],
+                aliases=['asc'],
                 pass_context=True)
 async def calendario_ascendente(context):
-    msg = "**:calendar: CALENDARIO - ASCENDENTE**\n```+---------+---------------------------------------------------------+\n\
+    msg = "**:calendar: CALENDARIO - ASCENDENTE**\n`+---------+---------------------------------------------------------+\n\
 | NOV 6*  | FORTALEZA DE FILOS CORTANTES - RETIRO DEL HERALDO       |\n\
 +---------+---------------------------------------------------------+\n\
 | NOV 13  | ABISMO AGONARCH – BAHIA DE LOS DESEOS AHOGADOS          |\n\
@@ -798,7 +803,7 @@ async def calendario_ascendente(context):
 | DEC 25  | ABISMO AGONARCH – BAHIA DE LOS DESEOS AHOGADOS          |\n\
 +---------+---------------------------------------------------------+\n\
 | JAN 1   | GUARNICION CIMERA - CAMARA DE LUZ DE ESTRELLAS          |\n\
-+---------+---------------------------------------------------------+\n```"
++---------+---------------------------------------------------------+\n`"
     #embed = discord.Embed(title=":calendar: CALENDARIO - ASCENDENTE" , description=msg, color=0x00ff00)
     #await client.send_message(context.message.channel, embed=embed)
     await client.send_message(context.message.channel, msg)
@@ -808,10 +813,10 @@ async def calendario_ascendente(context):
 @client.command(name='Armas de Protocolo',
                 description="Muestra el calendario de las armas de Protocolo",
                 brief="Muestra el calendario de las armas de Protocolo",
-                aliases=['cal_pro'],
+                aliases=['pro'],
                 pass_context=True)
 async def calendario_protocolo(context):
-    msg = "**:calendar: CALENDARIO - PROTOCOLO**\n```+-----------------+---+---+---+-----------------------+\n\
+    msg = "**:calendar: CALENDARIO - PROTOCOLO**\n`+-----------------+---+---+---+-----------------------+\n\
 |    SEMANA       | E | S | F |                       |\n\
 +-----------------+---+---+---+-----------------------+\n\
 | 27 de Noviembre | O | O | O |                       |\n\
@@ -844,7 +849,7 @@ async def calendario_protocolo(context):
 +-----------------+---+---+---+-----------------------+\n\
 | 5 de Marzo      | 0 | 0 | 0 |                       |\n\
 +-----------------+---+---+---+-----------------------+\n\
-```"
+`"
     #embed = discord.Embed(title=":calendar: CALENDARIO - ASCENDENTE" , description=msg, color=0x00ff00)
     #await client.send_message(context.message.channel, embed=embed)
     await client.send_message(context.message.channel, msg)
