@@ -518,15 +518,15 @@ async def inactivos(context):
             embed = discord.Embed(
                 title = "Inactivos "+str(key),
                 description="`"+value+"`",
-                color=0x00ff00,
-                #color=random_color,
+                #color=0x00ff00,
+                color=random_color,
                 inline=True
             )
             #embed.set_footer(text='Tis is a footer!')
             #embed.set_image(url=client.user.avatar_url.replace("webp?size=1024","png"))
             embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))     
             embed.set_author(name=client.user.name,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
-            embed.add_field(name='Field Name', value=value, inline=True)
+            embed.add_field(name='Test', value=value, inline=False)
             #embed.add_field(name='Field Name', value=value, inline=False)
             #embed.add_field(name='Field Name', value='Field Value', inline=False)
             #embed.add_field(name='Field Name', value='Field Value', inline=True)
