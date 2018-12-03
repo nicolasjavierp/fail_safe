@@ -518,7 +518,7 @@ async def inactivos(context):
                 title = "Inactivos "+str(key),
                 description="`"+value+"`",
                 #color=0x00ff00,
-                color=r,
+                color=random_color,
                 inline=True
             )
             #embed.set_footer(text='Tis is a footer!')
