@@ -512,19 +512,21 @@ async def inactivos(context):
         #    await client.send_message(context.message.channel,"Inactivos "+key+":\n"+"`"+value+"`")
         for key, value in my_dict.items():
             r = lambda: random.randint(0,255)
-            random_color='#%02X%02X%02X' % (r(),r(),r())
+            random_color='0x%02X%02X%02X' % (r(),r(),r())
             print(random_color)
             embed = discord.Embed(
                 title = "Inactivos "+str(key),
-                description=value+"\n",
-                color=0x00ff00,
-                #color=r,
-                inline=False
+                description="`"+value+"`",
+                #color=0x00ff00,
+                color=r,
+                inline=True
             )
             #embed.set_footer(text='Tis is a footer!')
             #embed.set_image(url=client.user.avatar_url.replace("webp?size=1024","png"))
             embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))     
             embed.set_author(name=client.user.name,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
+            embed.add_field(name='Field Name', value=value, inline=True)
+            #embed.add_field(name='Field Name', value=value, inline=False)
             #embed.add_field(name='Field Name', value='Field Value', inline=False)
             #embed.add_field(name='Field Name', value='Field Value', inline=True)
             #embed.add_field(name='Field Name', value='Field Value', inline=True)
