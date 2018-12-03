@@ -511,15 +511,10 @@ async def inactivos(context):
         #for key, value in my_dict.items():
         #    await client.send_message(context.message.channel,"Inactivos "+key+":\n"+"`"+value+"`")
         for key, value in my_dict.items():
-            r = lambda: random.randint(0,255)
-            random_color='0x%02X%02X%02X' % (r(),r(),r())
-            random_color="0x{:06x}".format(random.randint(0, 0xFFFFFF))
-            print(random_color)
             embed = discord.Embed(
                 title = "Inactivos "+str(key),
                 description="`"+value+"`",
-                #color=0x00ff00,
-                color=hex(random_color),
+                color=0x00ff00,
                 inline=True
             )
             #embed.set_footer(text='Tis is a footer!')
