@@ -180,8 +180,8 @@ async def rol(context):
                         #print(client.id)
                         #print(type(context.message.author.id))
                         #print(context.message.author)
-                        user=my_server.get_member(context.message.author.id)
-                        await client.change_nickname(context.message.author, str(real_battletag)+" ["+clan_alias+"]")
+                        member=my_server.get_member(context.message.author.id)
+                        await client.change_nickname(member, str(real_battletag)+" ["+clan_alias+"]")
                     else:
                         embed = discord.Embed(title="" , description=":warning: "+context.message.author.mention+" **Parece que no estas en nuestro clan** \n• Unite y volve a intentarlo!", color=0x00ff00)
                         await client.send_message(context.message.channel, embed=embed)
@@ -488,14 +488,27 @@ async def inactivos(context):
         #4 Heroku
         MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
+        #4 Tests
+        #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
+        #4 Heroku
+        fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+        #END Heroku
         cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = cursor.get_database("bot_definitivo")
         blacklisters = db.blacklist
+        
         date_blacklist_generated = await get_blacklist_date(blacklisters)
         await client.send_message(context.message.channel,"Fecha de ultima modificacion: "+date_blacklist_generated)
         blacklisters_list = await get_blacklist(blacklisters)
+        
+        my_dict = {}
         for record in blacklisters_list:
-            await client.send_message(context.message.channel,record["displayName"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"])
+            #await client.send_message(context.message.channel,record["displayName"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"])    
+            if record["clan"] in my_dict:
+                my_dict[record["clan"]] += record["displayName"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"] +" \n"
+            else:
+                my_dict[record["clan"]] = record["displayName"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"] +" \n"
+        print(str(my_dict))
         await asyncio.sleep(2.5)       
         await client.send_message(context.message.channel, "Fin.")
     else:
@@ -506,7 +519,7 @@ async def inactivos(context):
 @client.command(name='Run blacklist and populate clan',
                 description="Genera la lista negra y actualiza la db del clan",
                 brief="run",
-                aliases=['run_sync'],
+                aliases=['sync'],
                 pass_context=True)
 async def run_sync(context):
     my_server = discord.utils.get(client.servers)
