@@ -509,6 +509,21 @@ async def inactivos(context):
             else:
                 my_dict[record["clan"]] = record["displayName"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"] +" \n"
         print(str(my_dict))
+        print(client.avatar_url)
+        for key, value in my_dict.items():
+            embed = discord.Embed(
+                title = "Inactivos"+str(key),
+                description=value,
+                color=0x00ff00
+            )
+            #embed.set_footer(text='Tis is a footer!')
+            #embed.set_image(url=client.avatar_url)
+            #embed.set_thumbnail(url=client.avatar_url)
+            embed.set_author(name=client.name,icon_url='client.avatar_url')
+            #embed.add_field(name='Field Name', value='Field Value', inline=False)
+            #embed.add_field(name='Field Name', value='Field Value', inline=True)
+            #embed.add_field(name='Field Name', value='Field Value', inline=True)
+            await client.say(embed=embed)
         await asyncio.sleep(2.5)       
         await client.send_message(context.message.channel, "Fin.")
     else:
