@@ -504,31 +504,23 @@ async def inactivos(context):
                 my_dict[record["clan"]] += record["displayName"]+" ─ "+ record["inactive_time"] +"\n"
             else:
                 my_dict[record["clan"]] = record["displayName"]+" ─ "+ record["inactive_time"] +"\n"
-        #print(str(my_dict))
-        print(dir(client.user))
-        print(client.user.avatar)
-        print(client.user.avatar_url)
-        #for key, value in my_dict.items():
-        #    await client.send_message(context.message.channel,"Inactivos "+key+":\n"+"`"+value+"`")
+                
         for key, value in my_dict.items():
             embed = discord.Embed(
                 title = "Inactivos "+str(key),
-                description="`"+value+"`",
-                color=0x00ff00,
-                inline=True
+                description=value,
+                color=0x00ff00
             )
             #embed.set_footer(text='Tis is a footer!')
             #embed.set_image(url=client.user.avatar_url.replace("webp?size=1024","png"))
             embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))     
             embed.set_author(name=client.user.name,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
-            embed.add_field(name='Test', value=value, inline=False)
-            #embed.add_field(name='Field Name', value=value, inline=False)
             #embed.add_field(name='Field Name', value='Field Value', inline=False)
             #embed.add_field(name='Field Name', value='Field Value', inline=True)
             #embed.add_field(name='Field Name', value='Field Value', inline=True)
             #await client.say(embed=embed)
             await client.send_message(context.message.channel, embed=embed)
-        await asyncio.sleep(2.5)       
+        await asyncio.sleep(0.5)       
         await client.send_message(context.message.channel, "Fin.")
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
