@@ -488,11 +488,7 @@ async def inactivos(context):
         #4 Heroku
         MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
-        #4 Tests
-        #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
-        #4 Heroku
-        fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
-        #END Heroku
+        
         cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = cursor.get_database("bot_definitivo")
         blacklisters = db.blacklist
@@ -516,11 +512,12 @@ async def inactivos(context):
         #    await client.send_message(context.message.channel,"Inactivos "+key+":\n"+"`"+value+"`")
         for key, value in my_dict.items():
             r = lambda: random.randint(0,255)
+            print(r)
             embed = discord.Embed(
                 title = "Inactivos"+str(key),
                 description="`"+value+"`",
-                #color=0x00ff00,
-                color=r,
+                color=0x00ff00,
+                #color=r,
                 inline=False
             )
             #embed.set_footer(text='Tis is a footer!')
