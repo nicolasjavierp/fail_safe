@@ -498,7 +498,7 @@ async def inactivos(context):
         blacklisters = db.blacklist
         
         date_blacklist_generated = await get_blacklist_date(blacklisters)
-        await client.send_message(context.message.channel,":calendar: **Fecha de ultima modificacion: "+date_blacklist_generated+"**")
+        await client.send_message(context.message.channel,":calendar: **Fecha de ultima modificacion: **"+date_blacklist_generated)
         blacklisters_list = await get_blacklist(blacklisters)
         
         my_dict = {}
@@ -509,7 +509,7 @@ async def inactivos(context):
             else:
                 my_dict[record["clan"]] = record["displayName"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"] +" \n"
         print(str(my_dict))
-        print(dir(client))
+        print(dir(client.user))
         for key, value in my_dict.items():
             embed = discord.Embed(
                 title = "Inactivos"+str(key),
@@ -520,7 +520,7 @@ async def inactivos(context):
             #embed.set_image(url=client.user.avatar_url)
             #embed.set_thumbnail(url=client.user.avatar_url)
             
-            embed.set_author(name=client.user.name,icon_url=client.user.avater_url)
+            #embed.set_author(name=client.user.name,icon_url=client.user.avater_url)
             #embed.add_field(name='Field Name', value='Field Value', inline=False)
             #embed.add_field(name='Field Name', value='Field Value', inline=True)
             #embed.add_field(name='Field Name', value='Field Value', inline=True)
