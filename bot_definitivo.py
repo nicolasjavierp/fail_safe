@@ -774,16 +774,22 @@ async def async_add_discord_users_list(discord_users_list):
                 aliases=['asc'],
                 pass_context=True)
 async def calendario_ascendente(context):
-    msg = "**:calendar: CALENDARIO - ASCENDENTE**\n\
-` NOV 6*  FORTALEZA DE FILOS CORTANTES - RETIRO DEL HERALDO  \n\
-NOV 13  ABISMO AGONARCH – BAHIA DE LOS DESEOS AHOGADOS     \n\
-NOV 20  GUARNICION CIMERA - CAMARA DE LUZ DE ESTRELLAS     \n\
-NOV 27* OUROBOREA – REPOSO DEL AFELIO                      \n\
-DEC 4   ALTAR ABANDONADO - JARDINES DE ESILA               \n\
-DEC 11  RUINAS QUESBRAJADAS – ESPINA DE KERES              \n\
-DEC 18* FORTALEZA DE FILOS CORTANTES - RETIRO DEL HERALDO  \n\
-DEC 25  ABISMO AGONARCH – BAHIA DE LOS DESEOS AHOGADOS     \n\
-JAN 1   GUARNICION CIMERA - CAMARA DE LUZ DE ESTRELLAS    `\n"
+    msg = "```prolog\
+\"𝐂𝐀𝐋𝐄𝐍𝐃𝐀𝐑𝐈𝐎 𝐃𝐄𝐒𝐀𝐅𝐈𝐎 𝐀𝐒𝐂𝐄𝐍𝐃𝐄𝐍𝐓𝐄\"\n\
+DICIEMBRE  4   ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ\n\
+DICIEMBRE 11   ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs\n\
+DICIEMBRE 18   ғᴏʀᴛᴀʟᴇᴢᴀ ᴅᴇ ғɪʟᴏs ᴄᴏʀᴛᴀɴᴛᴇs - ʀᴇᴛɪʀᴏ ᴅᴇʟ ʜᴇʀᴀʟᴅᴏ\n\
+DICIEMBRE 25   ᴀʙɪsᴍᴏ ᴀɢᴏɴᴀʀᴄʜ – ʙᴀʜɪᴀ ᴅᴇ ʟᴏs ᴅᴇsᴇᴏs ᴀʜᴏɢᴀᴅᴏs\n\
+ENERO      1   ɢᴜᴀʀɴɪᴄɪᴏɴ ᴄɪᴍᴇʀᴀ - ᴄᴀᴍᴀʀᴀ ᴅᴇ ʟᴜᴢ ᴅᴇ ᴇsᴛʀᴇʟʟᴀs\n\
+ENERO      8   ᴏᴜʀᴏʙᴏʀᴇᴀ – ʀᴇᴘᴏsᴏ ᴅᴇʟ ᴀғᴇʟɪᴏ\n\
+ENERO     15   ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ\n\
+ENERO     22   ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs\n\
+ENERO     29   ғᴏʀᴛᴀʟᴇᴢᴀ ᴅᴇ ғɪʟᴏs ᴄᴏʀᴛᴀɴᴛᴇs - ʀᴇᴛɪʀᴏ ᴅᴇʟ ʜᴇʀᴀʟᴅᴏ\n\
+FEBRERO    5   ᴀʙɪsᴍᴏ ᴀɢᴏɴᴀʀᴄʜ – ʙᴀʜɪᴀ ᴅᴇ ʟᴏs ᴅᴇsᴇᴏs ᴀʜᴏɢᴀᴅᴏs\n\
+FEBRERO   12   ɢᴜᴀʀɴɪᴄɪᴏɴ ᴄɪᴍᴇʀᴀ - ᴄᴀᴍᴀʀᴀ ᴅᴇ ʟᴜᴢ ᴅᴇ ᴇsᴛʀᴇʟʟᴀs\n\
+FEBRERO   19   ᴏᴜʀᴏʙᴏʀᴇᴀ – ʀᴇᴘᴏsᴏ ᴅᴇʟ ᴀғᴇʟɪᴏ\n\
+FEBRERO   26   ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ\n\
+```"
     #embed = discord.Embed(title=":calendar: CALENDARIO - ASCENDENTE" , description=msg, color=0x00ff00)
     #await client.send_message(context.message.channel, embed=embed)
     await client.send_message(context.message.channel, msg)
