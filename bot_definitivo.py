@@ -523,7 +523,8 @@ async def inactivos(context):
             #embed.add_field(name='Field Name', value='Field Value', inline=False)
             #embed.add_field(name='Field Name', value='Field Value', inline=True)
             #embed.add_field(name='Field Name', value='Field Value', inline=True)
-            await client.say(embed=embed)
+            #await client.say(embed=embed)
+            await client.send_message(message.channel, embed=embed)
         await asyncio.sleep(2.5)       
         await client.send_message(context.message.channel, "Fin.")
     else:
