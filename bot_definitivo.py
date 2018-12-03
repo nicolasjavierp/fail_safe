@@ -513,7 +513,7 @@ async def inactivos(context):
         for key, value in my_dict.items():
             r = lambda: random.randint(0,255)
             random_color='0x%02X%02X%02X' % (r(),r(),r())
-            random_color="#{:06x}".format(random.randint(0, 0xFFFFFF))
+            random_color="0x{:06x}".format(random.randint(0, 0xFFFFFF))
             print(random_color)
             embed = discord.Embed(
                 title = "Inactivos "+str(key),
