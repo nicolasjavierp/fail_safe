@@ -501,9 +501,9 @@ async def inactivos(context):
         for record in blacklisters_list:
             #await client.send_message(context.message.channel,record["displayName"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"])    
             if record["clan"] in my_dict:
-                my_dict[record["clan"]] += record["displayName"]+"    \t"+ record["clan"]+"    \t"+ record["inactive_time"] +"\n"
+                my_dict[record["clan"]] += record["displayName"]+"    "+ record["inactive_time"] +"\n"
             else:
-                my_dict[record["clan"]] = record["displayName"]+"    \t"+ record["clan"]+"    \t"+ record["inactive_time"] +"\n"
+                my_dict[record["clan"]] = record["displayName"]+"    "+ record["inactive_time"] +"\n"
         #print(str(my_dict))
         print(dir(client.user))
         print(client.user.avatar)
@@ -514,8 +514,8 @@ async def inactivos(context):
             r = lambda: random.randint(0,255)
             print(r)
             embed = discord.Embed(
-                title = "Inactivos"+str(key),
-                description="`"+value+"`",
+                title = "Inactivos "+str(key),
+                description="```"+value+"```",
                 color=0x00ff00,
                 #color=r,
                 inline=False
@@ -524,7 +524,7 @@ async def inactivos(context):
             #embed.set_image(url=client.user.avatar_url)
             #embed.set_thumbnail(url=client.user.avatar_url)
             
-            embed.set_author(name=client.user.name,icon_url=client.user.avatar_url)#.replace("webp?size=1024","png"))
+            embed.set_author(name=client.user.name,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
             #embed.add_field(name='Field Name', value='Field Value', inline=False)
             #embed.add_field(name='Field Name', value='Field Value', inline=True)
             #embed.add_field(name='Field Name', value='Field Value', inline=True)
