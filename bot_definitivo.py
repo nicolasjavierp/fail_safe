@@ -527,6 +527,31 @@ async def inactivos(context):
     await asyncio.sleep(0.05)
 
 
+
+
+@client.command(name='Test_Markdown',
+                description="Test_Markdown",
+                brief="testMD",
+                aliases=['md'],
+                pass_context=True)
+async def testMD(context):
+    my_server = discord.utils.get(client.servers)
+    user_id = context.message.author.id
+    user=my_server.get_member(user_id)
+    for i in my_server.roles:
+        if "Admin" in i.name:
+                    admin_id=i.id
+    if admin_id in [role.id for role in user.roles]:
+        await client.send_message(context.message.channel, "´´´css\
+                                                              dont kill the memes\
+                                                               ´´´")
+    else:
+        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
+    await asyncio.sleep(0.05)
+
+
+
+
 @client.command(name='Run blacklist and populate clan',
                 description="Genera la lista negra y actualiza la db del clan",
                 brief="run",
@@ -849,6 +874,12 @@ async def list_servers():
         for server in client.servers:
             print(server.name)
         await asyncio.sleep(600)
+
+
+
+
+
+
 
 
 
