@@ -538,11 +538,14 @@ async def inactivos(context):
 async def testMD(context):
     cont="```md\n\
  \n\
-<span style=\"color:white\">Calendario!</span>\n\
+Calendario\n\
 ====================\n\
 1.  Red\n\
 2.  Green\n\
+\n\
 3.  Blue\n\
+Roses are $\color{red}{\text{beautiful red}}$, \
+violets are $\color{blue}{\text{lovely blue}}$.\
 \n\
 ```"
     embed = discord.Embed(description=cont, color=discord.Color(0x00ff00), timestamp=datetime.now())
