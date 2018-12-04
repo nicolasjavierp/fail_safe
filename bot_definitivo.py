@@ -536,7 +536,18 @@ async def inactivos(context):
                 aliases=['md'],
                 pass_context=True)
 async def testMD(context):
-        await client.send_message(context.message.channel, Markdown('*some markdown* $\phi$'))
+        await client.send_message(context.message.channel,'```md\
+ \
+(3 backticks)markdown\
+or just:\
+(3 backticks)md\
+ \
+#lines starting with # are blue(?),\
+[murky blue][red?] --------------------> anywhere in the code block\
+[murky blue](red?) --------------------> anywhere in the code block\
+<first_word_blue and the rest orange> -> anywhere in the code block\
+(3 backticks)\
+```)')
 
 
 
