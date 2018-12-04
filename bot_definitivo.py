@@ -536,17 +536,17 @@ async def inactivos(context):
                 aliases=['md'],
                 pass_context=True)
 async def testMD(context):
-    cont="```md\n\
- \n\
-Calendario\n\
-====================\n\
-1.  [red?]\n\
-2.  Green\n\
-\n\
-3.  [Blue]\n\
-[murky blue][red?]\n\
-first_word_blue and the rest orange\n\
-\n\
+    cont="```prolog \n\
+    \n\
+\"𝐂𝐀𝐋𝐄𝐍𝐃𝐀𝐑𝐈𝐎 𝐃𝐄𝐒𝐀𝐅𝐈𝐎 𝐀𝐒𝐂𝐄𝐍𝐃𝐄𝐍𝐓𝐄\" DICIEMBRE 4 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ\n\
+DICIEMBRE 11 ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs\n\
+DICIEMBRE 18 ғᴏʀᴛᴀʟᴇᴢᴀ ᴅᴇ ғɪʟᴏs ᴄᴏʀᴛᴀɴᴛᴇs - ʀᴇᴛɪʀᴏ ᴅᴇʟ ʜᴇʀᴀʟᴅᴏ\n\
+DICIEMBRE 25 ᴀʙɪsᴍᴏ ᴀɢᴏɴᴀʀᴄʜ – ʙᴀʜɪᴀ ᴅᴇ ʟᴏs ᴅᴇsᴇᴏs ᴀʜᴏɢᴀᴅᴏs\n\
+ENERO 1 ɢᴜᴀʀɴɪᴄɪᴏɴ ᴄɪᴍᴇʀᴀ - ᴄᴀᴍᴀʀᴀ ᴅᴇ ʟᴜᴢ ᴅᴇ ᴇsᴛʀᴇʟʟᴀs ENERO 8 ᴏᴜʀᴏʙᴏʀᴇᴀ – ʀᴇᴘᴏsᴏ ᴅᴇʟ ᴀғᴇʟɪᴏ\n\
+ENERO 15 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ\n\
+ENERO 22 ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs\n\
+ENERO 29 ғᴏʀᴛᴀʟᴇᴢᴀ ᴅᴇ ғɪʟᴏs ᴄᴏʀᴛᴀɴᴛᴇs - ʀᴇᴛɪʀᴏ ᴅᴇʟ ʜᴇʀᴀʟᴅᴏ\n\
+FEBRERO 5 ᴀʙɪsᴍᴏ ᴀɢᴏɴᴀʀᴄʜ – ʙᴀʜɪᴀ ᴅᴇ ʟᴏs ᴅᴇsᴇᴏs ᴀʜᴏɢᴀᴅᴏs FEBRERO 12 ɢᴜᴀʀɴɪᴄɪᴏɴ ᴄɪᴍᴇʀᴀ - ᴄᴀᴍᴀʀᴀ ᴅᴇ ʟᴜᴢ ᴅᴇ ᴇsᴛʀᴇʟʟᴀs FEBRERO 19 ᴏᴜʀᴏʙᴏʀᴇᴀ – ʀᴇᴘᴏsᴏ ᴅᴇʟ ᴀғᴇʟɪᴏ FEBRERO 26 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ\n\
 ```"
     embed = discord.Embed(description=cont, color=discord.Color(0x00ff00), timestamp=datetime.now())
     await client.say(content='Top active users:', embed=embed) 
