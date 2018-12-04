@@ -536,11 +536,13 @@ async def inactivos(context):
                 aliases=['md'],
                 pass_context=True)
 async def testMD(context):
-    cont="```diff\n\
+    cont="```md\n\
  \n\
-+ for green,\n\
-- for red,\n\
---- for grey\n\
+Header\n\
+====================\n\
+1.  Red\n\
+2.  Green\n\
+3.  Blue\n\
 \n\
 ```"
     embed = discord.Embed(description=cont, color=discord.Color(0x00ff00), timestamp=datetime.now())
