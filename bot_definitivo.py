@@ -538,7 +538,7 @@ async def inactivos(context):
 async def testMD(context):
     cont="```md\n\
  \n\
-Header\n\
+<span style=\"color:white\">Calendario!</span>\n\
 ====================\n\
 1.  Red\n\
 2.  Green\n\
@@ -547,7 +547,7 @@ Header\n\
 ```"
     embed = discord.Embed(description=cont, color=discord.Color(0x00ff00), timestamp=datetime.now())
     await client.say(content='Top active users:', embed=embed) 
-    await client.say(content=cont) 
+    #await client.say(content=cont) 
     await client.send_message(context.message.channel, cont)
         
 
