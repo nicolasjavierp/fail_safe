@@ -551,7 +551,8 @@ first_word_blue and the rest orange\n\
     embed = discord.Embed(description=cont, color=discord.Color(0x00ff00), timestamp=datetime.now())
     await client.say(content='Top active users:', embed=embed) 
     await client.send_message(context.message.channel, cont)
-    #await client.say(content=text) 
+
+    await client.say(content="\033[1;32;40m Bright Green  \n") 
         
 
 
