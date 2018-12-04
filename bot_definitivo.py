@@ -536,19 +536,13 @@ async def inactivos(context):
                 aliases=['md'],
                 pass_context=True)
 async def testMD(context):
-        await client.send_message(context.message.channel,'```md\
- \
-(3 backticks)markdown\
-or just:\
-(3 backticks)md\
- \
-#lines starting with # are blue(?),\
-[murky blue][red?] --------------------> anywhere in the code block\
-[murky blue](red?) --------------------> anywhere in the code block\
-<first_word_blue and the rest orange> -> anywhere in the code block\
-(3 backticks)\
-```)')
-
+        embed = discord.Embed(description="```fix\n\
+ \n\
+(3 backticks)fix makes pretty much everything orange\n\
+(3 backticks)\n\
+```", color=discord.Color(0x00ff00), timestamp=datetime.datetime.now())
+        await client.bot.say(content='Top active users:', embed=embed) 
+        
 
 
 
