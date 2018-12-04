@@ -536,21 +536,17 @@ async def inactivos(context):
                 aliases=['md'],
                 pass_context=True)
 async def testMD(context):
-        embed = discord.Embed(description="```diff\n\
+    cont="```diff\n\
  \n\
 + for green,\
 - for red,\
 --- for grey\n\
 \n\
-```", color=discord.Color(0x00ff00), timestamp=datetime.now())
-        await client.say(content='Top active users:', embed=embed) 
-        await client.say(content='TEST:', "```diff\n\
- \n\
-+ for green,\
-- for red,\
---- for grey\n\
-\n\
-```") 
+```"
+    embed = discord.Embed(description=cont, color=discord.Color(0x00ff00), timestamp=datetime.now())
+    await client.say(content='Top active users:', embed=embed) 
+    await client.say(content=cont) 
+    await client.send_message(context.message.channel, cont)
         
 
 
