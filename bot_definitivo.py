@@ -16,6 +16,7 @@ from boto.s3.connection import S3Connection
 import unicodedata
 from urllib.request import urlopen
 from pymongo import MongoClient
+from IPython.display import display, Markdown
 
 
 #4 Heroku
@@ -535,19 +536,7 @@ async def inactivos(context):
                 aliases=['md'],
                 pass_context=True)
 async def testMD(context):
-    my_server = discord.utils.get(client.servers)
-    user_id = context.message.author.id
-    user=my_server.get_member(user_id)
-    for i in my_server.roles:
-        if "Admin" in i.name:
-                    admin_id=i.id
-    if admin_id in [role.id for role in user.roles]:
-        await client.send_message(context.message.channel, "´´´css\
-                                                              dont kill the memes\
-                                                               ´´´")
-    else:
-        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
-    await asyncio.sleep(0.05)
+        await client.send_message(context.message.channel, display(Markdown('*some markdown* $\phi$')))
 
 
 
