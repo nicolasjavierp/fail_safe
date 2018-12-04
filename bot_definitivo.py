@@ -538,8 +538,8 @@ async def inactivos(context):
 async def testMD(context):
     cont="```diff\n\
  \n\
-+ for green,\
-- for red,\
++ for green,\n\
+- for red,\n\
 --- for grey\n\
 \n\
 ```"
