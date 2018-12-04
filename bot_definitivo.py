@@ -540,14 +540,14 @@ async def testMD(context):
  \n\
 Calendario\n\
 ====================\n\
-1.  Red\n\
+1.  Red?\n\
 2.  Green\n\
 \n\
-3.  Blue\n\
-Roses are $\color\{red\}{\\text{beautiful red}}$, \
-violets are $\color\{blue\}{\\text{lovely blue}}$.\
-[murky blue][red?]\
-<first_word_blue and the rest orange> -> anywhere in the code block\
+3.  [Blue]\n\
+Roses are $\color\{red\}{\\text{beautiful red}}$, \n\
+violets are $\color\{blue\}{\\text{lovely blue}}$.\n\
+[murky blue][red?]\n\
+<first_word_blue and the rest orange> -> anywhere in the code block\n\
 \n\
 ```"
     embed = discord.Embed(description=cont, color=discord.Color(0x00ff00), timestamp=datetime.now())
