@@ -16,7 +16,7 @@ from boto.s3.connection import S3Connection
 import unicodedata
 from urllib.request import urlopen
 from pymongo import MongoClient
-from IPython.display import display, Markdown
+from termcolor import colored
 
 
 #4 Heroku
@@ -550,8 +550,10 @@ violets are $\color{blue}{\text{lovely blue}}$.\
 ```"
     embed = discord.Embed(description=cont, color=discord.Color(0x00ff00), timestamp=datetime.now())
     await client.say(content='Top active users:', embed=embed) 
-    #await client.say(content=cont) 
+    
     await client.send_message(context.message.channel, cont)
+    text = colored('Hello, World!', 'red', attrs=['reverse', 'blink'])
+    await client.say(content=text) 
         
 
 
