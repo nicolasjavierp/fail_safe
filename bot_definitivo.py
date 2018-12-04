@@ -536,7 +536,7 @@ async def inactivos(context):
                 aliases=['md'],
                 pass_context=True)
 async def testMD(context):
-        await client.send_message(context.message.channel, display(Markdown('*some markdown* $\phi$')))
+        await client.send_message(context.message.channel, Markdown('*some markdown* $\phi$'))
 
 
 
