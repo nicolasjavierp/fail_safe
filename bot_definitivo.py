@@ -598,13 +598,13 @@ async def run_sync(context):
                 aliases=['cap','clan_cap'],
                 pass_context=True)
 async def clan_capacity(context):
-    my_server = discord.utils.get(client.servers)
-    user_id = context.message.author.id
-    user=my_server.get_member(user_id)
-    for i in my_server.roles:
-        if "Admin" in i.name:
-                    admin_id=i.id
-    if admin_id in [role.id for role in user.roles]:
+    #my_server = discord.utils.get(client.servers)
+    #user_id = context.message.author.id
+    #user=my_server.get_member(user_id)
+    #for i in my_server.roles:
+    #    if "Admin" in i.name:
+    #                admin_id=i.id
+    #if admin_id in [role.id for role in user.roles]:
         #4 tests
         #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
         #4 Heroku
@@ -614,9 +614,9 @@ async def clan_capacity(context):
         for c in capacity:
             for key,val in c.items():
                 await client.send_message(context.message.channel, str(key)+": "+str(val)+"/100" )
-    else:
-        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
-    await asyncio.sleep(0.01)
+    #else:
+    #    await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
+    #await asyncio.sleep(0.01)
 
 
 #######################################################################
