@@ -854,7 +854,7 @@ async def calendario_protocolo(context):
     msg="```prolog\n\
 \n\
 𝐂𝐀𝐋𝐄𝐍𝐃𝐀𝐑𝐈𝐎 𝐏𝐑𝐎𝐓𝐎𝐂𝐎𝐋𝐎 𝐈𝐍𝐓𝐄𝐍𝐒𝐈𝐅𝐈𝐂𝐀𝐂𝐈𝐎𝐍 \n\
-                      (E) (S) (F) \n\
+                  (E) (S) (F) \n\
 ᴅɪᴄɪᴇᴍʙʀᴇ    4     0 | X | X \n\
 ᴅɪᴄɪᴇᴍʙʀᴇ   11     X | 0 | X \n\
 ᴅɪᴄɪᴇᴍʙʀᴇ   18     X | X | 0 \n\
