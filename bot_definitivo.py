@@ -588,7 +588,7 @@ FEBRERO   26 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅ
         1: ["Francotirador","https://cdn.thetrackernetwork.com/destiny//common/destiny2_content/icons/52630df015ef0e839555982c478d78f3.jpg"],
         2: ["Escopeta, Subfusil, Francotirador","https://www.destinysherpas.net/wp-content/uploads/2018/08/EP-sdfsdf34.jpg"],
         3: ["Escopeta, Subfusil, Francotirador","https://www.destinysherpas.net/wp-content/uploads/2018/08/EP-sdfsdf34.jpg"],
-        4: ["Escopeta","https://cdn.thetrackernetwork.com/destiny//common/destiny2_content/icons/edfdd807c9d604e80b48ad8fe39c8f36.jpg"]
+        4: ["Escopeta","https://www.destinypedia.com/images/thumb/e/ee/Ikelos_SG_No_Overlay.jpg/300px-Ikelos_SG_No_Overlay.jpg"]
     }
 
     embed = discord.Embed(title="" , description= context.message.author.mention+" esta semana toca: \n **"+ascendant_dict[key%7]+"** :vulcan:", color=0x00ff00)
@@ -599,6 +599,7 @@ FEBRERO   26 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅ
     
     embed = discord.Embed(title="" , description= context.message.author.mention+" en Protocolo esta semana hay disponible: \n **"+protocol_dict[key%5][0]+"** :vulcan:", color=0x00ff00)
     embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
+    print(protocol_dict[key%5][1])
     embed.set_image(url=protocol_dict[key%5][1])
     await client.send_message(context.message.channel, embed=embed)
 
