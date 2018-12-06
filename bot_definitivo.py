@@ -584,11 +584,12 @@ FEBRERO   26 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅ
     key = datetime.date(today).isocalendar()[1]
 
     protocol_dict={
-        0: ["Subfusil","https://cdn.discordapp.com/attachments/508999396835196950/520269508728979467/Subfusil.png"],
-        1: ["Francotirador","https://cdn.discordapp.com/attachments/508999396835196950/520269665478508544/Francotirador.png"],
-        2: ["Escopeta, Subfusil, Francotirador","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png"],
-        3: ["Escopeta, Subfusil, Francotirador","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png"],
-        4: ["Escopeta","https://cdn.discordapp.com/attachments/508999396835196950/520269571253600271/Escopeta.png"]
+        0: ["IKELOS_SMG_v1.0.1 (Subfusil)","https://cdn.discordapp.com/attachments/508999396835196950/520269508728979467/Subfusil.png"],
+        1: ["IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520269665478508544/Francotirador.png"],
+        2: ["IKELOS_SG_v1.0.1 (Escopeta), IKELOS_SMG_v1.0.1 (Subfusil), IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png"],
+        3: ["IKELOS_SG_v1.0.1 (Escopeta), IKELOS_SMG_v1.0.1 (Subfusil), IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png"],
+        #4: ["IKELOS_SG_v1.0.1 (Escopeta)","https://cdn.discordapp.com/attachments/508999396835196950/520269571253600271/Escopeta.png"]
+        4: ["IKELOS_SG_v1.0.1 (Escopeta)","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png"]
     }
 
     embed = discord.Embed(title="" , description= context.message.author.mention+" esta semana toca: \n **"+ascendant_dict[key%7][0]+"**", color=0x00ff00)
@@ -598,7 +599,7 @@ FEBRERO   26 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅ
     embed.set_image(url=ascendant_dict[key%5][1])
     await client.send_message(context.message.channel, embed=embed)
     
-    embed = discord.Embed(title="" , description= context.message.author.mention+" en Protocolo esta semana hay disponible: \n **"+protocol_dict[key%5][0]+"**", color=0x00ff00)
+    embed = discord.Embed(title="" , description= ":calendar: "+context.message.author.mention+" esta semana en  Protocolo Intensificación: \n **"+protocol_dict[key%5][0]+"**", color=0x00ff00)
     #embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/508999396835196950/520269693479551004/Protocolo.png")
     embed.set_thumbnail(url=protocol_dict[key%5][1])
     #print(protocol_dict[key%5][1])
