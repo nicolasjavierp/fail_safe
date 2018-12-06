@@ -530,47 +530,12 @@ async def inactivos(context):
 
 
 
-@client.command(name='Test_Markdown',
-                description="Test_Markdown",
-                brief="testMD",
-                aliases=['test'],
+@client.command(name='Informe Semanal',
+                description="Informe Semanal",
+                brief="Informe Semanal",
+                aliases=['semana'],
                 pass_context=True)
-async def testing_shit(context):
-    cont="```prolog\n\
-\n\
-𝐂𝐀𝐋𝐄𝐍𝐃𝐀𝐑𝐈𝐎 𝐃𝐄𝐒𝐀𝐅𝐈𝐎 𝐀𝐒𝐂𝐄𝐍𝐃𝐄𝐍𝐓𝐄\n\
-DICIEMBRE  4 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ\n\
-DICIEMBRE 11 ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs\n\
-DICIEMBRE 18 ғᴏʀᴛᴀʟᴇᴢᴀ ᴅᴇ ғɪʟᴏs ᴄᴏʀᴛᴀɴᴛᴇs - ʀᴇᴛɪʀᴏ ᴅᴇʟ ʜᴇʀᴀʟᴅᴏ\n\
-DICIEMBRE 25 ᴀʙɪsᴍᴏ ᴀɢᴏɴᴀʀᴄʜ – ʙᴀʜɪᴀ ᴅᴇ ʟᴏs ᴅᴇsᴇᴏs ᴀʜᴏɢᴀᴅᴏs\n\
-ENERO      1 ɢᴜᴀʀɴɪᴄɪᴏɴ ᴄɪᴍᴇʀᴀ - ᴄᴀᴍᴀʀᴀ ᴅᴇ ʟᴜᴢ ᴅᴇ ᴇsᴛʀᴇʟʟᴀs \n\
-ENERO      8 ᴏᴜʀᴏʙᴏʀᴇᴀ – ʀᴇᴘᴏsᴏ ᴅᴇʟ ᴀғᴇʟɪᴏ\n\
-ENERO     15 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ\n\
-ENERO     22 ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs\n\
-ENERO     29 ғᴏʀᴛᴀʟᴇᴢᴀ ᴅᴇ ғɪʟᴏs ᴄᴏʀᴛᴀɴᴛᴇs - ʀᴇᴛɪʀᴏ ᴅᴇʟ ʜᴇʀᴀʟᴅᴏ\n\
-FEBRERO    5 ᴀʙɪsᴍᴏ ᴀɢᴏɴᴀʀᴄʜ – ʙᴀʜɪᴀ ᴅᴇ ʟᴏs ᴅᴇsᴇᴏs ᴀʜᴏɢᴀᴅᴏs\n\
-FEBRERO   12 ɢᴜᴀʀɴɪᴄɪᴏɴ ᴄɪᴍᴇʀᴀ - ᴄᴀᴍᴀʀᴀ ᴅᴇ ʟᴜᴢ ᴅᴇ ᴇsᴛʀᴇʟʟᴀs\n\
-FEBRERO   19 ᴏᴜʀᴏʙᴏʀᴇᴀ – ʀᴇᴘᴏsᴏ ᴅᴇʟ ᴀғᴇʟɪᴏ\n\
-FEBRERO   26 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ\n\
-```"
-    cont="```prolog\n\
-\n\
-𝐂𝐀𝐋𝐄𝐍𝐃𝐀𝐑𝐈𝐎 𝐏𝐑𝐎𝐓𝐎𝐂𝐎𝐋𝐎 𝐈𝐍𝐓𝐄𝐍𝐒𝐈𝐅𝐈𝐂𝐀𝐂𝐈𝐎𝐍 \n\
-                      (E) (S) (F) \n\
-ᴅɪᴄɪᴇᴍʙʀᴇ    4     0 | X | X \n\
-ᴅɪᴄɪᴇᴍʙʀᴇ   11     X | 0 | X \n\
-ᴅɪᴄɪᴇᴍʙʀᴇ   18     X | X | 0 \n\
-ᴅɪᴄɪᴇᴍʙʀᴇ   25     0 | 0 | 0 \n\
-ᴇɴᴇʀᴏ        1     0 | 0 | 0 \n\
-ᴇɴᴇʀᴏ        8     0 | X | X        ┌────────────────────┐\n\
-ᴇɴᴇʀᴏ       15     X | 0 | X        │ (E) ᴇsᴄᴏᴘᴇᴛᴀ       │\n\
-ᴇɴᴇʀᴏ       22     X | X | 0        │ (S) sᴜʙғᴜsɪʟ       │\n\
-ᴇɴᴇʀᴏ       29     0 | 0 | 0        │ (F) ғʀᴀɴᴄᴏᴛɪʀᴀᴅᴏʀ  │\n\
-ғᴇʙʀᴇʀᴏ      5     0 | 0 | 0        ├────────────────────┤\n\
-ғᴇʙʀᴇʀᴏ     12     0 | X | X        │ (0) ᴅɪsᴘᴏɴɪʙʟᴇ     │\n\
-ғᴇʙʀᴇʀᴏ     19     X | 0 | X        │ (X) ɴᴏ ᴅɪsᴘᴏɴɪʙʟᴇ  │\n\
-ғᴇʙʀᴇʀᴏ     26     X | X | 0        └────────────────────┘\n\
-```"
+async def informe_semanal(context):
     ascendant_dict={
         0: ["ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ","https://cdn.discordapp.com/attachments/508999396835196950/520280444277751828/Jardines_de_Esila.png"],
         1: ["ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs","https://cdn.discordapp.com/attachments/508999396835196950/520280396366086154/Espina_de_Keres.png"],
@@ -595,7 +560,6 @@ FEBRERO   26 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅ
     #embed = discord.Embed(title="Desafío Ascendente esta semana" , description=cont.format(ascendant_dict[key%7]), color=0x00ff00)
     #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
     #embed.set_author(name=client.user.name)#,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
-    print()
     embed.set_image(url=ascendant_dict[key%7][1])
     await client.send_message(context.message.channel, embed=embed)
     
