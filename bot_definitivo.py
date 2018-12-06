@@ -591,17 +591,18 @@ FEBRERO   26 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅ
         4: ["Escopeta","https://cdn.discordapp.com/attachments/508999396835196950/520269571253600271/Escopeta.png"]
     }
 
-    embed = discord.Embed(title="" , description= context.message.author.mention+" esta semana toca: \n **"+ascendant_dict[key%7][0]+"** :vulcan:", color=0x00ff00)
+    embed = discord.Embed(title="" , description= context.message.author.mention+" esta semana toca: \n **"+ascendant_dict[key%7][0]+"**", color=0x00ff00)
     #embed = discord.Embed(title="Desafío Ascendente esta semana" , description=cont.format(ascendant_dict[key%7]), color=0x00ff00)
     #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
     #embed.set_author(name=client.user.name)#,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
     embed.set_image(url=ascendant_dict[key%5][1])
     await client.send_message(context.message.channel, embed=embed)
     
-    embed = discord.Embed(title="" , description= context.message.author.mention+" en Protocolo esta semana hay disponible: \n **"+protocol_dict[key%5][0]+"** :vulcan:", color=0x00ff00)
-    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/508999396835196950/520269693479551004/Protocolo.png")
-    print(protocol_dict[key%5][1])
-    embed.set_image(url=protocol_dict[key%5][1])
+    embed = discord.Embed(title="" , description= context.message.author.mention+" en Protocolo esta semana hay disponible: \n **"+protocol_dict[key%5][0]+"**", color=0x00ff00)
+    #embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/508999396835196950/520269693479551004/Protocolo.png")
+    embed.set_thumbnail(url=protocol_dict[key%5][1])
+    #print(protocol_dict[key%5][1])
+    #embed.set_image(url=protocol_dict[key%5][1])
     await client.send_message(context.message.channel, embed=embed)
 
 
