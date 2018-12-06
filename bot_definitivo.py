@@ -515,7 +515,7 @@ async def inactivos(context):
             #embed.set_footer(text='Tis is a footer!')
             #embed.set_image(url=client.user.avatar_url.replace("webp?size=1024","png"))
             embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))     
-            embed.set_author(name=client.user.name)#,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
+            #embed.set_author(name=client.user.name)#,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
             #embed.add_field(name='Field Name', value='Field Value', inline=False)
             #embed.add_field(name='Field Name', value='Field Value', inline=True)
             #embed.add_field(name='Field Name', value='Field Value', inline=True)
@@ -591,7 +591,7 @@ FEBRERO   26 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅ
     embed = discord.Embed(title="" , description= context.message.author.mention+" esta semana toca: \n **"+ascendant_dict[key%7]+"** :vulcan:", color=0x00ff00)
     #embed = discord.Embed(title="Desafío Ascendente esta semana" , description=cont.format(ascendant_dict[key%7]), color=0x00ff00)
     embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
-    embed.set_author(name=client.user.name)#,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
+    #embed.set_author(name=client.user.name)#,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
     await client.send_message(context.message.channel, embed=embed)
     #await client.send_message(context.message.channel, "**"+ascendant_dict[key%7]+"**")
 
