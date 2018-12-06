@@ -592,11 +592,7 @@ FEBRERO   26 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅ
     embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))     
     embed.set_author(name=client.user.name,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
     await client.send_message(context.message.channel, embed=embed)
-    await client.send_message(context.message.channel, "```prolog\n\
-    \n\
-    %s\n\
-    \n\
-    ´´´" % (ascendant_dict[key%7)))
+    await client.send_message(context.message.channel, "**"+ascendant_dict[key%7]+"**")
 
 
 @client.command(name='Run blacklist and populate clan',
