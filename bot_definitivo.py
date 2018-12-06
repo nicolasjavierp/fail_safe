@@ -584,11 +584,11 @@ FEBRERO   26 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅ
     key = datetime.date(today).isocalendar()[1]
 
     protocol_dict={
-        0: "Subfusil",
-        1: "Francotirador",
+        0: ["Subfusil","https://cdn.thetrackernetwork.com/destiny//common/destiny2_content/icons/85ad82abdfc13537325b45a85d6f4462.jpg"],
+        1: ["Francotirador","https://cdn.thetrackernetwork.com/destiny//common/destiny2_content/icons/52630df015ef0e839555982c478d78f3.jpg"],
         2: "Escopeta, Subfusil, Francotirador",
         3: "Escopeta, Subfusil, Francotirador",
-        4: "Escopeta"
+        4: ["Escopeta","https://cdn.thetrackernetwork.com/destiny//common/destiny2_content/icons/edfdd807c9d604e80b48ad8fe39c8f36.jpg"]
     }
 
     embed = discord.Embed(title="" , description= context.message.author.mention+" esta semana toca: \n **"+ascendant_dict[key%7]+"** :vulcan:", color=0x00ff00)
@@ -597,8 +597,9 @@ FEBRERO   26 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅ
     #embed.set_author(name=client.user.name)#,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
     await client.send_message(context.message.channel, embed=embed)
     
-    embed = discord.Embed(title="" , description= context.message.author.mention+" en Protocolo esta semana hay disponible: \n **"+protocol_dict[key%5]+"** :vulcan:", color=0x00ff00)
+    embed = discord.Embed(title="" , description= context.message.author.mention+" en Protocolo esta semana hay disponible: \n **"+protocol_dict[key%5][0]+"** :vulcan:", color=0x00ff00)
     embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
+    embed.set_image(url=protocol_dict[key%5][1])
     await client.send_message(context.message.channel, embed=embed)
 
 
