@@ -584,23 +584,22 @@ FEBRERO   26 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅ
     key = datetime.date(today).isocalendar()[1]
 
     protocol_dict={
-        0: ["Subfusil","https://cdn.thetrackernetwork.com/destiny//common/destiny2_content/icons/85ad82abdfc13537325b45a85d6f4462.jpg"],
-        1: ["Francotirador","https://cdn.thetrackernetwork.com/destiny//common/destiny2_content/icons/52630df015ef0e839555982c478d78f3.jpg"],
-        2: ["Escopeta, Subfusil, Francotirador","https://www.destinysherpas.net/wp-content/uploads/2018/08/EP-sdfsdf34.jpg"],
-        3: ["Escopeta, Subfusil, Francotirador","https://www.destinysherpas.net/wp-content/uploads/2018/08/EP-sdfsdf34.jpg"],
-        #4: ["Escopeta","https://www.destinypedia.com/images/thumb/e/ee/Ikelos_SG_No_Overlay.jpg/300px-Ikelos_SG_No_Overlay.jpg"]
+        0: ["Subfusil","https://cdn.discordapp.com/attachments/508999396835196950/520269508728979467/Subfusil.png"],
+        1: ["Francotirador","https://cdn.discordapp.com/attachments/508999396835196950/520269665478508544/Francotirador.png"],
+        2: ["Escopeta, Subfusil, Francotirador","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png"],
+        3: ["Escopeta, Subfusil, Francotirador","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png"],
         4: ["Escopeta","https://cdn.discordapp.com/attachments/508999396835196950/520269571253600271/Escopeta.png"]
     }
 
     embed = discord.Embed(title="" , description= context.message.author.mention+" esta semana toca: \n **"+ascendant_dict[key%7][0]+"** :vulcan:", color=0x00ff00)
     #embed = discord.Embed(title="Desafío Ascendente esta semana" , description=cont.format(ascendant_dict[key%7]), color=0x00ff00)
-    embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
+    #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
     #embed.set_author(name=client.user.name)#,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
     embed.set_image(url=ascendant_dict[key%5][1])
     await client.send_message(context.message.channel, embed=embed)
     
     embed = discord.Embed(title="" , description= context.message.author.mention+" en Protocolo esta semana hay disponible: \n **"+protocol_dict[key%5][0]+"** :vulcan:", color=0x00ff00)
-    embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/508999396835196950/520269693479551004/Protocolo.png")
     print(protocol_dict[key%5][1])
     embed.set_image(url=protocol_dict[key%5][1])
     await client.send_message(context.message.channel, embed=embed)
