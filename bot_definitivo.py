@@ -586,8 +586,8 @@ FEBRERO   26 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅ
     protocol_dict={
         0: ["Subfusil","https://cdn.thetrackernetwork.com/destiny//common/destiny2_content/icons/85ad82abdfc13537325b45a85d6f4462.jpg"],
         1: ["Francotirador","https://cdn.thetrackernetwork.com/destiny//common/destiny2_content/icons/52630df015ef0e839555982c478d78f3.jpg"],
-        2: "Escopeta, Subfusil, Francotirador",
-        3: "Escopeta, Subfusil, Francotirador",
+        2: ["Escopeta, Subfusil, Francotirador","https://www.destinysherpas.net/wp-content/uploads/2018/08/EP-sdfsdf34.jpg"],
+        3: ["Escopeta, Subfusil, Francotirador","https://www.destinysherpas.net/wp-content/uploads/2018/08/EP-sdfsdf34.jpg"],
         4: ["Escopeta","https://cdn.thetrackernetwork.com/destiny//common/destiny2_content/icons/edfdd807c9d604e80b48ad8fe39c8f36.jpg"]
     }
 
