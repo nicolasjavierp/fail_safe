@@ -585,13 +585,14 @@ FEBRERO   26 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅ
     cont= "```prolog\n\
 \n\
 {} \n\
+\n\
 ´´´"
     #embed = discord.Embed(title="Desafío Ascendente esta semana" , description="KPO esta semana toca: "+ascendant_dict[key%7]+" ! :vulcan:", color=0x00ff00)
     embed = discord.Embed(title="Desafío Ascendente esta semana" , description="KPO esta semana toca: "+cont.format(ascendant_dict[key%7])+" ! :vulcan:", color=0x00ff00)
     embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))     
     embed.set_author(name=client.user.name,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
     await client.send_message(context.message.channel, embed=embed)
-    #await client.send_message(context.message.channel, "Kpo de los Kpos esta semana el desfío ascendente es en")
+    await client.send_message(context.message.channel, "Kpo de los Kpos esta semana el desfío ascendente es en %s" % cont)
         
 
 
