@@ -580,7 +580,9 @@ FEBRERO   26 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅ
         "5": "ᴏᴜʀᴏʙᴏʀᴇᴀ – ʀᴇᴘᴏsᴏ ᴅᴇʟ ᴀғᴇʟɪᴏ"
     }
     today = datetime.now()
-    week_num = datetime.date(today.year, today.month, today.day).isocalendar()[1]
+    #week_num = datetime.date(today.year, today.month, today.day).isocalendar()[1]
+    print(type(today))
+    week_num = datetime.date(today).isocalendar()[1]
     print(week_num)
     await client.send_message(context.message.channel, week_num)
         
