@@ -584,11 +584,11 @@ FEBRERO   26 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅ
     key = datetime.date(today).isocalendar()[1]
 
     protocol_dict={
-        0: "Escopeta",
-        1: "Subfusil",
-        2: "Francotirador",
+        0: "Subfusil",
+        1: "Francotirador",
+        2: "Escopeta, Subfusil, Francotirador",
         3: "Escopeta, Subfusil, Francotirador",
-        4: "Escopeta, Subfusil, Francotirador"
+        4: "Escopeta"
     }
 
     embed = discord.Embed(title="" , description= context.message.author.mention+" esta semana toca: \n **"+ascendant_dict[key%7]+"** :vulcan:", color=0x00ff00)
