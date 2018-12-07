@@ -16,7 +16,8 @@ from boto.s3.connection import S3Connection
 import unicodedata
 from urllib.request import urlopen
 from pymongo import MongoClient
-from datetime import timedelta  
+from datetime import timedelta 
+from datetime import date 
 
 
 
@@ -577,7 +578,7 @@ async def informe_semanal(context):
                 brief="Test",
                 aliases=['test'],
                 pass_context=True)
-async def test(context):
+async def testing(context):
 
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
@@ -588,6 +589,12 @@ async def test(context):
     monday=today + timedelta(days=3) 
     key = datetime.date(monday).isocalendar()[1]
     print("Monday week number is: "+str(key))
+    if date.today().weekday() == 4: # 0 is for monday
+        await client.send_message(context.message.channel,key)
+        print(key)
+        key = key - 1
+        print(key)
+        await client.send_message(context.message.channel,key)
 
 
 @client.command(name='Run blacklist and populate clan',
