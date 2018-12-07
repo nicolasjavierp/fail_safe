@@ -547,8 +547,6 @@ async def informe_semanal(context):
         5: ["ᴏᴜʀᴏʙᴏʀᴇᴀ – ʀᴇᴘᴏsᴏ ᴅᴇʟ ᴀғᴇʟɪᴏ","https://cdn.discordapp.com/attachments/508999396835196950/520280560724344862/Reposo_de_Afelio.png"],
         6: ["ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ","https://cdn.discordapp.com/attachments/508999396835196950/520280444277751828/Jardines_de_Esila.png"]
     }
-    today = datetime.now()
-    key = datetime.date(today).isocalendar()[1]
 
     protocol_dict={
         0: ["IKELOS_SMG_v1.0.1 (Subfusil)","https://cdn.discordapp.com/attachments/508999396835196950/520269508728979467/Subfusil.png"],
@@ -557,6 +555,11 @@ async def informe_semanal(context):
         3: ["IKELOS_SG_v1.0.1 (Escopeta),\n IKELOS_SMG_v1.0.1 (Subfusil),\n IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png"],
         4: ["IKELOS_SG_v1.0.1 (Escopeta)","https://cdn.discordapp.com/attachments/508999396835196950/520269571253600271/Escopeta.png"]
     }
+    today = datetime.now()
+    key = datetime.date(today).isocalendar()[1]
+
+    if date.today().weekday() == 0: # 0 is for monday
+        key = key - 1
 
     embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%7][0]+"**", color=0x00ff00)
     #embed = discord.Embed(title="Desafío Ascendente esta semana" , description=cont.format(ascendant_dict[key%7]), color=0x00ff00)
