@@ -15,7 +15,7 @@ from datetime import datetime
 from boto.s3.connection import S3Connection
 import unicodedata
 from urllib.request import urlopen
-from pymongo import MongoClient}
+from pymongo import MongoClient
 from datetime import timedelta  
 
 
