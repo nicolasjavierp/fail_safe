@@ -15,7 +15,8 @@ from datetime import datetime
 from boto.s3.connection import S3Connection
 import unicodedata
 from urllib.request import urlopen
-from pymongo import MongoClient
+from pymongo import MongoClient}
+from datetime import timedelta  
 
 
 
@@ -569,6 +570,24 @@ async def informe_semanal(context):
     #print(protocol_dict[key%5][1])
     embed.set_image(url=protocol_dict[key%5][1])
     await client.send_message(context.message.channel, embed=embed)
+
+
+@client.command(name='Test',
+                description="Test",
+                brief="Test",
+                aliases=['test'],
+                pass_context=True)
+async def test(context):
+
+    today = datetime.now()
+    key = datetime.date(today).isocalendar()[1]
+    print("Todays week number is: "+str(key))
+    sunday=today + timedelta(days=2) 
+    key = datetime.date(sunday).isocalendar()[1]
+    print("Sundays week number is: "+str(key))
+    monday=today + timedelta(days=3) 
+    key = datetime.date(monday).isocalendar()[1]
+    print("Monday week number is: "+str(key))
 
 
 @client.command(name='Run blacklist and populate clan',
