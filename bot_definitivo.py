@@ -597,14 +597,20 @@ async def testing(context):
     monday=today + timedelta(days=3) 
     key = datetime.date(monday).isocalendar()[1]
     print("Monday week number is: "+str(key))
-    if date.today().weekday() == 4: # 0 is for monday
-        await client.send_message(context.message.channel,key)
-        await client.send_message(context.message.author, key)
+
+    my_server = discord.utils.get(client.servers)
+    user_id = context.message.author.id
+    user=my_server.get_member(user_id)
+
+    if date.today().weekday() == 0: # 0 is for monday
+        #await client.send_message(context.message.channel,key)
+        await client.send_message(user, key)
         print(key)
         key = key - 1
         print(key)
         await client.send_message(context.message.channel,key)
-        await client.send_message(context.message.author, key)
+        #await client.send_message(context.message.author, key)
+        await client.send_message(user, key)
 
 
 @client.command(name='Run blacklist and populate clan',
