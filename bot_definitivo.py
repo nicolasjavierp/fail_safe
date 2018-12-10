@@ -150,7 +150,7 @@ async def rol(context):
                 
                 embed = discord.Embed(title="" , description="El Guardian "+str(name)+" ya fue dado de alta y tiene los roles! ", color=0x00ff00)
                 await client.send_message(context.message.channel, embed=embed)
-                #await client.send_message(context.message.author, embed=embed)
+                await client.send_message(user, embed=embed)
             else:
                 user_clan_name = fs.get_PlayerClanName(user_destiny_id)
                 #if user_destiny_id and user_clan_name:
@@ -180,7 +180,7 @@ async def rol(context):
                         
                         embed = discord.Embed(title="" , description=":white_check_mark: **Listo** "+context.message.author.mention+" \n• Ya podes usar todos los canales!", color=0x00ff00)
                         await client.send_message(context.message.channel, embed=embed)
-                        #await client.send_message(context.message.author, embed=embed)
+                        await client.send_message(user, embed=embed)
 
                         #print(type(client.id))
                         #print(client.id)
