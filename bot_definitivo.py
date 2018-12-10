@@ -616,14 +616,13 @@ async def testing(context):
         await client.send_message(user, key)
     
         embed2 = discord.Embed(title="" , description="**Aprovechamos para compentarte que en nuestro discord tenemos 2 bots con varias utilidades.**\n \
-        • **FailSafe:**\n\
-        \t\tBrinda stadisticas y informacion detallada de Destiny 2. Es necesario una registracíon, para eso escribí en el canal #BOTs \n \
+        • __**FailSafe:**__\n\
+        \t\tBrinda stadisticas y informacion detallada de Destiny 2. Es necesario una registracíon, para eso escribí en el canal #BOTs: \n \
         \t\t`!register`\n \
         \t\tLuego con `!help` podes ver el listado de comandos disponibles.\n\
-        • **Bot Definitivo:**\n\
-        \t\tEntrega información sobre las actividades semanales tipicas, escribí\n\
-        \t\t`+semana` \n\
-        \t\ten el canal #General", color=0x00ff00)
+        • __**Bot Definitivo:**__\n\
+        \t\tEntrega información sobre las actividades semanales tipicas, escribí en el canal #General:\n\
+        \t\t`+semana` \n", color=0x00ff00)
         await client.send_message(context.message.channel, embed=embed2)
 
 
