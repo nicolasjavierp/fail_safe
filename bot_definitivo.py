@@ -180,12 +180,15 @@ async def rol(context):
                         
                         embed = discord.Embed(title="" , description=":white_check_mark: **Listo** "+context.message.author.mention+" \n• Ya podes usar todos los canales!", color=0x00ff00)
                         await client.send_message(context.message.channel, embed=embed)
+                        
                         await client.send_message(user, embed=embed)
+
 
                         #print(type(client.id))
                         #print(client.id)
                         #print(type(context.message.author.id))
                         #print(context.message.author)
+                        
                         member=my_server.get_member(context.message.author.id)
                         await client.change_nickname(member, str(real_battletag)+" ["+clan_alias+"]")
                     else:
@@ -611,6 +614,16 @@ async def testing(context):
         await client.send_message(context.message.channel,key)
         #await client.send_message(context.message.author, key)
         await client.send_message(user, key)
+    
+        embed2 = discord.Embed(title="" , description="Aprovechamos para compentarte que en nuestro discord tenemos 2 bots con varias utilidades.\n \
+        • **FailSafe:**\n\
+          Brinda stadisticas y informacion detallada de Destiny 2. Es necesario una registracíon, para eso escribí en el canal #BOTs \n \
+          `!register`\n \
+          Luego con `!help` podes ver el listado de comandos disponibles.\n\
+        • **Bot Definitivo:**\n\
+          Entrega información sobre las actividades semanales tipicas, escribí\n\
+          `+semana` en el canal #General", color=0x00ff00)
+        await client.send_message(context.message.channel, embed=embed2)
 
 
 @client.command(name='Run blacklist and populate clan',
