@@ -607,15 +607,15 @@ async def testing(context):
 
     if date.today().weekday() == 0: # 0 is for monday
         #await client.send_message(context.message.channel,key)
-        await client.send_message(user, key)
-        print(key)
+        #await client.send_message(user, key)
+        #print(key)
         key = key - 1
-        print(key)
-        await client.send_message(context.message.channel,key)
+        #print(key)
+        #await client.send_message(context.message.channel,key)
         #await client.send_message(context.message.author, key)
-        await client.send_message(user, key)
+        #await client.send_message(user, key)
     
-        embed2 = discord.Embed(title="" , description="**Aprovechamos para compentarte que en nuestro discord tenemos 2 bots con varias utilidades.**\n \
+        embed2 = discord.Embed(title="" , description="**Aprovechamos para comentarte que en nuestro discord tenemos 2 bots con varias utilidades.**\n \
         \n\
         • __**FailSafe:**__\n\
         \t\tBrinda stadisticas y informacion detallada de Destiny 2. Es necesario una registracíon, para eso escribí en el canal #BOTs: \n \
@@ -626,6 +626,7 @@ async def testing(context):
         \n\
         • __**Bot Definitivo:**__\n\
         \t\tEntrega información sobre las actividades semanales tipicas, escribí en el canal #General:\n\
+        \n\
         \t\t`+semana` \n", color=0x00ff00)
         await client.send_message(context.message.channel, embed=embed2)
 
