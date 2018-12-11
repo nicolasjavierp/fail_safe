@@ -563,13 +563,13 @@ async def informe_semanal(context):
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
 
-    if date.today().weekday() == 0 and today.hour >= 14: # 0 is for monday
+    if date.today().weekday() == 0: #and today.hour >= 14: # 0 is for monday
         key = key - 1
         if key<0:
             key = 52
     print(today)
     print("Week Number: "+str(key))
-    if today.hour >= 14:
+    if today.hour < 14-3:
         key = key - 1
         if key<0:
             key = 0
