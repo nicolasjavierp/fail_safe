@@ -567,7 +567,7 @@ async def informe_semanal(context):
         key = key - 1
         if key<0:
             key = 52
-
+    print(today)
     print("Week Number: "+str(key))
     if today.hour >= 14:
         key = key - 1
