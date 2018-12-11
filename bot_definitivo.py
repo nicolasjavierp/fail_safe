@@ -182,7 +182,20 @@ async def rol(context):
                         await client.send_message(context.message.channel, embed=embed)
                         await client.send_message(user, embed=embed)
 
-
+                        embed2 = discord.Embed(title="" , description="**Aprovechamos para comentarte que en nuestro discord tenemos 2 bots con varias utilidades.**\n \
+                        \n\
+                        • __**FailSafe:**__\n\
+                        \t\tBrinda stadisticas y informacion detallada de Destiny 2. Es necesario una registracíon, para eso escribí en el canal #BOTs: \n \
+                        \n\
+                        \t\t`!register`\n \
+                        \n\
+                        \t\tLuego con `!help` podes ver el listado de comandos disponibles.\n\
+                        \n\
+                        • __**Bot Definitivo:**__\n\
+                        \t\tEntrega información sobre las actividades semanales tipicas, escribí en el canal #General:\n\
+                        \n\
+                        \t\t`+semana`\n ", color=0x00ff00)
+                        await client.send_message(user, embed=embed2)
                         #print(type(client.id))
                         #print(client.id)
                         #print(type(context.message.author.id))
@@ -428,10 +441,11 @@ async def on_ready():
                 pass_context=True)
 async def ayuda(context):
     msg = 'Hola {0.author.mention} estos son mis comandos : \n \
-    +ayuda: Imprime este mensage \n \
-    +pro (Calendario Armas Protocolo)\n\
-    +asc (Calendario Desafío Ascendente)\n\
-    +rol: auto-otorga roles a la gente que esta en el clan Escusara 2,3,4,5 , ejemplo: +rol CNorris#2234'.format(context.message)
+    `+ayuda` Imprime este mensage \n \
+    `+pro` (Calendario Armas Protocolo)\n\
+    `+asc` (Calendario Desafío Ascendente)\n\
+    `+rol` auto-otorga roles a la gente que esta en el clan Escusara 2,3,4,5 , ejemplo: +rol CNorris#2234\n\
+    ´+semana´ informa actividades tipica de esa semana'.format(context.message)
     await client.send_message(context.message.channel, msg )
 
 
