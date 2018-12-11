@@ -154,18 +154,10 @@ async def rol(context):
             else:
                 user_clan_name = fs.get_PlayerClanName(user_destiny_id)
                 #if user_destiny_id and user_clan_name:
+                is_regestered_in_clan = False
+                is_regestered_in_discord = False
                 if user_clan_name:
                     if "Escuadra" in user_clan_name:
-                        addroles = [role_Clan, role_DJ]
-                        await client.add_roles(user, *addroles)
-                        if not is_discord_id_in_db(context.message.author.id, discord_users):
-                            print(real_battletag + " is not in discord_users_DB!!")
-                            my_dict = {}
-                            my_dict = {"discord_id":user.id, "name":user.name, "nick":user.nick, "last_activity":""}
-                            await push_discord_user_db(my_dict, discord_users)
-                        else:
-                            print(context.message.author.name + " is in users.json!!")
-                            pass
                         if not is_clanmate_in_db(real_battletag, clanmates):
                             print(real_battletag + " is not in clan_DB!!")
                             name = real_battletag.split('#')[0]
@@ -174,23 +166,41 @@ async def rol(context):
                             await push_clanmate_to_db(my_dict, clanmates)
                         else:
                             print(real_battletag + " is in clan.json!!")
+                            is_regestered_in_clan = True
                             pass
-                        clan_alias=user_clan_name[0]+user_clan_name[-1]
-                        
-                        
-                        embed = discord.Embed(title="" , description=":white_check_mark: **Listo** "+context.message.author.mention+" \n• Ya podes usar todos los canales!", color=0x00ff00)
-                        await client.send_message(context.message.channel, embed=embed)
-                        
-                        await client.send_message(user, embed=embed)
-
-
-                        #print(type(client.id))
-                        #print(client.id)
-                        #print(type(context.message.author.id))
-                        #print(context.message.author)
-                        
-                        member=my_server.get_member(context.message.author.id)
-                        await client.change_nickname(member, str(real_battletag)+" ["+clan_alias+"]")
+                        if not is_discord_id_in_db(context.message.author.id, discord_users):
+                            print(real_battletag + " is not in discord_users_DB!!")
+                            my_dict = {}
+                            my_dict = {"discord_id":user.id, "name":user.name, "nick":user.nick, "last_activity":""}
+                            await push_discord_user_db(my_dict, discord_users)
+                        else:
+                            print(context.message.author.name + " is in users.json!!")
+                            is_regestered_in_discord = True
+                        #if not is_clanmate_in_db(real_battletag, clanmates):
+                        #    print(real_battletag + " is not in clan_DB!!")
+                        #    name = real_battletag.split('#')[0]
+                        #    my_dict = {}
+                        #    my_dict = {"battletag":real_battletag, "clan":user_clan_name, "nick":name}
+                        #    await push_clanmate_to_db(my_dict, clanmates)
+                        #else:
+                        #    print(real_battletag + " is in clan.json!!")
+                        #    pass
+                        if is_regestered_in_clan:
+                            embed = discord.Embed(title="" , description="El Guardian "+str(read_param_from_aux)+" ya fue dado de alta! ", color=0x00ff00)
+                            await client.send_message(context.message.channel, embed=embed)
+                        else:
+                            addroles = [role_Clan, role_DJ]
+                            await client.add_roles(user, *addroles)
+                            clan_alias=user_clan_name[0]+user_clan_name[-1]
+                            embed = discord.Embed(title="" , description=":white_check_mark: **Listo** "+context.message.author.mention+" \n• Ya podes usar todos los canales!", color=0x00ff00)
+                            await client.send_message(context.message.channel, embed=embed)
+                            await client.send_message(user, embed=embed)
+                            #print(type(client.id))
+                            #print(client.id)
+                            #print(type(context.message.author.id))
+                            #print(context.message.author)
+                            member=my_server.get_member(context.message.author.id)
+                            await client.change_nickname(member, str(real_battletag)+" ["+clan_alias+"]")
                     else:
                         embed = discord.Embed(title="" , description=":warning: "+context.message.author.mention+" **Parece que no estas en nuestro clan** \n• Unite y volve a intentarlo!", color=0x00ff00)
                         await client.send_message(context.message.channel, embed=embed)
