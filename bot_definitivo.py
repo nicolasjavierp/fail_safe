@@ -563,14 +563,16 @@ async def informe_semanal(context):
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
 
-    if date.today().weekday() == 0: # 0 is for monday
+    if date.today().weekday() == 0 and today.hour >= 14: # 0 is for monday
         key = key - 1
         if key<0:
             key = 52
-    print(today)
-    print(key)
+            
+    print("Week Number: "+str(key))
     if today.hour >= 14:
-        print(today.hour)
+        key = key - 1
+        print("Week Number: "+str(key))
+        #print(today.hour)
 
     embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%7][0]+"**", color=0x00ff00)
     #embed = discord.Embed(title="Desafío Ascendente esta semana" , description=cont.format(ascendant_dict[key%7]), color=0x00ff00)
