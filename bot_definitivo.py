@@ -637,8 +637,7 @@ async def testing(context):
     • __**Bot Definitivo:**__\n\
     \t\tEntrega información sobre las actividades semanales tipicas, escribí en el canal #General:\n\
     \n\
-    \t\t`+semana`\n\
-    \t\t`+pro` \n", color=0x00ff00)
+    \t\t`+semana`\n", color=0x00ff00)
     await client.send_message(context.message.channel, embed=embed2)
 
 
@@ -925,15 +924,15 @@ async def calendario_protocolo(context):
 ᴅɪᴄɪᴇᴍʙʀᴇ   11     X | 0 | X \n\
 ᴅɪᴄɪᴇᴍʙʀᴇ   18     X | X | 0 \n\
 ᴅɪᴄɪᴇᴍʙʀᴇ   25     0 | 0 | 0 \n\
-ᴇɴᴇʀᴏ        1    0 | 0 | 0 \n\
-ᴇɴᴇʀᴏ        8    0 | X | X        ┌────────────────────┐\n\
-ᴇɴᴇʀᴏ       15    X | 0 | X        │ (E) ᴇsᴄᴏᴘᴇᴛᴀ        │\n\
-ᴇɴᴇʀᴏ       22    X | X | 0        │ (S) sᴜʙғᴜsɪʟ        │\n\
-ᴇɴᴇʀᴏ       29    0 | 0 | 0        │ (F) ғʀᴀɴᴄᴏᴛɪʀᴀᴅᴏʀ   │\n\
-ғᴇʙʀᴇʀᴏ      5    0 | 0 | 0        ├────────────────────┤\n\
-ғᴇʙʀᴇʀᴏ     12    0 | X | X        │ (0) ᴅɪsᴘᴏɴɪʙʟᴇ       │\n\
-ғᴇʙʀᴇʀᴏ     19    X | 0 | X        │ (X) ɴᴏ ᴅɪsᴘᴏɴɪʙʟᴇ    │\n\
-ғᴇʙʀᴇʀᴏ     26    X | X | 0        └────────────────────┘\n\
+ᴇɴᴇʀᴏ        1     0 | 0 | 0 \n\
+ᴇɴᴇʀᴏ        8     0 | X | X        ┌────────────────────┐\n\
+ᴇɴᴇʀᴏ       15     X | 0 | X        │ (E) ᴇsᴄᴏᴘᴇᴛᴀ       │\n\
+ᴇɴᴇʀᴏ       22     X | X | 0        │ (S) sᴜʙғᴜsɪʟ       │\n\
+ᴇɴᴇʀᴏ       29     0 | 0 | 0        │ (F) ғʀᴀɴᴄᴏᴛɪʀᴀᴅᴏʀ  │\n\
+ғᴇʙʀᴇʀᴏ      5     0 | 0 | 0        ├────────────────────┤\n\
+ғᴇʙʀᴇʀᴏ     12     0 | X | X        │ (0) ᴅɪsᴘᴏɴɪʙʟᴇ      │\n\
+ғᴇʙʀᴇʀᴏ     19     X | 0 | X        │ (X) ɴᴏ ᴅɪsᴘᴏɴɪʙʟᴇ   │\n\
+ғᴇʙʀᴇʀᴏ     26     X | X | 0        └────────────────────┘\n\
 ```" 
     await client.send_message(context.message.channel, msg)
 
