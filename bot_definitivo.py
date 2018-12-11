@@ -580,7 +580,9 @@ async def informe_semanal(context):
         #print(today.hour)
 
     three_hours_from_now = datetime.now() + timedelta(hours=3)
-    if three_hours_from_now.hour < 17:
+    print("3 Hors from now H:"+str(three_hours_from_now.hour))
+
+    if three_hours_from_now.hour > 17:
         print("AFTER RESET !!")
         print("3 hours from"+str(today))
         #key = key - 1
@@ -634,20 +636,21 @@ async def testing(context):
         #await client.send_message(context.message.author, key)
         #await client.send_message(user, key)
     
-        embed2 = discord.Embed(title="" , description="**Aprovechamos para comentarte que en nuestro discord tenemos 2 bots con varias utilidades.**\n \
-        \n\
-        • __**FailSafe:**__\n\
-        \t\tBrinda stadisticas y informacion detallada de Destiny 2. Es necesario una registracíon, para eso escribí en el canal #BOTs: \n \
-        \n\
-        \t\t`!register`\n \
-        \n\
-        \t\tLuego con `!help` podes ver el listado de comandos disponibles.\n\
-        \n\
-        • __**Bot Definitivo:**__\n\
-        \t\tEntrega información sobre las actividades semanales tipicas, escribí en el canal #General:\n\
-        \n\
-        \t\t`+semana` \n", color=0x00ff00)
-        await client.send_message(context.message.channel, embed=embed2)
+    embed2 = discord.Embed(title="" , description="**Aprovechamos para comentarte que en nuestro discord tenemos 2 bots con varias utilidades.**\n \
+    \n\
+    • __**FailSafe:**__\n\
+    \t\tBrinda stadisticas y informacion detallada de Destiny 2. Es necesario una registracíon, para eso escribí en el canal #BOTs: \n \
+    \n\
+    \t\t`!register`\n \
+    \n\
+    \t\tLuego con `!help` podes ver el listado de comandos disponibles.\n\
+    \n\
+    • __**Bot Definitivo:**__\n\
+    \t\tEntrega información sobre las actividades semanales tipicas, escribí en el canal #General:\n\
+    \n\
+    \t\t`+semana`\n\
+    \t\t`+pro` \n", color=0x00ff00)
+    await client.send_message(context.message.channel, embed=embed2)
 
 
 @client.command(name='Run blacklist and populate clan',
