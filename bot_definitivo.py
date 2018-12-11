@@ -570,7 +570,8 @@ async def informe_semanal(context):
     print(today)
     print("Week Number: "+str(key))
         
-    if today.hour > 17:
+    if today.hour < 17:
+        print("AFTER RESET !!")
         key = key - 1
         if key<0:
             key = 0
@@ -578,7 +579,8 @@ async def informe_semanal(context):
         #print(today.hour)
 
     three_hours_from_now = datetime.now() + timedelta(hours=3)
-    if three_hours_from_now.hour > 17:
+    if three_hours_from_now.hour < 17:
+        print("AFTER RESET !!")
         print("3 hours from"+str(today))
         key = key - 1
         if key<0:
