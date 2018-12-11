@@ -569,13 +569,21 @@ async def informe_semanal(context):
             key = 52
     print(today)
     print("Week Number: "+str(key))
-    
+        
     if today.hour > 17:
         key = key - 1
         if key<0:
             key = 0
         print("Week Number: "+str(key))
         #print(today.hour)
+
+    three_hours_from_now = datetime.now() + timedelta(hours=3)
+    if three_hours_from_now.hour > 17:
+        print("3 hours from"+str(today))
+        key = key - 1
+        if key<0:
+            key = 0
+        print("Week Number: "+str(key))
 
     embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%7][0]+"**", color=0x00ff00)
     #embed = discord.Embed(title="Desafío Ascendente esta semana" , description=cont.format(ascendant_dict[key%7]), color=0x00ff00)
