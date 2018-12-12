@@ -616,8 +616,8 @@ async def informe_semanal(context):
                 aliases=['test'],
                 pass_context=True)
 async def testing(context):
-    auth=tweepy.OAuthHandler(os.environ['BUNGIE_API_KEY'],os.environ['BUNGIE_API_KEY'])
-    auth.set_access_token(os.environ['BUNGIE_API_KEY'],os.environ['BUNGIE_API_KEY'])
+    auth=tweepy.OAuthHandler(os.environ['TWITTER_API_KEY'],os.environ['TWITTER_API_SECRET'])
+    auth.set_access_token(os.environ['TWITTER_ACCESS_TOKEN'],os.environ['TWITTER_ACCESS_SECRET'])
     api = tweepy.API(auth)
     tweets = api.user_timeline("BungieHelp",page=1)
     for tweet in tweets:
