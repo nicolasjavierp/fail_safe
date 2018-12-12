@@ -19,6 +19,8 @@ from pymongo import MongoClient
 from datetime import timedelta 
 from datetime import date 
 
+import tweepy
+
 
 
 #4 Heroku
@@ -614,46 +616,15 @@ async def informe_semanal(context):
                 aliases=['test'],
                 pass_context=True)
 async def testing(context):
+    auth=tweepy.OAuthHandler(os.environ['BUNGIE_API_KEY'],os.environ['BUNGIE_API_KEY'])
+    auth.set_access_token(os.environ['BUNGIE_API_KEY'],os.environ['BUNGIE_API_KEY'])
+    api = tweepy.API(auth)
+    tweets = api.user_timeline("BungieHelp",page=1)
+    for tweet in tweets:
+        print(tweet)
+        await client.send_message(context.message.channel, tweet)
 
-    today = datetime.now()
-    key = datetime.date(today).isocalendar()[1]
-    print("Todays week number is: "+str(key))
-    sunday=today + timedelta(days=2) 
-    key = datetime.date(sunday).isocalendar()[1]
-    print("Sundays week number is: "+str(key))
-    monday=today + timedelta(days=3) 
-    key = datetime.date(monday).isocalendar()[1]
-    print("Monday week number is: "+str(key))
-
-    my_server = discord.utils.get(client.servers)
-    user_id = context.message.author.id
-    user=my_server.get_member(user_id)
-
-    if date.today().weekday() == 0: # 0 is for monday
-        #await client.send_message(context.message.channel,key)
-        #await client.send_message(user, key)
-        #print(key)
-        key = key - 1
-        #print(key)
-        #await client.send_message(context.message.channel,key)
-        #await client.send_message(context.message.author, key)
-        #await client.send_message(user, key)
     
-    embed2 = discord.Embed(title="" , description="**Aprovechamos para comentarte que en nuestro discord tenemos 2 bots con varias utilidades.**\n \
-    \n\
-    • __**FailSafe:**__\n\
-    \t\tBrinda stadisticas y informacion detallada de Destiny 2. Es necesario una registracíon, para eso escribí en el canal #BOTs: \n \
-    \n\
-    \t\t`!register`\n \
-    \n\
-    \t\tLuego con `!help` podes ver el listado de comandos disponibles.\n\
-    \n\
-    • __**Bot Definitivo:**__\n\
-    \t\tEntrega información sobre las actividades semanales tipicas, escribí en el canal #General:\n\
-    \n\
-    \t\t`+semana`\n", color=0x00ff00)
-    await client.send_message(context.message.channel, embed=embed2)
-
 
 @client.command(name='Run blacklist and populate clan',
                 description="Genera la lista negra y actualiza la db del clan",
@@ -962,13 +933,21 @@ async def list_servers():
 
 
 
+async def get_server_status_tweets():
+    await client.wait_until_ready()
+    while not client.is_closed:
+        auth=tweepy.OAuthHandler(os.environ['BUNGIE_API_KEY'],os.environ['BUNGIE_API_KEY'])
+        auth.set_access_token(os.environ['BUNGIE_API_KEY'],os.environ['BUNGIE_API_KEY'])
+        api = tweepy.API(auth)
+        tweets = api.user_timeline("BungieHelp",page=1)
+        for tweet in tweets:
+            print(tweet)
+        await asyncio.sleep(3600)
 
-
-
-
-
+        
 
 
 
 #client.loop.create_task(list_servers())
+#client.loop.create_task(get_server_status_tweets())
 client.run(BOT_TOKEN)
