@@ -616,13 +616,14 @@ async def informe_semanal(context):
                 aliases=['test'],
                 pass_context=True)
 async def testing(context):
-    auth=tweepy.OAuthHandler(os.environ['TWITTER_API_KEY'],os.environ['TWITTER_API_SECRET'])
-    auth.set_access_token(os.environ['TWITTER_ACCESS_TOKEN'],os.environ['TWITTER_ACCESS_SECRET'])
+    auth=tweepy.OAuthHandler(TWITTER_API_KEY,TWITTER_API_SECRET)
+    auth.set_access_token(TWITTER_ACCESS_TOKEN,TWITTER_ACCESS_SECRET)
     api = tweepy.API(auth)
     tweets = api.user_timeline("BungieHelp",page=1)
     for tweet in tweets:
-        print(tweet)
-        await client.send_message(context.message.channel, tweet)
+            if "maintenance has begun" in tweet.text:
+                    print(tweet.text)
+                    await client.send_message(context.message.channel, tweet.text)   
 
     
 

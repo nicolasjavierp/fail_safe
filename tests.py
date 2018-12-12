@@ -9,6 +9,8 @@ import pymongo
 from pymongo import MongoClient
 from datetime import datetime
 import time
+import tweepy
+
 
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 my_config_file = os.path.join(THIS_FOLDER, 'config.json')
@@ -25,6 +27,22 @@ db = client.get_database("bot_definitivo")
 clanmates = db.clan_members
 blacklisters = db.blacklist
 discord_users = db.discord_users
+
+TWITTER_ACCESS_SECRET='OrTWgB5Bt4bOjZXPkR6BeByObrqh91azBTy4ebmgZOToB'
+TWITTER_ACCESS_TOKEN='279556940-PlRMbi9byLOw9dVBGDEKh5znlUh38Bbu7eQKOrAz'
+TWITTER_API_KEY='20rgToegag5drInpyJwsiPvN6'
+TWITTER_API_SECRET='B4gvUPr9KHKHdnD9btgdLlkRH8yFjhpyewSS7EJECXDOCnzjbX'
+
+
+auth=tweepy.OAuthHandler(TWITTER_API_KEY,TWITTER_API_SECRET)
+auth.set_access_token(TWITTER_ACCESS_TOKEN,TWITTER_ACCESS_SECRET)
+api = tweepy.API(auth)
+tweets = api.user_timeline("BungieHelp",page=1)
+for tweet in tweets:
+        if "maintenance has begun" in tweet.text:
+                print(tweet.text)
+        #await client.send_message(context.message.channel, tweet)
+
 
 
 
@@ -65,45 +83,6 @@ def update_Discord_User(record, updates):
                                 }, upsert=False)
 
 
-
-for i in get_all_Discord_Users_by_last_activity():
-        print(i)
-
-exit(0)
-
-print(get_one_Clanmate("Ancona31#1695"))
-print(is_Clanmate_in_db("Ancona31#1695"))
-print(is_Clanmate_in_db("Ancona30001#1695"))
-
-print("///////////////////////////////")
-
-print(get_one_Discord_User("376055309657047040"))
-print(is_Discord_User_in_db("376055309657047040"))
-print(is_Discord_User_in_db("3760553096570470400000"))
-
-print("///////////////////////////////")
-
-currentTime = datetime.now()
-
-update = {
-        "last_activity": currentTime
-}
-original_record = get_one_Discord_User("376055309657047040")
-update_Discord_User(original_record,update)
-print(get_one_Discord_User("376055309657047040"))
-
-time.sleep(5)
-
-currentTime = datetime.now()
-
-update = {
-        "last_activity": currentTime
-}
-original_record = get_one_Discord_User("198516601497059328")
-update_Discord_User(original_record,update)
-print(get_one_Discord_User("198516601497059328"))
-
-exit(0)
 
 
 
