@@ -936,8 +936,8 @@ async def list_servers():
 async def get_server_status_tweets():
     await client.wait_until_ready()
     while not client.is_closed:
-        auth=tweepy.OAuthHandler(os.environ['BUNGIE_API_KEY'],os.environ['BUNGIE_API_KEY'])
-        auth.set_access_token(os.environ['BUNGIE_API_KEY'],os.environ['BUNGIE_API_KEY'])
+        auth=tweepy.OAuthHandler(os.environ['TWITTER_API_KEY'],os.environ['TWITTER_API_SECRET'])
+        auth.set_access_token(os.environ['TWITTER_ACCESS_TOKEN'],os.environ['TWITTER_ACCESS_SECRET'])
         api = tweepy.API(auth)
         tweets = api.user_timeline("BungieHelp",page=1)
         for tweet in tweets:
