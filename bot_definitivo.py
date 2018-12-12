@@ -621,7 +621,7 @@ async def testing(context):
     api = tweepy.API(auth)
     tweets = api.user_timeline("BungieHelp",page=1)
     for tweet in tweets:
-            if "maintenance has begun" in tweet.text:
+            if "maintenance has begun" in tweet.text and "backend" not in tweet.text:
                     print(tweet.text)
                     await client.send_message(context.message.channel, tweet.text)   
 
