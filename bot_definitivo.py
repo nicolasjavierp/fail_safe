@@ -616,9 +616,10 @@ async def informe_semanal(context):
                 aliases=['test'],
                 pass_context=True)
 async def testing(context):
-    for i in client.channels:
-        print(dir(i))
-        print(i)
+    print(dir(client))
+    #for i in client.channels:
+    #    print(dir(i))
+    #    print(i)
 
 
 
