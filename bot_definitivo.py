@@ -640,7 +640,8 @@ async def testing(context):
                 #print(tweet.created_at)
                 status = await get_server_status(server_status)
                 db_date = datetime.strptime(status["last_maintenance"], '%Y-%m-%d %H:%M:%S')
-                if db_date < tweet.created_at:
+                print("DatabaseData = "+str(db_date)+ " ||  Tweet time = "+str(tweet.created_at)+ " || Real Tweet time = "+str(tweet.created_at - timedelta(hours=3)))
+                if db_date < tweet.created_at - timedelta(hours=3):
                     print("New Maintenance DETECTED !!")
                     await client.send_message(context.message.channel, tweet.text)   
                 else:
@@ -650,7 +651,7 @@ async def testing(context):
                 #print(tweet.created_at)
                 #await update_server_status(server_status)
                 await client.send_message(context.message.channel, tweet.text)
-            if "FIG, GRAPE" in tweet.text.upper():
+            if "ELEVATED FIG, GRAPE" in tweet.text.upper():
                 print("Last Update!!")
                 print(tweet.created_at)
 
