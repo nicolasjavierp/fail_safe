@@ -632,7 +632,7 @@ async def testing(context):
 
     tweets = api.user_timeline("BungieHelp",page=1)
     for tweet in tweets:
-            if "maintenance has begun" in tweet.text and "backend" not in tweet.text:
+            if "MAINTENANCE HAS BEGUN" in tweet.text.upper() and "BACKEND" not in tweet.text.upper():
                     print(tweet.text)
                     print(tweet.created_at)
                     await client.send_message(context.message.channel, tweet.text)   
@@ -819,7 +819,7 @@ def update_discord_user(record, updates, discord_users):
 ######
 
 async def get_server_status(server_status):
-    document = server_status.find({})
+    document = server_status.find_one()
     await asyncio.sleep(0.01)
     return document
 
