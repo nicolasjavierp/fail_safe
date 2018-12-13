@@ -623,6 +623,7 @@ async def testing(context):
     for tweet in tweets:
             if "maintenance has begun" in tweet.text and "backend" not in tweet.text:
                     print(tweet.text)
+                    print(tweet.created_at)
                     await client.send_message(context.message.channel, tweet.text)   
 
     
