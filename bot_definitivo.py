@@ -647,8 +647,12 @@ async def testing(context):
             if "HAS OFFICIALLY CONCLUDED" in tweet.text.upper() and db_date < tweet.created_at:
                 #print(tweet.text)
                 #print(tweet.created_at)
-                #await update_server_status(server_status)
                 print("Maintenance FINISHED !!")
+                update = {
+                    "last_maintenance": tweet.created_at
+                }
+                await update_server_status(status, update, server_status)
+                print("Updated Record !!")
                 await client.send_message(context.message.channel, tweet.text)
 
 
@@ -829,6 +833,13 @@ async def get_server_status(server_status):
     document = server_status.find_one()
     await asyncio.sleep(0.01)
     return document
+
+
+def update_server_status(record, updates, server_status):
+        server_status.update_one({'_id': record['_id']},{
+                                '$set': updates
+                                }, upsert=False)
+
 
 #//////////////////////////////////////////////////////////////////////
 #//////////////////////////////////////////////////////////////////////
