@@ -616,47 +616,9 @@ async def informe_semanal(context):
                 aliases=['test'],
                 pass_context=True)
 async def testing(context):
-    auth=tweepy.OAuthHandler(os.environ['TWITTER_API_KEY'],os.environ['TWITTER_API_SECRET'])
-    auth.set_access_token(os.environ['TWITTER_ACCESS_TOKEN'],os.environ['TWITTER_ACCESS_SECRET'])
-    api = tweepy.API(auth)
-
-    #4 tests
-    #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
-    #4 Heroku
-    MONGODB_URI = os.environ['MONGO_DB_MLAB']
-    #END Heroku
-    
-    cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
-    db = cursor.get_database("bot_definitivo")
-    server_status = db.server_status
-
-    tweets = api.user_timeline("BungieHelp",page=1)
-    for tweet in tweets:
-        if "MAINTENANCE" in tweet.text.upper():
-            status = await get_server_status(server_status)
-            #db_date = datetime.strptime(status["last_maintenance"], '%Y-%m-%d %H:%M:%S')
-            db_date=status["last_maintenance"]
-            if "HAS BEGUN" in tweet.text.upper() and "BACKEND" not in tweet.text.upper():
-                #print(tweet.text)
-                #print(tweet.created_at - timedelta(hours=3))
-                print("DatabaseData = "+str(db_date)+ " ||  Tweet time = "+str(tweet.created_at)+ " || Argentina Tweet time = "+str(tweet.created_at - timedelta(hours=3)))
-                if db_date < tweet.created_at:# - timedelta(hours=3):
-                    print("New Maintenance DETECTED !!")
-                    await client.send_message(context.message.channel, tweet.text)   
-                else:
-                    print("No new Maintenance!!")
-            if "HAS OFFICIALLY CONCLUDED" in tweet.text.upper() and db_date < tweet.created_at:
-                #print(tweet.text)
-                #print(tweet.created_at)
-                print("Maintenance FINISHED !!")
-                update = {
-                    "last_maintenance": tweet.created_at
-                }
-                await update_server_status(status, update, server_status)
-                print("Updated Record !!")
-                await client.send_message(context.message.channel, tweet.text)
-            else:
-                print("No new Server updates !!")
+    for i in client.channels:
+        print(dir(i))
+        print(i)
 
 
 
@@ -989,10 +951,45 @@ async def get_server_status_tweets():
         auth=tweepy.OAuthHandler(os.environ['TWITTER_API_KEY'],os.environ['TWITTER_API_SECRET'])
         auth.set_access_token(os.environ['TWITTER_ACCESS_TOKEN'],os.environ['TWITTER_ACCESS_SECRET'])
         api = tweepy.API(auth)
+
+        #4 tests
+        #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
+        #4 Heroku
+        MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        #END Heroku
+        
+        cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+        db = cursor.get_database("bot_definitivo")
+        server_status = db.server_status
+
         tweets = api.user_timeline("BungieHelp",page=1)
         for tweet in tweets:
-            print(tweet)
-        await asyncio.sleep(3600)
+            if "MAINTENANCE" in tweet.text.upper():
+                status = await get_server_status(server_status)
+                #db_date = datetime.strptime(status["last_maintenance"], '%Y-%m-%d %H:%M:%S')
+                db_date=status["last_maintenance"]
+                if "HAS BEGUN" in tweet.text.upper() and "BACKEND" not in tweet.text.upper():
+                    #print(tweet.text)
+                    #print(tweet.created_at - timedelta(hours=3))
+                    #print("DatabaseData = "+str(db_date)+ " ||  Tweet time = "+str(tweet.created_at)+ " || Argentina Tweet time = "+str(tweet.created_at - timedelta(hours=3)))
+                    if db_date < tweet.created_at:# - timedelta(hours=3):
+                        print("New Maintenance DETECTED !!")
+                        #await client.send_message(context.message.channel, tweet.text)   
+                    else:
+                        print("No new Maintenance!!")
+                if "HAS OFFICIALLY CONCLUDED" in tweet.text.upper() and db_date < tweet.created_at:
+                    #print(tweet.text)
+                    #print(tweet.created_at)
+                    print("Maintenance FINISHED !!")
+                    update = {
+                        "last_maintenance": tweet.created_at
+                    }
+                    await update_server_status(status, update, server_status)
+                    print("Updated Record !!")
+                    #await client.send_message(context.message.channel, tweet.text)
+            else:
+                print("No new Server updates !!")
+            await asyncio.sleep(900)
 
         
 
