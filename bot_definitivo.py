@@ -636,7 +636,9 @@ async def testing(context):
                     print(tweet.text)
                     print(tweet.created_at)
                     await client.send_message(context.message.channel, tweet.text)   
-                    status = get_server_status(server_status)
+                    status = await get_server_status(server_status)
+                    print(status.last_maintenance)
+                    print(tweet.created_at)
                     if status.last_maintenance < tweet.created_at:
                         print("New Maintenance DETECTED !!")
                     else:
