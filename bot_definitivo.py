@@ -634,10 +634,10 @@ async def testing(context):
     for tweet in tweets:
             #status = await get_server_status(server_status)
             #db_last_update = datetime.strptime(status["last_update"], '%Y-%m-%d %H:%M:%S')
-            #if db_date < tweet.created_at:
+            #if db_date < tweet.created_at - timedelta(hours=3):
             if "MAINTENANCE HAS BEGUN" in tweet.text.upper() and "BACKEND" not in tweet.text.upper():
                 #print(tweet.text)
-                #print(tweet.created_at)
+                #print(tweet.created_at - timedelta(hours=3))
                 status = await get_server_status(server_status)
                 db_date = datetime.strptime(status["last_maintenance"], '%Y-%m-%d %H:%M:%S')
                 print("DatabaseData = "+str(db_date)+ " ||  Tweet time = "+str(tweet.created_at)+ " || Real Tweet time = "+str(tweet.created_at - timedelta(hours=3)))
@@ -648,12 +648,12 @@ async def testing(context):
                     print("No new Maintenance")
             if "MAINTENANCE HAS OFFICIALLY CONCLUDED" in tweet.text.upper():
                 #print(tweet.text)
-                #print(tweet.created_at)
+                #print(tweet.created_at - timedelta(hours=3))
                 #await update_server_status(server_status)
                 await client.send_message(context.message.channel, tweet.text)
             if "ELEVATED FIG, GRAPE" in tweet.text.upper():
                 print("Last Update!!")
-                print(tweet.created_at)
+                print(tweet.created_at - timedelta(hours=3))
 
 
 
