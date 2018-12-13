@@ -634,7 +634,8 @@ async def testing(context):
     for tweet in tweets:
         if "MAINTENANCE" in tweet.text.upper():
             status = await get_server_status(server_status)
-            db_date = datetime.strptime(status["last_maintenance"], '%Y-%m-%d %H:%M:%S')
+            #db_date = datetime.strptime(status["last_maintenance"], '%Y-%m-%d %H:%M:%S')
+            db_date=status["last_maintenance"]
             if "HAS BEGUN" in tweet.text.upper() and "BACKEND" not in tweet.text.upper():
                 #print(tweet.text)
                 #print(tweet.created_at - timedelta(hours=3))
@@ -654,6 +655,8 @@ async def testing(context):
                 await update_server_status(status, update, server_status)
                 print("Updated Record !!")
                 await client.send_message(context.message.channel, tweet.text)
+            else:
+                print("No new Server updates !!")
 
 
 
