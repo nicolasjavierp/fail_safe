@@ -619,12 +619,29 @@ async def testing(context):
     auth=tweepy.OAuthHandler(os.environ['TWITTER_API_KEY'],os.environ['TWITTER_API_SECRET'])
     auth.set_access_token(os.environ['TWITTER_ACCESS_TOKEN'],os.environ['TWITTER_ACCESS_SECRET'])
     api = tweepy.API(auth)
+
+    #4 tests
+    #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
+    #4 Heroku
+    MONGODB_URI = os.environ['MONGO_DB_MLAB']
+    #END Heroku
+    
+    cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+    db = cursor.get_database("bot_definitivo")
+    server_status = db.server_status
+
     tweets = api.user_timeline("BungieHelp",page=1)
     for tweet in tweets:
             if "maintenance has begun" in tweet.text and "backend" not in tweet.text:
                     print(tweet.text)
                     print(tweet.created_at)
                     await client.send_message(context.message.channel, tweet.text)   
+                    status = get_server_status(server_status)
+                    if status.last_maintenance < tweet.created_at:
+                        print("New Maintenance DETECTED !!")
+                    else:
+                        print("No new Maintenance")
+                    
 
     
 
@@ -795,6 +812,15 @@ def update_discord_user(record, updates, discord_users):
                                 '$set': updates
                                 }, upsert=False)
 
+
+######
+#Server Status
+######
+
+async def get_server_status(server_status):
+    document = server_status.find({})
+    await asyncio.sleep(0.01)
+    return document
 
 #//////////////////////////////////////////////////////////////////////
 #//////////////////////////////////////////////////////////////////////
