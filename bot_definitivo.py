@@ -642,7 +642,6 @@ async def testing(context):
                     else:
                         print("No new Maintenance")
                     
-
     
 
 @client.command(name='Run blacklist and populate clan',
