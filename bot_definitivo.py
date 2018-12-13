@@ -615,11 +615,13 @@ async def informe_semanal(context):
                 brief="Test",
                 aliases=['test'],
                 pass_context=True)
-async def testing(context):
-    print(dir(client))
-    #for i in client.channels:
-    #    print(dir(i))
-    #    print(i)
+async def testing():
+    for i in client.get_all_channels():
+        if "Avisos".upper() in i.name.upper() :
+            print(i.name)
+            #canal_avisos = i
+        
+
 
 
 
