@@ -643,7 +643,7 @@ async def testing(context):
                     print("New Maintenance DETECTED !!")
                     await client.send_message(context.message.channel, tweet.text)   
                 else:
-                    print("No new Maintenance")
+                    print("No new Maintenance!!")
             if "HAS OFFICIALLY CONCLUDED" in tweet.text.upper() and db_date < tweet.created_at:
                 #print(tweet.text)
                 #print(tweet.created_at)
@@ -835,7 +835,7 @@ async def get_server_status(server_status):
     return document
 
 
-def update_server_status(record, updates, server_status):
+async def update_server_status(record, updates, server_status):
         server_status.update_one({'_id': record['_id']},{
                                 '$set': updates
                                 }, upsert=False)
