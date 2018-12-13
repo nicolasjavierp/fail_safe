@@ -632,21 +632,28 @@ async def testing(context):
 
     tweets = api.user_timeline("BungieHelp",page=1)
     for tweet in tweets:
+            #status = await get_server_status(server_status)
+            #db_last_update = datetime.strptime(status["last_update"], '%Y-%m-%d %H:%M:%S')
+            #if db_date < tweet.created_at:
             if "MAINTENANCE HAS BEGUN" in tweet.text.upper() and "BACKEND" not in tweet.text.upper():
-                    print(tweet.text)
-                    print(tweet.created_at)
+                #print(tweet.text)
+                #print(tweet.created_at)
+                status = await get_server_status(server_status)
+                db_date = datetime.strptime(status["last_maintenance"], '%Y-%m-%d %H:%M:%S')
+                if db_date < tweet.created_at:
+                    print("New Maintenance DETECTED !!")
                     await client.send_message(context.message.channel, tweet.text)   
-                    status = await get_server_status(server_status)
-                    print(status["last_maintenance"])
-                    print(tweet.created_at)
-                    db_date = datetime.strptime(status["last_maintenance"], '%Y-%m-%d %H:%M:%S')
-                    print(db_date)
-                    if db_date < tweet.created_at:
-                        print("New Maintenance DETECTED !!")
-                    else:
-                        print("No new Maintenance")
-                    
-    
+                else:
+                    print("No new Maintenance")
+            if "MAINTENANCE HAS OFFICIALLY CONCLUDED" in tweet.text.upper():
+                print(tweet.text)
+                print(tweet.created_at)
+                #await update_server_status(server_status)
+                await client.send_message(context.message.channel, tweet.text)
+            if "FIG, GRAPE" in tweet.text.upper():
+                print(tweet.created_at)
+
+
 
 @client.command(name='Run blacklist and populate clan',
                 description="Genera la lista negra y actualiza la db del clan",
