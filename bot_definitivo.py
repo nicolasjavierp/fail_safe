@@ -646,11 +646,12 @@ async def testing(context):
                 else:
                     print("No new Maintenance")
             if "MAINTENANCE HAS OFFICIALLY CONCLUDED" in tweet.text.upper():
-                print(tweet.text)
-                print(tweet.created_at)
+                #print(tweet.text)
+                #print(tweet.created_at)
                 #await update_server_status(server_status)
                 await client.send_message(context.message.channel, tweet.text)
             if "FIG, GRAPE" in tweet.text.upper():
+                print("Last Update!!")
                 print(tweet.created_at)
 
 
