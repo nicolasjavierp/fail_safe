@@ -633,11 +633,11 @@ async def testing(context):
     tweets = api.user_timeline("BungieHelp",page=1)
     for tweet in tweets:
         if "MAINTENANCE" in tweet.text.upper():
+            status = await get_server_status(server_status)
+            db_date = datetime.strptime(status["last_maintenance"], '%Y-%m-%d %H:%M:%S')
             if "HAS BEGUN" in tweet.text.upper() and "BACKEND" not in tweet.text.upper():
                 #print(tweet.text)
                 #print(tweet.created_at - timedelta(hours=3))
-                status = await get_server_status(server_status)
-                db_date = datetime.strptime(status["last_maintenance"], '%Y-%m-%d %H:%M:%S')
                 print("DatabaseData = "+str(db_date)+ " ||  Tweet time = "+str(tweet.created_at)+ " || Argentina Tweet time = "+str(tweet.created_at - timedelta(hours=3)))
                 if db_date < tweet.created_at:# - timedelta(hours=3):
                     print("New Maintenance DETECTED !!")
