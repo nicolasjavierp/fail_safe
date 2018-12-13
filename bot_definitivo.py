@@ -617,10 +617,9 @@ async def informe_semanal(context):
                 pass_context=True)
 async def testing():
     for i in client.get_all_channels():
-        #print(i.name)
         if "ᴀᴠɪsᴏs".upper() in i.name.upper() :
-            print(i.name)
-            #canal_avisos = i
+            #print(i.name)
+            canal_avisos = i
         
 
 
@@ -952,6 +951,10 @@ async def list_servers():
 async def get_server_status_tweets():
     await client.wait_until_ready()
     while not client.is_closed:
+        for i in client.get_all_channels():
+            if "ᴀᴠɪsᴏs".upper() in i.name.upper() :
+                #print(i.name)
+                canal_avisos = i
         auth=tweepy.OAuthHandler(os.environ['TWITTER_API_KEY'],os.environ['TWITTER_API_SECRET'])
         auth.set_access_token(os.environ['TWITTER_ACCESS_TOKEN'],os.environ['TWITTER_ACCESS_SECRET'])
         api = tweepy.API(auth)
@@ -979,6 +982,7 @@ async def get_server_status_tweets():
                     if db_date < tweet.created_at:# - timedelta(hours=3):
                         print("New Maintenance DETECTED !!")
                         #await client.send_message(context.message.channel, tweet.text)   
+                        #await client.send_message(canal_avisos, tweet.text)
                     else:
                         print("No new Maintenance!!")
                 if "HAS OFFICIALLY CONCLUDED" in tweet.text.upper() and db_date < tweet.created_at:
@@ -991,6 +995,7 @@ async def get_server_status_tweets():
                     await update_server_status(status, update, server_status)
                     print("Updated Record !!")
                     #await client.send_message(context.message.channel, tweet.text)
+                    #await client.send_message(canal_avisos, tweet.text)
             else:
                 print("No new Server updates !!")
             await asyncio.sleep(900)
@@ -1000,5 +1005,5 @@ async def get_server_status_tweets():
 
 
 #client.loop.create_task(list_servers())
-#client.loop.create_task(get_server_status_tweets())
+client.loop.create_task(get_server_status_tweets())
 client.run(BOT_TOKEN)
