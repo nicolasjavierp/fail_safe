@@ -937,7 +937,6 @@ async def calendario_protocolo(context):
     await client.send_message(context.message.channel, msg)
 
 
-
 async def list_servers():
     await client.wait_until_ready()
     while not client.is_closed:
@@ -945,7 +944,6 @@ async def list_servers():
         for server in client.servers:
             print(server.name)
         await asyncio.sleep(600)
-
 
 
 async def get_server_status_tweets():
@@ -983,6 +981,11 @@ async def get_server_status_tweets():
                         print("New Maintenance DETECTED !!")
                         #await client.send_message(context.message.channel, tweet.text)   
                         await client.send_message(canal_avisos, tweet.text)
+                        update = {
+                            "last_maintenance": tweet.created_at
+                        }
+                        await update_server_status(status, update, server_status)
+                        print("Updated Record in Begun !!")
                     else:
                         print("No new Maintenance!!")
                 if "HAS OFFICIALLY CONCLUDED" in tweet.text.upper() and db_date < tweet.created_at:
@@ -993,16 +996,14 @@ async def get_server_status_tweets():
                         "last_maintenance": tweet.created_at
                     }
                     await update_server_status(status, update, server_status)
-                    print("Updated Record !!")
+                    print("Updated Record in Finished!!")
                     #await client.send_message(context.message.channel, tweet.text)
                     await client.send_message(canal_avisos, tweet.text)
             #else:
             #    print("No new Server updates !!")
             await asyncio.sleep(900)
 
-        
-
-
+     
 
 #client.loop.create_task(list_servers())
 client.loop.create_task(get_server_status_tweets())
