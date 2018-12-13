@@ -982,7 +982,7 @@ async def get_server_status_tweets():
                     if db_date < tweet.created_at:# - timedelta(hours=3):
                         print("New Maintenance DETECTED !!")
                         #await client.send_message(context.message.channel, tweet.text)   
-                        #await client.send_message(canal_avisos, tweet.text)
+                        await client.send_message(canal_avisos, tweet.text)
                     else:
                         print("No new Maintenance!!")
                 if "HAS OFFICIALLY CONCLUDED" in tweet.text.upper() and db_date < tweet.created_at:
@@ -995,7 +995,7 @@ async def get_server_status_tweets():
                     await update_server_status(status, update, server_status)
                     print("Updated Record !!")
                     #await client.send_message(context.message.channel, tweet.text)
-                    #await client.send_message(canal_avisos, tweet.text)
+                    await client.send_message(canal_avisos, tweet.text)
             else:
                 print("No new Server updates !!")
             await asyncio.sleep(900)
