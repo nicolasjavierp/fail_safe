@@ -639,7 +639,9 @@ async def testing(context):
                     status = await get_server_status(server_status)
                     print(status["last_maintenance"])
                     print(tweet.created_at)
-                    if status["last_maintenance"] < tweet.created_at:
+                    db_date = datetime.strptime(status["last_maintenance"], '%Y-%m-%d %H:%M:%S')
+                    print(db_date)
+                    if db_date < tweet.created_at:
                         print("New Maintenance DETECTED !!")
                     else:
                         print("No new Maintenance")
