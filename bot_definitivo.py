@@ -617,8 +617,8 @@ async def informe_semanal(context):
                 pass_context=True)
 async def testing():
     for i in client.get_all_channels():
-        print(i.name)
-        if "Avisos".upper() in i.name.upper() :
+        #print(i.name)
+        if "ᴀᴠɪsᴏs".upper() in i.name.upper() :
             print(i.name)
             #canal_avisos = i
         
