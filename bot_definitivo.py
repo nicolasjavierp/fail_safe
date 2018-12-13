@@ -996,8 +996,8 @@ async def get_server_status_tweets():
                     print("Updated Record !!")
                     #await client.send_message(context.message.channel, tweet.text)
                     await client.send_message(canal_avisos, tweet.text)
-            else:
-                print("No new Server updates !!")
+            #else:
+            #    print("No new Server updates !!")
             await asyncio.sleep(900)
 
         
