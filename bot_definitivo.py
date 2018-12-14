@@ -630,13 +630,13 @@ async def testing(context):
 
     embed2=discord.Embed()
 
-    if not status["online"]:
-        embed2 = discord.Embed(title="Estado Servidor" , description=":white_check_mark: **Servidores Destiny2 Online!**", color=0x00ff00)
+    if status["online"]:
+        embed2 = discord.Embed(title="" , description=":white_check_mark: **Servidores Destiny2 Online!**", color=0x00ff00)
         embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
         embed2.set_image(url="https://media.giphy.com/media/8EmeieJAGjvUI/giphy.gif")
         await client.send_message(context.message.channel, embed=embed2)
     else:
-        embed2 = discord.Embed(title="Estado Servidor" , description=":warning: **Servidores Destiny2 Caidos!**", color=0x00ff00)
+        embed2 = discord.Embed(title="" , description=":warning: **Servidores Destiny2 Caidos!**", color=0x00ff00)
         embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
         embed2.set_image(url="https://media.giphy.com/media/ZGarmJwETJ0He/giphy.gif")
         await client.send_message(context.message.channel, embed=embed2)
