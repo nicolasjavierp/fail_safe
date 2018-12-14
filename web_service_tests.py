@@ -1,6 +1,5 @@
 import requests
 import os
-from lxml import html
 import json
 
 

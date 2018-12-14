@@ -596,16 +596,11 @@ async def informe_semanal(context):
         #print(today.hour)
 
     embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%7][0]+"**", color=0x00ff00)
-    #embed = discord.Embed(title="Desafío Ascendente esta semana" , description=cont.format(ascendant_dict[key%7]), color=0x00ff00)
-    #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
-    #embed.set_author(name=client.user.name)#,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
     embed.set_image(url=ascendant_dict[key%7][1])
     await client.send_message(context.message.channel, embed=embed)
     
     embed = discord.Embed(title="" , description= ":calendar: Esta semana en  Protocolo Intensificación: \n **"+protocol_dict[key%5][0]+"**", color=0x00ff00)
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/508999396835196950/520269693479551004/Protocolo.png")
-    #embed.set_thumbnail(url=protocol_dict[key%5][1])
-    #print(protocol_dict[key%5][1])
     embed.set_image(url=protocol_dict[key%5][1])
     await client.send_message(context.message.channel, embed=embed)
 
@@ -615,12 +610,34 @@ async def informe_semanal(context):
                 brief="Test",
                 aliases=['test'],
                 pass_context=True)
-async def testing():
+async def testing(context):
+
+    #offline:https://media.giphy.com/media/ZGarmJwETJ0He/giphy.gif
+    #online:   https://media.giphy.com/media/8EmeieJAGjvUI/giphy.gif
     for i in client.get_all_channels():
         if "ᴀᴠɪsᴏs".upper() in i.name.upper() :
             #print(i.name)
             canal_avisos = i
-        
+    #4 tests
+    #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
+    #4 Heroku
+    MONGODB_URI = os.environ['MONGO_DB_MLAB']
+    #END Heroku
+    cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+    db = cursor.get_database("bot_definitivo")
+    server_status = db.server_status
+    status = await get_server_status(server_status)
+
+    embed2=discord.Embed()
+
+    if status["online"]:
+        embed2 = discord.Embed(title="" , description=":white_check_mark: **Servidores Destiny2 Online!**", color=0x00ff00)
+        embed2.set_image(url="https://media.giphy.com/media/8EmeieJAGjvUI/giphy.gif")
+        await client.send_message(context.message.channel, embed=embed2)
+    else:
+        embed2 = discord.Embed(title="" , description=":warning: **Servidores Destiny2 Caidos!**", color=0x00ff00)
+        embed2.set_image(url="https://media.giphy.com/media/ZGarmJwETJ0He/giphy.gif")
+        await client.send_message(context.message.channel, embed=embed2)
 
 
 
