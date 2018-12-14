@@ -605,19 +605,14 @@ async def informe_semanal(context):
     await client.send_message(context.message.channel, embed=embed)
 
 
-@client.command(name='Test',
-                description="Test",
-                brief="Test",
-                aliases=['test'],
+@client.command(name='Server Status',
+                description="Server Status",
+                brief="Server Status",
+                aliases=['status'],
                 pass_context=True)
-async def testing(context):
-
+async def server(context):
     #offline:https://media.giphy.com/media/ZGarmJwETJ0He/giphy.gif
     #online:   https://media.giphy.com/media/8EmeieJAGjvUI/giphy.gif
-    for i in client.get_all_channels():
-        if "ᴀᴠɪsᴏs".upper() in i.name.upper() :
-            #print(i.name)
-            canal_avisos = i
     #4 tests
     #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
     #4 Heroku
@@ -627,9 +622,7 @@ async def testing(context):
     db = cursor.get_database("bot_definitivo")
     server_status = db.server_status
     status = await get_server_status(server_status)
-
     embed2=discord.Embed()
-
     if status["online"]:
         embed2 = discord.Embed(title="" , description=":white_check_mark: **Servidores Destiny2 Online!**", color=0x00ff00)
         embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
@@ -642,6 +635,18 @@ async def testing(context):
         await client.send_message(context.message.channel, embed=embed2)
 
 
+@client.command(name='Test',
+                description="Test",
+                brief="Test",
+                aliases=['test'],
+                pass_context=True)
+async def testing(context):
+    #offline:https://media.giphy.com/media/ZGarmJwETJ0He/giphy.gif
+    #online:   https://media.giphy.com/media/8EmeieJAGjvUI/giphy.gif
+    for i in client.get_all_channels():
+        if "ᴀᴠɪsᴏs".upper() in i.name.upper() :
+            #print(i.name)
+            canal_avisos = i
 
 
 @client.command(name='Run blacklist and populate clan',
@@ -1001,6 +1006,7 @@ async def get_server_status_tweets():
                         #await client.send_message(context.message.channel, tweet.text)   
                         await client.send_message(canal_avisos, tweet.text)
                         update = {
+                            "online": "False",
                             "last_maintenance": tweet.created_at
                         }
                         await update_server_status(status, update, server_status)
@@ -1012,6 +1018,7 @@ async def get_server_status_tweets():
                     #print(tweet.created_at)
                     print("Maintenance FINISHED !!")
                     update = {
+                        "online": "True",
                         "last_maintenance": tweet.created_at
                     }
                     await update_server_status(status, update, server_status)
