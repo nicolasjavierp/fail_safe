@@ -1010,8 +1010,8 @@ async def get_server_status_tweets():
                         }
                         await update_server_status(status, update, server_status)
                         print("Updated Record in Begun !!")
-                    else:
-                        print("No new Maintenance!!")
+                    #else:
+                    #    print("No new Maintenance!!")
                 if "HAS OFFICIALLY CONCLUDED" in tweet.text.upper() and db_date < tweet.created_at:
                     print(tweet.text)
                     print(tweet.created_at)
