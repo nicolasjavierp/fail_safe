@@ -641,8 +641,6 @@ async def server(context):
                 aliases=['test'],
                 pass_context=True)
 async def testing(context):
-    #offline:https://media.giphy.com/media/ZGarmJwETJ0He/giphy.gif
-    #online:   https://media.giphy.com/media/8EmeieJAGjvUI/giphy.gif
     for i in client.get_all_channels():
         if "ᴀᴠɪsᴏs".upper() in i.name.upper() :
             #print(i.name)
@@ -1027,8 +1025,7 @@ async def get_server_status_tweets():
                     await client.send_message(canal_avisos, tweet.text)
             #else:
             #    print("No new Server updates !!")
-            await asyncio.sleep(900)
-
+            await asyncio.sleep(30)
      
 
 #client.loop.create_task(list_servers())
