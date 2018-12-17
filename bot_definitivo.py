@@ -996,7 +996,8 @@ async def get_server_status_tweets():
                 #db_date = datetime.strptime(status["last_maintenance"], '%Y-%m-%d %H:%M:%S')
                 db_date=status["last_maintenance"]
                 if "HAS BEGUN" in tweet.text.upper() and "BACKEND" not in tweet.text.upper():
-                    #print(tweet.text)
+                    print(tweet.text)
+                    print(tweet.created_at)
                     #print(tweet.created_at - timedelta(hours=3))
                     #print("DatabaseData = "+str(db_date)+ " ||  Tweet time = "+str(tweet.created_at)+ " || Argentina Tweet time = "+str(tweet.created_at - timedelta(hours=3)))
                     if db_date < tweet.created_at:# - timedelta(hours=3):
@@ -1012,8 +1013,8 @@ async def get_server_status_tweets():
                     else:
                         print("No new Maintenance!!")
                 if "HAS OFFICIALLY CONCLUDED" in tweet.text.upper() and db_date < tweet.created_at:
-                    #print(tweet.text)
-                    #print(tweet.created_at)
+                    print(tweet.text)
+                    print(tweet.created_at)
                     print("Maintenance FINISHED !!")
                     update = {
                         "online": "True",
