@@ -1032,7 +1032,7 @@ async def get_server_status_tweets():
                     await client.send_message(canal_avisos, embed=embed2)
                     await client.send_message(canal_avisos, tweet.text)
 
-                if "HAS OFFICIALLY CONCLUDED" in tweet.text.upper() and db_date < tweet.created_at:
+                if "HAS OFFICIALLY CONCLUDED" in tweet.text.upper() and db_date < tweet.created_at or "COMPLETE" in tweet.text.upper():
                     print(tweet.text)
                     print(tweet.created_at)
                     print("Maintenance FINISHED !!")
