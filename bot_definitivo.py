@@ -972,7 +972,7 @@ async def get_server_status_tweets():
     await client.wait_until_ready()
     while not client.is_closed:
         for i in client.get_all_channels():
-            print(i.name)
+            print(i.name, i.id)
             if "ᴀᴠɪsᴏs".upper() in i.name.upper():
                 #print(i.name)
                 canal_avisos = i
@@ -996,6 +996,7 @@ async def get_server_status_tweets():
         status = await get_server_status(server_status)
         #db_date = datetime.strptime(status["last_maintenance"], '%Y-%m-%d %H:%M:%S')
         db_date=status["last_maintenance"]
+        #print(str(tweets))
         for tweet in tweets:
             if "MAINTENANCE" in tweet.text.upper() :    
                 print("Comparing dates: "+str(db_date)+" vs. "+str(tweet.created_at))
@@ -1004,7 +1005,7 @@ async def get_server_status_tweets():
                     #print("DatabaseData = "+str(db_date)+ " ||  Tweet time = "+str(tweet.created_at)+ " || Argentina Tweet time = "+str(tweet.created_at - timedelta(hours=3)))
                     print("Entered begun maitenance")
                     print(tweet.created_at)
-                    print(tweet.text)
+                    
 
                     if db_date < tweet.created_at:# - timedelta(hours=3):
                         #print(tweet.text)
@@ -1014,7 +1015,6 @@ async def get_server_status_tweets():
                         #await client.send_message(context.message.channel, tweet.text)   
                         #await client.send_message(canal_avisos, tweet.text)
                         update = {
-                            "online": "False",
                             "last_maintenance": tweet.created_at
                         }
 
@@ -1031,7 +1031,6 @@ async def get_server_status_tweets():
                     #print(tweet.created_at)
                     print("Entered Server Offline !!")
                     update = {
-                            "online": "False",
                             "last_maintenance": tweet.created_at
                         }
                     await update_server_status(status, update, server_status)
@@ -1048,7 +1047,6 @@ async def get_server_status_tweets():
                     #print(tweet.created_at)
                     print("Entered Maintenance FINISHED !!")
                     update = {
-                        "online": "True",
                         "last_maintenance": tweet.created_at
                     }
                     await update_server_status(status, update, server_status)
