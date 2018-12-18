@@ -997,7 +997,7 @@ async def get_server_status_tweets():
         db_date=status["last_maintenance"]
         for tweet in tweets:
             if "MAINTENANCE" in tweet.text.upper() :    
-                print("Comparing dates: "+str(db_date)+" vs. "+tweet.created_at)
+                print("Comparing dates: "+str(db_date)+" vs. "+str(tweet.created_at))
                 if "HAS BEGUN" in tweet.text.upper() and "BACKEND" not in tweet.text.upper():
                     #print(tweet.created_at - timedelta(hours=3))
                     #print("DatabaseData = "+str(db_date)+ " ||  Tweet time = "+str(tweet.created_at)+ " || Argentina Tweet time = "+str(tweet.created_at - timedelta(hours=3)))
