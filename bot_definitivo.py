@@ -1027,7 +1027,7 @@ async def get_server_status_tweets():
                     await update_server_status(status, update, server_status)
                     print("Updated Record in Offline !!")
                     #await client.send_message(context.message.channel, tweet.text)
-                    embed2 = discord.Embed(title="Servidores Online" , description=":x: **Servidores de Destiny2 Offline!**", color=0x00ff00)
+                    embed2 = discord.Embed(title="Servidores Offline" , description=":x: **Servidores de Destiny2 Offline!**", color=0x00ff00)
                     embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
                     await client.send_message(canal_avisos, embed=embed2)
                     await client.send_message(canal_avisos, tweet.text)
