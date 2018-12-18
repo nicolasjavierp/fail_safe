@@ -640,7 +640,7 @@ async def server(context):
                 brief="Test",
                 aliases=['test'],
                 pass_context=True)
-async def testing(context):+
+async def testing(context):
     auth=tweepy.OAuthHandler(os.environ['TWITTER_API_KEY'],os.environ['TWITTER_API_SECRET'])
     auth.set_access_token(os.environ['TWITTER_ACCESS_TOKEN'],os.environ['TWITTER_ACCESS_SECRET'])
     api = tweepy.API(auth)
