@@ -670,8 +670,6 @@ async def testing(context):
                 #print("DatabaseData = "+str(db_date)+ " ||  Tweet time = "+str(tweet.created_at)+ " || Argentina Tweet time = "+str(tweet.created_at - timedelta(hours=3)))
                 print("Entered begun maitenance")
                 print(tweet.created_at)
-                
-
                 if db_start < tweet.created_at:# - timedelta(hours=3):
                     #print(tweet.text)
                     #print(tweet.created_at)
@@ -680,7 +678,7 @@ async def testing(context):
                     #await client.send_message(context.message.channel, tweet.text)   
                     #await client.send_message(canal_avisos, tweet.text)
                     update = {
-                        "last_maintenance": tweet.created_at
+                        "start_maintenance": tweet.created_at
                     }
 
                     embed2 = discord.Embed(title="" , description=":warning: **Comienzo de Mantenimiento de Destiny2!**", color=0x00ff00)
@@ -696,7 +694,7 @@ async def testing(context):
                 #print(tweet.created_at)
                 print("Entered Server Offline !!")
                 update = {
-                        "last_maintenance": tweet.created_at
+                        "offline_maintenance": tweet.created_at
                     }
                 await update_server_status(status, update, server_status)
                 print("Updated Record in Offline !! "+str(tweet.created_at))
@@ -707,12 +705,12 @@ async def testing(context):
                 #await client.send_message(canal_bots, embed=embed2)
                 #await client.send_message(canal_avisos, tweet.text)
 
-            if ("HAS OFFICIALLY CONCLUDED" in tweet.text.upper() or "IS COMPLETE" in tweet.text.upper()) and db_date < tweet.created_at :
+            if ("HAS OFFICIALLY CONCLUDED" in tweet.text.upper() or "IS COMPLETE" in tweet.text.upper()) and db_online < tweet.created_at :
                 #print(tweet.text)
                 #print(tweet.created_at)
                 print("Entered Maintenance FINISHED !!")
                 update = {
-                    "last_maintenance": tweet.created_at
+                    "online_maintenance": tweet.created_at
                 }
                 await update_server_status(status, update, server_status)
                 print("Updated Record in Finished!! "+str(tweet.created_at))
