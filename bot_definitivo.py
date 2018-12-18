@@ -981,7 +981,7 @@ async def get_server_status_tweets():
 
         #4 tests
         #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
-        #4 Heroku
+        #4 Heroku   
         MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
         
@@ -1008,6 +1008,9 @@ async def get_server_status_tweets():
                             "online": "False",
                             "last_maintenance": tweet.created_at
                         }
+                        embed2 = discord.Embed(title="" , description=":x: **Comienzo de Mantenimiento de Destiny2! Servidores Offline**", color=0x00ff00)
+                        embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+                        await client.send_message(canal_avisos, embed=embed2)
                         await update_server_status(status, update, server_status)
                         print("Updated Record in Begun !!")
                     #else:
@@ -1023,6 +1026,9 @@ async def get_server_status_tweets():
                     await update_server_status(status, update, server_status)
                     print("Updated Record in Finished!!")
                     #await client.send_message(context.message.channel, tweet.text)
+                    embed2 = discord.Embed(title="" , description=":white_check_mark: **Mantenimiento de Destiny2 Finalizado!**", color=0x00ff00)
+                    embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+                    await client.send_message(canal_avisos, embed=embed2)
                     await client.send_message(canal_avisos, tweet.text)
             #else:
             #    print("No new Server updates !!")
