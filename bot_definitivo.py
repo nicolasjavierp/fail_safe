@@ -972,6 +972,7 @@ async def get_server_status_tweets():
     await client.wait_until_ready()
     while not client.is_closed:
         for i in client.get_all_channels():
+            print(i.name)
             if "ᴀᴠɪsᴏs".upper() in i.name.upper():
                 #print(i.name)
                 canal_avisos = i
@@ -1036,7 +1037,7 @@ async def get_server_status_tweets():
                     embed2 = discord.Embed(title="Servidores Offline" , description=":x: **Servidores de Destiny2 Offline!**", color=0x00ff00)
                     embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
                     #await client.send_message(canal_avisos, embed=embed2)
-                    await client.send_message(canal_bots, embed=embed2)
+                    #await client.send_message(canal_bots, embed=embed2)
                     #await client.send_message(canal_avisos, tweet.text)
 
                 if ("HAS OFFICIALLY CONCLUDED" in tweet.text.upper() or "IS COMPLETE" in tweet.text.upper()) and db_date < tweet.created_at :
@@ -1053,7 +1054,7 @@ async def get_server_status_tweets():
                     embed2 = discord.Embed(title="Servidores Online" , description=":white_check_mark: **Mantenimiento de Destiny2 Finalizado!**", color=0x00ff00)
                     embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
                     #await client.send_message(canal_avisos, embed=embed2)
-                    await client.send_message(canal_bots, embed=embed2)
+                    #await client.send_message(canal_bots, embed=embed2)
                     #await client.send_message(canal_avisos, tweet.text)
             #else:
             #    print("No new Server updates !!")
