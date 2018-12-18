@@ -972,9 +972,11 @@ async def get_server_status_tweets():
     await client.wait_until_ready()
     while not client.is_closed:
         for i in client.get_all_channels():
-            if "ᴀᴠɪsᴏs".upper() in i.name.upper() :
+            if "ᴀᴠɪsᴏs".upper() in i.name.upper():
                 #print(i.name)
                 canal_avisos = i
+            if "BOTs".upper() in i.name.upper():
+                canal_bots = i
         auth=tweepy.OAuthHandler(os.environ['TWITTER_API_KEY'],os.environ['TWITTER_API_SECRET'])
         auth.set_access_token(os.environ['TWITTER_ACCESS_TOKEN'],os.environ['TWITTER_ACCESS_SECRET'])
         api = tweepy.API(auth)
@@ -1002,16 +1004,18 @@ async def get_server_status_tweets():
                         print(tweet.text)
                         print(tweet.created_at)
                         print("New Maintenance DETECTED !!")
-                        print("Updated Record in Begun !!")
+                        print("Updated Record in Begun !! "+str(tweet.created_at))
                         #await client.send_message(context.message.channel, tweet.text)   
-                        await client.send_message(canal_avisos, tweet.text)
+                        #await client.send_message(canal_avisos, tweet.text)
                         update = {
                             "online": "False",
                             "last_maintenance": tweet.created_at
                         }
+
                         embed2 = discord.Embed(title="" , description=":warning: **Comienzo de Mantenimiento de Destiny2!**", color=0x00ff00)
                         embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
-                        await client.send_message(canal_avisos, embed=embed2)
+                        #await client.send_message(canal_avisos, embed=embed2)
+                        #await client.send_message(canal_bots, embed=embed2)
                         #await update_server_status(status, update, server_status)
                     #else:
                     #    print("No new Maintenance!!")
@@ -1025,11 +1029,12 @@ async def get_server_status_tweets():
                             "last_maintenance": tweet.created_at
                         }
                     await update_server_status(status, update, server_status)
-                    print("Updated Record in Offline !!")
+                    print("Updated Record in Offline !! "+str(tweet.created_at))
                     #await client.send_message(context.message.channel, tweet.text)
                     embed2 = discord.Embed(title="Servidores Offline" , description=":x: **Servidores de Destiny2 Offline!**", color=0x00ff00)
                     embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
-                    await client.send_message(canal_avisos, embed=embed2)
+                    #await client.send_message(canal_avisos, embed=embed2)
+                    await client.send_message(canal_bots, embed=embed2)
                     #await client.send_message(canal_avisos, tweet.text)
 
                 if "HAS OFFICIALLY CONCLUDED" in tweet.text.upper() and db_date < tweet.created_at or "IS COMPLETE" in tweet.text.upper():
@@ -1041,11 +1046,12 @@ async def get_server_status_tweets():
                         "last_maintenance": tweet.created_at
                     }
                     await update_server_status(status, update, server_status)
-                    print("Updated Record in Finished!!")
+                    print("Updated Record in Finished!! "+str(tweet.created_at))
                     #await client.send_message(context.message.channel, tweet.text)
                     embed2 = discord.Embed(title="Servidores Online" , description=":white_check_mark: **Mantenimiento de Destiny2 Finalizado!**", color=0x00ff00)
                     embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
-                    await client.send_message(canal_avisos, embed=embed2)
+                    #await client.send_message(canal_avisos, embed=embed2)
+                    await client.send_message(canal_bots, embed=embed2)
                     #await client.send_message(canal_avisos, tweet.text)
             #else:
             #    print("No new Server updates !!")
