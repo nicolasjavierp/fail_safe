@@ -640,11 +640,88 @@ async def server(context):
                 brief="Test",
                 aliases=['test'],
                 pass_context=True)
-async def testing(context):
-    for i in client.get_all_channels():
-        if "ᴀᴠɪsᴏs".upper() in i.name.upper() :
-            #print(i.name)
-            canal_avisos = i
+async def testing(context):+
+    auth=tweepy.OAuthHandler(os.environ['TWITTER_API_KEY'],os.environ['TWITTER_API_SECRET'])
+    auth.set_access_token(os.environ['TWITTER_ACCESS_TOKEN'],os.environ['TWITTER_ACCESS_SECRET'])
+    api = tweepy.API(auth)
+    #4 tests
+    #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
+    #4 Heroku   
+    MONGODB_URI = os.environ['MONGO_DB_MLAB']
+    #END Heroku
+    
+    cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+    db = cursor.get_database("bot_definitivo")
+    server_status = db.server_status
+
+    tweets = api.user_timeline("BungieHelp",page=1)
+    status = await get_server_status(server_status)
+    #db_date = datetime.strptime(status["last_maintenance"], '%Y-%m-%d %H:%M:%S')
+    db_start=status["start_maintenance"]
+    db_offline=status["offline_maintenance"]
+    db_online=status["online_maintenance"]
+    #print(str(tweets))
+    for tweet in tweets:
+        if "MAINTENANCE" in tweet.text.upper() :    
+            
+            if "HAS BEGUN" in tweet.text.upper() and "BACKEND" not in tweet.text.upper():
+                print("Comparing dates: "+str(db_start)+" vs. "+str(tweet.created_at))
+                #print(tweet.created_at - timedelta(hours=3))
+                #print("DatabaseData = "+str(db_date)+ " ||  Tweet time = "+str(tweet.created_at)+ " || Argentina Tweet time = "+str(tweet.created_at - timedelta(hours=3)))
+                print("Entered begun maitenance")
+                print(tweet.created_at)
+                
+
+                if db_start < tweet.created_at:# - timedelta(hours=3):
+                    #print(tweet.text)
+                    #print(tweet.created_at)
+                    print("New Maintenance DETECTED !!")
+                    print("Updated Record in Begun !! "+str(tweet.created_at))
+                    #await client.send_message(context.message.channel, tweet.text)   
+                    #await client.send_message(canal_avisos, tweet.text)
+                    update = {
+                        "last_maintenance": tweet.created_at
+                    }
+
+                    embed2 = discord.Embed(title="" , description=":warning: **Comienzo de Mantenimiento de Destiny2!**", color=0x00ff00)
+                    embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+                    #await client.send_message(canal_avisos, embed=embed2)
+                    #await client.send_message(canal_bots, embed=embed2)
+                    #await update_server_status(status, update, server_status)
+                #else:
+                #    print("No new Maintenance!!")
+            
+            if "BEING BROUGHT OFFLINE" in tweet.text.upper() and db_offline < tweet.created_at:
+                #print(tweet.text)
+                #print(tweet.created_at)
+                print("Entered Server Offline !!")
+                update = {
+                        "last_maintenance": tweet.created_at
+                    }
+                await update_server_status(status, update, server_status)
+                print("Updated Record in Offline !! "+str(tweet.created_at))
+                #await client.send_message(context.message.channel, tweet.text)
+                embed2 = discord.Embed(title="Servidores Offline" , description=":x: **Servidores de Destiny2 Offline!**", color=0x00ff00)
+                embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+                #await client.send_message(canal_avisos, embed=embed2)
+                #await client.send_message(canal_bots, embed=embed2)
+                #await client.send_message(canal_avisos, tweet.text)
+
+            if ("HAS OFFICIALLY CONCLUDED" in tweet.text.upper() or "IS COMPLETE" in tweet.text.upper()) and db_date < tweet.created_at :
+                #print(tweet.text)
+                #print(tweet.created_at)
+                print("Entered Maintenance FINISHED !!")
+                update = {
+                    "last_maintenance": tweet.created_at
+                }
+                await update_server_status(status, update, server_status)
+                print("Updated Record in Finished!! "+str(tweet.created_at))
+                #await client.send_message(context.message.channel, tweet.text)
+                embed2 = discord.Embed(title="Servidores Online" , description=":white_check_mark: **Mantenimiento de Destiny2 Finalizado!**", color=0x00ff00)
+                embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+                #await client.send_message(canal_avisos, embed=embed2)
+                #await client.send_message(canal_bots, embed=embed2)
+                #await client.send_message(canal_avisos, tweet.text)
 
 
 @client.command(name='Run blacklist and populate clan',
