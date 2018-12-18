@@ -1008,13 +1008,30 @@ async def get_server_status_tweets():
                             "online": "False",
                             "last_maintenance": tweet.created_at
                         }
-                        embed2 = discord.Embed(title="Servidores Offline" , description=":x: **Comienzo de Mantenimiento de Destiny2!**", color=0x00ff00)
+                        embed2 = discord.Embed(title="" , description=":warning: **Comienzo de Mantenimiento de Destiny2!**", color=0x00ff00)
                         embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
                         await client.send_message(canal_avisos, embed=embed2)
                         await update_server_status(status, update, server_status)
                         print("Updated Record in Begun !!")
                     #else:
                     #    print("No new Maintenance!!")
+                
+                if "BEING BROUGHT OFFLINE" in tweet.text.upper() and db_date < tweet.created_at:
+                    print(tweet.text)
+                    print(tweet.created_at)
+                    print("Server Offline !!")
+                    update = {
+                            "online": "False",
+                            "last_maintenance": tweet.created_at
+                        }
+                    await update_server_status(status, update, server_status)
+                    print("Updated Record in Offline !!")
+                    #await client.send_message(context.message.channel, tweet.text)
+                    embed2 = discord.Embed(title="Servidores Online" , description=":x: **Servidores de Destiny2 Offline!**", color=0x00ff00)
+                    embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+                    await client.send_message(canal_avisos, embed=embed2)
+                    await client.send_message(canal_avisos, tweet.text)
+
                 if "HAS OFFICIALLY CONCLUDED" in tweet.text.upper() and db_date < tweet.created_at:
                     print(tweet.text)
                     print(tweet.created_at)
