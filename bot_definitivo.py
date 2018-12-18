@@ -1003,6 +1003,9 @@ async def get_server_status_tweets():
                     #print(tweet.created_at - timedelta(hours=3))
                     #print("DatabaseData = "+str(db_date)+ " ||  Tweet time = "+str(tweet.created_at)+ " || Argentina Tweet time = "+str(tweet.created_at - timedelta(hours=3)))
                     print("Entered begun maitenance")
+                    print(tweet.created_at)
+                    print(tweet.text)
+
                     if db_date < tweet.created_at:# - timedelta(hours=3):
                         #print(tweet.text)
                         #print(tweet.created_at)
