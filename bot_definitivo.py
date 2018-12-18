@@ -1063,5 +1063,5 @@ async def get_server_status_tweets():
      
 
 #client.loop.create_task(list_servers())
-client.loop.create_task(get_server_status_tweets())
+#client.loop.create_task(get_server_status_tweets())
 client.run(BOT_TOKEN)
