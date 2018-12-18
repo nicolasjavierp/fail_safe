@@ -997,12 +997,14 @@ async def get_server_status_tweets():
         db_date=status["last_maintenance"]
         for tweet in tweets:
             if "MAINTENANCE" in tweet.text.upper() :    
+                print("Comparing dates: "+db_date +" vs. "+tweet.created_at)
                 if "HAS BEGUN" in tweet.text.upper() and "BACKEND" not in tweet.text.upper():
                     #print(tweet.created_at - timedelta(hours=3))
                     #print("DatabaseData = "+str(db_date)+ " ||  Tweet time = "+str(tweet.created_at)+ " || Argentina Tweet time = "+str(tweet.created_at - timedelta(hours=3)))
+                    print("Entered begun maitenance")
                     if db_date < tweet.created_at:# - timedelta(hours=3):
-                        print(tweet.text)
-                        print(tweet.created_at)
+                        #print(tweet.text)
+                        #print(tweet.created_at)
                         print("New Maintenance DETECTED !!")
                         print("Updated Record in Begun !! "+str(tweet.created_at))
                         #await client.send_message(context.message.channel, tweet.text)   
@@ -1021,9 +1023,9 @@ async def get_server_status_tweets():
                     #    print("No new Maintenance!!")
                 
                 if "BEING BROUGHT OFFLINE" in tweet.text.upper() and db_date < tweet.created_at:
-                    print(tweet.text)
-                    print(tweet.created_at)
-                    print("Server Offline !!")
+                    #print(tweet.text)
+                    #print(tweet.created_at)
+                    print("Entered Server Offline !!")
                     update = {
                             "online": "False",
                             "last_maintenance": tweet.created_at
@@ -1037,10 +1039,10 @@ async def get_server_status_tweets():
                     await client.send_message(canal_bots, embed=embed2)
                     #await client.send_message(canal_avisos, tweet.text)
 
-                if "HAS OFFICIALLY CONCLUDED" in tweet.text.upper() and db_date < tweet.created_at or "IS COMPLETE" in tweet.text.upper():
-                    print(tweet.text)
-                    print(tweet.created_at)
-                    print("Maintenance FINISHED !!")
+                if ("HAS OFFICIALLY CONCLUDED" in tweet.text.upper() or "IS COMPLETE" in tweet.text.upper()) and db_date < tweet.created_at :
+                    #print(tweet.text)
+                    #print(tweet.created_at)
+                    print("Entered Maintenance FINISHED !!")
                     update = {
                         "online": "True",
                         "last_maintenance": tweet.created_at
@@ -1059,5 +1061,5 @@ async def get_server_status_tweets():
      
 
 #client.loop.create_task(list_servers())
-#client.loop.create_task(get_server_status_tweets())
+client.loop.create_task(get_server_status_tweets())
 client.run(BOT_TOKEN)
