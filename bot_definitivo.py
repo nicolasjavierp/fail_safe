@@ -1002,6 +1002,7 @@ async def get_server_status_tweets():
                         print(tweet.text)
                         print(tweet.created_at)
                         print("New Maintenance DETECTED !!")
+                        print("Updated Record in Begun !!")
                         #await client.send_message(context.message.channel, tweet.text)   
                         await client.send_message(canal_avisos, tweet.text)
                         update = {
@@ -1011,8 +1012,7 @@ async def get_server_status_tweets():
                         embed2 = discord.Embed(title="" , description=":warning: **Comienzo de Mantenimiento de Destiny2!**", color=0x00ff00)
                         embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
                         await client.send_message(canal_avisos, embed=embed2)
-                        await update_server_status(status, update, server_status)
-                        print("Updated Record in Begun !!")
+                        #await update_server_status(status, update, server_status)
                     #else:
                     #    print("No new Maintenance!!")
                 
@@ -1030,9 +1030,9 @@ async def get_server_status_tweets():
                     embed2 = discord.Embed(title="Servidores Offline" , description=":x: **Servidores de Destiny2 Offline!**", color=0x00ff00)
                     embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
                     await client.send_message(canal_avisos, embed=embed2)
-                    await client.send_message(canal_avisos, tweet.text)
+                    #await client.send_message(canal_avisos, tweet.text)
 
-                if "HAS OFFICIALLY CONCLUDED" in tweet.text.upper() and db_date < tweet.created_at or "COMPLETE" in tweet.text.upper():
+                if "HAS OFFICIALLY CONCLUDED" in tweet.text.upper() and db_date < tweet.created_at or "IS COMPLETE" in tweet.text.upper():
                     print(tweet.text)
                     print(tweet.created_at)
                     print("Maintenance FINISHED !!")
@@ -1046,7 +1046,7 @@ async def get_server_status_tweets():
                     embed2 = discord.Embed(title="Servidores Online" , description=":white_check_mark: **Mantenimiento de Destiny2 Finalizado!**", color=0x00ff00)
                     embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
                     await client.send_message(canal_avisos, embed=embed2)
-                    await client.send_message(canal_avisos, tweet.text)
+                    #await client.send_message(canal_avisos, tweet.text)
             #else:
             #    print("No new Server updates !!")
             await asyncio.sleep(30)
