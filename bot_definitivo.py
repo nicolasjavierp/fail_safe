@@ -580,19 +580,19 @@ async def informe_semanal(context):
     key = datetime.date(today).isocalendar()[1]
 
     if date.today().weekday() == 0: #and today.hour >= 14: # 0 is for monday
-        print("Today is Monday !")
+        #print("Today is Monday !")
         key = key - 1
         if key<0:
             key = 52
-    print(today)
-    print("Week Number: "+str(key))
+    #print(today)
+    #print("Week Number: "+str(key))
         
     if date.today().weekday() == 1 and today.hour < 17:
-        print("Before RESET !! Adjusting week number!!")
+        #print("Before RESET !! Adjusting week number!!")
         key = key - 1
         if key<0:
             key = 0
-        print("Week Number: "+str(key))
+        #print("Week Number: "+str(key))
         #print(today.hour)
 
     embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%7][0]+"**", color=0x00ff00)
@@ -660,26 +660,17 @@ async def testing(context):
     db_start=status["start_maintenance"]
     db_offline=status["offline_maintenance"]
     db_online=status["online_maintenance"]
-    #print(str(tweets))
-    #for tweet in tweets:
-        #if "MAINTENANCE" in tweet.text.upper() :
-        #    print(tweet.created_at)
-        #    print(tweet.text)
+
     for tweet in tweets:
         if "MAINTENANCE" in tweet.text.upper() :           
             if "HAS BEGUN" in tweet.text.upper() and "BACKEND" not in tweet.text.upper():
-                #print(tweet.created_at - timedelta(hours=3))
-                #print("DatabaseData = "+str(db_date)+ " ||  Tweet time = "+str(tweet.created_at)+ " || Argentina Tweet time = "+str(tweet.created_at - timedelta(hours=3)))
                 print("--------------------------------")
                 print("Entered begun maitenance")
-                
                 print("Comparing dates: "+str(db_start)+" vs. "+str(tweet.created_at))
-                if db_start < tweet.created_at:# - timedelta(hours=3):
+                if db_start < tweet.created_at:
                     #print(tweet.text)
                     #print(tweet.created_at)
                     print("New Start Maintenance DETECTED !!")
-                    #await client.send_message(context.message.channel, tweet.text)   
-                    #await client.send_message(canal_avisos, tweet.text)
                     update = {
                         "start_maintenance": tweet.created_at
                     }
@@ -688,7 +679,6 @@ async def testing(context):
                     embed2 = discord.Embed(title="" , description=":warning: **Comienzo de Mantenimiento de Destiny2!**", color=0x00ff00)
                     embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
                     #await client.send_message(canal_avisos, embed=embed2)
-                    #await client.send_message(canal_bots, embed=embed2)
             
             if "being BROUGHT OFFLINE".upper() in tweet.text.upper():
                 print("--------------------------------")
@@ -710,27 +700,28 @@ async def testing(context):
                     embed2 = discord.Embed(title="Servidores Offline" , description=":x: **Servidores de Destiny2 Offline!**", color=0x00ff00)
                     embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
                     #await client.send_message(canal_avisos, embed=embed2)
-                    #await client.send_message(canal_bots, embed=embed2)
                     #await client.send_message(canal_avisos, tweet.text)
 
-            if ("HAS OFFICIALLY CONCLUDED" in tweet.text.upper() or "IS COMPLETE" in tweet.text.upper()) and db_online < tweet.created_at :
+            if ("HAS OFFICIALLY CONCLUDED" in tweet.text.upper() or "IS COMPLETE" in tweet.text.upper()):
                 print("--------------------------------")
                 print("Entered Maintenance FINISHED !!")
-                print(tweet.text)
-                print(tweet.created_at)
                 print("Comparing dates: "+str(db_online)+" vs. "+str(tweet.created_at))
-                print("New Online Maintenance DETECTED !!")
-                update = {
-                    "online_maintenance": tweet.created_at
-                }
-                print("Updating record from "+str(db_online)+" to -> "+str(tweet.created_at))
-                await update_server_status(status, update, server_status)
-                #await client.send_message(context.message.channel, tweet.text)
-                embed2 = discord.Embed(title="Servidores Online" , description=":white_check_mark: **Mantenimiento de Destiny2 Finalizado!**", color=0x00ff00)
-                embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
-                #await client.send_message(canal_avisos, embed=embed2)
-                #await client.send_message(canal_bots, embed=embed2)
-                #await client.send_message(canal_avisos, tweet.text)
+                if db_online < tweet.created_at:
+                    print(str(db_online)+"<"+str(tweet.created_at))
+                    print(tweet.text)
+                    print(tweet.created_at)
+                    print("New Online Maintenance DETECTED !!")
+                    update = {
+                        "online_maintenance": tweet.created_at
+                    }
+                    print("Updating record from "+str(db_online)+" to -> "+str(tweet.created_at))
+                    await update_server_status(status, update, server_status)
+                    #await client.send_message(context.message.channel, tweet.text)
+                    embed2 = discord.Embed(title="Servidores Online" , description=":white_check_mark: **Mantenimiento de Destiny2 Finalizado!**", color=0x00ff00)
+                    embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+                    #await client.send_message(canal_avisos, embed=embed2)
+                    #await client.send_message(canal_bots, embed=embed2)
+                    #await client.send_message(canal_avisos, tweet.text)
 
 
 @client.command(name='Run blacklist and populate clan',
