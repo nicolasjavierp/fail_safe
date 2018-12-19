@@ -662,8 +662,12 @@ async def testing(context):
     db_online=status["online_maintenance"]
     #print(str(tweets))
     for tweet in tweets:
-        if "MAINTENANCE" in tweet.text.upper() :    
-            
+        if "MAINTENANCE" in tweet.text.upper() :
+            print(tweet.created_at)
+            print(tweet.text)
+    
+    for tweet in tweets:
+        if "MAINTENANCE" in tweet.text.upper() :           
             if "HAS BEGUN" in tweet.text.upper() and "BACKEND" not in tweet.text.upper():
                 print("Comparing dates: "+str(db_start)+" vs. "+str(tweet.created_at))
                 #print(tweet.created_at - timedelta(hours=3))
