@@ -670,19 +670,20 @@ async def testing(context):
             if "HAS BEGUN" in tweet.text.upper() and "BACKEND" not in tweet.text.upper():
                 #print(tweet.created_at - timedelta(hours=3))
                 #print("DatabaseData = "+str(db_date)+ " ||  Tweet time = "+str(tweet.created_at)+ " || Argentina Tweet time = "+str(tweet.created_at - timedelta(hours=3)))
+                print("--------------------------------")
                 print("Entered begun maitenance")
                 
                 print("Comparing dates: "+str(db_start)+" vs. "+str(tweet.created_at))
                 if db_start < tweet.created_at:# - timedelta(hours=3):
                     #print(tweet.text)
                     #print(tweet.created_at)
-                    print("New Maintenance DETECTED !!")
+                    print("New Start Maintenance DETECTED !!")
                     #await client.send_message(context.message.channel, tweet.text)   
                     #await client.send_message(canal_avisos, tweet.text)
                     update = {
                         "start_maintenance": tweet.created_at
                     }
-                    print("Updated Record in Begun !! "+str(tweet.created_at))
+                    print("Updating record from "+str(db_start)+" to -> "+str(tweet.created_at))
                     await update_server_status(status, update, server_status)
                     embed2 = discord.Embed(title="" , description=":warning: **Comienzo de Mantenimiento de Destiny2!**", color=0x00ff00)
                     embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
@@ -690,19 +691,21 @@ async def testing(context):
                     #await client.send_message(canal_bots, embed=embed2)
             
             if "being BROUGHT OFFLINE".upper() in tweet.text.upper():
+                print("--------------------------------")
+                print("Entered Server Offline !!")
                 print("being BROUGHT OFFLINE".upper() in tweet.text.upper())
                 print(tweet.created_at)
                 print(tweet.text)
+                print("Comparing dates: "+str(db_offline)+" vs. "+str(tweet.created_at))
                 if db_offline < tweet.created_at:
-                    print("Comparing dates: "+str(db_offline)+" vs. "+str(tweet.created_at))
                     #print(tweet.text)
                     #print(tweet.created_at)
-                    print("Entered Server Offline !!")
+                    print("New Offline Maintenance DETECTED !!")
                     update = {
                             "offline_maintenance": tweet.created_at
                         }
-                    
-                    print("Updated Record in Offline !! "+str(tweet.created_at))
+                    print("Updating record from "+str(db_offline)+" to -> "+str(tweet.created_at))
+                    await update_server_status(status, update, server_status)
                     #await client.send_message(context.message.channel, tweet.text)
                     embed2 = discord.Embed(title="Servidores Offline" , description=":x: **Servidores de Destiny2 Offline!**", color=0x00ff00)
                     embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
@@ -711,14 +714,16 @@ async def testing(context):
                     #await client.send_message(canal_avisos, tweet.text)
 
             if ("HAS OFFICIALLY CONCLUDED" in tweet.text.upper() or "IS COMPLETE" in tweet.text.upper()) and db_online < tweet.created_at :
-                #print(tweet.text)
-                #print(tweet.created_at)
-                print("Comparing dates: "+str(db_start)+" vs. "+str(tweet.created_at))
+                print("--------------------------------")
                 print("Entered Maintenance FINISHED !!")
+                print(tweet.text)
+                print(tweet.created_at)
+                print("Comparing dates: "+str(db_online)+" vs. "+str(tweet.created_at))
+                print("New Online Maintenance DETECTED !!")
                 update = {
                     "online_maintenance": tweet.created_at
                 }
-                print("Updated Record in Finished!! "+str(tweet.created_at))
+                print("Updating record from "+str(db_online)+" to -> "+str(tweet.created_at))
                 await update_server_status(status, update, server_status)
                 #await client.send_message(context.message.channel, tweet.text)
                 embed2 = discord.Embed(title="Servidores Online" , description=":white_check_mark: **Mantenimiento de Destiny2 Finalizado!**", color=0x00ff00)
