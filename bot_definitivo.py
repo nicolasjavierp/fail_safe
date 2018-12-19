@@ -689,7 +689,8 @@ async def testing(context):
                     #await client.send_message(canal_avisos, embed=embed2)
                     #await client.send_message(canal_bots, embed=embed2)
             
-            if "BROUGHT OFFLINE" in tweet.text.upper():
+            if "being BROUGHT OFFLINE".upper() in tweet.text.upper():
+                print("being BROUGHT OFFLINE".upper() in tweet.text.upper())
                 print(tweet.created_at)
                 print(tweet.text)
                 if db_offline < tweet.created_at:
