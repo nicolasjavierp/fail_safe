@@ -18,7 +18,8 @@ from urllib.request import urlopen
 from pymongo import MongoClient
 from datetime import timedelta 
 from datetime import date 
-
+from db import *
+from utils import *
 import tweepy
 
 
@@ -226,27 +227,6 @@ async def rol(context):
     await asyncio.sleep(0.01)
 
 
-async def update_discord_user_last_activity(message_author_id):
-    #4 tests
-    #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
-    #END tests
-    #4 Heroku
-    MONGODB_URI = os.environ['MONGO_DB_MLAB']
-    #END Heroku
-    cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
-    db = cursor.get_database("bot_definitivo")
-    discord_users = db.discord_users
-    currentTime = datetime.now()
-    update = {
-            "last_activity": currentTime
-    }
-    original_record = get_one_discord_user(message_author_id, discord_users)
-    if original_record:
-        update_discord_user(original_record,update,discord_users)
-    await asyncio.sleep(0.01)
-    
-
-
 @client.event
 async def on_message(message):
     # we do not want the bot to reply to itself
@@ -260,27 +240,17 @@ async def on_message(message):
     msg = message.content
     #Normalizo el mensaje
     text = unicodedata.normalize('NFKD', msg).encode('ASCII', 'ignore').decode()
-    #print(text)
     regex_hola = re.search('^.*H+O+L+A+\s*.*$', text.upper(), re.MULTILINE) 
-    #regex_caca = re.search('^C+A+C+A+$', text.upper(), re.MULTILINE)
     regex_chau = re.search('^.*C+H+A+U+$', text.upper(), re.MULTILINE)
     regex_buen_dia = re.search('^.*B+U+E+N+\s+D+I+A+.*$', text.upper(), re.MULTILINE)
     regex_buenos_dias = re.search('^.*B+U+E+N+O+S+\sD+I+A+S.*$', text.upper(), re.MULTILINE)
     regex_buenas_tardes = re.search('^.*B+U+E+N+A+S+\sT+A+R+D+E+S+.*$', text.upper(), re.MULTILINE)
     regex_buenas_noches = re.search('^.*B+U+E+N+A+S+\sN+O+C+H+E+S+.*$', text.upper(), re.MULTILINE)
     regex_buenas = re.search('^B+U+E+N+A+S+$', text.upper(), re.MULTILINE)
-    #regex_jaja = re.search('^J+J*A+A*J+J*A+A*$', text.upper(), re.MULTILINE)
     regex_gracias_bot = re.search('^G+R+A+C+I+A+S\s+B+O+T+$', text.upper(), re.MULTILINE)
-    #print("Regex jjajajaja = "+str(regex_jaja))
-    #print("Regex hola = "+str(regex_hola))
-    #print("Regex Buen dia = "+str(regex_buen_dia))
-    #print("Regex Buenos dias = "+str(regex_buenos_dias))
-    #print("Regex hola = "+str(regex_hola))
-    #print("----")
     if (regex_hola or regex_buenas):
         if read_param_from_aux("number_of_hellos") >=2:
             currentTime = datetime.now()
-            #print(str(currentTime))
             salute_time = ""
             if currentTime.hour < 12+3:# Agrego diferencia de horario con el server US de Heroku
                 salute_time = " ,buen día!"
@@ -330,39 +300,11 @@ async def on_message(message):
         #    reset_param_aux("number_of_good_nights")
         #else:
         #    increment_param_in_1_aux("number_of_good_nights")
-        
-
-    #if (regex_caca) or ("mierda".upper() in text.upper()):
-        #embed = discord.Embed(title="", description=":poop:", color=0x00ff00)
-    #    embed = discord.Embed()
-        #response = json.loads(urlopen("http://api.giphy.com/v1/gifs/search?q=poop&api_key=NONE&limit=25").read())
-        #embed_list = [d['images']['fixed_width']['url'] for d in response['data']]
-        #url = random.choice(embed_list)
-        #print(url)
-    #    url="https://media.giphy.com/media/tdnUaMuARmi0o/giphy.gif"
-    #    embed.set_image(url=url)
-    #    await client.send_message(message.channel, embed=embed)
-
-    if "DANCE" in text.upper() or "DANCING" in text.upper():
-        embed = discord.Embed()
-        random_dance=[
-        "",
-        "",
-        "",
-        ""
-        ]
-        url = random.choice(random_dance)
-        embed.set_image(url=url)
-        await client.send_message(message.channel, embed=embed)
-
+      
     if "PUTO" in text.upper():
         embed = discord.Embed(title="" , description="Puto el que lee ... :punch:", color=0x00ff00)
         await client.send_message(message.channel, embed=embed)
 
-    #if "PENE" in text.upper() or "CHOTA" in text.upper() or "PIJA" in text.upper():
-    #    embed = discord.Embed(title="" , description=":eggplant:", color=0x00ff00)
-    #    await client.send_message(message.channel, embed=embed)
-    
     if (regex_chau) or ("ADIOS" in text.upper()):
         respuestas_posibles = ["Nos vemos en Disney ", "Hasta prontito ", "Nos re vimos ", "Cuidate, querete, ojito ... ","Hasta la próxima amig@ ", "Chau "]
         await client.send_message(message.channel, random.choice(respuestas_posibles) + message.author.mention )
@@ -371,44 +313,9 @@ async def on_message(message):
         embed = discord.Embed(title="" , description="De nada"+message.author.mention+" ! :vulcan:", color=0x00ff00)
         await client.send_message(message.channel, embed=embed)
 
-    #if regex_jaja:
-    #    embed = discord.Embed(title="" , description=":joy:", color=0x00ff00)
-    #    await client.send_message(message.channel, embed=embed)
     await asyncio.sleep(0.01)
     await client.process_commands(message)
     
-
-#@client.command(name='Oraculo',
-#                description="Responde tus dudas existenciales.",
-#                brief="Respuestas de mas alla de la Dreaming City!",
-#                aliases=['oraculo', 'odc'],
-#                pass_context=True)
-#async def oraculo(context):
-#    respuestas_posibles = [
-#        'Oraculo: El destino indica que NO',
-#        'Oraculo: Es muy probable que no',
-#        'Oraculo: Todavia no esta definido',
-#        #'Oraculo: Preguntame en un rato',
-#        # No cuentes con ello
-#        # Es cierto
-#        # Muy dudoso
-#        # No puedo predecirlo ahora
-#        # En mi opinión, sí
-#        # Sin duda
-#        # No
-#        # Si
-#        'Oraculo: Veo ... que es muy probable',
-#        'Oraculo: Definitivamente, SI ... aqui tienes un Edge Transit'
-#    ]
-#    list_split_message = context.message.content.split(' ', 1)[1]
-#    if "?" not in context.message.content:
-#        await client.say(context.message.author.mention + " eso no es una pregunta ")
-#    elif "?" in context.message.content and len(list_split_message) > 4:
-#        await client.say(random.choice(respuestas_posibles) + ", " + context.message.author.mention)
-#    elif "?" in context.message.content and len(list_split_message) <= 4:
-#        await client.say(context.message.author.mention + " eso no es una pregunta que con mis poderes pueda contestar ...")
-#
-
 
 @client.event
 async def on_ready():
@@ -416,25 +323,6 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
-
-
-#@client.command(name='Saludar',
-#                description="Saludo al guardian",
-#                brief="saludo",
-#                aliases=['hola', 'hello'],
-#                pass_context=True)
-#async def saludar(context):
-#    currentTime = datetime.now()
-#    salute_time = ""
-#    if currentTime.hour < 12:
-#        salute_time = " ,buen día!"
-#    elif 12 <= currentTime.hour < 18:
-#        salute_time = " ,buenas tardes!"
-#    else:
-#        salute_time = " ,buenas noches!"
-#    msg = 'Hola {0.author.mention}'.format(context.message)
-#    msg = msg + salute_time
-#    await client.send_message(context.message.channel, msg)
 
 @client.command(name='Ayuda',
                 description="Ayuda del bot definitivo",
@@ -551,7 +439,9 @@ async def inactivos(context):
     await asyncio.sleep(0.05)
 
 
-
+#######################################################################
+#######################################################################
+#######################################################################
 
 @client.command(name='Informe Semanal',
                 description="Informe Semanal",
@@ -662,8 +552,8 @@ async def testing(context):
     db_online=status["online_maintenance"]
 
     for tweet in tweets:
-        if "MAINTENANCE" in tweet.text.upper() :           
-            if "HAS BEGUN" in tweet.text.upper() and "BACKEND" not in tweet.text.upper():
+        if "MAINTENANCE".upper() in tweet.text.upper() :           
+            if ("HAS BEGUN".upper() in tweet.text.upper() and "BACKEND".upper() not in tweet.text.upper()):
                 print("--------------------------------")
                 print("Entered begun maitenance")
                 print("Comparing dates: "+str(db_start)+" vs. "+str(tweet.created_at))
@@ -795,190 +685,15 @@ async def run_sync(context):
                 aliases=['cap','clan_cap'],
                 pass_context=True)
 async def clan_capacity(context):
-    #my_server = discord.utils.get(client.servers)
-    #user_id = context.message.author.id
-    #user=my_server.get_member(user_id)
-    #for i in my_server.roles:
-    #    if "Admin" in i.name:
-    #                admin_id=i.id
-    #if admin_id in [role.id for role in user.roles]:
-        #4 tests
-        #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
-        #4 Heroku
-        fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
-        #END Heroku
-        capacity = await fs.get_clan_capacity()
-        for c in capacity:
-            for key,val in c.items():
-                await client.send_message(context.message.channel, str(key)+": "+str(val)+"/100" )
-    #else:
-    #    await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
-    #await asyncio.sleep(0.01)
-
-
-#######################################################################
-#######################################################################
-#######################################################################
-#//////////////////////////////////////////////////////////////////////
-#////////////////   DB SECTION           //////////////////////////////
-#//////////////////////////////////////////////////////////////////////
-
-######
-#Blacklist
-######
-async def get_blacklist(blacklisters):
-    document = blacklisters.find({})
-    await asyncio.sleep(0.01)
-    return document
-
-
-async def get_blacklist_date(blacklisters):
-    document = blacklisters.find_one()
-    await asyncio.sleep(0.01)
-    return str(document["date"])
-
-
-######
-#Clanmates
-######
-async def push_clanmate_to_db(record, clanmates):
-    clanmates.insert_one(record)
-    await asyncio.sleep(0.01)
-
-
-def get_one_Clanmate(clanmate_id, clanmates):
-        document = clanmates.find_one({'battletag':clanmate_id})
-        return document
-
-def is_clanmate_in_db(clanmate_id, clanmates):
-        document = clanmates.find_one({'battletag':clanmate_id})
-        if document:
-            return True
-        else:
-            return False
-
-
-######
-#Discord
-######
-async def push_discord_user_db(record, discord_users):
-    discord_users.insert_one(record)
-    await asyncio.sleep(0.01)
-
-
-
-def get_all_discord_users_by_last_activity(discord_users):
-        document = discord_users.find({}).sort('last_activity',pymongo.DESCENDING)
-        #await asyncio.sleep(0.01)
-        return document
-
-
-def get_one_discord_user(discord_id, discord_users):
-        document = discord_users.find_one({'discord_id':discord_id})
-        return document
-
-
-def is_discord_id_in_db(discord_id, discord_users):
-        document = discord_users.find_one({'discord_id':discord_id})
-        if document:
-                return True
-        else:
-                return False
-
-
-def update_discord_user(record, updates, discord_users):
-        discord_users.update_one({'_id': record['_id']},{
-                                '$set': updates
-                                }, upsert=False)
-
-
-######
-#Server Status
-######
-
-async def get_server_status(server_status):
-    document = server_status.find_one()
-    await asyncio.sleep(0.01)
-    return document
-
-
-async def update_server_status(record, updates, server_status):
-        server_status.update_one({'_id': record['_id']},{
-                                '$set': updates
-                                }, upsert=False)
-
-
-#//////////////////////////////////////////////////////////////////////
-#//////////////////////////////////////////////////////////////////////
-#//////////////////////////////////////////////////////////////////////
-
-#OLD WITH FILES
-async def add_user_data(member):
-    with open('users.json', 'r') as f:
-        users = json.load(f)
-        if not member.bot and not member.id in users:
-            print(member.id+" is not in users.json ... adding ...")
-            my_server = discord.utils.get(client.servers)
-            user=my_server.get_member(member.id)
-            users[member.id] = [member.name, user.nick]
-    with open('users.json', 'w') as f:
-            json.dump(users,f,indent=4)
-    await asyncio.sleep(0.01)
-
-
-async def add_clanmate_to_clan(clanmate_battletag, his_clan_name):
-    with open('clan.json', 'r') as f:
-        clan = json.load(f)
-        name = clanmate_battletag.split('#')[0]
-        if not clanmate_battletag in clan:
-            print("From "+ his_clan_name + " " + clanmate_battletag+" battletag is not in clan.json ... adding ...")
-            clan[clanmate_battletag] = [his_clan_name, name]
-    with open('clan.json', 'w') as f:
-            json.dump(clan,f,indent=4)
-    await asyncio.sleep(0.01)
-
-
-def is_user_in_users(user):
-    with open('users.json', 'r') as f:
-        users = json.load(f)
-        if user.id in users:
-            return True
-        else:
-            return False
-
-
-def is_clanmate_in_clan(clanmate_battletag):
-    #Patch for those who have no battleTag
-    with open('clan.json', 'r') as f:
-        clan = json.load(f)
-        #if clanmate_battletag in clan or name[0] in clan:
-        if clanmate_battletag in clan:
-            return True
-        else:
-            return False
-
-
-async def does_user_have_role(member,rol_id):
-    for role in member.roles:
-        if rol_id == role.id:
-            #print(member.name+" tiene rol " + rol_id + "!")
-            return True
-    await asyncio.sleep(0.01)
-    return False
-
-
-async def async_add_discord_users_list(discord_users_list):
     #4 tests
-    #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
+    #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
     #4 Heroku
-    MONGODB_URI = os.environ['MONGO_DB_MLAB']
+    fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
-    cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
-    db = cursor.get_database("bot_definitivo")
-    discord_users = db.discord_users
-    discord_users.remove({})
-    discord_users.insert_many(discord_users_list, ordered=False)
-
+    capacity = await fs.get_clan_capacity()
+    for c in capacity:
+        for key,val in c.items():
+            await client.send_message(context.message.channel, str(key)+": "+str(val)+"/100" )
 
 
 @client.command(name='Desafío Ascendente',
@@ -1053,12 +768,9 @@ async def get_server_status_tweets():
             if "ᴀᴠɪsᴏs".upper() in i.name.upper():
                 #print(i.name)
                 canal_avisos = i
-            if "BOTs".upper() in i.name.upper():
-                canal_bots = i
         auth=tweepy.OAuthHandler(os.environ['TWITTER_API_KEY'],os.environ['TWITTER_API_SECRET'])
         auth.set_access_token(os.environ['TWITTER_ACCESS_TOKEN'],os.environ['TWITTER_ACCESS_SECRET'])
         api = tweepy.API(auth)
-
         #4 tests
         #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
         #4 Heroku   
@@ -1072,71 +784,67 @@ async def get_server_status_tweets():
         tweets = api.user_timeline("BungieHelp",page=1)
         status = await get_server_status(server_status)
         #db_date = datetime.strptime(status["last_maintenance"], '%Y-%m-%d %H:%M:%S')
-        db_date=status["last_maintenance"]
-        #print(str(tweets))
+        db_start=status["start_maintenance"]
+        db_offline=status["offline_maintenance"]
+        db_online=status["online_maintenance"]
+
         for tweet in tweets:
-            if "MAINTENANCE" in tweet.text.upper() :    
-                print("Comparing dates: "+str(db_date)+" vs. "+str(tweet.created_at))
-                if "HAS BEGUN" in tweet.text.upper() and "BACKEND" not in tweet.text.upper():
-                    #print(tweet.created_at - timedelta(hours=3))
-                    #print("DatabaseData = "+str(db_date)+ " ||  Tweet time = "+str(tweet.created_at)+ " || Argentina Tweet time = "+str(tweet.created_at - timedelta(hours=3)))
+            if "MAINTENANCE".upper() in tweet.text.upper() :           
+                if ("HAS BEGUN".upper() in tweet.text.upper() and "BACKEND".upper() not in tweet.text.upper()):
+                    print("--------------------------------")
                     print("Entered begun maitenance")
-                    print(tweet.created_at)
-                    
-
-                    if db_date < tweet.created_at:# - timedelta(hours=3):
-                        #print(tweet.text)
+                    print("Comparing dates: "+str(db_start)+" vs. "+str(tweet.created_at))
+                    if db_start < tweet.created_at:
+                        print(tweet.text)
                         #print(tweet.created_at)
-                        print("New Maintenance DETECTED !!")
-                        print("Updated Record in Begun !! "+str(tweet.created_at))
-                        #await client.send_message(context.message.channel, tweet.text)   
-                        #await client.send_message(canal_avisos, tweet.text)
+                        print("New Start Maintenance DETECTED !!")
                         update = {
-                            "last_maintenance": tweet.created_at
+                            "start_maintenance": tweet.created_at
                         }
-
+                        print("Updating record from "+str(db_start)+" to -> "+str(tweet.created_at))
+                        await update_server_status(status, update, server_status)
                         embed2 = discord.Embed(title="" , description=":warning: **Comienzo de Mantenimiento de Destiny2!**", color=0x00ff00)
                         embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
-                        #await client.send_message(canal_avisos, embed=embed2)
-                        #await client.send_message(canal_bots, embed=embed2)
-                        #await update_server_status(status, update, server_status)
-                    #else:
-                    #    print("No new Maintenance!!")
+                        await client.send_message(canal_avisos, embed=embed2)
                 
-                if "BEING BROUGHT OFFLINE" in tweet.text.upper() and db_date < tweet.created_at:
-                    #print(tweet.text)
-                    #print(tweet.created_at)
+                if "being BROUGHT OFFLINE".upper() in tweet.text.upper():
+                    print("--------------------------------")
                     print("Entered Server Offline !!")
-                    update = {
-                            "last_maintenance": tweet.created_at
-                        }
-                    await update_server_status(status, update, server_status)
-                    print("Updated Record in Offline !! "+str(tweet.created_at))
-                    #await client.send_message(context.message.channel, tweet.text)
-                    embed2 = discord.Embed(title="Servidores Offline" , description=":x: **Servidores de Destiny2 Offline!**", color=0x00ff00)
-                    embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
-                    #await client.send_message(canal_avisos, embed=embed2)
-                    #await client.send_message(canal_bots, embed=embed2)
-                    #await client.send_message(canal_avisos, tweet.text)
-
-                if ("HAS OFFICIALLY CONCLUDED" in tweet.text.upper() or "IS COMPLETE" in tweet.text.upper()) and db_date < tweet.created_at :
-                    #print(tweet.text)
+                    print("being BROUGHT OFFLINE".upper() in tweet.text.upper())
                     #print(tweet.created_at)
+                    print(tweet.text)
+                    print("Comparing dates: "+str(db_offline)+" vs. "+str(tweet.created_at))
+                    if db_offline < tweet.created_at:
+                        #print(tweet.text)
+                        #print(tweet.created_at)
+                        print("New Offline Maintenance DETECTED !!")
+                        update = {
+                                "offline_maintenance": tweet.created_at
+                            }
+                        print("Updating record from "+str(db_offline)+" to -> "+str(tweet.created_at))
+                        await update_server_status(status, update, server_status)
+                        embed2 = discord.Embed(title="Servidores Offline" , description=":x: **Servidores de Destiny2 Offline!**", color=0x00ff00)
+                        embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+                        await client.send_message(canal_avisos, embed=embed2)
+                        
+                if ("HAS OFFICIALLY CONCLUDED" in tweet.text.upper() or "IS COMPLETE" in tweet.text.upper()):
+                    print("--------------------------------")
                     print("Entered Maintenance FINISHED !!")
-                    update = {
-                        "last_maintenance": tweet.created_at
-                    }
-                    await update_server_status(status, update, server_status)
-                    print("Updated Record in Finished!! "+str(tweet.created_at))
-                    #await client.send_message(context.message.channel, tweet.text)
-                    embed2 = discord.Embed(title="Servidores Online" , description=":white_check_mark: **Mantenimiento de Destiny2 Finalizado!**", color=0x00ff00)
-                    embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
-                    #await client.send_message(canal_avisos, embed=embed2)
-                    #await client.send_message(canal_bots, embed=embed2)
-                    #await client.send_message(canal_avisos, tweet.text)
-            #else:
-            #    print("No new Server updates !!")
-            await asyncio.sleep(30)
+                    print("Comparing dates: "+str(db_online)+" vs. "+str(tweet.created_at))
+                    print(tweet.text)
+                    #print(tweet.created_at)
+                    if db_online < tweet.created_at:
+                        print(str(db_online)+"<"+str(tweet.created_at))
+                        print("New Online Maintenance DETECTED !!")
+                        update = {
+                            "online_maintenance": tweet.created_at
+                        }
+                        print("Updating record from "+str(db_online)+" to -> "+str(tweet.created_at))
+                        await update_server_status(status, update, server_status)
+                        embed2 = discord.Embed(title="Servidores Online" , description=":white_check_mark: **Mantenimiento de Destiny2 Finalizado!**", color=0x00ff00)
+                        embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+                        await client.send_message(canal_avisos, embed=embed2)
+        await asyncio.sleep(30)
      
 
 #client.loop.create_task(list_servers())
