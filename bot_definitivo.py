@@ -33,44 +33,6 @@ BOT_PREFIX = ("+") #("+", "!")
 client = Bot(command_prefix=BOT_PREFIX)
 
 
-def load_param_from_config(item):
-    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-    my_config_file = os.path.join(THIS_FOLDER, 'config.json')
-    with open(my_config_file, 'r') as f:
-        config = json.load(f)
-        return config['DEFAULT'][item]
-
-
-def read_param_from_aux(item):
-    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-    my_config_file = os.path.join(THIS_FOLDER, 'aux.json')
-    with open(my_config_file, 'r') as f:
-        aux = json.load(f)
-        return aux[item]
-        #return aux
-
-
-def increment_param_in_1_aux(item):
-    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-    my_aux_file = os.path.join(THIS_FOLDER, 'aux.json')
-    with open(my_aux_file, 'r') as f:
-        aux = json.load(f)
-        tmp = aux[item]
-        aux[item] = tmp+1
-    with open("aux.json", "w") as f:
-        json.dump(aux, f)
-
-
-def reset_param_aux(item):
-    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-    my_aux_file = os.path.join(THIS_FOLDER, 'aux.json')
-    with open(my_aux_file, 'r') as f:
-        aux = json.load(f)
-        aux[item] = 0
-    with open("aux.json", "w") as f:
-        json.dump(aux, f)
-
-
 @client.event
 async def on_member_join(member):  
     server = member.server
