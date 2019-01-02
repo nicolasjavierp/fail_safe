@@ -394,7 +394,7 @@ async def inactivos(context):
             #embed.add_field(name='Field Name', value='Field Value', inline=True)
             #await client.say(embed=embed)
             await client.send_message(context.message.channel, embed=embed)
-        await asyncio.sleep(0.5)       
+        await asyncio.sleep(0.2)       
         await client.send_message(context.message.channel, "Fin.")
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
@@ -436,8 +436,8 @@ async def informe_semanal(context):
         key = key - 1
         if key<0:
             key = 52
-    #print(today)
-    #print("Week Number: "+str(key))
+    print(today)
+    print("Week Number: "+str(key))
         
     if date.today().weekday() == 1 and today.hour < 17:
         #print("Before RESET !! Adjusting week number!!")
@@ -789,7 +789,7 @@ async def get_server_status_tweets():
                         embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
                         await client.send_message(canal_avisos, embed=embed2)
                         
-                if ("HAS OFFICIALLY CONCLUDED" in tweet.text.upper() or "IS COMPLETE" in tweet.text.upper()):
+                if ("HAS OFFICIALLY CONCLUDED".upper() in tweet.text.upper() or "IS COMPLETE".upper() in tweet.text.upper()):
                     print("--------------------------------")
                     print("Entered Maintenance FINISHED !!")
                     print("Comparing dates: "+str(db_online)+" vs. "+str(tweet.created_at))
@@ -798,6 +798,8 @@ async def get_server_status_tweets():
                     if db_online < tweet.created_at:
                         print(str(db_online)+"<"+str(tweet.created_at))
                         print("New Online Maintenance DETECTED !!")
+                        #print(tweet.text)
+                        #print(tweet.created_at)
                         update = {
                             "online_maintenance": tweet.created_at
                         }
