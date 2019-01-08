@@ -220,7 +220,6 @@ async def on_message(message):
                 salute_time = " ,buenas tardes!"
             else:
                 salute_time = " ,buenas noches!"
-            
             msg = 'Hola {0.author.mention}'.format(message)
             msg = msg + salute_time
             embed = discord.Embed(title="" , description=msg+" :wave:", color=0x00ff00)
