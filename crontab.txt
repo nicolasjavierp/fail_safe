@@ -1,0 +1,1 @@
+0 14 * * 2 /home/njp/Downloads/clan/test/test.sh > /home/njp/Downloads/clan/test/cron_webhook.log 2>&1
