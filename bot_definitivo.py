@@ -435,17 +435,19 @@ async def informe_semanal(context):
         key = key - 1
         if key<0:
             key = 52
-    #print(today)
-    #print("Week Number: "+str(key))
+    print(today)
+    print("Week Number: "+str(key))
         
     if date.today().weekday() == 1 and today.hour < 17:
-        #print("Before RESET !! Adjusting week number!!")
+        print("Before RESET !! Adjusting week number!!")
         key = key - 1
         if key<0:
             key = 0
         #print("Week Number: "+str(key))
         #print(today.hour)
-
+    #print(key%7)
+    #print(ascendant_dict[key%7][0])
+    #print(protocol_dict[key%5][1])
     embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%7][0]+"**", color=0x00ff00)
     embed.set_image(url=ascendant_dict[key%7][1])
     await client.send_message(context.message.channel, embed=embed)
