@@ -427,6 +427,11 @@ async def informe_semanal(context):
         1: ["IKELOS_SG_v1.0.1 (Escopeta),\n IKELOS_SMG_v1.0.1 (Subfusil),\n IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png"],
         2: ["IKELOS_SG_v1.0.1 (Escopeta)","https://cdn.discordapp.com/attachments/508999396835196950/520269571253600271/Escopeta.png"]
     }
+    curse_dict={
+        0: ["Nivel de Maldicion 1"],
+        1: ["Nivel de Maldicion 2"],
+        2: ["Nivel de Maldicion 3, esta disponible el Trono Destrozado (Mazmorra)!"]
+    }
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
     print(key)
@@ -453,6 +458,9 @@ async def informe_semanal(context):
     #print(protocol_dict[key%5][1])
     embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%7][0]+"**", color=0x00ff00)
     embed.set_image(url=ascendant_dict[key%7][1])
+    await client.send_message(context.message.channel, embed=embed)
+
+    embed = discord.Embed(title="" , description=":**"+curse_dict[key%3][0]+"**", color=0x00ff00)
     await client.send_message(context.message.channel, embed=embed)
     
     embed = discord.Embed(title="" , description= ":calendar: Esta semana en  Protocolo Intensificación: \n **"+protocol_dict[key%5][0]+"**", color=0x00ff00)
