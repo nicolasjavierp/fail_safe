@@ -460,7 +460,7 @@ async def informe_semanal(context):
     embed.set_image(url=ascendant_dict[key%7][1])
     await client.send_message(context.message.channel, embed=embed)
 
-    embed = discord.Embed(title="" , description=":**"+curse_dict[key%3][0]+"**", color=0x00ff00)
+    embed = discord.Embed(title="" , description="**"+curse_dict[key%3][0]+"**", color=0x00ff00)
     await client.send_message(context.message.channel, embed=embed)
     
     embed = discord.Embed(title="" , description= ":calendar: Esta semana en  Protocolo Intensificación: \n **"+protocol_dict[key%5][0]+"**", color=0x00ff00)
