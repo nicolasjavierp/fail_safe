@@ -126,6 +126,7 @@ async def rol(context):
                 if user_clan_name:
                     if "Escuadra" in user_clan_name:
                         addroles = [role_Clan, role_DJ, role_Destiny_Clan]
+                        print(addroles)
                         await client.add_roles(user, *addroles)
                         if not is_discord_id_in_db(context.message.author.id, discord_users):
                             print(real_battletag + " is not in discord_users_DB!!")
@@ -520,13 +521,16 @@ async def testing(context):
 
     for i in my_server.roles:
         print(i.name, i.id)
+        if "DJ" in i.name:
+            custom_dj_role_id=i.id
 
     custom_clan_role_id=544911570258624522
     custom_destiny_clan_role_id=387742983249985536
     role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
+    role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
     role_Destiny_Clan = discord.utils.get(my_server.roles, id=custom_destiny_clan_role_id)
 
-
+    print(role_Clan,role_DJ,role_Destiny_Clan)
 
     for memb in my_server.members:
         if memb.bot:
