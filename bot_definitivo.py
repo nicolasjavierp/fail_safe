@@ -595,15 +595,15 @@ async def twitter(context):
                 pass_context=True)
 async def test(context):
     my_server = discord.utils.get(client.servers)
-    user_id = context.message.author.id
-    user=my_server.get_member(user_id)
+    print(my_server)
     for i in my_server.roles:
         print(i)
-        #if "Admin" in i.name:
-                    #admin_id=i.id
-    #if admin_id in [role.id for role in user.roles]:
-        #for i in my_server.roles:
-            #print(i)
+    for i in my_server.roles:
+        if "Clan" in i.name:
+            custom_clan_role_id=i.id
+        if "DJ" in i.name:
+            custom_dj_role_id=i.id
+        
 
 
 
