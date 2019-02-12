@@ -532,13 +532,14 @@ async def testing(context):
         if memb.bot:
             pass
         else:
-            #print(memb.name)
+            print(memb.name)
             user_has_role_destiny_clan = await does_user_have_role(memb,custom_destiny_clan_role_id)
-            #print(user_has_role_destiny_clan)
-            if user_has_role_destiny_clan:
-                print(str(memb.name)+" missing role ... adding ... ")
-                addroles = [role_Clan]
-                await client.add_roles(memb, *addroles)
+            print(user_has_role_destiny_clan)
+            #if user_has_role_destiny_clan:
+            #    print(str(memb.name)+" missing role ... adding ... ")
+            #    addroles = [role_Clan]
+            #    #await client.add_roles(memb, *addroles)
+            #    await client.add_role(memb, role_Clan)
 
 
 @client.command(name='Run blacklist and populate clan',
