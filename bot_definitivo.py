@@ -499,12 +499,12 @@ async def server(context):
         await client.send_message(context.message.channel, embed=embed2)
 
 
-@client.command(name='twitter',
-                description="twitter",
-                brief="twitter",
-                aliases=['twitter'],
+@client.command(name='Test',
+                description="Test",
+                brief="Test",
+                aliases=['test'],
                 pass_context=True)
-async def twitter(context):
+async def testing(context):
     auth=tweepy.OAuthHandler(os.environ['TWITTER_API_KEY'],os.environ['TWITTER_API_SECRET'])
     auth.set_access_token(os.environ['TWITTER_ACCESS_TOKEN'],os.environ['TWITTER_ACCESS_SECRET'])
     api = tweepy.API(auth)
