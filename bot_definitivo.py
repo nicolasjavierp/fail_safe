@@ -520,12 +520,17 @@ async def testing(context):
     my_server = discord.utils.get(client.servers)
 
     for i in my_server.roles:
-        print(i.name, i.id)
+        if "Clan" in i.name:
+            if "Desttiny" in i.name:
+                custom_destiny_clan_role_id=i.id
+            else:
+                custom_clan_role_id=i.id
+            print(i.name, i.id)
         if "DJ" in i.name:
             custom_dj_role_id=i.id
 
-    custom_clan_role_id=544911570258624522
-    custom_destiny_clan_role_id=387742983249985536
+    #custom_clan_role_id=544911570258624522
+    #custom_destiny_clan_role_id=387742983249985536
     role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
     role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
     role_Destiny_Clan = discord.utils.get(my_server.roles, id=custom_destiny_clan_role_id)
