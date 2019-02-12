@@ -521,9 +521,9 @@ async def testing(context):
 
     for i in my_server.roles:
         print(type(i.name), type(i.id))
-        if i.id == 544911570258624522:
+        if i.id == str(544911570258624522):
             custom_clan_role_id=i.id
-        if i.id == 387742983249985536:
+        if i.id == str(387742983249985536):
             custom_destiny_clan_role_id = i.id
         #if "Clan" in i.name:
         #    if "Destiny" in i.name:
@@ -539,7 +539,7 @@ async def testing(context):
     role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
     role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
     role_Destiny_Clan = discord.utils.get(my_server.roles, id=custom_destiny_clan_role_id)
-
+    print("RED ALert !")
     print(role_Clan,role_DJ,role_Destiny_Clan)
 
     for memb in my_server.members:
