@@ -520,12 +520,17 @@ async def testing(context):
     my_server = discord.utils.get(client.servers)
 
     for i in my_server.roles:
-        if "Clan" in i.name:
-            if "Destiny" in i.name:
-                custom_destiny_clan_role_id=i.id
-            else:
-                custom_clan_role_id=i.id
-            print(i.name, i.id)
+        print(type(i.name), type(i.id))
+        if i.id == 544911570258624522:
+            custom_clan_role_id=i.id
+        if i.id == 387742983249985536:
+            custom_destiny_clan_role_id = i.id
+        #if "Clan" in i.name:
+        #    if "Destiny" in i.name:
+        #        custom_destiny_clan_role_id=i.id
+        #    else:
+        #        custom_clan_role_id=i.id
+        print(i.name, i.id)
         if "DJ" in i.name:
             custom_dj_role_id=i.id
 
