@@ -598,11 +598,12 @@ async def test(context):
     user_id = context.message.author.id
     user=my_server.get_member(user_id)
     for i in my_server.roles:
-        if "Admin" in i.name:
-                    admin_id=i.id
-    if admin_id in [role.id for role in user.roles]:
-        for i in my_server.roles:
-            print(i)
+        print(i)
+        #if "Admin" in i.name:
+                    #admin_id=i.id
+    #if admin_id in [role.id for role in user.roles]:
+        #for i in my_server.roles:
+            #print(i)
 
 
 
