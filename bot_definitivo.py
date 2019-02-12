@@ -499,12 +499,12 @@ async def server(context):
         await client.send_message(context.message.channel, embed=embed2)
 
 
-@client.command(name='Test',
-                description="Test",
-                brief="Test",
-                aliases=['test'],
+@client.command(name='twitter',
+                description="twitter",
+                brief="twitter",
+                aliases=['twitter'],
                 pass_context=True)
-async def testing(context):
+async def twitter(context):
     auth=tweepy.OAuthHandler(os.environ['TWITTER_API_KEY'],os.environ['TWITTER_API_SECRET'])
     auth.set_access_token(os.environ['TWITTER_ACCESS_TOKEN'],os.environ['TWITTER_ACCESS_SECRET'])
     api = tweepy.API(auth)
@@ -586,6 +586,25 @@ async def testing(context):
                     #await client.send_message(canal_avisos, embed=embed2)
                     #await client.send_message(canal_bots, embed=embed2)
                     #await client.send_message(canal_avisos, tweet.text)
+
+
+@client.command(name='test',
+                description="test",
+                brief="test",
+                aliases=['test'],
+                pass_context=True)
+async def test(context):
+    my_server = discord.utils.get(client.servers)
+    user_id = context.message.author.id
+    user=my_server.get_member(user_id)
+    for i in my_server.roles:
+        if "Admin" in i.name:
+                    admin_id=i.id
+    if admin_id in [role.id for role in user.roles]:
+        for i in my_server.roles:
+            print(i)
+
+
 
 
 @client.command(name='Run blacklist and populate clan',
