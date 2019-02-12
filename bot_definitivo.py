@@ -41,11 +41,11 @@ async def on_member_join(member):
             #print(i.name)
             canal_bienvenida = i            
     #fmt = 'Bienvenido {0.mention} a {1.name}!'
-    fmt = ':wave: **Bienvenido {0.mention} a ESCUADRA 2!**'
+    fmt = ':wave: **Bienvenido {0.mention} al Discord de ESCUADRA 2!**'
     await client.send_message(canal_bienvenida, fmt.format(member))
     #await client.send_message(canal_bienvenida, fmt.format(member, server))
     embed2=discord.Embed()
-    embed2=discord.Embed(title="", description="• Necesitas permisos para usar los canales? \n • Escribí debajo el comando **+rol** seguido de tu Battletag! \n **Ejemplo: **\n", color=0x00ff00)
+    embed2=discord.Embed(title="", description="• Necesitas permisos para usar los canales de Destiny 2? \n • Escribí debajo el comando **+rol** seguido de tu Battletag! \n **Ejemplo: **\n", color=0x00ff00)
     embed2.set_image(url="https://media.giphy.com/media/vykWBW2wh4URJZ75Uu/giphy.gif")
     await client.send_message(canal_bienvenida, embed=embed2)
     await asyncio.sleep(0.01)
