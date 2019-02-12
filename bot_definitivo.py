@@ -474,10 +474,6 @@ async def informe_semanal(context):
     await client.send_message(context.message.channel, embed=embed)
 
 
-#######################################################################
-#######################################################################
-#######################################################################
-
 @client.command(name='Server Status',
                 description="Server Status",
                 brief="Server Status",
@@ -520,7 +516,7 @@ async def testing(context):
     my_server = discord.utils.get(client.servers)
 
     for i in my_server.roles:
-        print(type(i.name), type(i.id))
+        #print(type(i.name), type(i.id))
         if i.id == str(544911570258624522):
             custom_clan_role_id=i.id
         if i.id == str(387742983249985536):
@@ -530,7 +526,7 @@ async def testing(context):
         #        custom_destiny_clan_role_id=i.id
         #    else:
         #        custom_clan_role_id=i.id
-        print(i.name, i.id)
+        #print(i.name, i.id)
         if "DJ" in i.name:
             custom_dj_role_id=i.id
 
@@ -539,22 +535,24 @@ async def testing(context):
     role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
     role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
     role_Destiny_Clan = discord.utils.get(my_server.roles, id=custom_destiny_clan_role_id)
-    print("RED ALert !")
-    print(role_Clan,role_DJ,role_Destiny_Clan)
+    #print("RED ALert !")
+    #print(role_Clan,role_DJ,role_Destiny_Clan)
 
     for memb in my_server.members:
         if memb.bot:
             pass
         else:
-            print(memb.name)
+            #print(memb.name)
             user_has_role_destiny_clan = await does_user_have_role(memb,custom_destiny_clan_role_id)
-            print(user_has_role_destiny_clan)
-            #if user_has_role_destiny_clan:
-            #    print(str(memb.name)+" missing role ... adding ... ")
-            #    addroles = [role_Clan]
-            #    #await client.add_roles(memb, *addroles)
-            #    await client.add_role(memb, role_Clan)
+            #print(user_has_role_destiny_clan)
+            if user_has_role_destiny_clan:
+                addroles = [role_Clan]
+                await client.add_roles(memb, *addroles)
+            
 
+#######################################################################
+#######################################################################
+#######################################################################
 
 @client.command(name='Run blacklist and populate clan',
                 description="Genera la lista negra y actualiza la db del clan",
