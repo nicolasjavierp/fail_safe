@@ -588,26 +588,6 @@ async def twitter(context):
                     #await client.send_message(canal_avisos, tweet.text)
 
 
-@client.command(name='test',
-                description="test",
-                brief="test",
-                aliases=['test'],
-                pass_context=True)
-async def test(context):
-    my_server = discord.utils.get(client.servers)
-    print(my_server)
-    for i in my_server.roles:
-        print(i)
-    for i in my_server.roles:
-        if "Clan" in i.name:
-            custom_clan_role_id=i.id
-        if "DJ" in i.name:
-            custom_dj_role_id=i.id
-        
-
-
-
-
 @client.command(name='Run blacklist and populate clan',
                 description="Genera la lista negra y actualiza la db del clan",
                 brief="run",
