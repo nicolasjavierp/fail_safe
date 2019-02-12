@@ -534,8 +534,8 @@ async def testing(context):
         if "DJ" in i.name:
             custom_dj_role_id=i.id
 
-    #custom_clan_role_id=544911570258624522
-    #custom_destiny_clan_role_id=387742983249985536
+    #custom_clan_role_id=str(544911570258624522)
+    #custom_destiny_clan_role_id=str(387742983249985536)
     role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
     role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
     role_Destiny_Clan = discord.utils.get(my_server.roles, id=custom_destiny_clan_role_id)
@@ -546,9 +546,9 @@ async def testing(context):
         if memb.bot:
             pass
         else:
-            #print(memb.name)
+            print(memb.name)
             user_has_role_destiny_clan = await does_user_have_role(memb,custom_destiny_clan_role_id)
-            #print(user_has_role_destiny_clan)
+            print(user_has_role_destiny_clan)
             #if user_has_role_destiny_clan:
             #    print(str(memb.name)+" missing role ... adding ... ")
             #    addroles = [role_Clan]
