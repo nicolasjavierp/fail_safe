@@ -37,7 +37,7 @@ client = Bot(command_prefix=BOT_PREFIX)
 async def on_member_join(member):  
     server = member.server
     for i in server.channels:
-        if "ɪɴᴠɪᴛᴀᴅᴏs".upper() in i.name.upper() :
+        if "ʙɪᴇɴᴠᴇɴɪᴅᴏ".upper() in i.name.upper() :
             #print(i.name)
             canal_bienvenida = i            
     #fmt = 'Bienvenido {0.mention} a {1.name}!'
@@ -157,7 +157,7 @@ async def rol(context):
                         \t\tLuego con `!help` podes ver el listado de comandos disponibles.\n\
                         \n\
                         • __**Bot Definitivo:**__\n\
-                        \t\tEntrega información sobre las actividades semanales tipicas, escribí en el canal #General:\n\
+                        \t\tEntrega información sobre las actividades semanales tipicas, escribí en el canal #🎮ᴅᴇsᴛɪɴʏ:\n\
                         \n\
                         \t\t`+semana`\n ", color=0x00ff00)
                         await client.send_message(user, embed=embed2)
