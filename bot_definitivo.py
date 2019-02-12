@@ -81,13 +81,16 @@ async def rol(context):
                 user_roles_names.append(i.name)
             #Get clan defined roles ids from discord
             for i in my_server.roles:
-                if "Clan" in i.name:
-                    custom_clan_role_id=i.id
+                #if "Clan" in i.name:
+                    #custom_clan_role_id=i.id
                 if "DJ" in i.name:
                     custom_dj_role_id=i.id
 
+            custom_clan_role_id=544911570258624522
+            custom_destiny_clan_role_id=387742983249985536
             role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
             role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
+            role_Destiny_Clan = discord.utils.get(my_server.roles, id=custom_destiny_clan_role_id)
 
             #4 tests
             #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
@@ -107,10 +110,11 @@ async def rol(context):
                 #Verification if discord api does not work initialy
                 user_has_role_clan = await does_user_have_role(user,custom_clan_role_id)
                 user_has_role_dj = await does_user_have_role(user,custom_dj_role_id)
+                user_has_role_destiny_clan = await does_user_have_role(user,custom_destiny_clan_role_id)
                 
                 if not user_has_role_clan or not user_has_role_dj:
                     print(str(name)+" missing role ... adding ... ")
-                    addroles = [role_Clan, role_DJ]
+                    addroles = [role_Clan, role_DJ, role_Destiny_Clan]
                     await client.add_roles(user, *addroles)
                 
                 embed = discord.Embed(title="" , description="El Guardian "+str(name)+" ya fue dado de alta y tiene los roles! ", color=0x00ff00)
@@ -121,7 +125,7 @@ async def rol(context):
                 #if user_destiny_id and user_clan_name:
                 if user_clan_name:
                     if "Escuadra" in user_clan_name:
-                        addroles = [role_Clan, role_DJ]
+                        addroles = [role_Clan, role_DJ, role_Destiny_Clan]
                         await client.add_roles(user, *addroles)
                         if not is_discord_id_in_db(context.message.author.id, discord_users):
                             print(real_battletag + " is not in discord_users_DB!!")
@@ -513,9 +517,27 @@ async def server(context):
                 pass_context=True)
 async def testing(context):
     my_server = discord.utils.get(client.servers)
+    
     for i in my_server.roles:
         print(i.name, i.id)
 
+    custom_clan_role_id=544911570258624522
+    custom_destiny_clan_role_id=387742983249985536
+    role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
+    role_Destiny_Clan = discord.utils.get(my_server.roles, id=custom_destiny_clan_role_id)
+
+
+
+    for memb in my_server.members:
+        if memb.bot:
+            pass
+        else:
+            print(memb.name)
+            #user_has_role_clan = await does_user_have_role(memb,custom_clan_role_id)
+            #if user_has_role_clan:
+            #    print(str(memb.name)+" missing role ... adding ... ")
+            #    addroles = [role_Destiny_Clan]
+            #    await client.add_roles(memb, *addroles)
 
 
 @client.command(name='Run blacklist and populate clan',
