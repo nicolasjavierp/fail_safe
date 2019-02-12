@@ -517,7 +517,7 @@ async def server(context):
                 pass_context=True)
 async def testing(context):
     my_server = discord.utils.get(client.servers)
-    
+
     for i in my_server.roles:
         print(i.name, i.id)
 
@@ -533,7 +533,8 @@ async def testing(context):
             pass
         else:
             print(memb.name)
-            #user_has_role_clan = await does_user_have_role(memb,custom_clan_role_id)
+            user_has_role_clan = await does_user_have_role(memb,custom_clan_role_id)
+            print(user_has_role_clan)
             #if user_has_role_clan:
             #    print(str(memb.name)+" missing role ... adding ... ")
             #    addroles = [role_Destiny_Clan]
