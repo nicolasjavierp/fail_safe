@@ -521,7 +521,7 @@ async def testing(context):
 
     for i in my_server.roles:
         if "Clan" in i.name:
-            if "Desttiny" in i.name:
+            if "Destiny" in i.name:
                 custom_destiny_clan_role_id=i.id
             else:
                 custom_clan_role_id=i.id
