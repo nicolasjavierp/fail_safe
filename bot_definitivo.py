@@ -671,8 +671,9 @@ async def stop(context):
     server = context.message.server
     voice_client = client.voice_client_in(server)
     id = context.message.server.id
-    players[id].stop()
     await voice_client.disconnect()
+    players[id].stop()
+    
 
 
 @client.command(pass_context=True)
