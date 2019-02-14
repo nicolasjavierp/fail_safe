@@ -675,7 +675,6 @@ async def stop(context):
     await voice_client.disconnect()
 
 
-
 @client.command(pass_context=True)
 async def resume(context):
     id = context.message.server.id
