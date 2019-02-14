@@ -5,6 +5,7 @@ import random
 import asyncio
 import aiohttp
 from discord.ext.commands import Bot
+from discord.voice_client import VoiceClient
 from fail_safe import FailSafe
 import os, time
 import discord
@@ -21,6 +22,7 @@ from datetime import date
 from db import *
 from utils import *
 import tweepy
+import youtube_dl
 
 
 
@@ -32,6 +34,7 @@ BOT_TOKEN = os.environ['BOT_TOKEN']
 BOT_PREFIX = ("+") #("+", "!")
 client = Bot(command_prefix=BOT_PREFIX)
 
+players = {}
 
 @client.event
 async def on_member_join(member):  
@@ -308,6 +311,72 @@ async def ayuda(context):
 #######################################################################
 ################## SPECIAL PERMISIONS COMMANDS  #######################
 #######################################################################
+
+@client.command(name='Run blacklist and populate clan',
+                description="Genera la lista negra y actualiza la db del clan",
+                brief="run",
+                aliases=['sync'],
+                pass_context=True)
+async def run_sync(context):
+    my_server = discord.utils.get(client.servers)
+    user_id = context.message.author.id
+    user=my_server.get_member(user_id)
+    for i in my_server.roles:
+        if "Admin" in i.name:
+                    admin_id=i.id
+    if admin_id in [role.id for role in user.roles]:
+        #4 tests
+        #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
+        #4 Heroku
+        fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+        #END Heroku
+        t_start = time.perf_counter()
+        await client.send_message(context.message.channel, "**Aguantame la mecha :bomb: ... que estoy creando el listado de inactivos y pisando el listado de clan. **")
+        await fs.async_clear_clanmates_blacklister_db()
+        for clan in fs.our_clans:
+            blacklist_EX = []
+            #clan_list = await fs.async_get_ClanPlayerList(fs.our_clans[0])
+            clan_list = await fs.async_get_ClanPlayerList(clan)
+            if not clan_list:
+                print("Could not load CLAN LIST!!!!!")
+            await asyncio.sleep(0.5)
+            new_clan_list = await fs.async_add_Clanmembers_LastPlayed(clan_list)
+            print("Got last Played for" + str(clan))
+            await asyncio.sleep(0.5)
+            new_clan_list = await fs.async_add_Clanmembers_Battletag(new_clan_list)
+            print("Got Battletags for" + str(clan))
+            await asyncio.sleep(0.5)
+            new_clan_list = await fs.async_add_Clanmembers_ClanName(new_clan_list)
+            print("Got ClanNames for" + str(clan))
+            await asyncio.sleep(0.5)
+            
+            for clanmate in new_clan_list:
+                blacklisted = await fs.async_is_blacklisted(clanmate)
+                if blacklisted:
+                    blacklist_EX.append(blacklisted)
+            print("Got Blacklisters for" + str(clan))
+            await asyncio.sleep(0.5)
+            definitive_blacklist = await fs.async_filter_blacklist(blacklist_EX)
+            if definitive_blacklist:
+                await asyncio.sleep(0.5)
+                await fs.async_push_blacklist(definitive_blacklist)
+            await asyncio.sleep(0.5)
+            print("Filtered Blacklisters for" + str(clan))
+            for i in new_clan_list:
+                del i['last_played']
+            await fs.async_push_clanmates_to_db(new_clan_list)
+            print("Pushed ClanMates for" + str(clan))
+            await asyncio.sleep(0.5)
+            await client.send_message(context.message.channel, "**Termine con %s**" % clan[1])
+            
+        t_stop = time.perf_counter()
+        #print("Elapsed time: %.1f [min]" % ((t_stop-t_start)/60))
+        await client.send_message(context.message.channel, "**Finalizada la generacion de Inactivos y listado de clan, tardé ... %.1f [min]!**"% ((t_stop-t_start)/60))
+    else:
+        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
+    await asyncio.sleep(0.01)
+
+
 @client.command(name='Poblacion',
                 description="Indica los integrantes de discord",
                 brief="poblacion",
@@ -503,122 +572,6 @@ async def server(context):
         embed2.set_image(url="https://media.giphy.com/media/ZGarmJwETJ0He/giphy.gif")
         await client.send_message(context.message.channel, embed=embed2)
 
-#######################################################################
-#######################################################################
-#######################################################################
-
-@client.command(name='Test',
-                description="Test",
-                brief="Test",
-                aliases=['test'],
-                pass_context=True)
-async def testing(context):
-    my_server = discord.utils.get(client.servers)
-
-    for i in my_server.roles:
-        #print(type(i.name), type(i.id))
-        if i.id == str(544911570258624522):
-            custom_clan_role_id=i.id
-        if i.id == str(387742983249985536):
-            custom_destiny_clan_role_id = i.id
-        #if "Clan" in i.name:
-        #    if "Destiny" in i.name:
-        #        custom_destiny_clan_role_id=i.id
-        #    else:
-        #        custom_clan_role_id=i.id
-        #print(i.name, i.id)
-        if "DJ" in i.name:
-            custom_dj_role_id=i.id
-
-    #custom_clan_role_id=str(544911570258624522)
-    #custom_destiny_clan_role_id=str(387742983249985536)
-    role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
-    role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
-    role_Destiny_Clan = discord.utils.get(my_server.roles, id=custom_destiny_clan_role_id)
-    #print("RED ALert !")
-    #print(role_Clan,role_DJ,role_Destiny_Clan)
-
-    for memb in my_server.members:
-        if memb.bot:
-            pass
-        else:
-            #print(memb.name)
-            user_has_role_destiny_clan = await does_user_have_role(memb,custom_destiny_clan_role_id)
-            #print(user_has_role_destiny_clan)
-            if user_has_role_destiny_clan:
-                print(str(memb.name)+" missing role ... adding ... ")
-                addroles = [role_DJ]
-                await client.add_roles(memb, *addroles)
-            
-
-#######################################################################
-#######################################################################
-#######################################################################
-
-@client.command(name='Run blacklist and populate clan',
-                description="Genera la lista negra y actualiza la db del clan",
-                brief="run",
-                aliases=['sync'],
-                pass_context=True)
-async def run_sync(context):
-    my_server = discord.utils.get(client.servers)
-    user_id = context.message.author.id
-    user=my_server.get_member(user_id)
-    for i in my_server.roles:
-        if "Admin" in i.name:
-                    admin_id=i.id
-    if admin_id in [role.id for role in user.roles]:
-        #4 tests
-        #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
-        #4 Heroku
-        fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
-        #END Heroku
-        t_start = time.perf_counter()
-        await client.send_message(context.message.channel, "**Aguantame la mecha :bomb: ... que estoy creando el listado de inactivos y pisando el listado de clan. **")
-        await fs.async_clear_clanmates_blacklister_db()
-        for clan in fs.our_clans:
-            blacklist_EX = []
-            #clan_list = await fs.async_get_ClanPlayerList(fs.our_clans[0])
-            clan_list = await fs.async_get_ClanPlayerList(clan)
-            if not clan_list:
-                print("Could not load CLAN LIST!!!!!")
-            await asyncio.sleep(0.5)
-            new_clan_list = await fs.async_add_Clanmembers_LastPlayed(clan_list)
-            print("Got last Played for" + str(clan))
-            await asyncio.sleep(0.5)
-            new_clan_list = await fs.async_add_Clanmembers_Battletag(new_clan_list)
-            print("Got Battletags for" + str(clan))
-            await asyncio.sleep(0.5)
-            new_clan_list = await fs.async_add_Clanmembers_ClanName(new_clan_list)
-            print("Got ClanNames for" + str(clan))
-            await asyncio.sleep(0.5)
-            
-            for clanmate in new_clan_list:
-                blacklisted = await fs.async_is_blacklisted(clanmate)
-                if blacklisted:
-                    blacklist_EX.append(blacklisted)
-            print("Got Blacklisters for" + str(clan))
-            await asyncio.sleep(0.5)
-            definitive_blacklist = await fs.async_filter_blacklist(blacklist_EX)
-            if definitive_blacklist:
-                await asyncio.sleep(0.5)
-                await fs.async_push_blacklist(definitive_blacklist)
-            await asyncio.sleep(0.5)
-            print("Filtered Blacklisters for" + str(clan))
-            for i in new_clan_list:
-                del i['last_played']
-            await fs.async_push_clanmates_to_db(new_clan_list)
-            print("Pushed ClanMates for" + str(clan))
-            await asyncio.sleep(0.5)
-            await client.send_message(context.message.channel, "**Termine con %s**" % clan[1])
-            
-        t_stop = time.perf_counter()
-        #print("Elapsed time: %.1f [min]" % ((t_stop-t_start)/60))
-        await client.send_message(context.message.channel, "**Finalizada la generacion de Inactivos y listado de clan, tardé ... %.1f [min]!**"% ((t_stop-t_start)/60))
-    else:
-        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
-    await asyncio.sleep(0.01)
-
 
 @client.command(name='Get Clans Capacity',
                 description="Genera el listado de capacidad del clan",
@@ -690,6 +643,110 @@ async def calendario_protocolo(context):
 ғᴇʙʀᴇʀᴏ     26     X | X | 0        └────────────────────┘\n\
 ```" 
     await client.send_message(context.message.channel, msg)
+
+#######################################################################
+################################# MUSIC ###############################
+#######################################################################
+
+
+@client.command(name='play',
+                description="play",
+                brief="play",
+                aliases=['play'],
+                pass_context=True)
+async def play(context,url):
+    server = context.message.server
+    channel = context.message.author.voice.voice_channel
+    await client.join_voice_channel(channel)
+    voice_client = client.voice_client_in(server)
+    player = await voice_client.create_ytdl_player(url)
+    players[server.id] = player
+    player.start()
+
+
+@client.command(name='pause',
+                description="pause",
+                brief="pause",
+                aliases=['pause'],
+                pass_context=True)
+async def pause(context):
+    id = context.message.server.id
+    players[id].pause()
+
+
+@client.command(name='stop',
+                description="stop",
+                brief="stop",
+                aliases=['stop'],
+                pass_context=True)
+async def stop(context):
+    server = context.message.server
+    voice_client = client.voice_client_in(server)
+    id = context.message.server.id
+    players[id].stop()
+    await voice_client.disconnect()
+
+
+
+@client.command(name='resume',
+                description="resume",
+                brief="resume",
+                aliases=['resume'],
+                pass_context=True)
+async def resume(context):
+    id = context.message.server.id
+    players[id].resume()
+#######################################################################
+################################# TEST ################################
+#######################################################################
+
+@client.command(name='Test',
+                description="Test",
+                brief="Test",
+                aliases=['test'],
+                pass_context=True)
+async def testing(context):
+    my_server = discord.utils.get(client.servers)
+
+    for i in my_server.roles:
+        #print(type(i.name), type(i.id))
+        if i.id == str(544911570258624522):
+            custom_clan_role_id=i.id
+        if i.id == str(387742983249985536):
+            custom_destiny_clan_role_id = i.id
+        #if "Clan" in i.name:
+        #    if "Destiny" in i.name:
+        #        custom_destiny_clan_role_id=i.id
+        #    else:
+        #        custom_clan_role_id=i.id
+        #print(i.name, i.id)
+        if "DJ" in i.name:
+            custom_dj_role_id=i.id
+
+    #custom_clan_role_id=str(544911570258624522)
+    #custom_destiny_clan_role_id=str(387742983249985536)
+    role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
+    role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
+    role_Destiny_Clan = discord.utils.get(my_server.roles, id=custom_destiny_clan_role_id)
+    #print("RED ALert !")
+    #print(role_Clan,role_DJ,role_Destiny_Clan)
+
+    for memb in my_server.members:
+        if memb.bot:
+            pass
+        else:
+            #print(memb.name)
+            user_has_role_destiny_clan = await does_user_have_role(memb,custom_destiny_clan_role_id)
+            #print(user_has_role_destiny_clan)
+            if user_has_role_destiny_clan:
+                print(str(memb.name)+" missing role ... adding ... ")
+                addroles = [role_DJ]
+                await client.add_roles(memb, *addroles)
+            
+
+#######################################################################
+######################### LOOPS #######################################
+#######################################################################
 
 
 async def list_servers():
@@ -790,6 +847,12 @@ async def get_server_status_tweets():
         await asyncio.sleep(30)
      
 
+
+
+
+#######################################################################
+######################### MAIN ########################################
+#######################################################################
 #client.loop.create_task(list_servers())
 #client.loop.create_task(get_server_status_tweets())
 client.run(BOT_TOKEN)
