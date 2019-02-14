@@ -649,11 +649,7 @@ async def calendario_protocolo(context):
 #######################################################################
 
 
-@client.command(name='play',
-                description="play",
-                brief="play",
-                aliases=['play'],
-                pass_context=True)
+@client.command(pass_context=True)
 async def play(context,url):
     server = context.message.server
     channel = context.message.author.voice.voice_channel
@@ -664,21 +660,13 @@ async def play(context,url):
     player.start()
 
 
-@client.command(name='pause',
-                description="pause",
-                brief="pause",
-                aliases=['pause'],
-                pass_context=True)
+@client.command(pass_context=True)
 async def pause(context):
     id = context.message.server.id
     players[id].pause()
 
 
-@client.command(name='stop',
-                description="stop",
-                brief="stop",
-                aliases=['stop'],
-                pass_context=True)
+@client.command(pass_context=True)
 async def stop(context):
     server = context.message.server
     voice_client = client.voice_client_in(server)
@@ -688,14 +676,11 @@ async def stop(context):
 
 
 
-@client.command(name='resume',
-                description="resume",
-                brief="resume",
-                aliases=['resume'],
-                pass_context=True)
+@client.command(pass_context=True)
 async def resume(context):
     id = context.message.server.id
     players[id].resume()
+
 #######################################################################
 ################################# TEST ################################
 #######################################################################
