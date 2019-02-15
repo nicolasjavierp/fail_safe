@@ -25,7 +25,6 @@ import tweepy
 import youtube_dl
 
 
-
 #4 Heroku
 BUNGIE_API_KEY = os.environ['BUNGIE_API_KEY']
 BOT_TOKEN = os.environ['BOT_TOKEN']
