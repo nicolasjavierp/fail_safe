@@ -34,6 +34,7 @@ BOT_PREFIX = ("+") #("+", "!")
 client = Bot(command_prefix=BOT_PREFIX)
 
 players = {}
+my_queues = {}
 
 @client.event
 async def on_member_join(member):  
@@ -589,59 +590,6 @@ async def clan_capacity(context):
             await client.send_message(context.message.channel, str(key)+": "+str(val)+"/100" )
 
 
-@client.command(name='Desafío Ascendente',
-                description="Indica el calendario del Desafío ascendente",
-                brief="Muestra el calendario del Desafío ascendente",
-                aliases=['asc'],
-                pass_context=True)
-async def calendario_ascendente(context):
-    cont="```prolog\n\
-\n\
-𝐂𝐀𝐋𝐄𝐍𝐃𝐀𝐑𝐈𝐎 𝐃𝐄𝐒𝐀𝐅𝐈𝐎 𝐀𝐒𝐂𝐄𝐍𝐃𝐄𝐍𝐓𝐄\n\
-DICIEMBRE  4 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ\n\
-DICIEMBRE 11 ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs\n\
-DICIEMBRE 18 ғᴏʀᴛᴀʟᴇᴢᴀ ᴅᴇ ғɪʟᴏs ᴄᴏʀᴛᴀɴᴛᴇs - ʀᴇᴛɪʀᴏ ᴅᴇʟ ʜᴇʀᴀʟᴅᴏ\n\
-DICIEMBRE 25 ᴀʙɪsᴍᴏ ᴀɢᴏɴᴀʀᴄʜ – ʙᴀʜɪᴀ ᴅᴇ ʟᴏs ᴅᴇsᴇᴏs ᴀʜᴏɢᴀᴅᴏs\n\
-ENERO      1 ɢᴜᴀʀɴɪᴄɪᴏɴ ᴄɪᴍᴇʀᴀ - ᴄᴀᴍᴀʀᴀ ᴅᴇ ʟᴜᴢ ᴅᴇ ᴇsᴛʀᴇʟʟᴀs \n\
-ENERO      8 ᴏᴜʀᴏʙᴏʀᴇᴀ – ʀᴇᴘᴏsᴏ ᴅᴇʟ ᴀғᴇʟɪᴏ\n\
-ENERO     15 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ\n\
-ENERO     22 ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs\n\
-ENERO     29 ғᴏʀᴛᴀʟᴇᴢᴀ ᴅᴇ ғɪʟᴏs ᴄᴏʀᴛᴀɴᴛᴇs - ʀᴇᴛɪʀᴏ ᴅᴇʟ ʜᴇʀᴀʟᴅᴏ\n\
-FEBRERO    5 ᴀʙɪsᴍᴏ ᴀɢᴏɴᴀʀᴄʜ – ʙᴀʜɪᴀ ᴅᴇ ʟᴏs ᴅᴇsᴇᴏs ᴀʜᴏɢᴀᴅᴏs\n\
-FEBRERO   12 ɢᴜᴀʀɴɪᴄɪᴏɴ ᴄɪᴍᴇʀᴀ - ᴄᴀᴍᴀʀᴀ ᴅᴇ ʟᴜᴢ ᴅᴇ ᴇsᴛʀᴇʟʟᴀs\n\
-FEBRERO   19 ᴏᴜʀᴏʙᴏʀᴇᴀ – ʀᴇᴘᴏsᴏ ᴅᴇʟ ᴀғᴇʟɪᴏ\n\
-FEBRERO   26 ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ\n\
-```"
-    await client.send_message(context.message.channel, cont)
-    
-
-
-
-@client.command(name='Armas de Protocolo',
-                description="Muestra el calendario de las armas de Protocolo",
-                brief="Muestra el calendario de las armas de Protocolo",
-                aliases=['pro'],
-                pass_context=True)
-async def calendario_protocolo(context):
-    msg="```prolog\n\
-\n\
-𝐂𝐀𝐋𝐄𝐍𝐃𝐀𝐑𝐈𝐎 𝐏𝐑𝐎𝐓𝐎𝐂𝐎𝐋𝐎 𝐈𝐍𝐓𝐄𝐍𝐒𝐈𝐅𝐈𝐂𝐀𝐂𝐈𝐎𝐍 \n\
-                  (E) (S) (F) \n\
-ᴅɪᴄɪᴇᴍʙʀᴇ    4     0 | X | X \n\
-ᴅɪᴄɪᴇᴍʙʀᴇ   11     X | 0 | X \n\
-ᴅɪᴄɪᴇᴍʙʀᴇ   18     X | X | 0 \n\
-ᴅɪᴄɪᴇᴍʙʀᴇ   25     0 | 0 | 0 \n\
-ᴇɴᴇʀᴏ        1     0 | 0 | 0 \n\
-ᴇɴᴇʀᴏ        8     0 | X | X        ┌────────────────────┐\n\
-ᴇɴᴇʀᴏ       15     X | 0 | X        │ (E) ᴇsᴄᴏᴘᴇᴛᴀ       │\n\
-ᴇɴᴇʀᴏ       22     X | X | 0        │ (S) sᴜʙғᴜsɪʟ       │\n\
-ᴇɴᴇʀᴏ       29     0 | 0 | 0        │ (F) ғʀᴀɴᴄᴏᴛɪʀᴀᴅᴏʀ  │\n\
-ғᴇʙʀᴇʀᴏ      5     0 | 0 | 0        ├────────────────────┤\n\
-ғᴇʙʀᴇʀᴏ     12     0 | X | X        │ (0) ᴅɪsᴘᴏɴɪʙʟᴇ      │\n\
-ғᴇʙʀᴇʀᴏ     19     X | 0 | X        │ (X) ɴᴏ ᴅɪsᴘᴏɴɪʙʟᴇ   │\n\
-ғᴇʙʀᴇʀᴏ     26     X | X | 0        └────────────────────┘\n\
-```" 
-    await client.send_message(context.message.channel, msg)
 
 #######################################################################
 ################################# MUSIC ###############################
@@ -651,32 +599,21 @@ async def calendario_protocolo(context):
 @client.command(pass_context=True)
 async def play(context,url):
     server = context.message.server
-    user_id = context.message.author.id
-    user=server.get_member(user_id)
-    for i in server.roles:
-        if "Admin" in i.name:
-                    admin_id=i.id
-    if admin_id in [role.id for role in user.roles]:
+    if is_user_admin(context):
         channel = context.message.author.voice.voice_channel
         await client.join_voice_channel(channel)
         voice_client = client.voice_client_in(server)
-        player = await voice_client.create_ytdl_player(url)
+        player = await voice_client.create_ytdl_player(url, after=lambda:check_queue(server.id, my_queues, players))
         players[server.id] = player
         player.start()
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
-    
 
 
 @client.command(pass_context=True)
 async def pause(context):
     server = context.message.server
-    user_id = context.message.author.id
-    user=server.get_member(user_id)
-    for i in server.roles:
-        if "Admin" in i.name:
-                    admin_id=i.id
-    if admin_id in [role.id for role in user.roles]:
+    if is_user_admin(context):
         id = context.message.server.id
         players[id].pause()
     else:
@@ -686,12 +623,7 @@ async def pause(context):
 @client.command(pass_context=True)
 async def stop(context):
     server = context.message.server
-    user_id = context.message.author.id
-    user=server.get_member(user_id)
-    for i in server.roles:
-        if "Admin" in i.name:
-                    admin_id=i.id
-    if admin_id in [role.id for role in user.roles]:
+    if is_user_admin(context):
         voice_client = client.voice_client_in(server)
         id = context.message.server.id
         await voice_client.disconnect()
@@ -703,16 +635,25 @@ async def stop(context):
 @client.command(pass_context=True)
 async def resume(context):
     server = context.message.server
-    user_id = context.message.author.id
-    user=server.get_member(user_id)
-    for i in server.roles:
-        if "Admin" in i.name:
-                    admin_id=i.id
-    if admin_id in [role.id for role in user.roles]:
+    if is_user_admin(context):
         id = context.message.server.id
         players[id].resume()
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
+
+
+@client.command(pass_context=True)
+async def queue(context,url):
+    server = context.message.server
+    if is_user_admin(context):
+        voice_client = client.voice_client_in(server)
+        if voice_client:
+            player = await voice_client.create_ytdl_player(url, after=lambda:check_queue(server.id, my_queues, players))
+            if server.id in my_queues:
+                my_queues[server.id].append(player)
+            else:
+                my_queues[server.id] = [player]
+            await client.say("Video encolado KPO !")
 
 #######################################################################
 ################################# TEST ################################

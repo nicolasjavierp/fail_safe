@@ -106,3 +106,22 @@ def reset_param_aux(item):
         aux[item] = 0
     with open("aux.json", "w") as f:
         json.dump(aux, f)
+
+def is_user_admin(ctx):
+    server = ctx.message.server
+    user_id = ctx.message.author.id
+    user=server.get_member(user_id)
+    for i in server.roles:
+        if "Admin" in i.name:
+                    admin_id=i.id
+    if admin_id in [role.id for role in user.roles]:
+        return True
+    else:
+        return False
+
+def check_queue(id , my_queues, players):
+    if my_queues[id]:
+        player = my_queues[id].pop(0)
+        players[id] = player
+        player.start()
+    
