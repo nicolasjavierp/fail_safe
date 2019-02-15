@@ -34,7 +34,7 @@ BOT_TOKEN = os.environ['BOT_TOKEN']
 BOT_PREFIX = ("+") #("+", "!")
 client = Bot(command_prefix=BOT_PREFIX)
 
-players = {}
+#players = {}
 
 @client.event
 async def on_member_join(member):  
@@ -649,38 +649,37 @@ async def calendario_protocolo(context):
 #######################################################################
 
 
-@client.command(pass_context=True)
-async def play(context,url):
-    server = context.message.server
-    channel = context.message.author.voice.voice_channel
-    await client.join_voice_channel(channel)
-    voice_client = client.voice_client_in(server)
-    player = await voice_client.create_ytdl_player(url)
-    players[server.id] = player
-    player.start()
-
-
-@client.command(pass_context=True)
-async def pause(context):
-    id = context.message.server.id
-    players[id].pause()
-
-
-@client.command(pass_context=True)
-async def stop(context):
-    server = context.message.server
-    voice_client = client.voice_client_in(server)
-    id = context.message.server.id
-    await voice_client.disconnect()
-    players[id].stop()
-    
-
-
-@client.command(pass_context=True)
-async def resume(context):
-    id = context.message.server.id
-    players[id].resume()
-
+#@client.command(pass_context=True)
+#async def play(context,url):
+#    server = context.message.server
+#    channel = context.message.author.voice.voice_channel
+#    await client.join_voice_channel(channel)
+#    voice_client = client.voice_client_in(server)
+#    player = await voice_client.create_ytdl_player(url)
+#    players[server.id] = player
+#    player.start()
+#
+#
+#@client.command(pass_context=True)
+#async def pause(context):
+#    id = context.message.server.id
+#    players[id].pause()
+#
+#
+#@client.command(pass_context=True)
+#async def stop(context):
+#    server = context.message.server
+#    voice_client = client.voice_client_in(server)
+#    id = context.message.server.id
+#    await voice_client.disconnect()
+#    players[id].stop()
+#    
+#
+#@client.command(pass_context=True)
+#async def resume(context):
+#    id = context.message.server.id
+#    players[id].resume()
+#
 #######################################################################
 ################################# TEST ################################
 #######################################################################
