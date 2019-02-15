@@ -601,8 +601,11 @@ async def play(context,url):
     server = context.message.server
     if is_user_admin(context):
         channel = context.message.author.voice.voice_channel
+        print(client.is_voice_connected(channel))
+        
         await client.join_voice_channel(channel)
         voice_client = client.voice_client_in(server)
+        
         player = await voice_client.create_ytdl_player(url, after=lambda:check_queue(server.id, my_queues, players))
         players[server.id] = player
         player.start()
