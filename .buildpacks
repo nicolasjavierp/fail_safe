@@ -1,4 +1,2 @@
 https://github.com/Crazycatz00/heroku-buildpack-libopus.git
-https://github.com/integricho/heroku-buildpack-python-ffmpeg.git
-
-
+https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git
