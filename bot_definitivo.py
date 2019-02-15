@@ -651,33 +651,68 @@ async def calendario_protocolo(context):
 @client.command(pass_context=True)
 async def play(context,url):
     server = context.message.server
-    channel = context.message.author.voice.voice_channel
-    await client.join_voice_channel(channel)
-    voice_client = client.voice_client_in(server)
-    player = await voice_client.create_ytdl_player(url)
-    players[server.id] = player
-    player.start()
+    user_id = context.message.author.id
+    user=server.get_member(user_id)
+    for i in server.roles:
+        if "Admin" in i.name:
+                    admin_id=i.id
+    if admin_id in [role.id for role in user.roles]:
+        channel = context.message.author.voice.voice_channel
+        await client.join_voice_channel(channel)
+        voice_client = client.voice_client_in(server)
+        player = await voice_client.create_ytdl_player(url)
+        players[server.id] = player
+        player.start()
+    else:
+        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
+    
 
 
 @client.command(pass_context=True)
 async def pause(context):
-    id = context.message.server.id
-    players[id].pause()
+    server = context.message.server
+    user_id = context.message.author.id
+    user=server.get_member(user_id)
+    for i in server.roles:
+        if "Admin" in i.name:
+                    admin_id=i.id
+    if admin_id in [role.id for role in user.roles]:
+        id = context.message.server.id
+        players[id].pause()
+    else:
+        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
 
 
 @client.command(pass_context=True)
 async def stop(context):
     server = context.message.server
-    voice_client = client.voice_client_in(server)
-    id = context.message.server.id
-    await voice_client.disconnect()
-    players[id].stop()
+    user_id = context.message.author.id
+    user=server.get_member(user_id)
+    for i in server.roles:
+        if "Admin" in i.name:
+                    admin_id=i.id
+    if admin_id in [role.id for role in user.roles]:
+        voice_client = client.voice_client_in(server)
+        id = context.message.server.id
+        await voice_client.disconnect()
+        players[id].stop()
+    else:
+        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
     
 
 @client.command(pass_context=True)
 async def resume(context):
-    id = context.message.server.id
-    players[id].resume()
+    server = context.message.server
+    user_id = context.message.author.id
+    user=server.get_member(user_id)
+    for i in server.roles:
+        if "Admin" in i.name:
+                    admin_id=i.id
+    if admin_id in [role.id for role in user.roles]:
+        id = context.message.server.id
+        players[id].resume()
+    else:
+        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
 
 #######################################################################
 ################################# TEST ################################
