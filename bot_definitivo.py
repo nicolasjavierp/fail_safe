@@ -607,10 +607,10 @@ async def play(context,url):
         voice_client = client.voice_client_in(server)
         
         player = await voice_client.create_ytdl_player(url, after=lambda:check_queue(server.id, my_queues, players))
-        #players[server.id] = player
-        #player.start()
-        id = context.message.server.id
-        players[id].start()
+        players[server.id] = player
+        player.start()
+        #id = context.message.server.id
+        #players[id].start()
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
 
