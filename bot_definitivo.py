@@ -607,8 +607,10 @@ async def play(context,url):
         voice_client = client.voice_client_in(server)
         
         player = await voice_client.create_ytdl_player(url, after=lambda:check_queue(server.id, my_queues, players))
-        players[server.id] = player
-        player.start()
+        #players[server.id] = player
+        #player.start()
+        id = context.message.server.id
+        players[id].start()
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
 
@@ -657,6 +659,25 @@ async def queue(context,url):
             else:
                 my_queues[server.id] = [player]
             await client.say("Video encolado KPO !")
+
+
+@client.command(pass_context=True)
+async def skip(context,url):
+    server = context.message.server
+    if is_user_admin(context):
+        voice_client = client.voice_client_in(server)
+        if voice_client:
+            if server.id in my_queues:
+                print(players)
+                print(my_queues[server.id])
+                if len(my_queues)>1:
+                    player = await voice_client.create_ytdl_player(url, after=check_queue(server.id, my_queues, players))
+                    #players[id].stop()
+                    #players[id].start()
+                    await client.say("Salteando KPO !")
+                else:
+                    await client.say("Nada encolado KPO !")
+            
 
 #######################################################################
 ################################# TEST ################################

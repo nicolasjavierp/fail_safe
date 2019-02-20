@@ -124,4 +124,7 @@ def check_queue(id , my_queues, players):
         player = my_queues[id].pop(0)
         players[id] = player
         player.start()
+
+
+
     
