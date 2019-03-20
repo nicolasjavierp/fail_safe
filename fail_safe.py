@@ -141,6 +141,85 @@ class FailSafe(object):
             return None
 
 
+    def get_CharactersRaids(self, membership_id, character_id):
+        '''
+        get_CharactersRaids
+        None: 0
+        Story: 2
+        Strike: 3
+        Raid: 4
+        AllPvP: 5
+        Patrol: 6
+        AllPvE: 7
+        Reserved9: 9
+        Control: 10
+        Reserved11: 11
+        Clash: 12
+        Clash -> Destiny's name for Team Deathmatch. 4v4 combat, the team with the highest kills at the end of time wins.
+        Reserved13: 13
+        CrimsonDoubles: 15
+        Nightfall: 16
+        HeroicNightfall: 17
+        AllStrikes: 18
+        IronBanner: 19
+        Reserved20: 20
+        Reserved21: 21
+        Reserved22: 22
+        Reserved24: 24
+        AllMayhem: 25
+        Reserved26: 26
+        Reserved27: 27
+        Reserved28: 28
+        Reserved29: 29
+        Reserved30: 30
+        Supremacy: 31
+        PrivateMatchesAll: 32
+        Survival: 37
+        Countdown: 38
+        TrialsOfTheNine: 39
+        Social: 40
+        TrialsCountdown: 41
+        TrialsSurvival: 42
+        IronBannerControl: 43
+        IronBannerClash: 44
+        IronBannerSupremacy: 45
+        ScoredNightfall: 46
+        ScoredHeroicNightfall: 47
+        Rumble: 48
+        AllDoubles: 49
+        Doubles: 50
+        PrivateMatchesClash: 51
+        PrivateMatchesControl: 52
+        PrivateMatchesSupremacy: 53
+        PrivateMatchesCountdown: 54
+        PrivateMatchesSurvival: 55
+        PrivateMatchesMayhem: 56
+        PrivateMatchesRumble: 57
+        HeroicAdventure: 58
+        Showdown: 59
+        Lockdown: 60
+        Scorched: 61
+        ScorchedTeam: 62
+        Gambit: 63
+        AllPvECompetitive: 64
+        Breakthrough: 65
+        BlackArmoryRun: 66
+        Salvage: 67
+        IronBannerSalvage: 68
+        PvPCompetitive: 69
+        PvPQuickplay: 70
+        ClashQuickplay: 71
+        ClashCompetitive: 72
+        ControlQuickplay: 73
+        ControlCompetitive: 74
+        GambitPrime: 75
+        Reckoning: 76
+        '''
+        site_call = "https://www.bungie.net/platform/Destiny2/4/Account/"+ str(membership_id)+"/Character/"+str(character_id)+"/Stats/Activities/?count=250&mode=4&page=0"
+        request = requests.get(site_call,
+                                headers={"X-API-Key":self.api_key})
+        return request.json()['Response']
+
     def get_postGameStats(self, game_id):
         '''game_id (int): Need to look further into this, but game_ids can be found'''
         site_call = "https://bungie.net/Platform/Destiny2/Stats/PostGameCarnageReport/" + str(game_id)
