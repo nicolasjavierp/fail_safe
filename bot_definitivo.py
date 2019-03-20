@@ -221,7 +221,7 @@ async def raid_this_week(context):
             profile = fs.get_DestinyUserProfile(user_destiny_id)
             character_ids = profile['profile']['data']['characterIds']
             print(profile['profile']['characters']['data'])
-            test = profile['profile']['characters']['data']
+            test = profile['characters']['data']
             for guardian in test:
                 if guardian['classHash']==3655393761:
                     print(real_battletag + " has a TITAN !")
