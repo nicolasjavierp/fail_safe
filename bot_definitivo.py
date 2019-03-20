@@ -219,14 +219,16 @@ async def raid_this_week(context):
             print(user_destiny_id)
             print(real_battletag)
             profile = fs.get_DestinyUserProfile(user_destiny_id)
-            character_ids = profile['profile']['data']['characterIds']
-            print(profile['characters']['data'])
-            test = profile['characters']['data']
-            for guardian in test:
-                if guardian['classHash']==3655393761:
-                    print(real_battletag + " has a TITAN !")
-                else:
-                    print(real_battletag + " has shit !")
+            #character_ids = profile['profile']['data']['characterIds']
+            print(type(profile))
+            print(profile)
+            #print(profile['characters']['data'])
+            #test = profile['characters']['data']
+            #for guardian in test:
+            #    if guardian['classHash']==3655393761:
+            #        print(real_battletag + " has a TITAN !")
+            #    else:
+            #        print(real_battletag + " has shit !")
 
 
 @client.event
