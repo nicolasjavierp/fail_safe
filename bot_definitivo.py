@@ -218,7 +218,7 @@ async def raid_this_week(context):
             real_battletag = user_destiny[0]['displayName']
             print(user_destiny_id)
             print(real_battletag)
-            profile = fs.get_DestinyUserProfile(user_destiny_id)
+            profile = fs.get_DestinyUserProfileDetail(user_destiny_id)
             #character_ids = profile['profile']['data']['characterIds']
             print(type(profile))
             print(profile)

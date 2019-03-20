@@ -112,6 +112,34 @@ class FailSafe(object):
             #print(type(inst))
             return None
 
+    def get_DestinyUserProfileDetail(self, membership_id, components=[200]):
+        '''
+        membership_id (int): the Destiny membership_id of a player (returned by get_DestinyUserId)
+        components (list of ints): the type of info you want returned according the Bungie API docs.
+        Defaults to 100: basic profile info ([100, 200] would also return more detailed info by Destiny character
+        Uses new Destiny 2 endpoint for PC player using the Destiny membershipId
+        '''
+        #print membership_id
+        #while True:
+        try:
+            components = "?components=" + ','.join([str(c) for c in components])
+            site_call = "https://bungie.net/Platform/Destiny2/4/Profile/" + str(membership_id) + "/" + components
+            request = requests.get(site_call, headers={"X-API-Key":self.api_key})
+            if request.json()['ErrorCode']==1:
+                return request.json()['Response']
+            if request.json()['ErrorCode']==217:
+                print (str(request.json()['ErrorCode'])+" For membership_id: "+str(membership_id))
+                self.error_members.add(membership_id)
+                return None
+        except Exception as inst:
+            self.retrys.append(membership_id)
+            #print("----------------------")
+            print ("ERROR:"+membership_id)
+            #print("----------------------")
+            time.sleep(5)
+            #print(type(inst))
+            return None
+
 
     def get_postGameStats(self, game_id):
         '''game_id (int): Need to look further into this, but game_ids can be found'''
