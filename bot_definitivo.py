@@ -234,7 +234,8 @@ async def raid_this_week(context):
                     print(type(raids))
                     for key, value in raids.items():
                         print(key)
-                        print(value[0])
+                        print(value[0]['period'])
+                        print(type(value[0]['period']))
                     
                 elif value['classHash']==2271682572:
                     print(real_battletag + " has a Warlock!")
