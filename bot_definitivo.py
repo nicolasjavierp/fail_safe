@@ -224,9 +224,10 @@ async def raid_this_week(context):
             print(profile)
             print(profile['characters']['data'])
             characters = profile['characters']['data']
-            for guardian in characters:
-                print(type(guardian))
-                print(guardian)
+            for key, value in characters.iteritems():
+                print(key)
+                print(value)
+                print(value['classHash'])
                 #if guardian['classHash']==3655393761:
                 #    print(real_battletag + " has a TITAN !")
                 #else:
