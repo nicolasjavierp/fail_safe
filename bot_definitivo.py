@@ -232,9 +232,9 @@ async def raid_this_week(context):
                     character_id = value['characterId']
                     raids = fs.get_CharactersRaids(user_destiny_id,character_id)
                     print(type(raids))
-                    print(raids)
+                    print(raids[0])
                     
-                if value['classHash']==2271682572:
+                elif value['classHash']==2271682572:
                     print(real_battletag + " has a Warlock!")
                     character_id = value['characterId']
                 else:
