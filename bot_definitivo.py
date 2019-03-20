@@ -197,6 +197,32 @@ async def rol(context):
     await asyncio.sleep(0.01)
 
 
+@client.command(name='RES',
+                description="Responde por PJ si hizo raid esta semana",
+                brief="Raid esta semana",
+                aliases=['res'],
+                pass_context=True)
+async def raid_this_week(context):
+    valid_battle_tag_ending = bool(re.match('^.*#[0-9]{4,5}$', context.message.content))
+    if len(context.message.content)>=4 and valid_battle_tag_ending:
+        #4 Tests
+        #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
+        #4 Heroku
+        fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+        #END Heroku
+        user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
+        user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
+        if user_destiny:
+            print("Valid User Destiny= "+str(user_destiny))
+            user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
+            real_battletag = user_destiny[0]['displayName']
+            print(user_destiny_id)
+            print(real_battletag)
+
+
+
+
+
 @client.event
 async def on_message(message):
     # we do not want the bot to reply to itself
