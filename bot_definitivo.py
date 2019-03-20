@@ -216,8 +216,10 @@ async def raid_this_week(context):
             print("Valid User Destiny= "+str(user_destiny))
             user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
             real_battletag = user_destiny[0]['displayName']
+            character_ids = user_destiny[0]['characterIds']
             print(user_destiny_id)
             print(real_battletag)
+            print(character_ids)
 
 
 
