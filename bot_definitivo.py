@@ -223,16 +223,17 @@ async def raid_this_week(context):
             #print(profile)
             #print(profile['characters']['data'])
             characters = profile['characters']['data']
-            for key, value in characters.items():
+            for id, info in characters.items():
                 #print(key)
                 #print(value)
                 #print(value['classHash'])
-                if value['classHash']==3655393761:
+                if info['classHash']==3655393761:
                     print(real_battletag + " has a TITAN !")
-                    character_id = value['characterId']
+                    character_id = info['characterId']
                     raids = fs.get_CharactersRaids(user_destiny_id,character_id)
                     print(type(raids))
-                    print(raids[0])
+                    for key, value in raids.items():
+                        print(key)
                     
                 elif value['classHash']==2271682572:
                     print(real_battletag + " has a Warlock!")
