@@ -224,7 +224,7 @@ async def raid_this_week(context):
             print(profile)
             print(profile['characters']['data'])
             characters = profile['characters']['data']
-            for key, value in characters.iteritems():
+            for key, value in characters.items():
                 print(key)
                 print(value)
                 print(value['classHash'])
