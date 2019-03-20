@@ -219,7 +219,7 @@ async def raid_this_week(context):
             print(user_destiny_id)
             print(real_battletag)
             profile = fs.get_DestinyUserProfile(user_destiny_id)
-            print(profile)
+            print(profile['profile']['data']['characterIds'])
 
 
 @client.event
