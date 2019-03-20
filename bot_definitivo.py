@@ -213,25 +213,26 @@ async def raid_this_week(context):
         user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
         user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
         if user_destiny:
-            print("Valid User Destiny= "+str(user_destiny))
+            #print("Valid User Destiny= "+str(user_destiny))
             user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
             real_battletag = user_destiny[0]['displayName']
-            print(user_destiny_id)
-            print(real_battletag)
+            #print(user_destiny_id)
+            #print(real_battletag)
             profile = fs.get_DestinyUserProfileDetail(user_destiny_id)
-            #character_ids = profile['profile']['data']['characterIds']
-            print(type(profile))
-            print(profile)
-            print(profile['characters']['data'])
+            #print(type(profile))
+            #print(profile)
+            #print(profile['characters']['data'])
             characters = profile['characters']['data']
             for key, value in characters.items():
                 print(key)
                 print(value)
-                print(value['classHash'])
-                #if guardian['classHash']==3655393761:
-                #    print(real_battletag + " has a TITAN !")
-                #else:
-                #    print(real_battletag + " has shit !")
+                #print(value['classHash'])
+                if value['classHash']==3655393761:
+                    print(real_battletag + " has a TITAN !")
+                    print(value['characterId'])
+                else:
+                    print(real_battletag + " has shit !")
+                    print(value['characterId'])
 
 
 @client.event
