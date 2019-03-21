@@ -234,6 +234,8 @@ async def raid_this_week(context):
                     print(type(raids))
                     for key, value in raids.items():
                         print(key)
+                        print(value[0])
+                        print("*************************************")
                         #value tiene una lista de las últimas raids cronológica
                         raids_complete = []
                         for raid in value:
@@ -251,6 +253,7 @@ async def raid_this_week(context):
                         last_tuesday = today - timedelta(days=offset)
                         print(last_tuesday)
                         print(type(last_tuesday))
+                        datetime.datetime.combine(last_tuesday, datetime.time(17, 00, 00))
                         if last_raid_date<last_tuesday:
                             print("No raid this week!!")
 
