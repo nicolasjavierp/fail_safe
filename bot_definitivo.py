@@ -240,7 +240,7 @@ async def raid_this_week(context):
                             pass
                             #if raid['completed']['statId']=="completed":
                                 #raids_complete.append(raid)
-                        print("Raids_Completadas="+len(raids_complete))
+                        print("Raids_Completadas="+str(len(raids_complete)))
                         print(value[0]['period'])
                         print(type(value[0]['period']))
                         #Str to date ...
