@@ -260,8 +260,10 @@ async def raid_this_week(context):
                         print(type(last_tuesday_reset))
                         print(last_tuesday_reset)
 
-                        #if last_raid_date<last_tuesday_reset:
-                        #    print("No raid this week!!")
+                        if last_raid_date<last_tuesday_reset:
+                            print("Character has No raid this week!!")
+                        else:
+                            print("Character has Raid this week!!")
 
                     
                 elif value['classHash']==2271682572:
