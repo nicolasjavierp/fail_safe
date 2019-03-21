@@ -256,9 +256,11 @@ async def raid_this_week(context):
                         #last_tuesday_reset = datetime.combine(last_tuesday.date(), datetime.time(17, 00))
                         #last_tuesday_reset = last_tuesday.replace(hour=17, minute=00)
                         last_tuesday_reset = last_tuesday + timedelta(hours=17, minutes=00)
+                        print(type(last_tuesday_reset))
                         print(last_tuesday_reset)
-                        if last_raid_date<last_tuesday_reset:
-                            print("No raid this week!!")
+
+                        #if last_raid_date<last_tuesday_reset:
+                        #    print("No raid this week!!")
 
                     
                 elif value['classHash']==2271682572:
