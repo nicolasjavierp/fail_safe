@@ -235,32 +235,32 @@ async def raid_this_week(context):
                     for key, value in raids.items():
                         print(key)
                         #print(value[0])
-                        print("*************************************")
-                        #value tiene una lista de las últimas raids cronológica
-                        raids_complete = []
-                        for raid in value:
-                            if raid['values']['completed']['statId']=="completed":
-                                raids_complete.append(raid)
-                        print("Raids_Completadas="+str(len(raids_complete)))
-                        #raids_complete.sort(key=lambda date: datetime.strptime(date, "%d-%b-%y"))
-                        print("Raids!!!")
-                        for i in range(5):
-                            print(raids_complete[i]['period'])
-                        #print(value[0]['period'])
-                        #print(type(value[0]['period']))
-                        last_raid_date = datetime.strptime(value[0]['period'],"%Y-%m-%dT%H:%M:%SZ")
-                        #print(last_raid_date)
+                        #print("*************************************")
                         today = date.today()
                         offset = (today.weekday() - 1) % 7
                         last_tuesday = today - timedelta(days=offset)
                         last_tuesday_temp = str(last_tuesday)+" 17:00:00"
                         last_tuesday_reset = datetime.strptime(last_tuesday_temp,"%Y-%m-%d %H:%M:%S")
+                        #value tiene una lista de las últimas raids ordenados cronologicamente
+                        raids_complete = []
+                        for raid in value:
+                            raid_date_time = datetime.strptime(raid['period'],"%Y-%m-%dT%H:%M:%SZ")
+                            if raid['values']['completed']['statId']=="completed" and raid_date_time>last_tuesday_reset:
+                                raids_complete.append(raid)
+                        print("Raids Completadas despues del reset="+str(len(raids_complete)))
+                        #raids_complete.sort(key=lambda date: datetime.strptime(date, "%d-%b-%y"))
+                        #print(value[0]['period'])
+                        #print(type(value[0]['period']))
+                        #last_raid_date = datetime.strptime(value[0]['period'],"%Y-%m-%dT%H:%M:%SZ")
+                        #print(last_raid_date)
                         #print(type(last_tuesday_reset))
                         #print(last_tuesday_reset)
-                        if last_raid_date<last_tuesday_reset:
-                            print("Character Titan has No raid this week!!")
-                        else:
+                        #if last_raid_date<last_tuesday_reset:
+                        if raids_complete:
                             print("Character Titan has Raid this week!!")
+                        else:
+                            print("Character Titan has No raid this week!!")
+                            
 
                     
                 elif value['classHash']==2271682572:
