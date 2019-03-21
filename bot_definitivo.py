@@ -251,11 +251,12 @@ async def raid_this_week(context):
                         today = date.today()
                         offset = (today.weekday() - 1) % 7
                         last_tuesday = today - timedelta(days=offset)
-                        print("Last_Tuesday:"+str(last_tuesday))
-                        print(type(last_tuesday))
-                        #last_tuesday_reset = datetime.combine(last_tuesday.date(), datetime.time(17, 00))
+                        #print("Last_Tuesday:"+str(last_tuesday))
+                        last_tuesday_temp = str(last_tuesday)+" 17:00:00"
+                        last_tuesday_reset = datetime.strptime(last_tuesday_temp,"%Y-%m-%d %H:%M:%S")
+                        #last_tuesday_reset = datetime.combine(last_tuesday, datetime.time(17, 00))
                         #last_tuesday_reset = last_tuesday.replace(hour=17, minute=00)
-                        last_tuesday_reset = last_tuesday + timedelta(hours=17, minutes=00)
+                        #last_tuesday_reset = last_tuesday + timedelta(hours=17, minutes=00)
                         print(type(last_tuesday_reset))
                         print(last_tuesday_reset)
 
