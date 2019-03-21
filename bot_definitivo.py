@@ -237,8 +237,9 @@ async def raid_this_week(context):
                         #value tiene una lista de las últimas raids cronológica
                         raids_complete = []
                         for raid in value:
-                            if raid['completed']['statId']=="completed":
-                                raids_complete.append(raid)
+                            pass
+                            #if raid['completed']['statId']=="completed":
+                                #raids_complete.append(raid)
                         print("Raids_Completadas="+len(raids_complete))
                         print(value[0]['period'])
                         print(type(value[0]['period']))
