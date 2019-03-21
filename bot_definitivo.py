@@ -231,7 +231,7 @@ async def raid_this_week(context):
                 character_id = info['characterId']
                 raids = fs.get_CharactersRaids(user_destiny_id,character_id)
                 raids_complete = class_race_report(info,user_destiny_id,raids)
-                #print(str(len(raids_complete)))
+                print(raids_complete)
                                    
 
 @client.event
