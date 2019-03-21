@@ -242,6 +242,10 @@ async def raid_this_week(context):
                             if raid['values']['completed']['statId']=="completed":
                                 raids_complete.append(raid)
                         print("Raids_Completadas="+str(len(raids_complete)))
+                        #raids_complete.sort(key=lambda date: datetime.strptime(date, "%d-%b-%y"))
+                        print("Raids!!!")
+                        for i in range(5):
+                            print(raids_complete[i]['period'])
                         #print(value[0]['period'])
                         #print(type(value[0]['period']))
                         last_raid_date = datetime.strptime(value[0]['period'],"%Y-%m-%dT%H:%M:%SZ")
@@ -274,6 +278,7 @@ async def raid_this_week(context):
                             if raid['values']['completed']['statId']=="completed":
                                 raids_complete.append(raid)
                         print("Raids_Completadas="+str(len(raids_complete)))
+                        
                         #print(value[0]['period'])
                         #print(type(value[0]['period']))
                         last_raid_date = datetime.strptime(value[0]['period'],"%Y-%m-%dT%H:%M:%SZ")
