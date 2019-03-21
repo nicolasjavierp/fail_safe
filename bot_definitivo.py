@@ -227,105 +227,12 @@ async def raid_this_week(context):
                 #print(key)
                 #print(value)
                 #print(value['classHash'])
-                if info['classHash']==3655393761:
-                    print(real_battletag + " has a TITAN !")
-                    character_id = info['characterId']
-                    raids = fs.get_CharactersRaids(user_destiny_id,character_id)
-                    print(type(raids))
-                    for key, value in raids.items():
-                        print(key)
-                        #print(value[0])
-                        #print("*************************************")
-                        today = date.today()
-                        offset = (today.weekday() - 1) % 7
-                        last_tuesday = today - timedelta(days=offset)
-                        last_tuesday_temp = str(last_tuesday)+" 17:00:00"
-                        last_tuesday_reset = datetime.strptime(last_tuesday_temp,"%Y-%m-%d %H:%M:%S")
-                        #value tiene una lista de las últimas raids ordenados cronologicamente
-                        raids_complete = []
-                        for raid in value:
-                            raid_date_time = datetime.strptime(raid['period'],"%Y-%m-%dT%H:%M:%SZ")
-                            if raid['values']['completed']['statId']=="completed" and raid_date_time>last_tuesday_reset:
-                                raids_complete.append(raid)
-                        print("Raids Completadas despues del reset="+str(len(raids_complete)))
-                        #raids_complete.sort(key=lambda date: datetime.strptime(date, "%d-%b-%y"))
-                        #print(value[0]['period'])
-                        #print(type(value[0]['period']))
-                        #last_raid_date = datetime.strptime(value[0]['period'],"%Y-%m-%dT%H:%M:%SZ")
-                        #print(last_raid_date)
-                        #print(type(last_tuesday_reset))
-                        #print(last_tuesday_reset)
-                        #if last_raid_date<last_tuesday_reset:
-                        if raids_complete:
-                            print("Character Titan has Raid this week!!")
-                        else:
-                            print("Character Titan has No raid this week!!")
-                            
-
-                    
-                elif value['classHash']==2271682572:
-                    print(real_battletag + " has a Warlock!")
-                    character_id = info['characterId']
-                    raids = fs.get_CharactersRaids(user_destiny_id,character_id)
-                    print(type(raids))
-                    for key, value in raids.items():
-                        print(key)
-                        #print(value[0])
-                        print("*************************************")
-                        #value tiene una lista de las últimas raids cronológica
-                        raids_complete = []
-                        for raid in value:
-                            if raid['values']['completed']['statId']=="completed":
-                                raids_complete.append(raid)
-                        print("Raids_Completadas="+str(len(raids_complete)))
-                        
-                        #print(value[0]['period'])
-                        #print(type(value[0]['period']))
-                        last_raid_date = datetime.strptime(value[0]['period'],"%Y-%m-%dT%H:%M:%SZ")
-                        #print(last_raid_date)
-                        today = date.today()
-                        offset = (today.weekday() - 1) % 7
-                        last_tuesday = today - timedelta(days=offset)
-                        last_tuesday_temp = str(last_tuesday)+" 17:00:00"
-                        last_tuesday_reset = datetime.strptime(last_tuesday_temp,"%Y-%m-%d %H:%M:%S")
-                        #print(type(last_tuesday_reset))
-                        #print(last_tuesday_reset)
-                        if last_raid_date<last_tuesday_reset:
-                            print("Character Warlock has No raid this week!!")
-                        else:
-                            print("Character Warlock has Raid this week!!")
-
-                else:
-                    print(real_battletag + " has a Hunter!")
-                    character_id = value['characterId']
-                    raids = fs.get_CharactersRaids(user_destiny_id,character_id)
-                    print(type(raids))
-                    for key, value in raids.items():
-                        print(key)
-                        #print(value[0])
-                        print("*************************************")
-                        #value tiene una lista de las últimas raids cronológica
-                        raids_complete = []
-                        for raid in value:
-                            if raid['values']['completed']['statId']=="completed":
-                                raids_complete.append(raid)
-                        print("Raids_Completadas="+str(len(raids_complete)))
-                        #print(value[0]['period'])
-                        #print(type(value[0]['period']))
-                        last_raid_date = datetime.strptime(value[0]['period'],"%Y-%m-%dT%H:%M:%SZ")
-                        #print(last_raid_date)
-                        today = date.today()
-                        offset = (today.weekday() - 1) % 7
-                        last_tuesday = today - timedelta(days=offset)
-                        last_tuesday_temp = str(last_tuesday)+" 17:00:00"
-                        last_tuesday_reset = datetime.strptime(last_tuesday_temp,"%Y-%m-%d %H:%M:%S")
-                        #print(type(last_tuesday_reset))
-                        #print(last_tuesday_reset)
-                        if last_raid_date<last_tuesday_reset:
-                            print("Character Hunter has No raid this week!!")
-                        else:
-                            print("Character Hunter has Raid this week!!")
-
+                print(real_battletag + " has a"+ fs.guardian_class[info['classHash']]+"!")
+                character_id = info['characterId']
+                raids = fs.get_CharactersRaids(user_destiny_id,character_id)
+                raids_complete = class_race_report(info,user_destiny_id,raids)
+                #print(str(len(raids_complete)))
+                                   
 
 @client.event
 async def on_message(message):

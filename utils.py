@@ -126,5 +126,26 @@ def check_queue(id , my_queues, players):
         player.start()
 
 
-
+def class_race_report(guardian_info, user_destiny_id, raids ):
+    for key, value in raids.items():
+        #print(key)
+        #print(value[0])
+        #print("*************************************")
+        today = date.today()
+        offset = (today.weekday() - 1) % 7
+        last_tuesday = today - timedelta(days=offset)
+        last_tuesday_temp = str(last_tuesday)+" 17:00:00"
+        last_tuesday_reset = datetime.strptime(last_tuesday_temp,"%Y-%m-%d %H:%M:%S")
+        #value tiene una lista de las últimas raids ordenados cronologicamente
+        raids_complete = []
+        for raid in value:
+            raid_date_time = datetime.strptime(raid['period'],"%Y-%m-%dT%H:%M:%SZ")
+            if raid['values']['completed']['statId']=="completed" and raid_date_time>last_tuesday_reset:
+                raids_complete.append(raid)
+        print("Raids Completadas despues del reset="+str(len(raids_complete)))
+        if raids_complete:
+            print("Character Titan has Raid this week!!")
+        else:
+            print("Character Titan has No raid this week!!")
+        return raids_complete
     
