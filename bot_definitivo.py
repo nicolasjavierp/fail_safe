@@ -234,9 +234,20 @@ async def raid_this_week(context):
                     print(type(raids))
                     for key, value in raids.items():
                         print(key)
+                        #value tiene una lista de las últimas raids cronológica
                         print(value[0]['period'])
                         print(type(value[0]['period']))
                         #Str to date ...
+                        last_raid_date = datetime.datetime.strptime(value[0]['period'],"%Y-%m-%dT%H:%M:%S.%fZ")
+                        print(last_raid_date)
+                        today = date.today()
+                        offset = (today.weekday() - 1) % 7
+                        last_tuesday = today - timedelta(days=offset)
+                        print(last_tuesday)
+                        print(type(last_tuesday))
+                        if last_raid_date<last_tuesday:
+                            print("No raid this week!!")
+
                     
                 elif value['classHash']==2271682572:
                     print(real_battletag + " has a Warlock!")
