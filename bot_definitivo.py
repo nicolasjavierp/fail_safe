@@ -235,10 +235,15 @@ async def raid_this_week(context):
                     for key, value in raids.items():
                         print(key)
                         #value tiene una lista de las últimas raids cronológica
+                        raids_complete = []
+                        for raid in value:
+                            if raid['completed']['statId']=="completed":
+                                raids_complete.append(raid)
+                        print("Raids_Completadas="+len(raids_complete))
                         print(value[0]['period'])
                         print(type(value[0]['period']))
                         #Str to date ...
-                        last_raid_date = datetime.datetime.strptime(value[0]['period'],"%Y-%m-%dT%H:%M:%S.%fZ")
+                        last_raid_date = datetime.strptime(value[0]['period'],"%Y-%m-%dT%H:%M:%S.%fZ")
                         print(last_raid_date)
                         today = date.today()
                         offset = (today.weekday() - 1) % 7
