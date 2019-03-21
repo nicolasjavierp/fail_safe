@@ -251,8 +251,9 @@ async def raid_this_week(context):
                         today = date.today()
                         offset = (today.weekday() - 1) % 7
                         last_tuesday = today - timedelta(days=offset)
-                        print(last_tuesday)
-                        last_tuesday_reset = datetime.combine(last_tuesday, datetime.time(17, 00, 00))
+                        print("Last_Tuesday:"+str(last_tuesday))
+                        #last_tuesday_reset = datetime.combine(last_tuesday, datetime.time(17, 00, 00))
+                        last_tuesday_reset = last_tuesday.replace(hour=17, minute=00, second=00)
                         print(last_tuesday_reset)
                         if last_raid_date<last_tuesday_reset:
                             print("No raid this week!!")
