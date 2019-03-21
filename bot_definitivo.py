@@ -244,7 +244,7 @@ async def raid_this_week(context):
                         print(value[0]['period'])
                         print(type(value[0]['period']))
                         #Str to date ...
-                        last_raid_date = datetime.strptime(value[0]['period'],"%Y-%m-%dT%H:%M:%S.%fZ")
+                        last_raid_date = datetime.strptime(value[0]['period'],"%Y-%m-%dT%H:%M:%SZ")
                         print(last_raid_date)
                         today = date.today()
                         offset = (today.weekday() - 1) % 7
