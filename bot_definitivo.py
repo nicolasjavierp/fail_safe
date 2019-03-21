@@ -239,39 +239,87 @@ async def raid_this_week(context):
                         #value tiene una lista de las últimas raids cronológica
                         raids_complete = []
                         for raid in value:
-                            pass
-                            #if raid['values']['completed']['statId']=="completed":
-                                #raids_complete.append(raid)
-                        #print("Raids_Completadas="+str(len(raids_complete)))
-                        print(value[0]['period'])
-                        print(type(value[0]['period']))
-                        #Str to date ...
+                            if raid['values']['completed']['statId']=="completed":
+                                raids_complete.append(raid)
+                        print("Raids_Completadas="+str(len(raids_complete)))
+                        #print(value[0]['period'])
+                        #print(type(value[0]['period']))
                         last_raid_date = datetime.strptime(value[0]['period'],"%Y-%m-%dT%H:%M:%SZ")
-                        print(last_raid_date)
+                        #print(last_raid_date)
                         today = date.today()
                         offset = (today.weekday() - 1) % 7
                         last_tuesday = today - timedelta(days=offset)
-                        #print("Last_Tuesday:"+str(last_tuesday))
                         last_tuesday_temp = str(last_tuesday)+" 17:00:00"
                         last_tuesday_reset = datetime.strptime(last_tuesday_temp,"%Y-%m-%d %H:%M:%S")
-                        #last_tuesday_reset = datetime.combine(last_tuesday, datetime.time(17, 00))
-                        #last_tuesday_reset = last_tuesday.replace(hour=17, minute=00)
-                        #last_tuesday_reset = last_tuesday + timedelta(hours=17, minutes=00)
-                        print(type(last_tuesday_reset))
-                        print(last_tuesday_reset)
-
+                        #print(type(last_tuesday_reset))
+                        #print(last_tuesday_reset)
                         if last_raid_date<last_tuesday_reset:
-                            print("Character has No raid this week!!")
+                            print("Character Titan has No raid this week!!")
                         else:
-                            print("Character has Raid this week!!")
+                            print("Character Titan has Raid this week!!")
 
                     
                 elif value['classHash']==2271682572:
                     print(real_battletag + " has a Warlock!")
-                    character_id = value['characterId']
+                    character_id = info['characterId']
+                    raids = fs.get_CharactersRaids(user_destiny_id,character_id)
+                    print(type(raids))
+                    for key, value in raids.items():
+                        print(key)
+                        #print(value[0])
+                        print("*************************************")
+                        #value tiene una lista de las últimas raids cronológica
+                        raids_complete = []
+                        for raid in value:
+                            if raid['values']['completed']['statId']=="completed":
+                                raids_complete.append(raid)
+                        print("Raids_Completadas="+str(len(raids_complete)))
+                        #print(value[0]['period'])
+                        #print(type(value[0]['period']))
+                        last_raid_date = datetime.strptime(value[0]['period'],"%Y-%m-%dT%H:%M:%SZ")
+                        #print(last_raid_date)
+                        today = date.today()
+                        offset = (today.weekday() - 1) % 7
+                        last_tuesday = today - timedelta(days=offset)
+                        last_tuesday_temp = str(last_tuesday)+" 17:00:00"
+                        last_tuesday_reset = datetime.strptime(last_tuesday_temp,"%Y-%m-%d %H:%M:%S")
+                        #print(type(last_tuesday_reset))
+                        #print(last_tuesday_reset)
+                        if last_raid_date<last_tuesday_reset:
+                            print("Character Warlock has No raid this week!!")
+                        else:
+                            print("Character Warlock has Raid this week!!")
+
                 else:
                     print(real_battletag + " has a Hunter!")
                     character_id = value['characterId']
+                    raids = fs.get_CharactersRaids(user_destiny_id,character_id)
+                    print(type(raids))
+                    for key, value in raids.items():
+                        print(key)
+                        #print(value[0])
+                        print("*************************************")
+                        #value tiene una lista de las últimas raids cronológica
+                        raids_complete = []
+                        for raid in value:
+                            if raid['values']['completed']['statId']=="completed":
+                                raids_complete.append(raid)
+                        print("Raids_Completadas="+str(len(raids_complete)))
+                        #print(value[0]['period'])
+                        #print(type(value[0]['period']))
+                        last_raid_date = datetime.strptime(value[0]['period'],"%Y-%m-%dT%H:%M:%SZ")
+                        #print(last_raid_date)
+                        today = date.today()
+                        offset = (today.weekday() - 1) % 7
+                        last_tuesday = today - timedelta(days=offset)
+                        last_tuesday_temp = str(last_tuesday)+" 17:00:00"
+                        last_tuesday_reset = datetime.strptime(last_tuesday_temp,"%Y-%m-%d %H:%M:%S")
+                        #print(type(last_tuesday_reset))
+                        #print(last_tuesday_reset)
+                        if last_raid_date<last_tuesday_reset:
+                            print("Character Hunter has No raid this week!!")
+                        else:
+                            print("Character Hunter has Raid this week!!")
 
 
 @client.event
