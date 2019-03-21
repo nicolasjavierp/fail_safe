@@ -227,7 +227,7 @@ async def raid_this_week(context):
                 #print(key)
                 #print(value)
                 #print(value['classHash'])
-                print(real_battletag + " has a"+ fs.guardian_class[info['classHash']]+"!")
+                print(real_battletag + " has a"+ str(fs.guardian_class[info['classHash']])+"!")
                 character_id = info['characterId']
                 raids = fs.get_CharactersRaids(user_destiny_id,character_id)
                 raids_complete = class_race_report(info,user_destiny_id,raids)
