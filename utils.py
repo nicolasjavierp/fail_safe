@@ -143,9 +143,5 @@ def class_race_report(guardian_info, user_destiny_id, raids ):
             if raid['values']['completed']['statId']=="completed" and raid_date_time>last_tuesday_reset:
                 raids_complete.append(raid)
         print("Raids Completadas despues del reset="+str(len(raids_complete)))
-        if raids_complete:
-            print("Character Titan has Raid this week!!")
-        else:
-            print("Character Titan has No raid this week!!")
         return raids_complete
     

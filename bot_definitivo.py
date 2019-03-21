@@ -227,12 +227,15 @@ async def raid_this_week(context):
                 #print(key)
                 #print(value)
                 #print(value['classHash'])
-                print(real_battletag + " has a"+ str(fs.guardian_class[info['classHash']])+"!")
+                print(real_battletag + " has a "+ str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+"!")
                 character_id = info['characterId']
                 raids = fs.get_CharactersRaids(user_destiny_id,character_id)
                 raids_complete = class_race_report(info,user_destiny_id,raids)
                 print(raids_complete)
-                                   
+                if raids_complete:
+                    print("Character "+str(fs.guardian_class[info['classHash']])+" has Raid this week!!")
+                else:
+                    print("Character "+str(fs.guardian_class[info['classHash']])+" has No Raid this week!!")
 
 @client.event
 async def on_message(message):
