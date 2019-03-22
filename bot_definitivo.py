@@ -212,7 +212,7 @@ async def raid_this_week(context):
         #END Heroku
         user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
         user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
-        embed = discord.Embed(title="Warning" , description="Este comando esta en periodo de beta testing, cualquier inconveniente informar a Javu#2632", color=0x00ff00)
+        embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin\n Gracias", color=0x00ff00)
         await client.send_message(context.message.channel, embed=embed)
         if user_destiny:
             user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
