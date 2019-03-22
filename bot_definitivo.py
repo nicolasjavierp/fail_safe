@@ -213,20 +213,14 @@ async def raid_this_week(context):
         user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
         user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
         if user_destiny:
-            #print("Valid User Destiny= "+str(user_destiny))
             user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
             real_battletag = user_destiny[0]['displayName']
-            #print(user_destiny_id)
-            #print(real_battletag)
             profile = fs.get_DestinyUserProfileDetail(user_destiny_id)
-            #print(type(profile))
-            #print(profile)
-            #print(profile['characters']['data'])
             characters = profile['characters']['data']
             for id, info in characters.items():
-                #print(key)
-                #print(value)
-                #print(value['classHash'])
+                #print(id)
+                #print(info)
+                #print(info['classHash'])
                 print(real_battletag + " has a "+ str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+"!")
                 character_id = info['characterId']
                 raids = fs.get_CharactersRaids(user_destiny_id,character_id)
