@@ -221,7 +221,7 @@ async def raid_this_week(context):
             characters = profile['characters']['data']
             res = ""
             for id, info in characters.items():
-                report = ""
+                report = str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+": \n"
                 #print(id)
                 #print(info)
                 #print(info['classHash'])
@@ -231,7 +231,6 @@ async def raid_this_week(context):
                 raids_complete = class_race_report(info,user_destiny_id,raids)
                 #print(raids_complete)
                 if raids_complete:
-                    report = str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+": \n"
                     for raid in raids_complete:
                         #print(raid['activityDetails']['instanceId']+" => "+str(fs.raids[raid['activityDetails']['directorActivityHash']]))
                         report = report +"Completo "+str(fs.raids[raid['activityDetails']['directorActivityHash']]) + " :white_check_mark: "+"\n"   
