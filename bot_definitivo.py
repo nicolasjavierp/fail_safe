@@ -227,14 +227,16 @@ async def raid_this_week(context):
                 raids_complete = class_race_report(info,user_destiny_id,raids)
                 #print(raids_complete)
                 if raids_complete:
+                    completed = ""
                     for raid in raids_complete:
                         #print(raid['activityDetails']['instanceId']+" => "+str(fs.raids[raid['activityDetails']['directorActivityHash']]))
-                        embed = discord.Embed(title=str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']]) , description="Completo "+str(fs.raids[raid['activityDetails']['directorActivityHash']])+ "!! " + context.message.author.mention + " :white_check_mark: ", color=0x00ff00)
-                        await client.send_message(context.message.channel, embed=embed)
+                        completed = completed +"\n"+"Completo "+str(fs.raids[raid['activityDetails']['directorActivityHash']])
+                    embed = discord.Embed(title=str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']]) , description=completed+ "!! " + context.message.author.mention + " :white_check_mark: ", color=0x00ff00)
+                    await client.send_message(context.message.channel, embed=embed)
                 else:
                     embed = discord.Embed(title=str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']]) , description="No tiene Raids Completadas"+" "+ context.message.author.mention + " :cry: ", color=0x00ff00)
                     await client.send_message(context.message.channel, embed=embed)
-                    print("Character "+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" has No Raid this week!!")
+                    #print("Character "+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" has No Raid this week!!")
 
 @client.event
 async def on_message(message):

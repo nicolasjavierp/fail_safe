@@ -142,6 +142,6 @@ def class_race_report(guardian_info, user_destiny_id, raids ):
             raid_date_time = datetime.strptime(raid['period'],"%Y-%m-%dT%H:%M:%SZ")
             if raid['values']['completed']['basic']['value']==1 and  raid['values']['completionReason']['basic']['value']==0 and raid_date_time>last_tuesday_reset:
                 raids_complete.append(raid)
-        print("Raids Completadas despues del reset="+str(len(raids_complete)))
+        #print("Raids Completadas despues del reset="+str(len(raids_complete)))
         return raids_complete
     
