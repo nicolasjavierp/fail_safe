@@ -238,7 +238,7 @@ async def raid_this_week(context):
                     await client.send_message(context.message.channel, embed=embed)
                 else:
                     embed = discord.Embed(title=str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']]) , description="No tiene Raids Completadas este reset"+" "+ context.message.author.mention + " :cry: ", color=0x00ff00)
-                    embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+                    #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
                     await client.send_message(context.message.channel, embed=embed)
                     #print("Character "+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" has No Raid this week!!")
 
