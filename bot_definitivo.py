@@ -200,7 +200,7 @@ async def rol(context):
 @client.command(name='RES',
                 description="Responde por PJ si hizo raid esta semana",
                 brief="Raid esta semana",
-                aliases=['res'],
+                aliases=['raids'],
                 pass_context=True)
 async def raid_this_week(context):
     valid_battle_tag_ending = bool(re.match('^.*#[0-9]{4,5}$', context.message.content))
@@ -226,11 +226,14 @@ async def raid_this_week(context):
                 raids = fs.get_CharactersRaids(user_destiny_id,character_id)
                 raids_complete = class_race_report(info,user_destiny_id,raids)
                 #print(raids_complete)
-                for raid in raids_complete:
-                    print(raid['activityDetails']['instanceId']+" => "+str(fs.raids[raid['activityDetails']['directorActivityHash']]))
                 if raids_complete:
-                    print("Character "+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" has Raid this week!!")
+                    for raid in raids_complete:
+                        #print(raid['activityDetails']['instanceId']+" => "+str(fs.raids[raid['activityDetails']['directorActivityHash']]))
+                        embed = discord.Embed(title=str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']]) , description="Completo "+str(fs.raids[raid['activityDetails']['directorActivityHash']])+ "!! " + context.message.author.mention + " :white_check_mark: ", color=0x00ff00)
+                        await client.send_message(context.message.channel, embed=embed)
                 else:
+                    embed = discord.Embed(title=str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']]) , description="No tiene Raids Completadas"+" "+ context.message.author.mention + " :cry: ", color=0x00ff00)
+                    await client.send_message(context.message.channel, embed=embed)
                     print("Character "+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" has No Raid this week!!")
 
 @client.event
