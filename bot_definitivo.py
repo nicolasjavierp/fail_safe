@@ -226,6 +226,8 @@ async def raid_this_week(context):
                 raids = fs.get_CharactersRaids(user_destiny_id,character_id)
                 raids_complete = class_race_report(info,user_destiny_id,raids)
                 #print(raids_complete)
+                for raid in raids_complete:
+                    print(raid['activityDetails']['instanceId']+" => "+str(fs.raids[raid['activityDetails']['directorActivityHash']]))
                 if raids_complete:
                     print("Character "+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" has Raid this week!!")
                 else:
