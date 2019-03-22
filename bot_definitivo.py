@@ -221,6 +221,7 @@ async def raid_this_week(context):
             characters = profile['characters']['data']
             res = ""
             for id, info in characters.items():
+                report = ""
                 #print(id)
                 #print(info)
                 #print(info['classHash'])
@@ -242,7 +243,7 @@ async def raid_this_week(context):
                     #await client.send_message(context.message.channel, embed=embed)
                     #print("Character "+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" has No Raid this week!!")
                     report = report + "No tiene Raids Completadas :x: \n"
-                res = res + report
+                res = res + report + "\n"
             
             embed = discord.Embed(title="Raids este reset:", description=res, color=0x00ff00)
             embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
