@@ -212,6 +212,8 @@ async def raid_this_week(context):
         #END Heroku
         user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
         user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
+        embed = discord.Embed(title="Warning" , description="Este comando esta en periodo de beta testing, cualquier inconveniente informar a Javu#2632", color=0x00ff00)
+        await client.send_message(context.message.channel, embed=embed)
         if user_destiny:
             user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
             real_battletag = user_destiny[0]['displayName']
@@ -230,8 +232,8 @@ async def raid_this_week(context):
                     completed = ""
                     for raid in raids_complete:
                         #print(raid['activityDetails']['instanceId']+" => "+str(fs.raids[raid['activityDetails']['directorActivityHash']]))
-                        completed = completed +"\n"+"Completo este reset"+str(fs.raids[raid['activityDetails']['directorActivityHash']]) + " :white_check_mark: "
-                    embed = discord.Embed(title=str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']]) , description=context.message.author.mention + completed, color=0x00ff00)
+                        completed = completed +"\n"+"Completo"+str(fs.raids[raid['activityDetails']['directorActivityHash']]) + " :white_check_mark: "
+                    embed = discord.Embed(title=str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" este reset:", description=context.message.author.mention + completed, color=0x00ff00)
                     embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
                     await client.send_message(context.message.channel, embed=embed)
                 else:
