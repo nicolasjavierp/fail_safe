@@ -219,9 +219,9 @@ async def raid_this_week(context):
             real_battletag = user_destiny[0]['displayName']
             profile = fs.get_DestinyUserProfileDetail(user_destiny_id)
             characters = profile['characters']['data']
-            res = ""
+            res = "\n"
             for id, info in characters.items():
-                report = "\n**"+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+":** \n"
+                report = "**"+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+":** \n"
                 #print(id)
                 #print(info)
                 #print(info['classHash'])
