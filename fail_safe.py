@@ -38,6 +38,7 @@ class FailSafe(object):
         self.retrys = []
         self.guardian_class = {3655393761:"TITAN", 2271682572:"Warlock", 671679327:"Hunter"}
         self.guardian_race = {2803282938:"Awoken", 898834093:"Exo", 3887404748:"Human"}
+        self.raids = {2122313384: "Ultimo Deseo", 548750096:"Azote del Pasado"}
 
 
     def get_playerByTagName(self, gamertag):
