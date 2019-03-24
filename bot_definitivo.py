@@ -221,7 +221,7 @@ async def raid_this_week(context):
             characters = profile['characters']['data']
             res = "\n"
             for id, info in characters.items():
-                report = "**"+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+":** \n"
+                report = "**"+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" "+str(fs.guardian_gender[info['genderHash']])+":** \n"
                 #print(id)
                 #print(info)
                 #print(info['classHash'])
@@ -232,8 +232,11 @@ async def raid_this_week(context):
                 #print(raids_complete)
                 if raids_complete:
                     for raid in raids_complete:
-                        #print(raid['activityDetails']['instanceId']+" => "+str(fs.raids[raid['activityDetails']['directorActivityHash']]))
-                        report = report +str(fs.raids[raid['activityDetails']['directorActivityHash']]) + " :white_check_mark: "+"\n"   
+                        for key, value in fs.raids.items():    
+                            if value == str(fs.raids[raid['activityDetails']['directorActivityHash']]):
+                                report = report +" :white_check_mark: "+str(fs.raids[raid['activityDetails']['directorActivityHash']]) +"\n"
+                            else:
+                                report = report +" :x: "+ value +"\n"
                     #embed = discord.Embed(title=str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" este reset:", description=context.message.author.mention + completed, color=0x00ff00)
                     #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
                     #await client.send_message(context.message.channel, embed=embed)
@@ -241,10 +244,12 @@ async def raid_this_week(context):
                     #embed = discord.Embed(title=str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" este reset:" , description="No tiene Raids Completadas"+" "+ context.message.author.mention + " :x: ", color=0x00ff00)
                     #await client.send_message(context.message.channel, embed=embed)
                     #print("Character "+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" has No Raid this week!!")
-                    report = report + "No tiene Raids Completadas :x: \n"
+                    for key, value in fs.raids.items():
+                        report = report + " :x: "+ value +"\n"
+                    
                 res = res + report + "\n"
             
-            embed = discord.Embed(title="__Raids este reset:__", description=res, color=0x00ff00)
+            embed = discord.Embed(title=":bell:__Tus Raids este reset:__", description=res, color=0x00ff00)
             embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
             await client.send_message(context.message.channel, embed=embed)
 
