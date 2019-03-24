@@ -231,8 +231,8 @@ async def raid_this_week(context):
                 raids_complete = class_race_report(info,user_destiny_id,raids)
                 #print(raids_complete)
                 if raids_complete:
-                    for raid in raids_complete:
-                        for key, value in fs.raids.items():    
+                    for key, value in fs.raids.items():
+                        for raid in raids_complete: 
                             if value == str(fs.raids[raid['activityDetails']['directorActivityHash']]):
                                 report = report +" :white_check_mark: "+str(fs.raids[raid['activityDetails']['directorActivityHash']]) +"\n"
                             else:
