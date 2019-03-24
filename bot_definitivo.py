@@ -235,8 +235,10 @@ async def raid_this_week(context):
                         for raid in raids_complete: 
                             if value == str(fs.raids[raid['activityDetails']['directorActivityHash']]):
                                 report = report +" :white_check_mark: "+str(fs.raids[raid['activityDetails']['directorActivityHash']]) +"\n"
+                                break
                             else:
                                 report = report +" :x: "+ value +"\n"
+                                break
                     #embed = discord.Embed(title=str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" este reset:", description=context.message.author.mention + completed, color=0x00ff00)
                     #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
                     #await client.send_message(context.message.channel, embed=embed)
