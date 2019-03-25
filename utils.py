@@ -126,7 +126,7 @@ def check_queue(id , my_queues, players):
         player.start()
 
 
-def class_race_report(guardian_info, user_destiny_id, raids ):
+def get_completed_raids(guardian_info, user_destiny_id, raids ):
     for key, value in raids.items():
         #print(key)
         #print(value[0])
@@ -144,4 +144,19 @@ def class_race_report(guardian_info, user_destiny_id, raids ):
                 raids_complete.append(raid)
         #print("Raids Completadas despues del reset="+str(len(raids_complete)))
         return raids_complete
-    
+
+
+def filter_completed_raids(raids_complete, fs):
+    filtered_completed_raids=[]
+    for raid in raids_complete:
+            if raid['activityDetails']['referenceId'] in fs.raids:
+                filtered_completed_raids.append(raid)
+    return filtered_completed_raids
+                
+
+def get_unique_raids(filtered_completed_raids, fs):
+    unique_raid_complete = {}
+    for raid in filtered_completed_raids:
+        unique_raid_complete[str(fs.raids[raid['activityDetails']['directorActivityHash']])]=True
+    print(unique_raid_complete)
+    return unique_raid_complete
