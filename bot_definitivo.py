@@ -242,7 +242,7 @@ async def raid_this_week(context):
                         if value:
                             report = report +" :white_check_mark: "+str(key) +"\n"
                         else:
-                            report = report +" :x: "+ value +"\n"
+                            report = report +" :x: "+ str(key) +"\n"
                     #if len(raids_complete) == len(fs.raids):
                     #    for raid in raids_complete: 
                     #        report = report +" :white_check_mark: "+str(fs.raids[raid['activityDetails']['directorActivityHash']]) +"\n"    
