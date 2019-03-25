@@ -238,7 +238,11 @@ async def raid_this_week(context):
                     #print("*****************************")
                     #print(raids_complete)
                     print("*****************************")
-                    
+                    for key, value in definitive_complete_raids.items():
+                        if value:
+                            report = report +" :white_check_mark: "+str(key) +"\n"
+                        else:
+                            report = report +" :x: "+ value +"\n"
                     #if len(raids_complete) == len(fs.raids):
                     #    for raid in raids_complete: 
                     #        report = report +" :white_check_mark: "+str(fs.raids[raid['activityDetails']['directorActivityHash']]) +"\n"    
