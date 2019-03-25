@@ -229,7 +229,11 @@ async def raid_this_week(context):
                 character_id = info['characterId']
                 raids = fs.get_CharactersRaids(user_destiny_id,character_id)
                 raids_complete = class_race_report(info,user_destiny_id,raids)
-                #print(raids_complete)
+                print("*****************************")
+                print(len(raids_complete))
+                print("*****************************")
+                print(raids_complete)
+                print("*****************************")
                 if raids_complete:
                     if len(raids_complete) == len(fs.raids):
                         for raid in raids_complete: 
