@@ -222,45 +222,19 @@ async def raid_this_week(context):
             res = "\n"
             for id, info in characters.items():
                 report = "**"+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" "+str(fs.guardian_gender[info['genderHash']])+":** \n"
-                print(str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" "+str(fs.guardian_gender[info['genderHash']]))
-                #print(id)
-                #print(info)
-                #print(info['classHash'])
-                #print(real_battletag + " has a "+ str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+"!")
+                #print(str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" "+str(fs.guardian_gender[info['genderHash']]))
                 character_id = info['characterId']
                 raids = fs.get_CharactersRaids(user_destiny_id,character_id)
                 raids_complete = get_completed_raids(info,user_destiny_id,raids)
                 if raids_complete:
                     raids_complete_filtered = filter_completed_raids(raids_complete,fs)
                     definitive_complete_raids=get_unique_raids(raids_complete_filtered, fs)
-                    #print("*****************************")
-                    #print(len(raids_complete))
-                    #print("*****************************")
-                    #print(raids_complete)
-                    print("*****************************")
                     for key, value in definitive_complete_raids.items():
                         if value:
                             report = report +" :white_check_mark: "+str(key) +"\n"
                         else:
                             report = report +" :x: "+ str(key) +"\n"
-                    #if len(raids_complete) == len(fs.raids):
-                    #    for raid in raids_complete: 
-                    #        report = report +" :white_check_mark: "+str(fs.raids[raid['activityDetails']['directorActivityHash']]) +"\n"    
-                    #else:
-                    #    for key, value in fs.raids.items():
-                    #        for raid in raids_complete:
-                    #            if value == str(fs.raids[raid['activityDetails']['directorActivityHash']]):
-                    #                report = report +" :white_check_mark: "+str(fs.raids[raid['activityDetails']['directorActivityHash']]) +"\n"    
-                    #            else:
-                    #                report = report +" :x: "+ value +"\n"
-                                
-                    #embed = discord.Embed(title=str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" este reset:", description=context.message.author.mention + completed, color=0x00ff00)
-                    #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
-                    #await client.send_message(context.message.channel, embed=embed)
                 else:
-                    #embed = discord.Embed(title=str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" este reset:" , description="No tiene Raids Completadas"+" "+ context.message.author.mention + " :x: ", color=0x00ff00)
-                    #await client.send_message(context.message.channel, embed=embed)
-                    #print("Character "+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" has No Raid this week!!")
                     for key, value in fs.raids.items():
                         report = report + " :x: "+ value +"\n"
                     

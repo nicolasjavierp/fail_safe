@@ -163,5 +163,5 @@ def get_unique_raids(filtered_completed_raids, fs):
     for raid in filtered_completed_raids:
         unique_raid_complete[str(fs.raids[raid['activityDetails']['directorActivityHash']])]=True
     
-    print(unique_raid_complete)
+    #print(unique_raid_complete)
     return unique_raid_complete

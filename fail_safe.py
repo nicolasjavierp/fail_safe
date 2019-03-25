@@ -39,7 +39,7 @@ class FailSafe(object):
         self.guardian_class = {3655393761:"Titan", 2271682572:"Hechicero", 671679327:"Cazador"}
         self.guardian_race = {2803282938:"Insomne", 898834093:"Exo", 3887404748:"Humano"}
         self.guardian_gender = {3111576190: "Masculino", 2204441813:"Femenino"}
-        self.raids = {2122313384: "Ultimo Deseo", 548750096:"Azote del Pasado"}
+        self.raids = {2122313384: "Ultimo Deseo", 548750096:"Azote del Pasado"} #Spire of stars 119944200 // Eater of worlds 3089205900 // Leviathan 89727599
 
 
     def get_playerByTagName(self, gamertag):
@@ -431,8 +431,6 @@ class FailSafe(object):
             my_dict={}
             date=datetime.today().strftime('%Y-%m-%d')
             for key in blacklister:
-                #print(blacklister[key][4] + ":" + "(" + blacklister[key][2] + "\t" + str(blacklister[key][0]) + "\t" + str(blacklister[key][5]) +")")
-                #my_dict={"battletag":str(blacklister[key][4]), "clan":str(blacklister[key][2]), "alias":str(blacklister[key][0]), "inactive_time":str(blacklister[key][5]),"date":date}
                 my_dict={"displayName":str(blacklister[key][0]), "clan":str(blacklister[key][2]) , "inactive_time":str(blacklister[key][5]),"date":date}
                 self.push_blacklister_to_db(my_dict, blacklisters)
     
