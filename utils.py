@@ -136,6 +136,7 @@ def get_completed_raids(guardian_info, user_destiny_id, raids ):
         last_tuesday = today - timedelta(days=offset)
         last_tuesday_temp = str(last_tuesday)+" 17:00:00"
         last_tuesday_reset = datetime.strptime(last_tuesday_temp,"%Y-%m-%d %H:%M:%S")
+        print(last_tuesday_reset)
         #value tiene una lista de las últimas raids ordenados cronologicamente
         raids_complete = []
         for raid in value:
@@ -172,6 +173,7 @@ def get_last_reset_date_time():
     last_tuesday = today - timedelta(days=offset)
     last_tuesday_temp = str(last_tuesday)+" 17:00:00"
     last_tuesday_reset = datetime.strptime(last_tuesday_temp,"%Y-%m-%d %H:%M:%S")
+    print(last_tuesday_reset)
     return last_tuesday_reset
 
 

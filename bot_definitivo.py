@@ -214,20 +214,22 @@ async def raid_this_week(context):
         user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
         embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
         await client.send_message(context.message.channel, embed=embed)
-        print(user_destiny)
+        #print(user_destiny)
         if user_destiny:
             user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
             #real_battletag = user_destiny[0]['displayName']
             profile = fs.get_DestinyUserProfileDetail(user_destiny_id)
             characters = profile['characters']['data']
-            print("-------------------------")
-            print(characters)
+            #print("-------------------------")
+            #print(characters)
             res = "\n"
             for id, info in characters.items():
                 report = "**"+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" "+str(fs.guardian_gender[info['genderHash']])+":** \n"
                 #print(str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" "+str(fs.guardian_gender[info['genderHash']]))
                 character_id = info['characterId']
                 raids = fs.get_CharactersRaids(user_destiny_id,character_id)
+                print("/***************************************/")
+                print(len(raids))
                 raids_complete = get_completed_raids(info,user_destiny_id,raids)
                 print("/***************************************/")
                 print(raids_complete)
