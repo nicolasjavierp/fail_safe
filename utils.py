@@ -131,7 +131,7 @@ def get_completed_raids(guardian_info, user_destiny_id, raids ):
         #print(key)
         #print(value[0])
         #print("*************************************")
-        last_tuesday_reset = get_last_reset_date_time()
+        last_tuesday_reset = get_last_tuesday_reset()
         print("*************************************")
         print(last_tuesday_reset)
         print("*************************************")
@@ -183,6 +183,22 @@ def get_this_friday():
     print(d)
 
 
+def get_last_tuesday_reset():
+    import datetime
+    current_time = datetime.datetime.now()
+    # get tuesday, one week ago, at 17 o'clock
+    last_tuesday = (current_time.date()
+        - datetime.timedelta(days=current_time.weekday())
+        + datetime.timedelta(days=4, weeks=-1))
+    print("Last tuesday temp:"+str(last_tuesday))
+    last_tuesday_at_17 = datetime.datetime.combine(last_tuesday, datetime.time(17))
+    # if today is also tuesday, and after 17 o'clock, change to the current date
+    one_week = datetime.timedelta(weeks=1)
+    if current_time - last_tuesday_at_17 >= one_week:
+        last_tuesday_at_17 += one_week
+    return last_tuesday_at_17
+
+
 def get_last_friday_reset():
     import datetime
     current_time = datetime.datetime.now()
@@ -190,11 +206,14 @@ def get_last_friday_reset():
     last_friday = (current_time.date()
         - datetime.timedelta(days=current_time.weekday())
         + datetime.timedelta(days=4, weeks=-1))
+    print("Last Friday temp:"+str(last_friday))
     last_friday_at_17 = datetime.datetime.combine(last_friday, datetime.time(17))
     # if today is also friday, and after 17 o'clock, change to the current date
     one_week = datetime.timedelta(weeks=1)
     if current_time - last_friday_at_17 >= one_week:
         last_friday_at_17 += one_week
+    return last_friday_at_17
+
 
 def is_xur_arround():
     today = date.today()
