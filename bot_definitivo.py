@@ -229,9 +229,15 @@ async def raid_this_week(context):
                 character_id = info['characterId']
                 raids = fs.get_CharactersRaids(user_destiny_id,character_id)
                 raids_complete = get_completed_raids(info,user_destiny_id,raids)
+                print("/***************************************/")
+                print(raids_complete)
+                print("/***************************************/")
                 if raids_complete:
                     raids_complete_filtered = filter_completed_raids(raids_complete,fs)
+                    print("/***************************************/")
+                    print(raids_complete_filtered)
                     definitive_complete_raids=get_unique_raids(raids_complete_filtered, fs)
+                    print(definitive_complete_raids)
                     for key, value in definitive_complete_raids.items():
                         if value:
                             report = report +" :white_check_mark: "+str(key) +"\n"
