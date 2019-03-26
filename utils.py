@@ -137,11 +137,12 @@ def get_completed_raids(guardian_info, user_destiny_id, raids ):
         raids_complete = []
         for raid in value:
             raid_date_time = datetime.strptime(raid['period'],"%Y-%m-%dT%H:%M:%SZ")
-            print("*************************************")
-            print(raid_date_time)
-            print(last_tuesday_reset)
-            print("*************************************")
+
             if raid['values']['completed']['basic']['value']==1 and  raid['values']['completionReason']['basic']['value']==0 and raid_date_time>last_tuesday_reset:
+                print("**************ACTIVE RAIDS**************")
+                print(raid_date_time)
+                print(last_tuesday_reset)
+                print("*************************************")
                 raids_complete.append(raid)
         #print("Raids Completadas despues del reset="+str(len(raids_complete)))
         return raids_complete

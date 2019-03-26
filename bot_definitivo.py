@@ -228,11 +228,12 @@ async def raid_this_week(context):
                 #print(str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" "+str(fs.guardian_gender[info['genderHash']]))
                 character_id = info['characterId']
                 raids = fs.get_CharactersRaids(user_destiny_id,character_id)
+                raids_complete = get_completed_raids(info,user_destiny_id,raids)
+                #print("/***************************************/")
+                #print(raids_complete)
+                #print("/***************************************/")
                 print("/***************************************/")
                 print(len(raids))
-                raids_complete = get_completed_raids(info,user_destiny_id,raids)
-                print("/***************************************/")
-                print(raids_complete)
                 print("/***************************************/")
                 if raids_complete:
                     raids_complete_filtered = filter_completed_raids(raids_complete,fs)
