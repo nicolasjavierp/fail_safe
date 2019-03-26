@@ -191,7 +191,7 @@ def get_last_tuesday_reset():
     # get tuesday, one week ago, at 17 o'clock
     last_tuesday = (current_time.date()
         - datetime.timedelta(days=current_time.weekday())
-        + datetime.timedelta(days=2, weeks=-1))
+        + datetime.timedelta(days=1, weeks=-1))
     print("Last tuesday temp:"+str(last_tuesday))
     last_tuesday_at_17 = datetime.datetime.combine(last_tuesday, datetime.time(17))
     # if today is also tuesday, and after 17 o'clock, change to the current date
