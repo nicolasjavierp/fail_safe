@@ -131,12 +131,11 @@ def get_completed_raids(guardian_info, user_destiny_id, raids ):
         #print(key)
         #print(value[0])
         #print("*************************************")
-        today = date.today()
-        offset = (today.weekday() - 1) % 7
-        last_tuesday = today - timedelta(days=offset)
-        last_tuesday_temp = str(last_tuesday)+" 17:00:00"
-        last_tuesday_reset = datetime.strptime(last_tuesday_temp,"%Y-%m-%d %H:%M:%S")
+        last_tuesday_reset = get_last_reset_date_time()
+        print("*************************************")
         print(last_tuesday_reset)
+        print("*************************************")
+        print("Last Friday!!:"+str(get_last_friday_reset()))
         #value tiene una lista de las últimas raids ordenados cronologicamente
         raids_complete = []
         for raid in value:
@@ -170,10 +169,10 @@ def get_unique_raids(filtered_completed_raids, fs):
 def get_last_reset_date_time():
     today = date.today()
     offset = (today.weekday() - 1) % 7
+    print("Offset:"+str(offset))
     last_tuesday = today - timedelta(days=offset)
     last_tuesday_temp = str(last_tuesday)+" 17:00:00"
     last_tuesday_reset = datetime.strptime(last_tuesday_temp,"%Y-%m-%d %H:%M:%S")
-    print(last_tuesday_reset)
     return last_tuesday_reset
 
 
