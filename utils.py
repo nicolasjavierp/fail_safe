@@ -165,3 +165,38 @@ def get_unique_raids(filtered_completed_raids, fs):
     
     #print(unique_raid_complete)
     return unique_raid_complete
+
+def get_last_reset_date_time():
+    today = date.today()
+    offset = (today.weekday() - 1) % 7
+    last_tuesday = today - timedelta(days=offset)
+    last_tuesday_temp = str(last_tuesday)+" 17:00:00"
+    last_tuesday_reset = datetime.strptime(last_tuesday_temp,"%Y-%m-%d %H:%M:%S")
+    return last_tuesday_reset
+
+
+def get_this_friday():
+    d = datetime.date.today()
+    while d.weekday() != 4:
+        d += datetime.timedelta(1)
+    print(d)
+
+
+def get_last_friday_reset():
+    import datetime
+    current_time = datetime.datetime.now()
+    # get friday, one week ago, at 17 o'clock
+    last_friday = (current_time.date()
+        - datetime.timedelta(days=current_time.weekday())
+        + datetime.timedelta(days=4, weeks=-1))
+    last_friday_at_17 = datetime.datetime.combine(last_friday, datetime.time(17))
+    # if today is also friday, and after 17 o'clock, change to the current date
+    one_week = datetime.timedelta(weeks=1)
+    if current_time - last_friday_at_17 >= one_week:
+        last_friday_at_17 += one_week
+
+def is_xur_arround():
+    today = date.today()
+    if today.weekday() not in [1,2,3] and today<get_last_reset_date_time():# or today>last_friday_reset:
+        pass
+        
