@@ -158,20 +158,18 @@ def filter_completed_raids(raids_complete, fs):
 
 def get_unique_raids(filtered_completed_raids, fs):
     unique_raid_complete = {}
-
     for key, value in fs.raids.items():
         unique_raid_complete[value] = False
-
     for raid in filtered_completed_raids:
-        unique_raid_complete[str(fs.raids[raid['activityDetails']['directorActivityHash']])]=True
-    
+        unique_raid_complete[str(fs.raids[raid['activityDetails']['directorActivityHash']])]=True 
     #print(unique_raid_complete)
     return unique_raid_complete
+
 
 def get_last_reset_date_time():
     today = date.today()
     offset = (today.weekday() - 1) % 7
-    print("Offset:"+str(offset))
+    #print("Offset:"+str(offset))
     last_tuesday = today - timedelta(days=offset)
     last_tuesday_temp = str(last_tuesday)+" 17:00:00"
     last_tuesday_reset = datetime.strptime(last_tuesday_temp,"%Y-%m-%d %H:%M:%S")
@@ -192,7 +190,7 @@ def get_last_tuesday_reset():
     last_tuesday = (current_time.date()
         - datetime.timedelta(days=current_time.weekday())
         + datetime.timedelta(days=1, weeks=-1))
-    print("Last tuesday temp:"+str(last_tuesday))
+    print("Last tuesday temp: "+str(last_tuesday))
     last_tuesday_at_17 = datetime.datetime.combine(last_tuesday, datetime.time(17))
     # if today is also tuesday, and after 17 o'clock, change to the current date
     one_week = datetime.timedelta(weeks=1)
@@ -200,8 +198,7 @@ def get_last_tuesday_reset():
         print("RESTET is now and Greater than one week ... adjusting date!!")
         last_tuesday_at_17 += one_week
     else:
-        print("Almost a week ago"+str(current_time - last_tuesday_at_17))
-    
+        print("Almost a week ago "+str(current_time - last_tuesday_at_17))
     return last_tuesday_at_17
 
 

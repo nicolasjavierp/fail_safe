@@ -210,6 +210,8 @@ async def raid_this_week(context):
         #4 Heroku
         fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
         #END Heroku
+        print("Now:")
+        print(datetime.datetime.now())
         user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
         user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
         embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
@@ -233,7 +235,7 @@ async def raid_this_week(context):
                 #print(raids_complete)
                 #print("/***************************************/")
                 print("/***************************************/")
-                print(len(raids))
+                print(len(raids_complete))
                 print("/***************************************/")
                 if raids_complete:
                     raids_complete_filtered = filter_completed_raids(raids_complete,fs)
