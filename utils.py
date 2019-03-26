@@ -132,14 +132,15 @@ def get_completed_raids(guardian_info, user_destiny_id, raids ):
         #print(value[0])
         #print("*************************************")
         last_tuesday_reset = get_last_tuesday_reset()
-        print("*************************************")
-        print(last_tuesday_reset)
-        print("*************************************")
-        print("Last Friday!!:"+str(get_last_friday_reset()))
+                #print("Last Friday!!:"+str(get_last_friday_reset()))
         #value tiene una lista de las últimas raids ordenados cronologicamente
         raids_complete = []
         for raid in value:
             raid_date_time = datetime.strptime(raid['period'],"%Y-%m-%dT%H:%M:%SZ")
+            print("*************************************")
+            print(raid_date_time)
+            print(last_tuesday_reset)
+            print("*************************************")
             if raid['values']['completed']['basic']['value']==1 and  raid['values']['completionReason']['basic']['value']==0 and raid_date_time>last_tuesday_reset:
                 raids_complete.append(raid)
         #print("Raids Completadas despues del reset="+str(len(raids_complete)))
@@ -195,6 +196,7 @@ def get_last_tuesday_reset():
     # if today is also tuesday, and after 17 o'clock, change to the current date
     one_week = datetime.timedelta(weeks=1)
     if current_time - last_tuesday_at_17 >= one_week:
+        print("Greater than one week ... adjusting!!")
         last_tuesday_at_17 += one_week
     return last_tuesday_at_17
 
