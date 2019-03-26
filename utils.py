@@ -197,8 +197,11 @@ def get_last_tuesday_reset():
     # if today is also tuesday, and after 17 o'clock, change to the current date
     one_week = datetime.timedelta(weeks=1)
     if current_time - last_tuesday_at_17 >= one_week:
-        print("Greater than one week ... adjusting!!")
+        print("RESTET is now and Greater than one week ... adjusting date!!")
         last_tuesday_at_17 += one_week
+    else:
+        print("Almost a week ago"+str(current_time - last_tuesday_at_17))
+    
     return last_tuesday_at_17
 
 
