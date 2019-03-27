@@ -141,10 +141,10 @@ def get_completed_raids(guardian_info, user_destiny_id, raids ):
             raid_date_time = datetime.strptime(raid['period'],"%Y-%m-%dT%H:%M:%SZ")
 
             if raid['values']['completed']['basic']['value']==1 and  raid['values']['completionReason']['basic']['value']==0 and raid_date_time>last_tuesday_reset:
-                print("**************ACTIVE RAIDS**************")
-                print(raid_date_time)
-                print(last_tuesday_reset)
-                print("*************************************")
+                #print("**************ACTIVE RAIDS**************")
+                #print(raid_date_time)
+                #print(last_tuesday_reset)
+                #print("*************************************")
                 raids_complete.append(raid)
         #print("Raids Completadas despues del reset="+str(len(raids_complete)))
         return raids_complete
@@ -195,6 +195,7 @@ def get_last_friday_reset():
         - datetime.timedelta(days=current_time.weekday())
         + datetime.timedelta(days=4, weeks=-1))
     #print("Last Friday temp:"+str(last_friday))
+    print(type(last_friday))
     last_friday_at_17 = datetime.datetime.combine(last_friday, datetime.time(17))
     # if today is also friday, and after 17 o'clock, change to the current date
     one_week = datetime.timedelta(weeks=1)
@@ -229,7 +230,7 @@ def get_xur_info():
         date = result.find('h4').text
         #print str(date)
         date_xur = datetime.strptime(date, '%B %d, %Y')
-        xur_arrival = datetime.combine(date_xur, datetime.datetime.time(17))
+        xur_arrival = datetime.combine(date_xur, datetime.time(17))
         print("XUR!!")
         print(str(xur_arrival))
         

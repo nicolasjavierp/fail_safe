@@ -745,6 +745,7 @@ async def skip(context,url):
                 aliases=['test'],
                 pass_context=True)
 async def testing(context):
+    get_last_friday_reset()
     get_xur_info()
             
 
