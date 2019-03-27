@@ -166,23 +166,6 @@ def get_unique_raids(filtered_completed_raids, fs):
     return unique_raid_complete
 
 
-def get_last_reset_date_time():
-    today = date.today()
-    offset = (today.weekday() - 1) % 7
-    #print("Offset:"+str(offset))
-    last_tuesday = today - timedelta(days=offset)
-    last_tuesday_temp = str(last_tuesday)+" 17:00:00"
-    last_tuesday_reset = datetime.strptime(last_tuesday_temp,"%Y-%m-%d %H:%M:%S")
-    return last_tuesday_reset
-
-
-def get_next_friday():
-    d = datetime.date.today()
-    while d.weekday() != 4:
-        d += datetime.timedelta(1)
-    print(d)
-
-
 def get_last_tuesday_reset():
     import datetime
     current_time = datetime.datetime.now()
@@ -190,7 +173,7 @@ def get_last_tuesday_reset():
     last_tuesday = (current_time.date()
         - datetime.timedelta(days=current_time.weekday())
         + datetime.timedelta(days=1, weeks=-1))
-    print("Last tuesday temp: "+str(last_tuesday))
+    #print("Last tuesday temp: "+str(last_tuesday))
     last_tuesday_at_17 = datetime.datetime.combine(last_tuesday, datetime.time(17))
     # if today is also tuesday, and after 17 o'clock, change to the current date
     one_week = datetime.timedelta(weeks=1)
@@ -220,6 +203,6 @@ def get_last_friday_reset():
 
 def is_xur_arround():
     today = date.today()
-    if today.weekday() not in [1,2,3] and today<get_last_reset_date_time():# or today>last_friday_reset:
+    if today.weekday() not in [1,2,3] and today<get_last_tuesday_reset():# or today>last_friday_reset:
         pass
         
