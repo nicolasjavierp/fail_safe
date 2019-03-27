@@ -225,7 +225,7 @@ def get_xur_info():
         #print(type(result.text))
         #print(dir(result.text))
         #print result.text
-        this_year = date.today().year
+        this_year = datetime.datetime.now().year
         date = result.find('h4').text
         #print str(date)
         date_xur = datetime.datetime.strptime(date, '%B %d, %Y')
