@@ -225,10 +225,10 @@ def get_xur_info():
         #print(type(result.text))
         #print(dir(result.text))
         #print result.text
-        this_year = datetime.datetime.now().year
+        this_year = datetime.now().year
         date = result.find('h4').text
         #print str(date)
-        date_xur = datetime.datetime.strptime(date, '%B %d, %Y')
-        xur_arrival = datetime.datetime.combine(date_xur, datetime.time(17))
+        date_xur = datetime.strptime(date, '%B %d, %Y')
+        xur_arrival = datetime.combine(date_xur, datetime.time(17))
         print(str(xur_arrival))
         
