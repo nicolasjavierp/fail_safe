@@ -234,9 +234,9 @@ async def raid_this_week(context):
                 #print("/***************************************/")
                 #print(raids_complete)
                 #print("/***************************************/")
-                print("/***************************************/")
-                print(len(raids_complete))
-                print("/***************************************/")
+                #print("/***************************************/")
+                #print(len(raids_complete))
+                #print("/***************************************/")
                 if raids_complete:
                     raids_complete_filtered = filter_completed_raids(raids_complete,fs)
                     print("/***************************************/")
