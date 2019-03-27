@@ -230,5 +230,6 @@ def get_xur_info():
         #print str(date)
         date_xur = datetime.strptime(date, '%B %d, %Y')
         xur_arrival = datetime.combine(date_xur, datetime.datetime.time(17))
+        print("XUR!!")
         print(str(xur_arrival))
         
