@@ -230,8 +230,10 @@ def get_xur_info():
         date = result.find('h4').text
         #print str(date)
         date_xur = datetime.strptime(date, '%B %d, %Y')
-        print(type(date_xur))
-        xur_arrival = datetime.combine(date_xur.date, datetime.time(17))
+        #print(type(date_xur))
+        #print(type(datetime.time(17)))
+        reset_time = datetime.strptime('1700','%H%M').time()
+        xur_arrival = datetime.combine(date_xur.date, reset_time)
         print("XUR!!")
         print(str(xur_arrival))
         
