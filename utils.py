@@ -19,6 +19,8 @@ from pymongo import MongoClient
 from datetime import timedelta 
 from datetime import date 
 from db import *
+import requests  
+from bs4 import BeautifulSoup
 
 
 def is_user_in_users(user):
@@ -192,7 +194,7 @@ def get_last_friday_reset():
     last_friday = (current_time.date()
         - datetime.timedelta(days=current_time.weekday())
         + datetime.timedelta(days=4, weeks=-1))
-    print("Last Friday temp:"+str(last_friday))
+    #print("Last Friday temp:"+str(last_friday))
     last_friday_at_17 = datetime.datetime.combine(last_friday, datetime.time(17))
     # if today is also friday, and after 17 o'clock, change to the current date
     one_week = datetime.timedelta(weeks=1)
@@ -205,4 +207,28 @@ def is_xur_arround():
     today = date.today()
     if today.weekday() not in [1,2,3] and today<get_last_tuesday_reset():# or today>last_friday_reset:
         pass
+
+
+def get_xur_info():
+    r = requests.get('https://ftw.in/game/destiny-2/find-xur')
+    #print r
+    soup = BeautifulSoup(r.text, 'html.parser')
+    #print "SOUP:"+str(soup)
+    results = soup.find_all('div', attrs={'class':'target-class clearfix'})
+
+    records = []  
+    for result in results:  
+        #print result
+        print(type(result))
+        print(dir(result))
+        print("%%%%%%%%%%%%%%%%%%%%%%%%%")
+        #print(type(result.text))
+        #print(dir(result.text))
+        #print result.text
+        this_year = date.today().year
+        date = result.find('h4').text
+        #print str(date)
+        date_xur = datetime.datetime.strptime(date, '%B %d, %Y')
+        xur_arrival = datetime.datetime.combine(date_xur, datetime.time(17))
+        print(str(xur_arrival))
         

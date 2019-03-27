@@ -359,7 +359,7 @@ async def ayuda(context):
     `+ayuda` Imprime este mensage \n \
     `+pro` (Calendario Armas Protocolo)\n\
     `+asc` (Calendario Desafío Ascendente)\n\
-    `+rol` auto-otorga roles a la gente que esta en el clan Escusara 2,3,4,5 , ejemplo: +rol CNorris#2234\n\
+    `+rol` auto-otorga roles a la gente que esta en el clan Escuadra 2,3,4,5 , ejemplo: +rol CNorris#2234\n\
     ´+semana´ informa actividades tipica de esa semana'.format(context.message)
     await client.send_message(context.message.channel, msg )
 
@@ -745,42 +745,7 @@ async def skip(context,url):
                 aliases=['test'],
                 pass_context=True)
 async def testing(context):
-    my_server = discord.utils.get(client.servers)
-
-    for i in my_server.roles:
-        #print(type(i.name), type(i.id))
-        if i.id == str(544911570258624522):
-            custom_clan_role_id=i.id
-        if i.id == str(387742983249985536):
-            custom_destiny_clan_role_id = i.id
-        #if "Clan" in i.name:
-        #    if "Destiny" in i.name:
-        #        custom_destiny_clan_role_id=i.id
-        #    else:
-        #        custom_clan_role_id=i.id
-        #print(i.name, i.id)
-        if "DJ" in i.name:
-            custom_dj_role_id=i.id
-
-    #custom_clan_role_id=str(544911570258624522)
-    #custom_destiny_clan_role_id=str(387742983249985536)
-    role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
-    role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
-    role_Destiny_Clan = discord.utils.get(my_server.roles, id=custom_destiny_clan_role_id)
-    #print("RED ALert !")
-    #print(role_Clan,role_DJ,role_Destiny_Clan)
-
-    for memb in my_server.members:
-        if memb.bot:
-            pass
-        else:
-            #print(memb.name)
-            user_has_role_destiny_clan = await does_user_have_role(memb,custom_destiny_clan_role_id)
-            #print(user_has_role_destiny_clan)
-            if user_has_role_destiny_clan:
-                print(str(memb.name)+" missing role ... adding ... ")
-                addroles = [role_DJ]
-                await client.add_roles(memb, *addroles)
+    get_xur_info()
             
 
 #######################################################################

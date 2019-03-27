@@ -2,7 +2,9 @@ aiohttp==1.0.5
 astroid==2.0.4
 async-timeout==3.0.0
 backcall==0.1.0
+beautifulsoup4==4.7.1
 boto==2.49.0
+bs4==0.0.1
 certifi==2018.8.24
 cffi==1.12.0
 chardet==3.0.4
@@ -33,6 +35,7 @@ PySocks==1.6.8
 requests==2.20.0
 requests-oauthlib==1.0.0
 six==1.11.0
+soupsieve==1.9
 termcolor==1.1.0
 traitlets==4.3.2
 tweepy==3.7.0
