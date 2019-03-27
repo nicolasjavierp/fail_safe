@@ -229,6 +229,6 @@ def get_xur_info():
         date = result.find('h4').text
         #print str(date)
         date_xur = datetime.strptime(date, '%B %d, %Y')
-        xur_arrival = datetime.combine(date_xur, datetime.time(17))
+        xur_arrival = datetime.combine(date_xur, datetime.datetime.time(17))
         print(str(xur_arrival))
         
