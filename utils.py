@@ -240,11 +240,13 @@ def get_xur_info():
         print("Last Monday:")
         print(get_last_tuesday_reset() - timedelta(days=1))
         print("----------------------")
-        print(now)
+        print(now)#-timedelta(days=1)
         print("----------------------")
+        print("This Friday:")
         print(get_last_friday_reset())
+        print("----------------------")
 
-        if get_last_tuesday_reset() - timedelta(days=1) < now < get_last_friday_reset()+timedelta(week=1):
+        if get_last_tuesday_reset()-timedelta(days=1) < now < get_last_friday_reset()+timedelta(week=1):
             return False, "Master Xur no llega hasta "+str(get_last_friday_reset()+timedelta(week=1))
         else:
             print("XUR esta !!")
