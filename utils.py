@@ -220,20 +220,24 @@ def get_xur_info():
     records = []  
     for result in results:  
         #print result
-        print(type(result))
-        print(dir(result))
-        print("%%%%%%%%%%%%%%%%%%%%%%%%%")
+        #print(type(result))
+        #print(dir(result))
+        #print("%%%%%%%%%%%%%%%%%%%%%%%%%")
         #print(type(result.text))
         #print(dir(result.text))
         #print result.text
-        this_year = datetime.now().year
+        now = datetime.now()
         date = result.find('h4').text
         #print str(date)
         date_xur = datetime.strptime(date, '%B %d, %Y')
-        print(type(date_xur))
+        #print(type(date_xur))
         #print(type(datetime.time(17)))
         reset_time = datetime.strptime('1700','%H%M').time()
         xur_arrival = datetime.combine(date_xur, reset_time)
-        print("XUR!!")
-        print(str(xur_arrival))
+        #print("XUR!!")
+        #print(str(xur_arrival))
+        if get_last_tuesday_reset()<now<get_last_friday_reset():
+            print("XUR esta Presente!!!!")
+        else:
+            print("XUR no esta !!")
         
