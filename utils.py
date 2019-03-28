@@ -180,10 +180,10 @@ def get_last_tuesday_reset():
     # if today is also tuesday, and after 17 o'clock, change to the current date
     one_week = datetime.timedelta(weeks=1)
     if current_time - last_tuesday_at_17 >= one_week:
-        print("RESTET is now and Greater than one week ... adjusting date!!")
+        #print("RESTET is now and Greater than one week ... adjusting date!!")
         last_tuesday_at_17 += one_week
     else:
-        print("Almost a week ago "+str(current_time - last_tuesday_at_17))
+        #print("Almost a week ago "+str(current_time - last_tuesday_at_17))
     return last_tuesday_at_17
 
 
@@ -195,7 +195,7 @@ def get_last_friday_reset():
         - datetime.timedelta(days=current_time.weekday())
         + datetime.timedelta(days=4, weeks=-1))
     #print("Last Friday temp:"+str(last_friday))
-    print(type(last_friday))
+    #print(type(last_friday))
     last_friday_at_17 = datetime.datetime.combine(last_friday, datetime.time(17))
     # if today is also friday, and after 17 o'clock, change to the current date
     one_week = datetime.timedelta(weeks=1)
@@ -243,7 +243,7 @@ def get_xur_info():
         print(now)#-timedelta(days=1)
         print("----------------------")
         print("This Friday:")
-        print(get_last_friday_reset())
+        print(get_last_friday_reset()+timedelta(days=7))
         print("----------------------")
 
         if get_last_tuesday_reset()-timedelta(days=1) < now < get_last_friday_reset()+timedelta(days=7):
