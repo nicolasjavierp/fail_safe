@@ -745,8 +745,11 @@ async def skip(context,url):
                 aliases=['test'],
                 pass_context=True)
 async def testing(context):
-    get_last_friday_reset()
-    get_xur_info()
+    #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
+    #await client.send_message(context.message.channel, embed=embed)
+    is_xur_here, info = get_xur_info()
+    print(is_xur_here)
+    print(info)
             
 
 #######################################################################

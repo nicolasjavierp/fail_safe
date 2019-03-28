@@ -236,8 +236,16 @@ def get_xur_info():
         xur_arrival = datetime.combine(date_xur, reset_time)
         #print("XUR!!")
         #print(str(xur_arrival))
-        if get_last_tuesday_reset()<now<get_last_friday_reset():
-            print("XUR esta Presente!!!!")
+        print("----------------------")
+        print("Last Monday:")
+        print(get_last_tuesday_reset() - timedelta(days=1))
+        print("----------------------")
+        print(now)
+        print("----------------------")
+        print(get_last_friday_reset())
+        if get_last_tuesday_reset() - timedelta(days=1) < now < get_last_friday_reset():
+            return False, "Master Xur no llega hasta ... "
         else:
-            print("XUR no esta !!")
+            print("XUR esta !!")
+            return True,  "Xur esta en ... "
         
