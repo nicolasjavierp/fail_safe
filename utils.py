@@ -183,6 +183,7 @@ def get_last_tuesday_reset():
         #print("RESTET is now and Greater than one week ... adjusting date!!")
         last_tuesday_at_17 += one_week
     else:
+        pass
         #print("Almost a week ago "+str(current_time - last_tuesday_at_17))
     return last_tuesday_at_17
 
@@ -250,5 +251,8 @@ def get_xur_info():
             return False, "Master Xur no llega hasta "+str(get_last_friday_reset()+timedelta(days=7))
         else:
             print("XUR esta !!")
+            xur_location = result.find('p').text
+            for i in xur_location:
+                print(i)
             return True,  "Xur esta en ... "
         
