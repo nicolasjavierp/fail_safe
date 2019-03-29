@@ -248,7 +248,7 @@ def get_xur_info():
         print(get_last_friday_reset())#+timedelta(weeks=1))
         print("----------------------")
 
-        if (now.weekday() == 0 and (now.time() <= datetime.time(17,00))) or (now.weekday() == 4 and (now.time() >= datetime.time(17,00))) or (now.weekday() == 5) or (now.weekday() == 6):
+        if (now.weekday() == 0 and (now.time() <= datetime.time(hour=17))) or (now.weekday() == 4 and (now.time() >= datetime.time(hour=17))) or (now.weekday() == 5) or (now.weekday() == 6):
             print("XUR esta !!")
             xur_location = result.find('p').text
             for i in xur_location:
