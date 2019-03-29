@@ -40,6 +40,7 @@ class FailSafe(object):
         self.guardian_race = {2803282938:"Insomne", 898834093:"Exo", 3887404748:"Humano"}
         self.guardian_gender = {3111576190: "Masculino", 2204441813:"Femenino"}
         self.raids = {2122313384: "Ultimo Deseo", 548750096:"Azote del Pasado"} #Spire of stars 119944200 // Eater of worlds 3089205900 // Leviathan 89727599
+        self.xur_locations=["IO","TITAN","EDZ","NESSUS","TOWER"]
 
 
     def get_playerByTagName(self, gamertag):

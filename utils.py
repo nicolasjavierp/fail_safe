@@ -218,7 +218,8 @@ def get_xur_info():
     #print "SOUP:"+str(soup)
     results = soup.find_all('div', attrs={'class':'target-class clearfix'})
     #article = soup.find("div", {"class":"ffblender fs24px margin-top-remove margin-bottom-remove text-capitalize"})
-    for result in results:
+    test = results.find("p")
+    for result in test:
         print(result)
         print("-----------------------")
     
