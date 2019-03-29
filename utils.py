@@ -217,6 +217,9 @@ def get_xur_info():
     soup = BeautifulSoup(r.text, 'html.parser')
     #print "SOUP:"+str(soup)
     results = soup.find_all('div', attrs={'class':'target-class clearfix'})
+    location = soup.find_all('p', attrs={'class':'ffblender fs24px margin-top-remove margin-bottom-remove text-capitalize'})
+    for l in location:
+        print(l)
 
     records = []  
     for result in results:  
@@ -231,29 +234,13 @@ def get_xur_info():
         date = result.find('h4').text
         #print str(date)
         date_xur = datetime.strptime(date, '%B %d, %Y')
-        print(type(date_xur))
-        print(date_xur)
         #print(type(datetime.time(17)))
         reset_time = datetime.strptime('1700','%H%M').time()
         xur_arrival = datetime.combine(date_xur, reset_time)
-        #print("XUR!!")
-        #print(str(xur_arrival))
-        print("----------------------")
-        print("Last Monday:")
-        print(get_last_tuesday_reset() - timedelta(days=1))
-        print("----------------------")
-        print(now)#-timedelta(days=1)
-        print("----------------------")
-        print("Last Friday:")
-        print(get_last_friday_reset())#+timedelta(weeks=1))
-        print("----------------------")
 
 
         if (now.weekday() == 1) or ((now.weekday() == 1) and (now.time() <= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 4 and (now.time() >= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 5) or (now.weekday() == 6):
             print("XUR esta !!")
-            xur_location = result.find_all('p').text
-            for i in xur_location:
-                print(i)
             #print(xur_location)
             return True,  "Xur esta en ... "
         else:
