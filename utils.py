@@ -217,33 +217,26 @@ def get_xur_info():
     soup = BeautifulSoup(r.text, 'html.parser')
     #print "SOUP:"+str(soup)
     results = soup.find_all('div', attrs={'class':'target-class clearfix'})
-    location = soup.find_all('p', attrs={'class':'ffblender fs24px margin-top-remove margin-bottom-remove text-capitalize'})
-    for l in location:
-        print(l)
+    article = soup.find("div", {"class":"ffblender fs24px margin-top-remove margin-bottom-remove text-capitalize"}).findAll('p')
+    for element in article:
+        print(element)
+        article_text += '\n' + ''.join(element.findAll(text = True))
+    print("-----------------------")
+    print(article_text)
 
     records = []  
     for result in results:  
-        #print result
-        #print(type(result))
-        #print(dir(result))
-        #print("%%%%%%%%%%%%%%%%%%%%%%%%%")
-        #print(type(result.text))
-        #print(dir(result.text))
-        #print result.text
         now = datetime.now()
         date = result.find('h4').text
-        #print str(date)
         date_xur = datetime.strptime(date, '%B %d, %Y')
-        #print(type(datetime.time(17)))
         reset_time = datetime.strptime('1700','%H%M').time()
         xur_arrival = datetime.combine(date_xur, reset_time)
 
-
-        if (now.weekday() == 1) or ((now.weekday() == 1) and (now.time() <= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 4 and (now.time() >= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 5) or (now.weekday() == 6):
-            print("XUR esta !!")
-            #print(xur_location)
-            return True,  "Xur esta en ... "
-        else:
-            return False, "KPO, Xur no llega hasta "+str(get_last_friday_reset()+timedelta(weeks=1))
+    if (now.weekday() == 1) or ((now.weekday() == 1) and (now.time() <= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 4 and (now.time() >= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 5) or (now.weekday() == 6):
+        print("XUR esta !!")
+        #print(xur_location)
+        return True,  "Xur esta en ... "
+    else:
+        return False, "KPO, Xur no llega hasta "+str(get_last_friday_reset()+timedelta(weeks=1))
             
         
