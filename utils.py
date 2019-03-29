@@ -231,8 +231,8 @@ def get_xur_info():
         date = result.find('h4').text
         #print str(date)
         date_xur = datetime.strptime(date, '%B %d, %Y')
-        #print(type(date_xur))
-        #print(type(datetime.time(17)))
+        print(type(date_xur))
+        print(type(datetime.time(17)))
         reset_time = datetime.strptime('1700','%H%M').time()
         xur_arrival = datetime.combine(date_xur, reset_time)
         #print("XUR!!")
@@ -247,7 +247,10 @@ def get_xur_info():
         print(get_last_friday_reset()+timedelta(days=7))
         print("----------------------")
 
-
+        if now.weekday() == 4: #and (now.time() <= datetime.time(17,00)):
+            print(get_last_friday_reset())
+            netx_friday = get_last_friday_reset()+timedelta(days=7)
+            print(netx_friday)
         
         if get_last_tuesday_reset()-timedelta(days=1) < now < get_last_friday_reset()+timedelta(days=7):
             return False, "KPO, Xur no llega hasta "+str(get_last_friday_reset()+timedelta(days=7))
