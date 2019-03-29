@@ -251,9 +251,10 @@ def get_xur_info():
 
         if (now.weekday() == 1) or ((now.weekday() == 1) and (now.time() <= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 4 and (now.time() >= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 5) or (now.weekday() == 6):
             print("XUR esta !!")
-            xur_location = result.find('p').text
+            xur_location = result.find_all('p').text
             for i in xur_location:
                 print(i)
+            #print(xur_location)
             return True,  "Xur esta en ... "
         else:
             return False, "KPO, Xur no llega hasta "+str(get_last_friday_reset()+timedelta(weeks=1))
