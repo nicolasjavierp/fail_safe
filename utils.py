@@ -232,6 +232,7 @@ def get_xur_info():
         #print str(date)
         date_xur = datetime.strptime(date, '%B %d, %Y')
         print(type(date_xur))
+        print(date_xur)
         #print(type(datetime.time(17)))
         reset_time = datetime.strptime('1700','%H%M').time()
         xur_arrival = datetime.combine(date_xur, reset_time)
