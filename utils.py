@@ -244,23 +244,18 @@ def get_xur_info():
         print("----------------------")
         print(now)#-timedelta(days=1)
         print("----------------------")
-        print("This Friday:")
-        print(get_last_friday_reset()+timedelta(days=7))
+        print("Last Friday:")
+        print(get_last_friday_reset())#+timedelta(weeks=1))
         print("----------------------")
 
-        if now.weekday() == 4: #and (now.time() <= datetime.time(17,00)):
-            print(get_last_friday_reset())
-            netx_friday = get_last_friday_reset()+timedelta(days=7)
-            print(netx_friday)
-        
-        if get_last_tuesday_reset()-timedelta(days=1) < now < get_last_friday_reset()+timedelta(days=7):
-            return False, "KPO, Xur no llega hasta "+str(get_last_friday_reset()+timedelta(days=7))
-        else:
+        if (now.weekday() == 0 and (now.time() <= datetime.time(17,00))) or (now.weekday() == 4 and (now.time() >= datetime.time(17,00)) or (now.weekday() == 5) or (now.weekday() == 6)):
             print("XUR esta !!")
             if (now.weekday() == 0 and (now.time() <= datetime.time(17,00))) or (now.weekday() == 4 and (now.time() >= datetime.time(17,00))):
-                print("Today is Monday Befor 17hs or Today is Friday AFTER 17 hs")
-            xur_location = result.find('p').text
-            for i in xur_location:
-                print(i)
+                xur_location = result.find('p').text
+                for i in xur_location:
+                    print(i)
             return True,  "Xur esta en ... "
+        else:
+            return False, "KPO, Xur no llega hasta "+str(get_last_friday_reset()+timedelta(weeks=1))
+            
         
