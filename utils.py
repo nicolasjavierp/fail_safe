@@ -17,8 +17,7 @@ import unicodedata
 from urllib.request import urlopen
 from pymongo import MongoClient
 from datetime import timedelta 
-from datetime import date# , time
-
+from datetime import date 
 from db import *
 import requests  
 from bs4 import BeautifulSoup
@@ -249,7 +248,8 @@ def get_xur_info():
         print(get_last_friday_reset())#+timedelta(weeks=1))
         print("----------------------")
 
-        if (now.weekday() == 0 and (now.time() <= datetime.time(17))) or (now.weekday() == 4 and (now.time() >= datetime.time(17))) or (now.weekday() == 5) or (now.weekday() == 6):
+
+        if (now.weekday() == 1) or ((now.weekday() == 1) and (now.time() <= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 4 and (now.time() >= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 5) or (now.weekday() == 6):
             print("XUR esta !!")
             xur_location = result.find('p').text
             for i in xur_location:
