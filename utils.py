@@ -217,12 +217,11 @@ def get_xur_info():
     soup = BeautifulSoup(r.text, 'html.parser')
     #print "SOUP:"+str(soup)
     results = soup.find_all('div', attrs={'class':'target-class clearfix'})
-    article = soup.find("div", {"class":"ffblender fs24px margin-top-remove margin-bottom-remove text-capitalize"}).findAll('p')
+    article = soup.find("div", {"class":"ffblender fs24px margin-top-remove margin-bottom-remove text-capitalize"}).find_all('p')
     for element in article:
         print(element)
-        article_text += '\n' + ''.join(element.findAll(text = True))
-    print("-----------------------")
-    print(article_text)
+        print("-----------------------")
+    
 
     records = []  
     for result in results:  
