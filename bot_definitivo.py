@@ -747,7 +747,12 @@ async def skip(context,url):
 async def testing(context):
     #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
     #await client.send_message(context.message.channel, embed=embed)
-    is_xur_here, info = get_xur_info()
+    #4 Tests
+    #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
+    #4 Heroku
+    fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+    #END Heroku
+    is_xur_here, info = get_xur_info(fs)
     print(is_xur_here)
     print(info)
             

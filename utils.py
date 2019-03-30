@@ -212,7 +212,7 @@ def is_xur_arround():
         pass
 
 
-def get_xur_info():
+def get_xur_info(fs):
     #url = "https://www.pythonforbeginners.com"
 
     #content = urllib2.urlopen(url).read()
@@ -231,26 +231,26 @@ def get_xur_info():
     results = soup.find_all('div', attrs={'class':'target-class clearfix'})
     #article = soup.find("div", {"class":"ffblender fs24px margin-top-remove margin-bottom-remove text-capitalize"})
     #test = results.find("p")
+    now = datetime.now()
+    
+
     for result in results:
         print(type(result))
         print(result.text)
-        if "p" in result:
-            print(result)
-            print("-----------------------")
+        #date = result.find('h4').text
+        #date_xur = datetime.strptime(date, '%B %d, %Y')
+        #reset_time = datetime.strptime('1700','%H%M').time()
+        #xur_arrival = datetime.combine(date_xur, reset_time)
+        if str(now.year()) in result:
+            print("XUR DATE:"+ str(result.text))
+
+        if result.text.upper() in fs.xur_location:
+            xur_location = result.text.upper()
     
-
-    records = []  
-    for result in results:  
-        now = datetime.now()
-        date = result.find('h4').text
-        date_xur = datetime.strptime(date, '%B %d, %Y')
-        reset_time = datetime.strptime('1700','%H%M').time()
-        xur_arrival = datetime.combine(date_xur, reset_time)
-
     if (now.weekday() == 1) or ((now.weekday() == 1) and (now.time() <= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 4 and (now.time() >= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 5) or (now.weekday() == 6):
         print("XUR esta !!")
         #print(xur_location)
-        return True,  "Xur esta en ... "
+        return True,  "Xur esta en "+str(xur_location)
     else:
         return False, "KPO, Xur no llega hasta "+str(get_last_friday_reset()+timedelta(weeks=1))
             
