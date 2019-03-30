@@ -231,7 +231,7 @@ def get_xur_info(fs):
         if str(now.year) in result:
             print("XUR DATE:"+ str(result.text))
 
-        if result.text.upper() in fs.xur_location:
+        if result.text.upper() in fs.xur_locations:
             xur_location = result.text.upper()
     
     if (now.weekday() == 1) or ((now.weekday() == 1) and (now.time() <= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 4 and (now.time() >= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 5) or (now.weekday() == 6):
