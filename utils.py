@@ -212,16 +212,28 @@ def is_xur_arround():
 
 
 def get_xur_info():
+    url = "https://www.pythonforbeginners.com"
+
+    content = urllib2.urlopen(url).read()
+
+    soup = BeautifulSoup(content)
+
+    print soup.prettify()
+
+    print soup.p
+
     r = requests.get('https://ftw.in/game/destiny-2/find-xur')
     #print r
     soup = BeautifulSoup(r.text, 'html.parser')
     #print "SOUP:"+str(soup)
+
     results = soup.find_all('div', attrs={'class':'target-class clearfix'})
     #article = soup.find("div", {"class":"ffblender fs24px margin-top-remove margin-bottom-remove text-capitalize"})
     test = results.find("p")
     for result in test:
-        print(result)
-        print("-----------------------")
+        if "p" in result:
+            print(result)
+            print("-----------------------")
     
 
     records = []  
