@@ -224,17 +224,18 @@ def get_xur_info(fs):
     for result in results:
         print(type(result))
         print(result.text)
+        print(type(result.text))
+        print(len(result.text))
         #date = result.find('h4').text
         #date_xur = datetime.strptime(date, '%B %d, %Y')
         #reset_time = datetime.strptime('1700','%H%M').time()
         #xur_arrival = datetime.combine(date_xur, reset_time)
-        if str(now.year) in result:
+        if str(now.year) in result.text:
             print("XUR DATE:"+ str(result.text))
 
         if result.text.upper() in fs.xur_locations:
             print("Detectado:"+ str(result.text.upper()))
             xur_location = result.text.upper()
-
         else:
             xur_location = ""
     
