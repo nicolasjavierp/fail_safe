@@ -233,7 +233,8 @@ def get_xur_info():
     #test = results.find("p")
     for result in results:
         print(type(result))
-        if "<p>" in result:
+        print(result.text)
+        if "p" in result:
             print(result)
             print("-----------------------")
     
