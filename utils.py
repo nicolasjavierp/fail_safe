@@ -21,7 +21,6 @@ from datetime import date
 from db import *
 import requests  
 from bs4 import BeautifulSoup
-#import urllib2
 
 
 def is_user_in_users(user):
@@ -213,24 +212,12 @@ def is_xur_arround():
 
 
 def get_xur_info(fs):
-    #url = "https://www.pythonforbeginners.com"
-
-    #content = urllib2.urlopen(url).read()
-
-    #soup = BeautifulSoup(content)
-
-    #print(soup.prettify())
-
-    #print(soup.p)
-
     r = requests.get('https://ftw.in/game/destiny-2/find-xur')
     #print r
     soup = BeautifulSoup(r.text, 'html.parser')
     #print "SOUP:"+str(soup)
 
     results = soup.find_all('div', attrs={'class':'target-class clearfix'})
-    #article = soup.find("div", {"class":"ffblender fs24px margin-top-remove margin-bottom-remove text-capitalize"})
-    #test = results.find("p")
     now = datetime.now()
     
 
@@ -241,7 +228,7 @@ def get_xur_info(fs):
         #date_xur = datetime.strptime(date, '%B %d, %Y')
         #reset_time = datetime.strptime('1700','%H%M').time()
         #xur_arrival = datetime.combine(date_xur, reset_time)
-        if str(now.year()) in result:
+        if str(now.year) in result:
             print("XUR DATE:"+ str(result.text))
 
         if result.text.upper() in fs.xur_location:
