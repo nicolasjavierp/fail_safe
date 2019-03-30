@@ -218,9 +218,9 @@ def get_xur_info():
 
     soup = BeautifulSoup(content)
 
-    print soup.prettify()
+    print(soup.prettify())
 
-    print soup.p
+    print(soup.p)
 
     r = requests.get('https://ftw.in/game/destiny-2/find-xur')
     #print r
