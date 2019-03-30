@@ -232,7 +232,8 @@ def get_xur_info():
     #article = soup.find("div", {"class":"ffblender fs24px margin-top-remove margin-bottom-remove text-capitalize"})
     #test = results.find("p")
     for result in results:
-        if "p" in result:
+        print(type(result))
+        if "<p>" in result:
             print(result)
             print("-----------------------")
     
