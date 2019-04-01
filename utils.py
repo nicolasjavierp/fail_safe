@@ -223,7 +223,7 @@ def get_xur_info(fs):
         #print(type(i.text))
         print(i)
         print("888888888888888888888888888")
-        for key ,value in fs.xur_locations.index():
+        for key ,value in fs.xur_locations.items():
             if key in i.text.upper():
                 print("Detectado:"+ str(key))
                 xur_location = value
