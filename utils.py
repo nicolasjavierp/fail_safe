@@ -219,7 +219,7 @@ def get_xur_info(fs):
     ps = soup.find_all('p')
     for i in ps:
         print(i)
-        print(type(i))
+        print(type(i.text))
     #print(ps)
     print("--------------------")
     results = soup.find_all('div', attrs={'class':'target-class clearfix'})
