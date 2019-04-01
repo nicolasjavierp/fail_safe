@@ -40,7 +40,7 @@ class FailSafe(object):
         self.guardian_race = {2803282938:"Insomne", 898834093:"Exo", 3887404748:"Humano"}
         self.guardian_gender = {3111576190: "Masculino", 2204441813:"Femenino"}
         self.raids = {2122313384: "Ultimo Deseo", 548750096:"Azote del Pasado"} #Spire of stars 119944200 // Eater of worlds 3089205900 // Leviathan 89727599
-        self.xur_locations={'IO':'Xur esta en IO en la zona de Cicatriz del Gigante', 'TITAN':'Xur esta en Titan en la zona Plataforma', 'EDZ':'Xur esta la Tierra (ZME), en la zona Bahía del Viento ', 'NESSUS':'Xur esta en Nessus en la zona de Tumba del Vigia','TOWER':'Xur esta la torre en la zona de Hangar detras de Orbita Muerta'}
+        self.xur_locations={'IO':'Xur esta en IO en la zona de Cicatriz del Gigante', 'TITAN':'Xur esta en Titan en la zona Plataforma', 'EDZ':'Xur esta la Tierra (ZME), en la zona Bahía del Viento ', 'NESSUS':'Xur esta en Nessus en la zona de Tumba del Vigia','TOWER':'Xur esta la Torre en la zona de Hangar detras de Orbita Muerta'}
 
 
     def get_playerByTagName(self, gamertag):

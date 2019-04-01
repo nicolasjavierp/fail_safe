@@ -231,9 +231,12 @@ def get_xur_info(fs):
         if ps and len(ps)>=2:
             for key ,value in fs.xur_locations.items():
                 if key in ps[1].text.upper():
-                    print("Detectado:"+ str(key))
+                    #print("Detectado:"+ str(key))
                     xur_location = value
-        return True,  "Xur esta en "+str(xur_location)
+                    xur_departure = ps[1].text.split("reset on",1)[1] 
+                    print(xur_departure)
+                    print(type(xur_departure))
+        return True, str(xur_location)
     else:
         return False, "KPO, Xur no llega hasta "+str(get_last_friday_reset()+timedelta(weeks=1))
             

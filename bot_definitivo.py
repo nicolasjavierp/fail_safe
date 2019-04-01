@@ -756,7 +756,7 @@ async def testing(context):
     print(is_xur_here)
     print(info)
     embed = discord.Embed(title=":squid:__XUR:__", description=info, color=0x00ff00)
-    embed.add_field(name='Inventario', value="<https://ftw.in/game/destiny-2/find-xur>", inline=False)
+    embed.add_field(name='Inventario y Referencia', value="<https://ftw.in/game/destiny-2/find-xur>", inline=False)
     embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
     await client.send_message(context.message.channel, embed=embed)
 
