@@ -218,18 +218,7 @@ def get_xur_info(fs):
     soup = BeautifulSoup(r.text, 'html.parser')
     #print "SOUP:"+str(soup)
     ps = soup.find_all('p')
-    xur_location = "??????"
-    if ps and len(ps)>=2:
-        print(type(ps[0]))
-        print(type(ps[0].text))
-        reference=ps[0].text
-        url = re.search("(?P<url>https?://[^\s]+)", reference)#.group("url")
-        print(url)
-        for key ,value in fs.xur_locations.items():
-            if key in ps[1].text.upper():
-                print("Detectado:"+ str(key))
-                xur_location = value
-    
+    xur_location = "??????"  
     #results = soup.find_all('div', attrs={'class':'target-class clearfix'})
     now = datetime.now()
     #for result in results:
@@ -239,6 +228,16 @@ def get_xur_info(fs):
     if (now.weekday() == 0) or ((now.weekday() == 1) and (now.time() <= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 4 and (now.time() >= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 5) or (now.weekday() == 6):
         print("XUR esta !!")
         #print(xur_location)
+        if ps and len(ps)>=2:
+            print(type(ps[0]))
+            print(type(ps[0].text))
+            reference=ps[0].text
+            url = re.findall('https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+', reference)
+            print(url)
+            for key ,value in fs.xur_locations.items():
+                if key in ps[1].text.upper():
+                    print("Detectado:"+ str(key))
+                    xur_location = value
         return True,  "Xur esta en "+str(xur_location)
     else:
         return False, "KPO, Xur no llega hasta "+str(get_last_friday_reset()+timedelta(weeks=1))
