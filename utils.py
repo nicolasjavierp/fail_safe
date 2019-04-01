@@ -217,14 +217,13 @@ def get_xur_info(fs):
     soup = BeautifulSoup(r.text, 'html.parser')
     #print "SOUP:"+str(soup)
     ps = soup.find_all('p')
+    xur_location = "??????"
     for i in ps:
         #print(i)
         #print(type(i.text))
         if i.text.upper() in fs.xur_locations:
             print("Detectado:"+ str(i.text.upper()))
             xur_location = i.text.upper()
-        else:
-            xur_location = "????????"
     #print(ps)
     
     results = soup.find_all('div', attrs={'class':'target-class clearfix'})
