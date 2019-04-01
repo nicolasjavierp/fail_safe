@@ -220,8 +220,10 @@ def get_xur_info(fs):
     ps = soup.find_all('p')
     xur_location = "??????"
     if ps and len(ps)>=2:
+        print(type(ps[0]))
+        print(type(ps[0].text))
         reference=ps[0].text
-        url = re.search("(?P<url>https?://[^\s]+)", reference).group("url")
+        url = re.search("(?P<url>https?://[^\s]+)", reference)#.group("url")
         print(url)
         for key ,value in fs.xur_locations.items():
             if key in ps[1].text.upper():
