@@ -216,7 +216,8 @@ def get_xur_info(fs):
     #print r
     soup = BeautifulSoup(r.text, 'html.parser')
     #print "SOUP:"+str(soup)
-
+    print(soup.p)
+    print("--------------------")
     results = soup.find_all('div', attrs={'class':'target-class clearfix'})
     now = datetime.now()
     
