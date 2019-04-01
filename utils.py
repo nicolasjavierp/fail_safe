@@ -218,11 +218,14 @@ def get_xur_info(fs):
     #print "SOUP:"+str(soup)
     ps = soup.find_all('p')
     xur_location = "??????"
+    print(ps[0])
+    print(ps[1])
+    print(ps[2])
     for i in ps:
         #print(i)
         #print(type(i.text))
-        print(i)
-        print("888888888888888888888888888")
+        #print(i)
+        #print("888888888888888888888888888")
         for key ,value in fs.xur_locations.items():
             if key in i.text.upper():
                 print("Detectado:"+ str(key))
