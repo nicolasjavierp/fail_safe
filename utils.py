@@ -218,7 +218,7 @@ def get_xur_info(fs):
     soup = BeautifulSoup(r.text, 'html.parser')
     #print "SOUP:"+str(soup)
     ps = soup.find_all('p')
-    xur_location = "??????"  
+    xur_info = "??????"
     #results = soup.find_all('div', attrs={'class':'target-class clearfix'})
     now = datetime.now()
     #for result in results:
@@ -233,10 +233,13 @@ def get_xur_info(fs):
                 if key in ps[1].text.upper():
                     #print("Detectado:"+ str(key))
                     xur_location = value
-                    xur_departure = ps[1].text.split("reset on",1)[1] 
+                    xur_departure_temp = ps[1].text.split("reset on",1)[1] 
+                    xur_departure_temp =  xur_departure_temp[:-1]
+                    print(xur_departure_temp)
+                    xur_departure = (datetime.datetime.strptime(xur_departure_temp, "%B %d").strftime("%d-%m"))
                     print(xur_departure)
-                    print(type(xur_departure))
-        return True, str(xur_location)
+            xur_info = str(xur_location)+" y se va el reset del "+str(xur_departure)
+        return True, str(xur_info)
     else:
         return False, "KPO, Xur no llega hasta "+str(get_last_friday_reset()+timedelta(weeks=1))
             
