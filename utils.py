@@ -217,17 +217,20 @@ def get_xur_info(fs):
     soup = BeautifulSoup(r.text, 'html.parser')
     #print "SOUP:"+str(soup)
     ps = soup.find_all('p')
-    print(ps)
+    for i in ps:
+        print(i)
+        print(type(i))
+    #print(ps)
     print("--------------------")
     results = soup.find_all('div', attrs={'class':'target-class clearfix'})
     now = datetime.now()
     
 
     for result in results:
-        print(type(result))
-        print(result.text)
-        print(type(result.text))
-        print(len(result.text))
+        #print(type(result))
+        #print(result.text)
+        #print(type(result.text))
+        #print(len(result.text))
         #date = result.find('h4').text
         #date_xur = datetime.strptime(date, '%B %d, %Y')
         #reset_time = datetime.strptime('1700','%H%M').time()
