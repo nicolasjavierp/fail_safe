@@ -212,37 +212,27 @@ def is_xur_arround():
 
 
 def get_xur_info(fs):
+    
     r = requests.get('https://ftw.in/game/destiny-2/find-xur')
     #print r
     soup = BeautifulSoup(r.text, 'html.parser')
     #print "SOUP:"+str(soup)
     ps = soup.find_all('p')
     for i in ps:
-        print(i)
-        print(type(i.text))
+        #print(i)
+        #print(type(i.text))
+        if i.text.upper() in fs.xur_locations:
+            print("Detectado:"+ str(i.text.upper()))
+            xur_location = i.text.upper()
+        else:
+            xur_location = "????????"
     #print(ps)
-    print("--------------------")
+    
     results = soup.find_all('div', attrs={'class':'target-class clearfix'})
     now = datetime.now()
-    
-
     for result in results:
-        #print(type(result))
-        #print(result.text)
-        #print(type(result.text))
-        #print(len(result.text))
-        #date = result.find('h4').text
-        #date_xur = datetime.strptime(date, '%B %d, %Y')
-        #reset_time = datetime.strptime('1700','%H%M').time()
-        #xur_arrival = datetime.combine(date_xur, reset_time)
         if str(now.year) in result.text:
             print("XUR DATE:"+ str(result.text))
-
-        if result.text.upper() in fs.xur_locations:
-            print("Detectado:"+ str(result.text.upper()))
-            xur_location = result.text.upper()
-        else:
-            xur_location = ""
     
     if (now.weekday() == 1) or ((now.weekday() == 1) and (now.time() <= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 4 and (now.time() >= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 5) or (now.weekday() == 6):
         print("XUR esta !!")
