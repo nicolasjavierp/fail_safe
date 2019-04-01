@@ -742,7 +742,7 @@ async def skip(context,url):
 @client.command(name='Test',
                 description="Test",
                 brief="Test",
-                aliases=['test'],
+                aliases=['xur'],
                 pass_context=True)
 async def testing(context):
     #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
@@ -755,6 +755,10 @@ async def testing(context):
     is_xur_here, info = get_xur_info(fs)
     print(is_xur_here)
     print(info)
+    embed = discord.Embed(title=":squid:__Ubicación de XUR:__", description=info, color=0x00ff00)
+    embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+    await client.send_message(context.message.channel, embed=embed)
+
             
 
 #######################################################################

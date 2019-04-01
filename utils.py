@@ -229,12 +229,6 @@ def get_xur_info(fs):
         print("XUR esta !!")
         #print(xur_location)
         if ps and len(ps)>=2:
-            print(ps[0].text)
-            print(type(ps[0]))
-            print(type(ps[0].text))
-            reference=ps[0].text
-            url = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', reference)
-            print(url)
             for key ,value in fs.xur_locations.items():
                 if key in ps[1].text.upper():
                     print("Detectado:"+ str(key))
