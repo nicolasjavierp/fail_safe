@@ -235,9 +235,9 @@ def get_xur_info(fs):
                     xur_location = value
                     xur_departure_temp = ps[1].text.split("reset on",1)[1] 
                     xur_departure_temp =  xur_departure_temp[:-1]
-                    print(xur_departure_temp)
+                    #print(xur_departure_temp)
                     xur_departure = (datetime.strptime(xur_departure_temp, " %B %d").strftime("%d-%m"))
-                    print(xur_departure)
+                    #print(xur_departure)
             xur_info = str(xur_location)+" y se va el reset del "+str(xur_departure)
         return True, str(xur_info)
     else:

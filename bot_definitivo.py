@@ -753,13 +753,17 @@ async def testing(context):
     fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
     is_xur_here, info = get_xur_info(fs)
-    print(is_xur_here)
-    print(info)
-    embed = discord.Embed(title=":squid:__XUR:__", description=info, color=0x00ff00)
-    embed.add_field(name='Inventario y Referencia', value="<https://ftw.in/game/destiny-2/find-xur>", inline=False)
-    embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
-    await client.send_message(context.message.channel, embed=embed)
-
+    #print(is_xur_here)
+    #print(info)
+    if is_xur_here:    
+        embed = discord.Embed(title=":squid:__XUR:__", description=info, color=0x00ff00)
+        embed.add_field(name='Inventario y Referencia', value="<https://ftw.in/game/destiny-2/find-xur>", inline=False)
+        embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+        await client.send_message(context.message.channel, embed=embed)
+    else:
+        embed = discord.Embed(title=":x:__XUR:__", description=info, color=0x00ff00)
+        embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+        await client.send_message(context.message.channel, embed=embed)
             
 
 #######################################################################
