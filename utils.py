@@ -221,6 +221,8 @@ def get_xur_info(fs):
     for i in ps:
         #print(i)
         #print(type(i.text))
+        print(i)
+        print("888888888888888888888888888")
         if i.text.upper() in fs.xur_locations:
             print("Detectado:"+ str(i.text.upper()))
             xur_location = i.text.upper()
