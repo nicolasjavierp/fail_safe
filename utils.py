@@ -223,9 +223,13 @@ def get_xur_info(fs):
         #print(type(i.text))
         print(i)
         print("888888888888888888888888888")
-        if i.text.upper() in fs.xur_locations:
-            print("Detectado:"+ str(i.text.upper()))
-            xur_location = i.text.upper()
+        for key ,value in fs.xur_locations.index():
+            if key in i.text.upper():
+                print("Detectado:"+ str(key))
+                xur_location = value
+        #if i.text.upper() in fs.xur_locations:
+        #    print("Detectado:"+ str(i.text.upper()))
+        #    xur_location = i.text.upper()
     #print(ps)
     
     results = soup.find_all('div', attrs={'class':'target-class clearfix'})
