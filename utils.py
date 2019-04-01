@@ -22,6 +22,7 @@ from db import *
 import requests  
 from bs4 import BeautifulSoup
 
+my_reset_time='1700'
 
 def is_user_in_users(user):
     with open('users.json', 'r') as f:
@@ -218,24 +219,14 @@ def get_xur_info(fs):
     #print "SOUP:"+str(soup)
     ps = soup.find_all('p')
     xur_location = "??????"
-    print(ps[0])
-    print(ps[1])
-    print(ps[2])
-    for i in ps:
-        #print(i)
-        #print(type(i.text))
-        #print(i)
-        #print("888888888888888888888888888")
+    if ps and len(ps)>=2:
+        reference=ps[0]
         for key ,value in fs.xur_locations.items():
-            if key in i.text.upper():
+            if key in ps[1]:
                 print("Detectado:"+ str(key))
                 xur_location = value
-        #if i.text.upper() in fs.xur_locations:
-        #    print("Detectado:"+ str(i.text.upper()))
-        #    xur_location = i.text.upper()
-    #print(ps)
     
-    results = soup.find_all('div', attrs={'class':'target-class clearfix'})
+    #results = soup.find_all('div', attrs={'class':'target-class clearfix'})
     now = datetime.now()
     #for result in results:
     #    if str(now.year) in result.text:
