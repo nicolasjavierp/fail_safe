@@ -224,6 +224,11 @@ def get_xur_info(fs):
     #for result in results:
     #    if str(now.year) in result.text:
     #        print("XUR DATE:"+ str(result.text))
+    imgs = soup.findAll("img", {"class":"img img-responsive center-block"})
+    print(type(imgs))
+    print(dir(imgs))
+    print(imgs)
+
     
     if (now.weekday() == 0) or ((now.weekday() == 1) and (now.time() <= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 4 and (now.time() >= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 5) or (now.weekday() == 6):
         print("XUR esta !!")
