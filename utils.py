@@ -212,7 +212,6 @@ def is_xur_arround():
 
 
 def get_xur_info(fs):
-    
     r = requests.get('https://ftw.in/game/destiny-2/find-xur')
     #print r
     soup = BeautifulSoup(r.text, 'html.parser')
@@ -230,11 +229,11 @@ def get_xur_info(fs):
     
     results = soup.find_all('div', attrs={'class':'target-class clearfix'})
     now = datetime.now()
-    for result in results:
-        if str(now.year) in result.text:
-            print("XUR DATE:"+ str(result.text))
+    #for result in results:
+    #    if str(now.year) in result.text:
+    #        print("XUR DATE:"+ str(result.text))
     
-    if (now.weekday() == 1) or ((now.weekday() == 1) and (now.time() <= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 4 and (now.time() >= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 5) or (now.weekday() == 6):
+    if (now.weekday() == 0) or ((now.weekday() == 1) and (now.time() <= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 4 and (now.time() >= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 5) or (now.weekday() == 6):
         print("XUR esta !!")
         #print(xur_location)
         return True,  "Xur esta en "+str(xur_location)
