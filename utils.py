@@ -224,7 +224,7 @@ def get_xur_info(fs):
     #for result in results:
     #    if str(now.year) in result.text:
     #        print("XUR DATE:"+ str(result.text))
-    imgs = soup.findAll("img", {"class":"img img-responsive center-block"})
+    imgs = soup.findAll("div", {"img class":"img img-responsive center-block"})
     print(type(imgs))
     print(dir(imgs))
     print(imgs)
