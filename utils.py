@@ -244,6 +244,6 @@ def get_xur_info(fs):
             xur_info = str(xur_location)+" y se va el reset del "+str(xur_departure)
         return True, str(xur_info)
     else:
-        return False, "KPO, Xur no llega hasta el reset de "+str(get_last_friday_reset().date()+timedelta(weeks=1))
+        return False, "Xur solamente esta de Viernes a Martes. Proxima aparición será el reset del "+str(get_last_friday_reset().date()+timedelta(weeks=1))
             
         
