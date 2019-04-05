@@ -218,10 +218,14 @@ def get_xur_info(fs):
     soup = BeautifulSoup(r.text, 'html.parser')
     #print "SOUP:"+str(soup)
     links_with_text = []
+    inventory = []
     for a in soup.find_all('a', href=True): 
         if a.text: 
             links_with_text.append(a['href'])
-    print(links_with_text)
+        if "DestinyInventoryItemDefinition".upper() in a.text.upper():
+            inventory.append(int(filter(str.isdigit, a.text.upper())))
+    #print(links_with_text)
+    print(inventory)
     ps = soup.find_all('p')
     print("Inventory:")
     print(ps[2])
