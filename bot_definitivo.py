@@ -752,18 +752,7 @@ async def testing(context):
     #4 Heroku
     fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
-    is_xur_here, info = get_xur_info(fs)
-    #print(is_xur_here)
-    #print(info)
-    if is_xur_here:    
-        embed = discord.Embed(title=":squid:__XUR:__", description=info, color=0x00ff00)
-        embed.add_field(name='Inventario y Referencia', value="<https://ftw.in/game/destiny-2/find-xur>", inline=False)
-        embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
-        await client.send_message(context.message.channel, embed=embed)
-    else:
-        embed = discord.Embed(title=":x:__XUR:__", description=info, color=0x00ff00)
-        embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
-        await client.send_message(context.message.channel, embed=embed)
+    pass
             
 
 #######################################################################
@@ -869,7 +858,31 @@ async def get_server_status_tweets():
         await asyncio.sleep(30)
      
 
-
+@client.command(name='Xur',
+                description="Entrega la ubicación de Xur en Destiny2",
+                brief="Ubicacion Xur",
+                aliases=['xur'],
+                pass_context=True)
+async def xur_info(context):
+    #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
+    #await client.send_message(context.message.channel, embed=embed)
+    #4 Tests
+    #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
+    #4 Heroku
+    fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+    #END Heroku
+    is_xur_here, info = get_xur_info(fs)
+    #print(is_xur_here)
+    #print(info)
+    if is_xur_here:    
+        embed = discord.Embed(title=":squid:__XUR:__", description=info, color=0x00ff00)
+        embed.add_field(name='Inventario y Referencia', value="<https://ftw.in/game/destiny-2/find-xur>", inline=False)
+        embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+        await client.send_message(context.message.channel, embed=embed)
+    else:
+        embed = discord.Embed(title=":x:__XUR:__", description=info, color=0x00ff00)
+        embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+        await client.send_message(context.message.channel, embed=embed)
 
 
 #######################################################################
