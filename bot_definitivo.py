@@ -858,7 +858,7 @@ async def get_server_status_tweets():
         await asyncio.sleep(30)
      
 
-@client.command(name='Xur',
+@client.command(name='Info Xur',
                 description="Entrega la ubicación de Xur en Destiny2",
                 brief="Ubicacion Xur",
                 aliases=['xur'],
