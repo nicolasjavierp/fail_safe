@@ -224,12 +224,10 @@ def get_xur_info(fs):
     #for result in results:
     #    if str(now.year) in result.text:
     #        print("XUR DATE:"+ str(result.text))
-    imgs = soup.findAll("a", {"img class":"img img-responsive center-block"})
-    print(type(imgs))
-    print(dir(imgs))
-    print(imgs)
-
-    
+    #imgs = soup.findAll("a", {"img class":"img img-responsive center-block"})
+    #print(type(imgs))
+    #print(dir(imgs))
+    #print(imgs)
     if (now.weekday() == 0) or ((now.weekday() == 1) and (now.time() <= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 4 and (now.time() >= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 5) or (now.weekday() == 6):
         print("XUR esta !!")
         #print(xur_location)
@@ -246,6 +244,6 @@ def get_xur_info(fs):
             xur_info = str(xur_location)+" y se va el reset del "+str(xur_departure)
         return True, str(xur_info)
     else:
-        return False, "KPO, Xur no llega hasta "+str(get_last_friday_reset()+timedelta(weeks=1))
+        return False, "KPO, Xur no llega hasta el reset de "+str(get_last_friday_reset().date()+timedelta(weeks=1))
             
         
