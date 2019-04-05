@@ -218,6 +218,11 @@ def get_xur_info(fs):
     soup = BeautifulSoup(r.text, 'html.parser')
     #print "SOUP:"+str(soup)
     ps = soup.find_all('p')
+    print("Inventory:")
+    print(ps[2])
+    print(ps[3])
+    print(ps[4])
+    print(ps[5])
     xur_info = "??????"
     #results = soup.find_all('div', attrs={'class':'target-class clearfix'})
     now = datetime.now()
