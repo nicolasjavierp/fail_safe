@@ -742,7 +742,7 @@ async def skip(context,url):
 @client.command(name='Test',
                 description="Test",
                 brief="Test",
-                aliases=['xur'],
+                aliases=['test'],
                 pass_context=True)
 async def testing(context):
     #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
