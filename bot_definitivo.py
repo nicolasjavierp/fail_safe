@@ -880,7 +880,7 @@ async def xur_info(context):
         embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
         if inventory:
             for idx, val in enumerate(inventory):
-                embed.add_field(name='Item '+str(idx), value=val, inline=True)
+                embed.add_field(name='Item '+str(idx), value=url_bungie+val, inline=True)
         await client.send_message(context.message.channel, embed=embed)
     else:
         embed = discord.Embed(title=":x:__XUR:__", description=info, color=0x00ff00)
