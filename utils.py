@@ -220,16 +220,16 @@ def get_xur_info(fs):
     for a in soup.find_all('a', href=True): 
         if a.text: 
             links_with_text.append(a['href'])
-        if "DestinyInventoryItemDefinition" in a['href']:
-            print(a['href'])
+        if "DestinyInventoryItemDefinition" in a['href'] or "Explore/Detail/Item" in a['href']:
+            #print(a['href'])
             inventory.append(re.sub("\D", "", a['href']))
-    print(links_with_text)
+    #print(links_with_text)
     ps = soup.find_all('p')
     xur_info = "??????"
     item_icons = []
     now = datetime.now()
     if (now.weekday() == 0) or ((now.weekday() == 1) and (now.time() <= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 4 and (now.time() >= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 5) or (now.weekday() == 6):
-        print("XUR esta !!")
+        #print("XUR esta !!")
         if inventory:
             for x in inventory:
                 item = fs.get_manifest_item_info(x)
