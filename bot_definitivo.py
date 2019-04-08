@@ -876,11 +876,12 @@ async def xur_info(context):
     if is_xur_here: 
         url_bungie="http://www.bungie.net/"   
         embed = discord.Embed(title=":squid:__XUR:__", description=info, color=0x00ff00)
-        embed.add_field(name='Inventario y Referencia', value="<https://ftw.in/game/destiny-2/find-xur>", inline=False)
+        embed.add_field(name='Referencia', value="<https://ftw.in/game/destiny-2/find-xur>", inline=False)
         embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
         if inventory:
             for idx, val in enumerate(inventory):
-                embed.add_field(name='Item '+str(idx), value=url_bungie+val, inline=True)
+                #embed.add_field(name='Item '+str(idx+1), value=url_bungie+val, inline=True)
+                embed.set_image(url=url_bungie+val)
         await client.send_message(context.message.channel, embed=embed)
     else:
         embed = discord.Embed(title=":x:__XUR:__", description=info, color=0x00ff00)
