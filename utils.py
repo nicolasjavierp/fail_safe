@@ -214,39 +214,30 @@ def is_xur_arround():
 
 def get_xur_info(fs):
     r = requests.get('https://ftw.in/game/destiny-2/find-xur')
-    #print r
     soup = BeautifulSoup(r.text, 'html.parser')
-    #print "SOUP:"+str(soup)
     links_with_text = []
     inventory = []
     for a in soup.find_all('a', href=True): 
         if a.text: 
             links_with_text.append(a['href'])
         if "DestinyInventoryItemDefinition" in a['href']:
-            #print("Found Item !!")
             print(a['href'])
-            #inventory.append(int(filter(str.isdigit, a['href'])))
             inventory.append(re.sub("\D", "", a['href']))
-    #print(links_with_text)
-    print(inventory)
     ps = soup.find_all('p')
-    #print("Inventory:")
-    #print(ps[2])
-    #print(ps[3])
-    #print(ps[4])
-    #print(ps[5])
     xur_info = "??????"
-    #results = soup.find_all('div', attrs={'class':'target-class clearfix'})
+    item_icons = []
     now = datetime.now()
-    #for result in results:
-    #    if str(now.year) in result.text:
-    #        print("XUR DATE:"+ str(result.text))
-    #imgs = soup.findAll("a", {"img class":"img img-responsive center-block"})
-    #print(type(imgs))
-    #print(dir(imgs))
-    #print(imgs)
     if (now.weekday() == 0) or ((now.weekday() == 1) and (now.time() <= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 4 and (now.time() >= datetime.strptime('1700','%H%M').time())) or (now.weekday() == 5) or (now.weekday() == 6):
         print("XUR esta !!")
+        if inventory:
+            for x in inventory:
+                item = fs.get_manifest_item_info(x)
+                if item:
+                    item_icons.append(item['displayProperties']['icon'])
+                else:
+                    print("Could not get item manifest")
+        else:
+            print("Inventory NULL")
         #print(xur_location)
         if ps and len(ps)>=2:
             for key ,value in fs.xur_locations.items():
@@ -259,8 +250,8 @@ def get_xur_info(fs):
                     xur_departure = (datetime.strptime(xur_departure_temp, " %B %d").strftime("%d-%m"))
                     #print(xur_departure)
             xur_info = str(xur_location)+" y se va el reset del "+str(xur_departure)
-        return True, str(xur_info)
+        return True, str(xur_info), item_icons
     else:
-        return False, "Xur solamente esta de Viernes a Martes. Proxima aparición será el reset del "+str(get_last_friday_reset().date()+timedelta(weeks=1))
+        return False, "Xur solamente esta de Viernes a Martes. Proxima aparición será el reset del "+str(get_last_friday_reset().date()+timedelta(weeks=1)), item_icons
             
         

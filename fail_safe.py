@@ -54,6 +54,17 @@ class FailSafe(object):
             return None
 
 
+    def get_manifest_item_info(self, itemHash):
+        '''Get info on item manifest in Destiny 2'''
+        site_call = "http://www.bungie.net/platform/Destiny2/Manifest/DestinyInventoryItemDefinition/" + itemHash
+        request = requests.get(site_call,
+                                headers={"X-API-Key":self.api_key})
+        if request:
+            return request.json()['Response']
+        else:
+            return None
+
+
     def get_battleTag_from_bungieNetUser(self, bungie_id):
         '''Returns the players battletag from bungieNetUser'''
         #print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
