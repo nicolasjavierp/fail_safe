@@ -233,6 +233,8 @@ def get_xur_info(fs):
             for x in inventory:
                 item = fs.get_manifest_item_info(x)
                 if item:
+                    print("Item manifest FOUND: ")
+                    print(item['displayProperties']['icon'])
                     item_icons.append(item['displayProperties']['icon'])
                 else:
                     print("Could not get item manifest")

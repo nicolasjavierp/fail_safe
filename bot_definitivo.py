@@ -873,10 +873,14 @@ async def xur_info(context):
     #END Heroku
     is_xur_here, info, inventory = get_xur_info(fs)
                 
-    if is_xur_here:    
+    if is_xur_here: 
+        url_bungie="http://www.bungie.net/"   
         embed = discord.Embed(title=":squid:__XUR:__", description=info, color=0x00ff00)
         embed.add_field(name='Inventario y Referencia', value="<https://ftw.in/game/destiny-2/find-xur>", inline=False)
         embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+        if inventory:
+            for idx, val in enumerate(inventory):
+                embed.add_field(name='Item '+str(idx), value=val, inline=True)
         await client.send_message(context.message.channel, embed=embed)
     else:
         embed = discord.Embed(title=":x:__XUR:__", description=info, color=0x00ff00)
