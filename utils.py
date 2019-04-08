@@ -225,9 +225,8 @@ def get_xur_info(fs):
         if "DestinyInventoryItemDefinition" in a['href']:
             #print("Found Item !!")
             print(a['href'])
-            print(type(a['href']))
             #inventory.append(int(filter(str.isdigit, a['href'])))
-            inventory.append(str(filter(lambda x: x.isdigit(), a['href'])))
+            inventory.append(re.sub("\D", "", a['href']))
     #print(links_with_text)
     print(inventory)
     ps = soup.find_all('p')
