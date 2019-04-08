@@ -670,8 +670,8 @@ async def xur_info(context):
         if inventory:
             for idx, val in enumerate(inventory):
                 destiny_class=""
-                index_class = {1:"Cazador",2:"Titan",3:"Hechicero"}
-                destiny_class = index_class[idx+1]
+                index_xur = {0:":gun:**Arma:**",1:":knife:**Cazador:**",2:":punch:**Titan:**",3:":bulb:**Hechicero:**"}
+                destiny_class = index_xur[idx]
                 embed = discord.Embed(title=destiny_class, description="", color=0x00ff00)
                 embed.set_image(url=url_bungie+val)
                 await client.send_message(context.message.channel, embed=embed)
