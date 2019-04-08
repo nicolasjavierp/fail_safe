@@ -214,9 +214,9 @@ async def raid_this_week(context):
         #print("Now:")
         #print(datetime.now())
         user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
-        user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
-        embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
+        embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie, que a veces tarda unos minutos en registrar la Raid", color=0x00ff00)
         await client.send_message(context.message.channel, embed=embed)
+        user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
         #print(user_destiny)
         if user_destiny:
             user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
@@ -871,8 +871,8 @@ async def xur_info(context):
     #4 Heroku
     fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
+    await client.say("Juntando información ... un momento por favor.")
     is_xur_here, info, inventory = get_xur_info(fs)
-                
     if is_xur_here: 
         url_bungie="http://www.bungie.net/"   
         embed = discord.Embed(title=":squid:__XUR:__", description=info, color=0x00ff00)
@@ -881,7 +881,7 @@ async def xur_info(context):
         await client.send_message(context.message.channel, embed=embed)
         if inventory:
             for idx, val in enumerate(inventory):
-                embed = discord.Embed(title="__Item:__", description="", color=0x00ff00)
+                embed = discord.Embed(title="__Item "+str(idx)+":__", description="", color=0x00ff00)
                 embed.set_image(url=url_bungie+val)
                 await client.send_message(context.message.channel, embed=embed)
         
