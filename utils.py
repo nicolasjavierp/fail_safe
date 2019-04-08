@@ -223,6 +223,7 @@ def get_xur_info(fs):
         if "DestinyInventoryItemDefinition" in a['href']:
             print(a['href'])
             inventory.append(re.sub("\D", "", a['href']))
+    print(links_with_text)
     ps = soup.find_all('p')
     xur_info = "??????"
     item_icons = []
