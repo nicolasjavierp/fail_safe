@@ -246,15 +246,16 @@ def get_xur_info(fs):
             for key ,value in fs.xur_locations.items():
                 if key in ps[1].text.upper():
                     #print("Detectado:"+ str(key))
-                    xur_location = value
+                    xur_location = value[0]
+                    xur_map = value[1]
                     xur_departure_temp = ps[1].text.split("reset on",1)[1] 
                     xur_departure_temp =  xur_departure_temp[:-1]
                     #print(xur_departure_temp)
                     xur_departure = (datetime.strptime(xur_departure_temp, " %B %d").strftime("%d-%m"))
                     #print(xur_departure)
             xur_info = str(xur_location)+" y se va el reset del "+str(xur_departure)
-        return True, str(xur_info), item_icons
+        return True, str(xur_info), item_icons, xur_map
     else:
-        return False, "Xur solamente esta de Viernes a Martes. Proxima aparición será el reset del "+str(get_last_friday_reset().date()+timedelta(weeks=1)), item_icons
+        return False, "Xur solamente esta de Viernes a Martes. Proxima aparición será el reset del "+str(get_last_friday_reset().date()+timedelta(weeks=1)), None, None
             
         

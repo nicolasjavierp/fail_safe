@@ -40,7 +40,11 @@ class FailSafe(object):
         self.guardian_race = {2803282938:"Insomne", 898834093:"Exo", 3887404748:"Humano"}
         self.guardian_gender = {3111576190: "Masculino", 2204441813:"Femenino"}
         self.raids = {2122313384: "Ultimo Deseo", 548750096:"Azote del Pasado"} #Spire of stars 119944200 // Eater of worlds 3089205900 // Leviathan 89727599
-        self.xur_locations={'IO':'Xur esta en IO en la zona de Cicatriz del Gigante', 'TITAN':'Xur esta en Titan en la zona Plataforma', 'EDZ':'Xur esta la Tierra (ZME), en la zona Bahía del Viento ', 'NESSUS':'Xur esta en Nessus en la zona de Tumba del Vigia','TOWER':'Xur esta la Torre en la zona de Hangar detras de Orbita Muerta'}
+        self.xur_locations={'IO':['Xur esta en IO en la zona de Cicatriz del Gigante',"https://cdn.discordapp.com/attachments/383420850738823186/565192090347372564/io.jpg"],
+                            'TITAN':['Xur esta en Titan en la zona Plataforma',"https://cdn.discordapp.com/attachments/383420850738823186/565192132898586627/titan.jpg"],
+                            'EDZ':['Xur esta la Tierra (ZME), en la zona Bahía del Viento',"https://cdn.discordapp.com/attachments/383420850738823186/565192115005423651/tierra.jpg"],
+                            'NESSUS':['Xur esta en Nessus en la zona de Tumba del Vigia',"https://cdn.discordapp.com/attachments/383420850738823186/565192144978182144/nessus.jpg"],
+                            'TOWER':['Xur esta la Torre en la zona de Hangar detras de Orbita Muerta',"https://cdn.discordapp.com/attachments/383420850738823186/565192126330044430/torre.jpg"]}
 
 
     def get_playerByTagName(self, gamertag):
