@@ -242,6 +242,8 @@ def get_xur_info(fs):
         else:
             print("Inventory NULL")
         #print(xur_location)
+        xur_map = None
+        xur_info = None
         if ps and len(ps)>=2:
             for key ,value in fs.xur_locations.items():
                 if key in ps[1].text.upper():
@@ -254,7 +256,7 @@ def get_xur_info(fs):
                     xur_departure = (datetime.strptime(xur_departure_temp, " %B %d").strftime("%d-%m"))
                     #print(xur_departure)
             xur_info = str(xur_location)+" y se va el reset del "+str(xur_departure)
-        return True, str(xur_info), item_icons, xur_map
+            return True, str(xur_info), item_icons, xur_map
     else:
         return False, "Xur solamente esta de Viernes a Martes. Proxima aparición será el reset del "+str(get_last_friday_reset().date()+timedelta(weeks=1)), None, None
             
