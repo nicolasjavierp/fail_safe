@@ -36,6 +36,105 @@ client = Bot(command_prefix=BOT_PREFIX)
 players = {}
 my_queues = {}
 
+#######################################################################
+################## EVENTS  ############################################
+#######################################################################
+
+
+@client.event
+async def on_ready():
+    print('Logged in as')
+    print(client.user.name)
+    print(client.user.id)
+    print('------')
+
+
+@client.event
+async def on_message(message):
+    print("Entered on_message!!")
+    # we do not want the bot to reply to itself
+    if message.author == client.user:
+        return
+    #await update_discord_user_last_activity(message.author.id)
+    
+    msg = message.content
+    #Normalizo el mensaje
+    text = unicodedata.normalize('NFKD', msg).encode('ASCII', 'ignore').decode()
+    regex_hola = re.search('^.*H+O+L+A+\s*.*$', text.upper(), re.MULTILINE) 
+    regex_chau = re.search('^.*C+H+A+U+$', text.upper(), re.MULTILINE)
+    regex_buen_dia = re.search('^.*B+U+E+N+\s+D+I+A+.*$', text.upper(), re.MULTILINE)
+    regex_buenos_dias = re.search('^.*B+U+E+N+O+S+\sD+I+A+S.*$', text.upper(), re.MULTILINE)
+    regex_buenas_tardes = re.search('^.*B+U+E+N+A+S+\sT+A+R+D+E+S+.*$', text.upper(), re.MULTILINE)
+    regex_buenas_noches = re.search('^.*B+U+E+N+A+S+\sN+O+C+H+E+S+.*$', text.upper(), re.MULTILINE)
+    regex_buenas = re.search('^B+U+E+N+A+S+$', text.upper(), re.MULTILINE)
+    regex_gracias_bot = re.search('^G+R+A+C+I+A+S\s+B+O+T+$', text.upper(), re.MULTILINE)
+    if (regex_hola or regex_buenas):
+        if read_param_from_aux("number_of_hellos") >=2:
+            currentTime = datetime.now()
+            salute_time = ""
+            if currentTime.hour < 12+3:# Agrego diferencia de horario con el server US de Heroku
+                salute_time = " ,buen día!"
+            elif 12+3 <= currentTime.hour < 18+3:# Agrego diferencia de horario con el server US de Heroku
+                salute_time = " ,buenas tardes!"
+            else:
+                salute_time = " ,buenas noches!"
+            msg = 'Hola {0.author.mention}'.format(message)
+            msg = msg + salute_time
+            embed = discord.Embed(title="" , description=msg+" :wave:", color=0x00ff00)
+            await client.send_message(message.channel, embed=embed)
+            reset_param_aux("number_of_hellos")
+        else:
+            increment_param_in_1_aux("number_of_hellos")
+        
+        
+    if regex_buen_dia and not regex_hola:
+        if read_param_from_aux("number_of_good_mornings") >=2:
+            embed = discord.Embed(title="" , description="Buen Dia para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
+            await client.send_message(message.channel, embed=embed)
+            reset_param_aux("number_of_good_mornings")
+        else:
+            increment_param_in_1_aux("number_of_good_mornings")
+
+    if regex_buenos_dias and not regex_hola:
+        if read_param_from_aux("number_of_good_mornings") >=2:
+            embed = discord.Embed(title="" , description="Buenos Dias para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
+            await client.send_message(message.channel, embed=embed)
+            reset_param_aux("number_of_good_mornings")
+        else:
+            increment_param_in_1_aux("number_of_good_mornings")
+
+
+    if regex_buenas_tardes and not regex_hola:
+        #if read_param_from_aux("number_of_good_evenings") >=2:
+            embed = discord.Embed(title="" , description="Buenas tardes para vos"+message.author.mention+" :wave:", color=0x00ff00)
+            await client.send_message(message.channel, embed=embed)
+        #    reset_param_aux("number_of_good_evenings")
+        #else:
+        #    increment_param_in_1_aux("number_of_good_evenings")
+
+    if regex_buenas_noches and not regex_hola :
+        #if read_param_from_aux("number_of_good_nights") >=2:
+            embed = discord.Embed(title="" , description="Buenas noches para vos"+message.author.mention+" :full_moon_with_face: :coffee: ", color=0x00ff00)
+            await client.send_message(message.channel, embed=embed)
+        #    reset_param_aux("number_of_good_nights")
+        #else:
+        #    increment_param_in_1_aux("number_of_good_nights")
+      
+    if "PUTO" in text.upper():
+        embed = discord.Embed(title="" , description="Puto el que lee ... :punch:", color=0x00ff00)
+        await client.send_message(message.channel, embed=embed)
+
+    if (regex_chau) or ("ADIOS" in text.upper()):
+        respuestas_posibles = ["Nos vemos en Disney ", "Hasta prontito ", "Nos re vimos ", "Cuidate, querete, ojito ... ","Hasta la próxima amig@ ", "Chau "]
+        await client.send_message(message.channel, random.choice(respuestas_posibles) + message.author.mention )
+    
+    if regex_gracias_bot:
+        embed = discord.Embed(title="" , description="De nada"+message.author.mention+" ! :vulcan:", color=0x00ff00)
+        await client.send_message(message.channel, embed=embed)
+
+    await asyncio.sleep(0.01)
+    await client.process_commands(message)
+
 
 @client.event
 async def on_member_join(member):  
@@ -68,6 +167,9 @@ async def on_reaction_add(reaction, user):
         print(dir(reaction))
 
 
+#######################################################################
+################## COMMON COMMANDS  ###################################
+#######################################################################
 
 @client.command(name='Free Roles Destiny',
                 description="Autoprovisioning de Roles Destiny y DJ",
@@ -365,99 +467,7 @@ async def raid_this_week(context):
             embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
             await client.send_message(context.message.channel, embed=embed)
 
-@client.event
-async def on_message(message):
-    print("Entered on_message!!")
-    # we do not want the bot to reply to itself
-    if message.author == client.user:
-        return
-    #await update_discord_user_last_activity(message.author.id)
-    
-    msg = message.content
-    #Normalizo el mensaje
-    text = unicodedata.normalize('NFKD', msg).encode('ASCII', 'ignore').decode()
-    regex_hola = re.search('^.*H+O+L+A+\s*.*$', text.upper(), re.MULTILINE) 
-    regex_chau = re.search('^.*C+H+A+U+$', text.upper(), re.MULTILINE)
-    regex_buen_dia = re.search('^.*B+U+E+N+\s+D+I+A+.*$', text.upper(), re.MULTILINE)
-    regex_buenos_dias = re.search('^.*B+U+E+N+O+S+\sD+I+A+S.*$', text.upper(), re.MULTILINE)
-    regex_buenas_tardes = re.search('^.*B+U+E+N+A+S+\sT+A+R+D+E+S+.*$', text.upper(), re.MULTILINE)
-    regex_buenas_noches = re.search('^.*B+U+E+N+A+S+\sN+O+C+H+E+S+.*$', text.upper(), re.MULTILINE)
-    regex_buenas = re.search('^B+U+E+N+A+S+$', text.upper(), re.MULTILINE)
-    regex_gracias_bot = re.search('^G+R+A+C+I+A+S\s+B+O+T+$', text.upper(), re.MULTILINE)
-    if (regex_hola or regex_buenas):
-        if read_param_from_aux("number_of_hellos") >=2:
-            currentTime = datetime.now()
-            salute_time = ""
-            if currentTime.hour < 12+3:# Agrego diferencia de horario con el server US de Heroku
-                salute_time = " ,buen día!"
-            elif 12+3 <= currentTime.hour < 18+3:# Agrego diferencia de horario con el server US de Heroku
-                salute_time = " ,buenas tardes!"
-            else:
-                salute_time = " ,buenas noches!"
-            msg = 'Hola {0.author.mention}'.format(message)
-            msg = msg + salute_time
-            embed = discord.Embed(title="" , description=msg+" :wave:", color=0x00ff00)
-            await client.send_message(message.channel, embed=embed)
-            reset_param_aux("number_of_hellos")
-        else:
-            increment_param_in_1_aux("number_of_hellos")
-        
-        
-    if regex_buen_dia and not regex_hola:
-        if read_param_from_aux("number_of_good_mornings") >=2:
-            embed = discord.Embed(title="" , description="Buen Dia para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
-            await client.send_message(message.channel, embed=embed)
-            reset_param_aux("number_of_good_mornings")
-        else:
-            increment_param_in_1_aux("number_of_good_mornings")
 
-    if regex_buenos_dias and not regex_hola:
-        if read_param_from_aux("number_of_good_mornings") >=2:
-            embed = discord.Embed(title="" , description="Buenos Dias para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
-            await client.send_message(message.channel, embed=embed)
-            reset_param_aux("number_of_good_mornings")
-        else:
-            increment_param_in_1_aux("number_of_good_mornings")
-
-
-    if regex_buenas_tardes and not regex_hola:
-        #if read_param_from_aux("number_of_good_evenings") >=2:
-            embed = discord.Embed(title="" , description="Buenas tardes para vos"+message.author.mention+" :wave:", color=0x00ff00)
-            await client.send_message(message.channel, embed=embed)
-        #    reset_param_aux("number_of_good_evenings")
-        #else:
-        #    increment_param_in_1_aux("number_of_good_evenings")
-
-    if regex_buenas_noches and not regex_hola :
-        #if read_param_from_aux("number_of_good_nights") >=2:
-            embed = discord.Embed(title="" , description="Buenas noches para vos"+message.author.mention+" :full_moon_with_face: :coffee: ", color=0x00ff00)
-            await client.send_message(message.channel, embed=embed)
-        #    reset_param_aux("number_of_good_nights")
-        #else:
-        #    increment_param_in_1_aux("number_of_good_nights")
-      
-    if "PUTO" in text.upper():
-        embed = discord.Embed(title="" , description="Puto el que lee ... :punch:", color=0x00ff00)
-        await client.send_message(message.channel, embed=embed)
-
-    if (regex_chau) or ("ADIOS" in text.upper()):
-        respuestas_posibles = ["Nos vemos en Disney ", "Hasta prontito ", "Nos re vimos ", "Cuidate, querete, ojito ... ","Hasta la próxima amig@ ", "Chau "]
-        await client.send_message(message.channel, random.choice(respuestas_posibles) + message.author.mention )
-    
-    if regex_gracias_bot:
-        embed = discord.Embed(title="" , description="De nada"+message.author.mention+" ! :vulcan:", color=0x00ff00)
-        await client.send_message(message.channel, embed=embed)
-
-    await asyncio.sleep(0.01)
-    await client.process_commands(message)
-    
-
-@client.event
-async def on_ready():
-    print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
-    print('------')
 
 @client.command(name='Ayuda',
                 description="Ayuda del bot definitivo",
