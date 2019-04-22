@@ -58,6 +58,7 @@ async def on_member_join(member):
 
 @client.event
 async def on_reaction_add(reaction, user):
+    print("reactioned")
     channel = reaction.message.channel
     print(dir(reaction.emoji))
     print(type(reaction.emoji))
