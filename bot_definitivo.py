@@ -51,7 +51,6 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    print("Entered on_message!!")
     # we do not want the bot to reply to itself
     if message.author == client.user:
         return
@@ -910,7 +909,7 @@ async def testing(context):
     #4 Heroku
     fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
-    pass
+    print(client.messages)
             
 
 #######################################################################
