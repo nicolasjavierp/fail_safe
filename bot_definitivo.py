@@ -96,12 +96,15 @@ async def free_rol_destiny(context):
     \t\tLuego con `!help` podes ver el listado de comandos disponibles.\n\
     \n\
     • __**Bot Definitivo:**__\n\
-    \t\tEntrega información sobre las actividades semanales tipicas, escribí en el canal #🎮ᴅᴇsᴛɪɴʏ o #BOTS:\n\
+    \t\tEntrega información sobre las actividades semanales tipicas, escribí en el canal \n \
+    #🎮ᴅᴇsᴛɪɴʏ o #💠ʙᴏᴛs:\n\
     \n\
     \t\t`+semana`\n\
-    \t\tEntrega raids completadas y con que personaje, escribí en el canal #🎮ᴅᴇsᴛɪɴʏ o #BOTS:\n \
     \n\
-    \t\t`+raids BattleTagUsuario`\n ", color=0x00ff00)
+    \t\tEntrega raids completadas y con que personaje, escribí en el canal #🎮ᴅᴇsᴛɪɴʏ o #💠ʙᴏᴛs:\n \
+    \n\
+    \t\t`+raids BattleTagUsuario`\n\
+    \n", color=0x00ff00)
     await client.send_message(user, embed=embed2)
 
 
