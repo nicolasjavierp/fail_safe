@@ -49,7 +49,7 @@ async def on_member_join(member):
     #await client.send_message(canal_bienvenida, fmt.format(member, server))
     embed2=discord.Embed()
     #embed2=discord.Embed(title="", description="• Necesitas permisos para usar los canales de Destiny 2? \n • Escribí debajo el comando **+rol** seguido de tu Battletag! \n **Ejemplo: **\n", color=0x00ff00)
-    embed2=discord.Embed(title="", description="• Necesitas permisos para usar los canales de Destiny 2? \n • Escribí debajo el comando **+destiny** ", color=0x00ff00)
+    embed2=discord.Embed(title="", description="• Necesitas permisos para usar los canales de Destiny 2 ó los de Division 2? \n • Escribí debajo el comando **+destiny** o **+division** respectivamente.", color=0x00ff00)
     #embed2.set_image(url="https://media.giphy.com/media/vykWBW2wh4URJZ75Uu/giphy.gif")
     await client.send_message(canal_bienvenida, embed=embed2)
     await asyncio.sleep(0.01)
@@ -105,6 +105,8 @@ async def free_rol_destiny(context):
     \t\tEntrega raids completadas y con que personaje, escribí en el canal #🎮ᴅᴇsᴛɪɴʏ o #💠ʙᴏᴛs:\n \
     \n\
     \t\t`+raids BattleTagUsuario`\n\
+     \n\
+     \n\
     __Ejemplo:__\n\
     `+raids CNorris#4902`\n\
      \n", color=0x00ff00)
