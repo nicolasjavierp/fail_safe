@@ -55,6 +55,15 @@ async def on_member_join(member):
     await asyncio.sleep(0.01)
 
 
+@client.event
+async def on_reaction_add(reaction, user):
+    channel = reaction.message.channel
+    print(dir(reaction))
+    if "ʙɪᴇɴᴠᴇɴɪᴅᴏ" in channel.name:
+        print(dir(reaction))
+
+
+
 @client.command(name='Free Roles Destiny',
                 description="Autoprovisioning de Roles Destiny y DJ",
                 brief="Autoprovisioning roles Escuadra X",
