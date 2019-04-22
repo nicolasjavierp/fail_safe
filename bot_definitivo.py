@@ -157,13 +157,13 @@ async def on_member_join(member):
 @client.event
 async def on_reaction_add(reaction, user):
     print("reactioned")
-    channel = reaction.message.channel
-    print(dir(reaction.emoji))
-    print(type(reaction.emoji))
-    print(reaction.emoji)
-    await client.send_message(channel,'{} agregó {} al mensaje: {}'.format(user.name, reaction.emoji, reaction.message.content))
-    if "ʙɪᴇɴᴠᴇɴɪᴅᴏ" in channel.name:
-        print(dir(reaction))
+    #channel = reaction.message.channel
+    #print(dir(reaction.emoji))
+    #print(type(reaction.emoji))
+    #print(reaction.emoji)
+    #await client.send_message(channel,'{} agregó {} al mensaje: {}'.format(user.name, reaction.emoji, reaction.message.content))
+    #if "ʙɪᴇɴᴠᴇɴɪᴅᴏ" in channel.name:
+    #    print(dir(reaction))
 
 
 #######################################################################
