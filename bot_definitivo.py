@@ -70,6 +70,7 @@ async def free_rol_destiny(context):
         user_roles_names.append(i.name)
     #Get clan defined roles ids from discord
     for i in my_server.roles:
+        print(i.id,i.name)
         if i.id == str(544911570258624522):
             custom_clan_role_id=i.id
         if i.id == str(387742983249985536):
@@ -104,7 +105,9 @@ async def free_rol_destiny(context):
     \t\tEntrega raids completadas y con que personaje, escribí en el canal #🎮ᴅᴇsᴛɪɴʏ o #💠ʙᴏᴛs:\n \
     \n\
     \t\t`+raids BattleTagUsuario`\n\
-    \n", color=0x00ff00)
+    __Ejemplo:__\n\
+    `+raids CNorris#4902`\n\
+     \n", color=0x00ff00)
     await client.send_message(user, embed=embed2)
 
 
