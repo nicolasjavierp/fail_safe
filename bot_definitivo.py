@@ -82,6 +82,27 @@ async def free_rol_destiny(context):
     role_Destiny_Clan = discord.utils.get(my_server.roles, id=custom_destiny_clan_role_id)
     addroles = [role_Clan, role_DJ, role_Destiny_Clan]
     await client.add_roles(user, *addroles)
+    embed = discord.Embed(title="" , description=":white_check_mark: **Listo** "+context.message.author.mention+" \n• Ya podes usar todos los canales!", color=0x00ff00)
+    await client.send_message(context.message.channel, embed=embed)
+    await client.send_message(user, embed=embed)
+
+    embed2 = discord.Embed(title="" , description="**Aprovechamos para comentarte que en nuestro discord tenemos 2 bots con varias utilidades.**\n \
+    \n\
+    • __**FailSafe:**__\n\
+    \t\tBrinda stadisticas y informacion detallada de Destiny 2. Es necesario una registracíon, para eso escribí en el canal #BOTs: \n \
+    \n\
+    \t\t`!register`\n \
+    \n\
+    \t\tLuego con `!help` podes ver el listado de comandos disponibles.\n\
+    \n\
+    • __**Bot Definitivo:**__\n\
+    \t\tEntrega información sobre las actividades semanales tipicas, escribí en el canal #🎮ᴅᴇsᴛɪɴʏ o #BOTS:\n\
+    \n\
+    \t\t`+semana`\n\
+    \t\tEntrega raids completadas y con que personaje, escribí en el canal #🎮ᴅᴇsᴛɪɴʏ o #BOTS:\n \
+    \n\
+    \t\t`+raids BattleTagUsuario`\n ", color=0x00ff00)
+    await client.send_message(user, embed=embed2)
 
 
 @client.command(name='Rol',
@@ -196,9 +217,12 @@ async def rol(context):
                         \t\tLuego con `!help` podes ver el listado de comandos disponibles.\n\
                         \n\
                         • __**Bot Definitivo:**__\n\
-                        \t\tEntrega información sobre las actividades semanales tipicas, escribí en el canal #🎮ᴅᴇsᴛɪɴʏ:\n\
+                        \t\tEntrega información sobre las actividades semanales tipicas, escribí en el canal #🎮ᴅᴇsᴛɪɴʏ o #BOTS:\n\
                         \n\
-                        \t\t`+semana`\n ", color=0x00ff00)
+                        \t\t`+semana`\n\
+                        \t\tEntrega raids completadas y con que personaje, escribí en el canal #🎮ᴅᴇsᴛɪɴʏ o #BOTS:\n \
+                        \n\
+                        \t\t`+raids BattleTagUsuario`\n ", color=0x00ff00)
                         await client.send_message(user, embed=embed2)
                         #print(type(client.id))
                         #print(client.id)
