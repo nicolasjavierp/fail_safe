@@ -70,16 +70,17 @@ async def free_rol_destiny(context):
         user_roles_names.append(i.name)
     #Get clan defined roles ids from discord
     for i in my_server.roles:
-        #if i.id == str(544911570258624522):
-        #    custom_clan_role_id=i.id
+        if i.id == str(544911570258624522):
+            custom_clan_role_id=i.id
         if i.id == str(387742983249985536):
             custom_destiny_clan_role_id = i.id
         if "DJ" in i.name:
             custom_dj_role_id=i.id
-
+    
+    role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
     role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
     role_Destiny_Clan = discord.utils.get(my_server.roles, id=custom_destiny_clan_role_id)
-    addroles = [role_DJ, role_Destiny_Clan]
+    addroles = [role_Clan, role_DJ, role_Destiny_Clan]
     await client.add_roles(user, *addroles)
 
 
