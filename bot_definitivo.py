@@ -36,6 +36,7 @@ client = Bot(command_prefix=BOT_PREFIX)
 players = {}
 my_queues = {}
 
+
 @client.event
 async def on_member_join(member):  
     server = member.server
@@ -58,7 +59,10 @@ async def on_member_join(member):
 @client.event
 async def on_reaction_add(reaction, user):
     channel = reaction.message.channel
-    print(dir(reaction))
+    print(dir(reaction.emoji))
+    print(type(reaction.emoji))
+    print(reaction.emoji)
+    await client.send_message(channel,'{} agregó {} al mensaje: {}'.format(user.name, reaction.emoji, reaction.message.content))
     if "ʙɪᴇɴᴠᴇɴɪᴅᴏ" in channel.name:
         print(dir(reaction))
 
