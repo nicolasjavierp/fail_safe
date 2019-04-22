@@ -910,6 +910,8 @@ async def testing(context):
     fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
     print(client.messages)
+    print(type(client.messages))
+    print(dir(client.messages))
             
 
 #######################################################################
