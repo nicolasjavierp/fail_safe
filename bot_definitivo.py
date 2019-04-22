@@ -48,10 +48,39 @@ async def on_member_join(member):
     await client.send_message(canal_bienvenida, fmt.format(member))
     #await client.send_message(canal_bienvenida, fmt.format(member, server))
     embed2=discord.Embed()
-    embed2=discord.Embed(title="", description="• Necesitas permisos para usar los canales de Destiny 2? \n • Escribí debajo el comando **+rol** seguido de tu Battletag! \n **Ejemplo: **\n", color=0x00ff00)
-    embed2.set_image(url="https://media.giphy.com/media/vykWBW2wh4URJZ75Uu/giphy.gif")
+    #embed2=discord.Embed(title="", description="• Necesitas permisos para usar los canales de Destiny 2? \n • Escribí debajo el comando **+rol** seguido de tu Battletag! \n **Ejemplo: **\n", color=0x00ff00)
+    embed2=discord.Embed(title="", description="• Necesitas permisos para usar los canales de Destiny 2? \n • Escribí debajo el comando **+destiny** ", color=0x00ff00)
+    #embed2.set_image(url="https://media.giphy.com/media/vykWBW2wh4URJZ75Uu/giphy.gif")
     await client.send_message(canal_bienvenida, embed=embed2)
     await asyncio.sleep(0.01)
+
+
+@client.command(name='Free Roles Destiny',
+                description="Autoprovisioning de Roles Destiny y DJ",
+                brief="Autoprovisioning roles Escuadra X",
+                aliases=['destiny'],
+                pass_context=True)
+async def free_rol_destiny(context):
+    my_server = discord.utils.get(client.servers)
+    user_id = context.message.author.id
+    user=my_server.get_member(user_id)
+    user_roles_names=[]
+    #Get users roles
+    for i in user.roles:
+        user_roles_names.append(i.name)
+    #Get clan defined roles ids from discord
+    for i in my_server.roles:
+        #if i.id == str(544911570258624522):
+        #    custom_clan_role_id=i.id
+        if i.id == str(387742983249985536):
+            custom_destiny_clan_role_id = i.id
+        if "DJ" in i.name:
+            custom_dj_role_id=i.id
+
+    role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
+    role_Destiny_Clan = discord.utils.get(my_server.roles, id=custom_destiny_clan_role_id)
+    addroles = [role_DJ, role_Destiny_Clan]
+    await client.add_roles(user, *addroles)
 
 
 @client.command(name='Rol',
