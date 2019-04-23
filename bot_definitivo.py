@@ -47,7 +47,7 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
-    for i in client.channels:
+    for i in client.get_all_channels():
         if "_test".upper() in i.name.upper():
             print(i.name)
             print(i.id)
