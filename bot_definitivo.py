@@ -146,11 +146,21 @@ async def on_member_join(member):
     fmt = ':wave: **Bienvenido {0.mention} al Discord de ESCUADRA 2!**'
     await client.send_message(canal_bienvenida, fmt.format(member))
     #await client.send_message(canal_bienvenida, fmt.format(member, server))
-    embed2=discord.Embed()
-    #embed2=discord.Embed(title="", description="• Necesitas permisos para usar los canales de Destiny 2? \n • Escribí debajo el comando **+rol** seguido de tu Battletag! \n **Ejemplo: **\n", color=0x00ff00)
-    embed2=discord.Embed(title="", description="• Necesitas permisos para usar los canales de Destiny 2 ó los de Division 2? \n • Escribí debajo el comando **+destiny** o **+division** respectivamente.", color=0x00ff00)
-    #embed2.set_image(url="https://media.giphy.com/media/vykWBW2wh4URJZ75Uu/giphy.gif")
+    embed2=discord.Embed(title="", description="• Necesitas permisos para usar los canales de Destiny 2? \n • Escribí debajo el comando **+rol** seguido de tu Battletag! \n **Ejemplo: **\n", color=0x00ff00)
+    #embed2=discord.Embed(title="", description="• Necesitas permisos para usar los canales de Destiny 2 ó los de Division 2? \n • Escribí debajo el comando **+destiny** o **+division** respectivamente.", color=0x00ff00)
+    embed2.set_image(url="https://media.giphy.com/media/vykWBW2wh4URJZ75Uu/giphy.gif")
     await client.send_message(canal_bienvenida, embed=embed2)
+    for i in server.roles:
+        print(i.id,i.name)
+        if i.id == str(544911570258624522):
+            custom_clan_role_id=i.id
+        if "DJ" in i.name:
+            custom_dj_role_id=i.id
+    
+    role_Clan = discord.utils.get(server.roles, id=custom_clan_role_id)
+    role_DJ = discord.utils.get(server.roles, id=custom_dj_role_id)
+    addroles = [role_Clan, role_DJ]
+    await client.add_roles(member, *addroles)
     await asyncio.sleep(0.01)
 
 
@@ -912,15 +922,15 @@ async def testing(context):
     #print(client.messages)
     #print(type(client.messages))
     #print(dir(client.messages))
-    for i in client.get_all_channels():
-        if "welcome_test".upper() in i.name.upper():
-            print(i.name)
-            print(i.id)
-            canal_test = i
-            await client.delete_channel(i.id)
+    #for i in client.get_all_channels():
+    #    if "welcome_test".upper() in i.name.upper():
+    #        print(i.name)
+    #        print(i.id)
+    #        canal_test = i
+    #        await client.delete_channel(i.id)
     
     #await client.delete_channel(canal_test.id)
-    await client.create_channel(server, 'cool-channel', type=discord.ChannelType.text)
+    #await client.create_channel(server, 'cool-channel', type=discord.ChannelType.text)
 
     #number = int(100) #Converting the amount of messages to delete to an integer
     #counter = 0
