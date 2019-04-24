@@ -917,9 +917,12 @@ async def testing(context):
             print(i.name)
             print(i.id)
             canal_test = i
-
-    client.delete_channel(canal_test)
-    await client.create_text_channel('cool-channel')
+    server_escuadra = ""
+    for server in client.servers:
+        print(server.name)
+    
+    #await client.delete_channel(canal_test)
+    #await client.create_channel(lserver, 'Text', type=discord.ChannelType.text)
 
     #number = int(100) #Converting the amount of messages to delete to an integer
     #counter = 0
