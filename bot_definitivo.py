@@ -917,22 +917,23 @@ async def testing(context):
             print(i.name)
             print(i.id)
             canal_test = i
+
+    client.delete_channel(canal_test)
+    await client.create_text_channel('cool-channel')
+
     #number = int(100) #Converting the amount of messages to delete to an integer
     #counter = 0
     #print(len(client.logs_from(canal_test)))
-    my_logs = client.logs_from(canal_test)
-    print(dir(my_logs))
-    print("-------------")
-    print(type(my_logs.messages))
-    print(dir(my_logs.messages))
-    print(my_logs.messages)
-    print("-------------")
-    print(type(my_logs.iterate))
-    print(dir(my_logs.iterate))
-    print("-------------")
-    async for m in client.logs_from(canal_test):
-        print(dir(m))
-        print(m.clean_content)
+    #my_logs = client.logs_from(canal_test)
+    #print(dir(my_logs))
+    #print("-------------")
+    #print(type(my_logs.messages))
+    #print(dir(my_logs.messages))
+    #print(my_logs.messages)
+
+    #async for m in client.logs_from(canal_test):
+        #print(dir(m))
+        #print(m.clean_content)
     #await client.logs_from(canal_test)
     #async for x in client.logs_from(canal_test, limit = number):
     #    if counter < number:
