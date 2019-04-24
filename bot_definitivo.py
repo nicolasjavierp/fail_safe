@@ -919,7 +919,9 @@ async def testing(context):
             canal_test = i
     #number = int(100) #Converting the amount of messages to delete to an integer
     #counter = 0
-    print(len(client.logs_from(canal_test)))
+    #print(len(client.logs_from(canal_test)))
+    my_logs = client.logs_from(canal_test)
+    print(dir(my_logs))
     async for m in client.logs_from(canal_test):
         print(m.clean_content)
     #await client.logs_from(canal_test)
