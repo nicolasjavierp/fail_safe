@@ -922,7 +922,13 @@ async def testing(context):
     #print(len(client.logs_from(canal_test)))
     my_logs = client.logs_from(canal_test)
     print(dir(my_logs))
+    print(sizeof(my_logs))
+    print("-------------")
+    print(dir(my_logs.messages))
+    print(my_logs.messages)
+
     async for m in client.logs_from(canal_test):
+        print(dir(m))
         print(m.clean_content)
     #await client.logs_from(canal_test)
     #async for x in client.logs_from(canal_test, limit = number):
