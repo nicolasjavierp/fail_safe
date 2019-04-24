@@ -47,11 +47,6 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
-    for i in client.get_all_channels():
-        if "_test".upper() in i.name.upper():
-            print(i.name)
-            print(i.id)
-            #canal_bienvenida = i
 
 
 @client.event
@@ -914,9 +909,25 @@ async def testing(context):
     #4 Heroku
     fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
-    print(client.messages)
-    print(type(client.messages))
-    print(dir(client.messages))
+    #print(client.messages)
+    #print(type(client.messages))
+    #print(dir(client.messages))
+    for i in client.get_all_channels():
+        if "welcome_test".upper() in i.name.upper():
+            print(i.name)
+            print(i.id)
+            canal_test = i
+    #number = int(100) #Converting the amount of messages to delete to an integer
+    #counter = 0
+    print(len(client.logs_from(canal_test)))
+    async for m in client.logs_from(canal_test):
+        print(m.clean_content)
+    #await client.logs_from(canal_test)
+    #async for x in client.logs_from(canal_test, limit = number):
+    #    if counter < number:
+    #        await client.delete_message(x)
+    #        counter += 1
+    #        await asyncio.sleep(1.2) #1.2 second timer so the deleting process can be even
             
 
 #######################################################################
