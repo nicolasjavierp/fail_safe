@@ -178,8 +178,27 @@ async def on_member_join(member):
 
 @client.event
 async def on_member_remove(member):
-    print("Someone Left!!")
-    print("Bye Bye {0}".format(member.mention))
+    #print("Someone Left!!")
+    print("Bye Bye {0}".format(member.name))
+    for i in server.roles:
+        print(i.id,i.name)
+        if i.id == str(544911570258624522):
+            custom_clan_role_id=i.id
+        if i.id == str(387742983249985536):
+            custom_destiny_clan_role_id = i.id
+        if i.id == str(544915941713248267):
+            custom_division_clan_role_id = i.id
+        if "DJ" in i.name:
+            custom_dj_role_id=i.id
+    
+    role_Clan = discord.utils.get(server.roles, id=custom_clan_role_id)
+    role_DJ = discord.utils.get(server.roles, id=custom_dj_role_id)
+    role_Destiny_Clan = discord.utils.get(server.roles, id=custom_destiny_clan_role_id)
+    role_Division_Clan = discord.utils.get(server.roles, id=custom_division_clan_role_id)
+
+    remove_roles = [role_Clan, role_DJ, role_Destiny_Clan, role_Division_Clan]
+    await client.remove_roles(member, *remove_roles)
+    await asyncio.sleep(0.01)
     #msg = "Bye Bye {0}".format(member.mention)
     #await client.send_message(serverchannel, msg)
 
