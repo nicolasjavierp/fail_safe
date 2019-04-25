@@ -176,6 +176,13 @@ async def on_member_join(member):
     #    print(dir(reaction))
 
 
+@client.event
+async def on_member_remove(member):
+    print("Someone Left!!")
+    print("Bye Bye {0}".format(member.mention))
+    #msg = "Bye Bye {0}".format(member.mention)
+    #await client.send_message(serverchannel, msg)
+
 #######################################################################
 ################## COMMON COMMANDS  ###################################
 #######################################################################
