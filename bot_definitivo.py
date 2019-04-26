@@ -830,7 +830,8 @@ async def xur_info(context):
                 embed.set_image(url=url_bungie+val)
                 await client.send_message(context.message.channel, embed=embed)
         else:
-            embed = discord.Embed(title="Error!", description="No pude obtener los datos, intenta mas tarde ...", color=0x00ff00)
+            #embed = discord.Embed(title="Error!", description="No pude obtener los datos, intenta mas tarde ...", color=0x00ff00)
+            embed = discord.Embed(title="Error!", description="Todavía no esta la info KP@, aguantá la mecha un toque y intenta mas tarde ...", color=0x00ff00)
             await client.send_message(context.message.channel, embed=embed)
         
     else:
