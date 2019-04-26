@@ -255,8 +255,11 @@ def get_xur_info(fs):
                     #print(xur_departure_temp)
                     xur_departure = (datetime.strptime(xur_departure_temp, " %B %d").strftime("%d-%m"))
                     #print(xur_departure)
-            xur_info = str(xur_location)+" y se va el reset del "+str(xur_departure)
-            return True, str(xur_info), item_icons, xur_map
+            if xur_location and xur_departure:
+                xur_info = str(xur_location)+" y se va el reset del "+str(xur_departure)
+                return True, str(xur_info), item_icons, xur_map
+            else:
+               True, None, None, None 
     else:
         return False, "Xur solamente esta de Viernes a Martes. Proxima aparición será el reset del "+str(get_last_friday_reset().date()+timedelta(weeks=1)), None, None
             

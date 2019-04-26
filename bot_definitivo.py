@@ -821,7 +821,7 @@ async def xur_info(context):
         embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
         embed.set_image(url=xur_map)
         await client.send_message(context.message.channel, embed=embed)
-        if inventory:
+        if inventory and info:
             for idx, val in enumerate(inventory):
                 destiny_class=""
                 index_xur = {0:":gun: **Arma:**",1:":knife: **Cazador:**",2:":punch: **Titan:**",3:":bulb: **Hechicero:**"}
