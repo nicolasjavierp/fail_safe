@@ -503,7 +503,6 @@ async def raid_this_week(context):
             await client.send_message(context.message.channel, embed=embed)
 
 
-
 @client.command(name='Ayuda',
                 description="Ayuda del bot definitivo",
                 brief="ayuda",
