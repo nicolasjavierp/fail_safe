@@ -179,6 +179,7 @@ async def on_member_join(member):
 @client.event
 async def on_member_remove(member):
     #print("Someone Left!!")
+    server = member.server
     print("Bye Bye {0} !".format(member.name))
     for i in server.roles:
         print(i.id,i.name)
