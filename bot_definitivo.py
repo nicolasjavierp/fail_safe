@@ -152,14 +152,14 @@ async def on_member_join(member):
     #await client.send_message(canal_bienvenida, embed=embed2)
     for i in server.roles:
         print(i.id,i.name)
-        if i.id == str(544911570258624522):
-            custom_clan_role_id=i.id
+        #if i.id == str(544911570258624522):
+        #    custom_clan_role_id=i.id
         if "DJ" in i.name:
             custom_dj_role_id=i.id
     
-    role_Clan = discord.utils.get(server.roles, id=custom_clan_role_id)
+    #role_Clan = discord.utils.get(server.roles, id=custom_clan_role_id)
     role_DJ = discord.utils.get(server.roles, id=custom_dj_role_id)
-    addroles = [role_Clan, role_DJ]
+    addroles = [role_DJ]
     await client.add_roles(member, *addroles)
     await asyncio.sleep(0.01)
 
@@ -183,8 +183,8 @@ async def on_member_remove(member):
     print("Bye Bye {0} !".format(member.name))
     for i in server.roles:
         print(i.id,i.name)
-        if i.id == str(544911570258624522):
-            custom_clan_role_id=i.id
+        #if i.id == str(544911570258624522):
+        #    custom_clan_role_id=i.id
         if i.id == str(387742983249985536):
             custom_destiny_clan_role_id = i.id
         if i.id == str(544915941713248267):
@@ -192,12 +192,12 @@ async def on_member_remove(member):
         if "DJ" in i.name:
             custom_dj_role_id=i.id
     
-    role_Clan = discord.utils.get(server.roles, id=custom_clan_role_id)
+    #role_Clan = discord.utils.get(server.roles, id=custom_clan_role_id)
     role_DJ = discord.utils.get(server.roles, id=custom_dj_role_id)
     role_Destiny_Clan = discord.utils.get(server.roles, id=custom_destiny_clan_role_id)
     role_Division_Clan = discord.utils.get(server.roles, id=custom_division_clan_role_id)
 
-    remove_roles = [role_Clan, role_DJ, role_Destiny_Clan, role_Division_Clan]
+    remove_roles = [role_DJ, role_Destiny_Clan, role_Division_Clan]
     await client.remove_roles(member, *remove_roles)
     await asyncio.sleep(0.01)
     #msg = "Bye Bye {0}".format(member.mention)
@@ -223,17 +223,17 @@ async def free_rol_destiny(context):
     #Get clan defined roles ids from discord
     for i in my_server.roles:
         print(i.id,i.name)
-        if i.id == str(544911570258624522):
-            custom_clan_role_id=i.id
+        #if i.id == str(544911570258624522):
+        #    custom_clan_role_id=i.id
         if i.id == str(387742983249985536):
             custom_destiny_clan_role_id = i.id
         if "DJ" in i.name:
             custom_dj_role_id=i.id
     
-    role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
+    #role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
     role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
     role_Destiny_Clan = discord.utils.get(my_server.roles, id=custom_destiny_clan_role_id)
-    addroles = [role_Clan, role_DJ, role_Destiny_Clan]
+    addroles = [role_DJ, role_Destiny_Clan]
     await client.add_roles(user, *addroles)
     embed = discord.Embed(title="" , description=":white_check_mark: **Listo** "+context.message.author.mention+" \n• Ya podes usar los canales de Destiny 2!", color=0x00ff00)
     await client.send_message(context.message.channel, embed=embed)
@@ -281,17 +281,17 @@ async def free_rol_division(context):
     #Get clan defined roles ids from discord
     for i in my_server.roles:
         print(i.id,i.name)
-        if i.id == str(544911570258624522):
-            custom_clan_role_id=i.id
+        #if i.id == str(544911570258624522):
+        #    custom_clan_role_id=i.id
         if i.id == str(544915941713248267):
             custom_division_clan_role_id = i.id
         if "DJ" in i.name:
             custom_dj_role_id=i.id
     
-    role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
+    #role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
     role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
     role_Division_Clan = discord.utils.get(my_server.roles, id=custom_division_clan_role_id)
-    addroles = [role_Clan, role_DJ, role_Division_Clan]
+    addroles = [role_DJ, role_Division_Clan]
     await client.add_roles(user, *addroles)
     embed = discord.Embed(title="" , description=":white_check_mark: **Listo** "+context.message.author.mention+" \n• Ya podes usar los canales de The Division!", color=0x00ff00)
     await client.send_message(context.message.channel, embed=embed)
@@ -329,14 +329,14 @@ async def rol(context):
                 user_roles_names.append(i.name)
             #Get clan defined roles ids from discord
             for i in my_server.roles:
-                if i.id == str(544911570258624522):
-                    custom_clan_role_id=i.id
+                #if i.id == str(544911570258624522):
+                #    custom_clan_role_id=i.id
                 if i.id == str(387742983249985536):
                     custom_destiny_clan_role_id = i.id
                 if "DJ" in i.name:
                     custom_dj_role_id=i.id
 
-            role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
+            #role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
             role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
             role_Destiny_Clan = discord.utils.get(my_server.roles, id=custom_destiny_clan_role_id)
 
@@ -356,13 +356,14 @@ async def rol(context):
                 print(str(context.message.author.name) +" with BT = "+ str(real_battletag) +" in clan and in users !")
                 name = real_battletag.split('#')[0]
                 #Verification if discord api does not work initialy
-                user_has_role_clan = await does_user_have_role(user,custom_clan_role_id)
+                #user_has_role_clan = await does_user_have_role(user,custom_clan_role_id)
                 user_has_role_dj = await does_user_have_role(user,custom_dj_role_id)
                 user_has_role_destiny_clan = await does_user_have_role(user,custom_destiny_clan_role_id)
                 
-                if not user_has_role_clan or not user_has_role_dj:
+                #if not user_has_role_clan or not user_has_role_dj:
+                if not user_has_role_dj:
                     print(str(name)+" missing role ... adding ... ")
-                    addroles = [role_Clan, role_DJ, role_Destiny_Clan]
+                    addroles = [role_DJ, role_Destiny_Clan]
                     await client.add_roles(user, *addroles)
                 
                 embed = discord.Embed(title="" , description="El Guardian "+str(name)+" ya fue dado de alta y tiene los roles! ", color=0x00ff00)
@@ -373,7 +374,7 @@ async def rol(context):
                 #if user_destiny_id and user_clan_name:
                 if user_clan_name:
                     if "Escuadra" in user_clan_name:
-                        addroles = [role_Clan, role_DJ, role_Destiny_Clan]
+                        addroles = [role_DJ, role_Destiny_Clan]
                         print(addroles)
                         await client.add_roles(user, *addroles)
                         if not is_discord_id_in_db(context.message.author.id, discord_users):
