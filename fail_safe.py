@@ -664,7 +664,7 @@ class FailSafe(object):
         '''Checks if player is a blacklister'''
         #print(player)
         if player['last_played']:
-            break_point_seconds=1296000
+            break_point_seconds=1296000*2
             last = player['last_played']
             last_played = datetime.strptime(last, "%Y-%m-%dT%H:%M:%SZ")
             now = datetime.utcnow().replace(microsecond=0)
@@ -706,7 +706,7 @@ class FailSafe(object):
         #print(str(definitive_blacklist))
         return definitive_blacklist
 
-        
+
     async def get_one_Clanmate_Whitelist(self, clanmate_displayName, whitelist):
         '''Returns whitelister'''
         document = whitelist.find_one({'displayName':clanmate_displayName})
@@ -748,6 +748,7 @@ class FailSafe(object):
         clanmates = db.clan_members
 
         clanmates.insert_many(clan_list, ordered=False)
+
 
     async def async_clear_clanmates_blacklister_db(self):
         '''Pushes clanmates to db'''
