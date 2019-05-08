@@ -300,7 +300,8 @@ class FailSafe(object):
 
 
     def is_blacklisted(self, player):
-            break_point_seconds=1296000
+            #break_point_seconds=1296000
+            break_point_seconds=2592000
             for key in player:
                 #last = self.get_PlayerLastLogin(key)
                 last = player[key][1]['profile']['data']['dateLastPlayed']
