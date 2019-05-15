@@ -151,7 +151,7 @@ async def on_member_join(member):
     #embed2.set_image(url="https://media.giphy.com/media/vykWBW2wh4URJZ75Uu/giphy.gif")
     #await client.send_message(canal_bienvenida, embed=embed2)
     for i in server.roles:
-        print(i.id,i.name)
+        #print(i.id,i.name)
         #if i.id == str(544911570258624522):
         #    custom_clan_role_id=i.id
         if "DJ" in i.name:
@@ -738,8 +738,8 @@ async def informe_semanal(context):
         #print(today.hour)
     #print("**************")
     #print("Next Week")
-    #print((key+1)%7)
-    #print(ascendant_dict[key%7][0])
+    #print((key+1)%6)
+    #print(ascendant_dict[key%6][0])
     #print(protocol_dict[key%5][0])
     embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%6][0]+"**", color=0x00ff00)
     embed.set_image(url=ascendant_dict[key%6][1])
