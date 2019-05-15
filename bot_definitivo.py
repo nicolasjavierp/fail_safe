@@ -54,7 +54,7 @@ async def on_message(message):
     # we do not want the bot to reply to itself
     if message.author == client.user:
         return
-    #await update_discord_user_last_activity(message.author.id)
+    #await(message.author.id)
     
     msg = message.content
     #Normalizo el mensaje
@@ -741,8 +741,8 @@ async def informe_semanal(context):
     #print((key+1)%7)
     #print(ascendant_dict[key%7][0])
     #print(protocol_dict[key%5][0])
-    embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%7][0]+"**", color=0x00ff00)
-    embed.set_image(url=ascendant_dict[key%7][1])
+    embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%6][0]+"**", color=0x00ff00)
+    embed.set_image(url=ascendant_dict[key%6][1])
     await client.send_message(context.message.channel, embed=embed)
 
     embed = discord.Embed(title="" , description="**"+curse_dict[key%3][0]+"**", color=0x00ff00)

@@ -22,6 +22,8 @@ from datetime import date
 #//////////////////////////////////////////////////////////////////////
 #////////////////   DB SECTION           //////////////////////////////
 #//////////////////////////////////////////////////////////////////////
+#https://mlab.com/databases/bot_definitivo/collections
+
 
 ######
 #Blacklist
@@ -50,6 +52,7 @@ def get_one_Clanmate(clanmate_id, clanmates):
         document = clanmates.find_one({'battletag':clanmate_id})
         return document
 
+
 def is_clanmate_in_db(clanmate_id, clanmates):
         document = clanmates.find_one({'battletag':clanmate_id})
         if document:
@@ -64,7 +67,6 @@ def is_clanmate_in_db(clanmate_id, clanmates):
 async def push_discord_user_db(record, discord_users):
     discord_users.insert_one(record)
     await asyncio.sleep(0.01)
-
 
 
 def get_all_discord_users_by_last_activity(discord_users):
@@ -92,7 +94,6 @@ def update_discord_user(record, updates, discord_users):
                                 }, upsert=False)
 
 
-
 async def async_add_discord_users_list(discord_users_list):
     #4 tests
     #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
@@ -105,10 +106,10 @@ async def async_add_discord_users_list(discord_users_list):
     discord_users.remove({})
     discord_users.insert_many(discord_users_list, ordered=False)
 
+
 ######
 #Server Status
 ######
-
 async def get_server_status(server_status):
     document = server_status.find_one()
     await asyncio.sleep(0.01)
@@ -119,9 +120,6 @@ async def update_server_status(record, updates, server_status):
         server_status.update_one({'_id': record['_id']},{
                                 '$set': updates
                                 }, upsert=False)
-
-
-
 
 
 #//////////////////////////////////////////////////////////////////////

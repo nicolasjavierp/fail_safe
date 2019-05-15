@@ -110,6 +110,7 @@ def reset_param_aux(item):
     with open("aux.json", "w") as f:
         json.dump(aux, f)
 
+
 def is_user_admin(ctx):
     server = ctx.message.server
     user_id = ctx.message.author.id
@@ -121,6 +122,7 @@ def is_user_admin(ctx):
         return True
     else:
         return False
+
 
 def check_queue(id , my_queues, players):
     if my_queues[id]:
