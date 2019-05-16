@@ -842,6 +842,26 @@ async def xur_info(context):
         await client.send_message(context.message.channel, embed=embed)
 
 
+
+@client.command(name='Calus Quotes',
+                description="Lineas de Calus",
+                brief="Calus",
+                aliases=['calus'],
+                pass_context=True)
+async def calus_quotes(context):
+    calus_quotes = ["Everything you know is a lie. There is a truth beyond what your people and your Speaker have told you. I can take you to that truth, if you seek me out. These gifts are a reminder of my words."\
+                    ,"If you seek the means to live to your potential, I can guide you to it. There is a power in this universe beyond your feeble Light. I leave you with those words, and these parting gifts. Take them, and grow fat from strength."\
+                    ,"Now you’ve seen everything. Do you still believe you’re on the right side? Mull it over, and enjoy my gifts to you. I possess the means to true agency beyond your feeble Light. Seek me out and perhaps I’ll show you how to grow fat from strength."\
+                    ,"You’ve accepted my challenge. Good! I would be pleased to see what your Light can do."\
+                    ,"Guardians show your selves worthy and I will show you the true means to power!"\
+                    ,"The gardens are beautiful, but watch your step. You never know where a beast might lurk!"\
+                    ,"The gardens contain the floral emblem of the empire - the plants from which we derive royal nectar. Enjoy them!"\
+                    ,"There is beauty to your Light. Let me admire it up close!"]
+    embed = discord.Embed(title="", description=random.choice(calus_quotes), color=0x00ff00)
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/499231830235414529/578589363055755264/unknown.png")
+    embed.set_footer(text='Emperor Calus has spoken!')
+    await client.send_message(context.message.channel, embed=embed)
+
 #######################################################################
 ################################# MUSIC ###############################
 #######################################################################
