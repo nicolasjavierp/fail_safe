@@ -857,7 +857,7 @@ async def calus_quotes(context):
                     ,"The gardens are beautiful, but watch your step. You never know where a beast might lurk!"\
                     ,"The gardens contain the floral emblem of the empire - the plants from which we derive royal nectar. Enjoy them!"\
                     ,"There is beauty to your Light. Let me admire it up close!"]
-    embed = discord.Embed(title="", description=random.choice(calus_quotes), color=0x00ff00)
+    embed = discord.Embed(title="", description=random.choice(calus_quotes), color=0xffd700)
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/499231830235414529/578589363055755264/unknown.png")
     embed.set_footer(text='Emperor Calus has spoken!')
     await client.send_message(context.message.channel, embed=embed)
