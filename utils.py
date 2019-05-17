@@ -271,10 +271,10 @@ def get_random_lore():
     lore=[]
     #r = requests.get("https://destiny.fandom.com/es/wiki/"+random.choice(random_value))
     result = requests.get("https://destiny.fandom.com/es/wiki/"+"Cabal")
-    print(result.text)
+    #print(result.text)
     #soup = BeautifulSoup(r.text, 'html.parser')
     c = result.content
-    soup = BeautifulSoup(c)
+    soup = BeautifulSoup(c, 'html.parser')
     lore = soup.find("div", {"id":"mw-content-text"}).findAll('p')
     #print(dir(main_div))
     #for x in lore:
