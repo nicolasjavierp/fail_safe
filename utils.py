@@ -275,6 +275,7 @@ def get_random_lore():
     main_div = soup.findAll("div", {"class":"mw-content-ltr mw-content-text"})
     print(dir(main_div))
     for x in main_div:
+        print("$$$$$$$$$$$$$$$$$$$$$$$")
         print(x.find('p').text)
         
     #for lore in soup.find_all('p'): 
