@@ -267,7 +267,7 @@ def get_xur_info(fs):
 
 
 def get_random_lore():
-    random_value= ["Vex","Cabal","Colmena","El_Viajero"]
+    random_value= ["Vex","Cabal","Colmena","El_Viajero", "Caídos", "Los_Poseídos"]
     lore=[]
     result = requests.get("https://destiny.fandom.com/es/wiki/"+random.choice(random_value))
     #result = requests.get("https://destiny.fandom.com/es/wiki/"+"Cabal")
@@ -279,19 +279,22 @@ def get_random_lore():
     #print(dir(main_div))
     #for x in lore:
     lore_text=[]
-    #article_text=""
+    article_text=""
     index_start = 0
     for idx, val in enumerate(lore):
         if "«" in val:
             index_start = idx
         lore_text.append(''.join(val.findAll(text = True)))
-        #article_text += '\n' + ''.join(val.findAll(text = True))
-    #print("///////////////////////")
-    #print(lore_text)
-    #print(article_text)
-    #print("///////////////////////")
+        article_text += '\n' + ''.join(val.findAll(text = True))
+    print("///////////////////////")
+    print(lore_text)
+    print("///////////////////////")
+    print(article_text)
+    print("///////////////////////")
     definitive_lore_text = lore_text[index_start:]
-    return random.choice(definitive_lore_text)
+    #print(definitive_lore_text)
+    #return random.choice(definitive_lore_text)
+    return ""
             
 
         #print(idx, val.text)
