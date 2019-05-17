@@ -279,6 +279,7 @@ def get_random_lore():
     #print(dir(main_div))
     #for x in lore:
     lore_text=[]
+    index_start = 0
     for idx, val in enumerate(lore):
         #print("///////////////////////")
         if "«" in val:
