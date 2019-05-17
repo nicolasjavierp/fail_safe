@@ -279,12 +279,17 @@ def get_random_lore():
     #print(dir(main_div))
     #for x in lore:
     lore_text=[]
+    #article_text=""
     index_start = 0
     for idx, val in enumerate(lore):
-        #print("///////////////////////")
         if "«" in val:
             index_start = idx
         lore_text.append(''.join(val.findAll(text = True)))
+        #article_text += '\n' + ''.join(val.findAll(text = True))
+    #print("///////////////////////")
+    #print(lore_text)
+    #print(article_text)
+    #print("///////////////////////")
     definitive_lore_text = lore_text[index_start:]
     return random.choice(definitive_lore_text)
             
