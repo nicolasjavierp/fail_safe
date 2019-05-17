@@ -862,6 +862,26 @@ async def calus_quotes(context):
     embed.set_footer(text='Emperor Calus has spoken!')
     await client.send_message(context.message.channel, embed=embed)
 
+@client.command(name='Riven Quotes',
+                description="Lineas de Riven",
+                brief="Riven",
+                aliases=['riven'],
+                pass_context=True)
+async def riven_quotes(context):
+    riven_quotes = ["You are finally here, Brother slayer. Spawn killer. All that strength and you're still nothing but a retainer to the Awoken Queen. You could be so much more...all you need do is wish it. Come. I would quite like to meet you."\
+                    ,"Have you come to free the Witches? They will resist. Darkness is their shape now ..."\
+                    ,"I can give you anything. What is it you want? Weapons? Glory? Peace? Or is it simpler than that?"\
+                    ,"Oh ho ho. You are so tiny. Yet you continue to make enemies of so many gods and monsters. You want battle. I'll give you war!"\
+                    ,"You sully the sacred architecture of a culture you cannot understand. All so you can say you won today. Could that be what you’re driving toward? Do you have the audacity to wish for my death? Perhaps you and I can work together ..."\
+                    ,"The Awoken kept me here for so long. A better fate than my kin suffered. But paradise is a prison when you cannot leave. I would so love to repay the hospitality of those who use my words to carve this city into the screaming surface of reality."\
+                    ,"There is no end to the Taken. You have stolen from them more than they could ever take from you. You are destined to fight forever."\
+                    ,"You don’t hesitate to reach into the Deep. Your kind is so brave. Those with conviction pair best with my kind. Like you. Like the Awoken prince. Shall we be friends?"\
+                    ,"Ah, I've waited so long to fulfill one last wish ..."\
+                    ,"I thought they'd never leave. You and I are not done. We're inseparable now. Through your actions, we've forged an age-old-bond between my kind and yours. One wish granted deserves another. And I cannot wait to show you what SHE asked for. O murderer mine..."]
+    embed = discord.Embed(title="", description=random.choice(riven_quotes), color=0x000000)
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/499231830235414529/578935863992516608/Riven1.png")
+    await client.send_message(context.message.channel, embed=embed)
+
 #######################################################################
 ################################# MUSIC ###############################
 #######################################################################
