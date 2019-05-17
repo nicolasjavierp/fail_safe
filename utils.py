@@ -279,7 +279,7 @@ def get_random_lore():
     #print(dir(main_div))
     #for x in lore:
     
-    for item1 in soup.find_all("h2","class:mw-headline"):
+    for item1 in soup.find("h2"):
         for item2 in item1.find("p"):
             print(item2.text)
     #return random.choice(definitive_lore_text)
