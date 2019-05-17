@@ -278,7 +278,17 @@ def get_random_lore():
     #intro = soup.find("div", {"id":"mw-content-text"}).find('p')
     #print(dir(main_div))
     #for x in lore:
-    descr = soup.find('h2', class_="mw-headline").findAll('p')
+    descr = soup.find('h2', id="Descripci.C3.B3n")
+    if descr:
+        print(descr)
+    else:
+        print("Error descr")
+    descr2 = soup.find('h2', id="Descripci.C3.B3n").findAll('p')
+    if descr2:
+        print(descr2)
+    else:
+        print("Error descr2")
+    
 
     for idx, val in enumerate(descr):
         article_text += '\n' + ''.join(val.findAll(text = True))
