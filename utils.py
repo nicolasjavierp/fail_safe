@@ -278,7 +278,7 @@ def get_random_lore():
     #intro = soup.find("div", {"id":"mw-content-text"}).find('p')
     #print(dir(main_div))
     #for x in lore:
-    descr = soup.find_all('h2')
+    descr = soup.find('h2').attrs
     if descr:
         for i in descr:
             print(type(descr))
