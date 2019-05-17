@@ -281,6 +281,7 @@ def get_random_lore():
     descr = soup.find_all('h2')
     if descr:
         for i in descr:
+            print(type(descr))
             print(dir(descr))
     #return random.choice(definitive_lore_text)
     return ""
