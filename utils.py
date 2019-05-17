@@ -275,13 +275,16 @@ def get_random_lore():
     #soup = BeautifulSoup(r.text, 'html.parser')
     c = result.content
     soup = BeautifulSoup(c, 'html.parser')
-    #intro = soup.find("div", {"id":"mw-content-text"}).find('p')
-    #print(dir(main_div))
-    #for x in lore:
-    
-    for item1 in soup.find("h2"):
-        for item2 in item1.find("p"):
-            print(item2.text)
+    lore = ""
+    all_p = soup.find("div", {"id":"mw-content-text"}).findAll('p')
+    for index, item in enumerate(all_p):
+        print(type(item.text))
+        #adding = str(item.text)
+        if index == 0 or index == 1:
+            pass
+        else:
+            lore = lore + item.text
+    print(lore)
     #return random.choice(definitive_lore_text)
     return ""
 
