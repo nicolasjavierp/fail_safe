@@ -285,9 +285,9 @@ def get_random_lore():
             pass
         else:
             lore = lore + item.text
-    print(random_value,lore)
+    #print(random_value,lore)
     #return random.choice(definitive_lore_text)
-    return lore
+    return random_value,lore
 
 
         
