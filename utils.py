@@ -269,42 +269,28 @@ def get_xur_info(fs):
 def get_random_lore():
     random_value= ["Vex","Cabal","Colmena","El_Viajero", "Caídos", "Los_Poseídos"]
     lore=[]
-    result = requests.get("https://destiny.fandom.com/es/wiki/"+random.choice(random_value))
-    #result = requests.get("https://destiny.fandom.com/es/wiki/"+"Cabal")
+    #result = requests.get("https://destiny.fandom.com/es/wiki/"+random.choice(random_value))
+    result = requests.get("https://destiny.fandom.com/es/wiki/"+"Cabal")
     #print(result.text)
     #soup = BeautifulSoup(r.text, 'html.parser')
     c = result.content
     soup = BeautifulSoup(c, 'html.parser')
-    lore = soup.find("div", {"id":"mw-content-text"}).findAll('p')
+    intro = soup.find("div", {"id":"mw-content-text"}).find('p')
     #print(dir(main_div))
     #for x in lore:
-    lore_text=[]
+    
     article_text=""
-    index_start = 0
-    for idx, val in enumerate(lore):
-        if "«" in val:
-            index_start = idx
-        lore_text.append(''.join(val.findAll(text = True)))
+    for idx, val in enumerate(intro):
         article_text += '\n' + ''.join(val.findAll(text = True))
+
     print("///////////////////////")
-    print(lore_text)
-    print("///////////////////////")
+    print("INTRO:")
     print(article_text)
     print("///////////////////////")
-    definitive_lore_text = lore_text[index_start:]
+    #definitive_lore_text = lore_text[index_start:]
     #print(definitive_lore_text)
     #return random.choice(definitive_lore_text)
     return ""
-            
-
-        #print(idx, val.text)
-        #article_text += '\n' + ''.join(x.findAll(text = True))
-        #print(x.findAll(text = True))
-    #print(article_text)
-    #for lore in soup.find_all('p'): 
-    #    if lore.text: 
-    #        print(lore.text)
-    #        #print(dir(lore))
 
 
         
