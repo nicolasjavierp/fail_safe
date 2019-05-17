@@ -273,10 +273,11 @@ def get_random_lore():
     print(r.text)
     soup = BeautifulSoup(r.text, 'html.parser')
     main_div = soup.findAll("div", {"class":"mw-content-ltr mw-content-text"})
-    print(dir(main_div))
+    #print(dir(main_div))
     for x in main_div:
         print("$$$$$$$$$$$$$$$$$$$$$$$")
         print(x.find('p').text)
+        break
         
     #for lore in soup.find_all('p'): 
     #    if lore.text: 
