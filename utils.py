@@ -264,5 +264,14 @@ def get_xur_info(fs):
                True, None, None, None 
     else:
         return False, "Xur solamente esta de Viernes a Martes. Proxima aparición será el reset del "+str(get_last_friday_reset().date()+timedelta(weeks=1)), None, None
-            
+
+
+def get_random_lore():
+    r = requests.get("https://destiny.fandom.com/es/")
+    soup = BeautifulSoup(r.text, 'html.parser')
+    for a in soup.find_all('a', href=True): 
+        if a.text: 
+            print(a.text)
+
+
         

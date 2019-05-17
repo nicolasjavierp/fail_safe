@@ -882,6 +882,18 @@ async def riven_quotes(context):
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/499231830235414529/578935863992516608/Riven1.png")
     await client.send_message(context.message.channel, embed=embed)
 
+
+
+@client.command(name='Lore',
+                description="Lore",
+                brief="lore",
+                aliases=['lore'],
+                pass_context=True)
+async def destiny_lore(context):
+    destiny_lore = {}
+    embed = discord.Embed(title="", description=random.choice(riven_quotes), color=0x000000)
+    embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
+    await client.send_message(context.message.channel, embed=embed)
 #######################################################################
 ################################# MUSIC ###############################
 #######################################################################
@@ -987,38 +999,8 @@ async def testing(context):
     #4 Heroku
     fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
-    #print(client.messages)
-    #print(type(client.messages))
-    #print(dir(client.messages))
-    #for i in client.get_all_channels():
-    #    if "welcome_test".upper() in i.name.upper():
-    #        print(i.name)
-    #        print(i.id)
-    #        canal_test = i
-    #        await client.delete_channel(i.id)
-    
-    #await client.delete_channel(canal_test.id)
-    #await client.create_channel(server, 'cool-channel', type=discord.ChannelType.text)
-
-    #number = int(100) #Converting the amount of messages to delete to an integer
-    #counter = 0
-    #print(len(client.logs_from(canal_test)))
-    #my_logs = client.logs_from(canal_test)
-    #print(dir(my_logs))
-    #print("-------------")
-    #print(type(my_logs.messages))
-    #print(dir(my_logs.messages))
-    #print(my_logs.messages)
-
-    #async for m in client.logs_from(canal_test):
-        #print(dir(m))
-        #print(m.clean_content)
-    #await client.logs_from(canal_test)
-    #async for x in client.logs_from(canal_test, limit = number):
-    #    if counter < number:
-    #        await client.delete_message(x)
-    #        counter += 1
-    #        await asyncio.sleep(1.2) #1.2 second timer so the deleting process can be even
+    get_random_lore()
+    pass
             
 
 #######################################################################
