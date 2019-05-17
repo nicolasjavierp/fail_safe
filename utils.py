@@ -267,12 +267,13 @@ def get_xur_info(fs):
 
 
 def get_random_lore():
-    r = requests.get("https://destiny.fandom.com/es/")
+    random_value= ["Vex","Cabal","Colmena","El_Viajero"]
+    r = requests.get("https://destiny.fandom.com/es/"+random.choice(random_value))
     soup = BeautifulSoup(r.text, 'html.parser')
-    for a in soup.find_all('a', href=True): 
-        if a.text and "Mapa del sitio local" in a.text : 
-            print(a.text)
-            print(dir(a))
+    for lore in soup.find_all('p', href=True): 
+        if lore.text: 
+            print(lore.text)
+            print(dir(lore))
 
 
         
