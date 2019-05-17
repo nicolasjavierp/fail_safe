@@ -999,7 +999,7 @@ async def testing(context):
     #4 Heroku
     fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
-    get_random_lore()
+    print(get_random_lore())
     pass
             
 

@@ -278,9 +278,16 @@ def get_random_lore():
     lore = soup.find("div", {"id":"mw-content-text"}).findAll('p')
     #print(dir(main_div))
     #for x in lore:
+    lore_text=[]
     for idx, val in enumerate(lore):
-        print("///////////////////////")
-        print(idx, val.findAll(text=True))
+        #print("///////////////////////")
+        if "«" in val:
+            index_start = idx
+        lore_text.append(''.join(val.findAll(text = True)))
+    definitive_lore_text = lore_text[index_start:]
+    return random.choice(definitive_lore_text)
+            
+
         #print(idx, val.text)
         #article_text += '\n' + ''.join(x.findAll(text = True))
         #print(x.findAll(text = True))
