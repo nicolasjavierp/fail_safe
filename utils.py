@@ -270,8 +270,9 @@ def get_random_lore():
     r = requests.get("https://destiny.fandom.com/es/")
     soup = BeautifulSoup(r.text, 'html.parser')
     for a in soup.find_all('a', href=True): 
-        if a.text: 
+        if a.text and "Mapa del sitio local" in a.text : 
             print(a.text)
+            print(dir(a))
 
 
         
