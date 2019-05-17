@@ -278,7 +278,7 @@ def get_random_lore():
     lore = ""
     all_p = soup.find("div", {"id":"mw-content-text"}).findAll('p')
     for index, item in enumerate(all_p):
-        print(type(item.text))
+        #print(type(item.text))
         #adding = str(item.text)
         if index == 0 or index == 1:
             pass
