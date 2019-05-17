@@ -281,8 +281,8 @@ def get_random_lore():
     
     article_text=""
     for idx, val in enumerate(intro):
-        article_text += '\n' + ''.join(val.findAll(text = True))
-
+        #article_text += '\n' + ''.join(val.findAll(text = True))
+        article_text += '\n' + ''.join(val.text)
     print("///////////////////////")
     print("INTRO:")
     print(article_text)
