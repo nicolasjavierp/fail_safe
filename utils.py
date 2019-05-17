@@ -286,7 +286,7 @@ def get_random_lore():
             lore = lore + item.text
     print(lore)
     #return random.choice(definitive_lore_text)
-    return ""
+    return lore
 
 
         

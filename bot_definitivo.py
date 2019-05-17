@@ -890,8 +890,8 @@ async def riven_quotes(context):
                 aliases=['lore'],
                 pass_context=True)
 async def destiny_lore(context):
-    destiny_lore = {}
-    embed = discord.Embed(title="", description=random.choice(riven_quotes), color=0x000000)
+    destiny_lore = get_random_lore()
+    embed = discord.Embed(title="", description=destiny_lore, color=0x00FF00)
     embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
     await client.send_message(context.message.channel, embed=embed)
 #######################################################################
