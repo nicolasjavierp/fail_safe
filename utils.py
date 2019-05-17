@@ -268,7 +268,7 @@ def get_xur_info(fs):
 
 def get_random_lore():
     random_value= ["Vex","Cabal","Colmena","El_Viajero"]
-    r = requests.get("https://destiny.fandom.com/es/"+random.choice(random_value))
+    r = requests.get("https://destiny.fandom.com/es/wiki/"+random.choice(random_value))
     print(r.text)
     soup = BeautifulSoup(r.text, 'html.parser')
     for lore in soup.find_all('p'): 
