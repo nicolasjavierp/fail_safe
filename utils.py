@@ -284,6 +284,8 @@ def get_random_lore():
         if index == 0 or index == 1:
             pass
         else:
+            item2 = item.encode('ascii', 'ignore')
+            print(type(item2))
             lore = lore + item.text
     #print(random_value,lore)
     #return random.choice(definitive_lore_text)
