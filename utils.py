@@ -270,6 +270,7 @@ def get_random_lore():
     values= ["Vex","Cabal","Colmena","El_Viajero", "Caídos", "Los_Poseídos"]
     lore=[]
     random_value = random.choice(values)
+    print("Entrada  =  "+ str(random_value))
     result = requests.get("https://destiny.fandom.com/es/wiki/"+random_value)
     #result = requests.get("https://destiny.fandom.com/es/wiki/"+"Cabal")
     #print(result.text)
