@@ -284,11 +284,11 @@ def get_random_lore():
         if index == 0 or index == 1:
             pass
         else:
-            item2 = (item.encode('ascii', 'ignore')).decode("utf-8")
-            print(type(item2))
             lore = lore + item.text
     #print(random_value,lore)
     #return random.choice(definitive_lore_text)
+    lore2 = (lore.encode('ascii', 'ignore')).decode("utf-8")
+    print(type(lore2))
     return random_value,lore
 
 
