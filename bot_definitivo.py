@@ -730,7 +730,7 @@ async def destiny_lore(context):
         embed.add_field(name='Referencia', value="<https://destiny.fandom.com/es/wiki/>", inline=True)
         await client.send_message(context.message.channel, embed=embed)
     else:
-        embed = discord.Embed(title=Error, description="No pude obtener el lore :cry:.\n Intentá en un toque ...", color=0x00FF00)
+        embed = discord.Embed(title="Error", description="No pude obtener el lore :cry:.\n Intentá en un toque ...", color=0x00FF00)
         await client.send_message(context.message.channel, embed=embed)
 
 
