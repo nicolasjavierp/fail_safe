@@ -520,176 +520,6 @@ async def ayuda(context):
     await client.send_message(context.message.channel, msg )
 
 
-#######################################################################
-################## SPECIAL PERMISIONS COMMANDS  #######################
-#######################################################################
-
-@client.command(name='Run blacklist and populate clan',
-                description="Genera la lista negra y actualiza la db del clan",
-                brief="run",
-                aliases=['sync'],
-                pass_context=True)
-async def run_sync(context):
-    my_server = discord.utils.get(client.servers)
-    user_id = context.message.author.id
-    user=my_server.get_member(user_id)
-    for i in my_server.roles:
-        if "Admin" in i.name:
-                    admin_id=i.id
-    if admin_id in [role.id for role in user.roles]:
-        #4 tests
-        #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
-        #4 Heroku
-        fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
-        #END Heroku
-        t_start = time.perf_counter()
-        await client.send_message(context.message.channel, "**Aguantame la mecha :bomb: ... que estoy creando el listado de inactivos y pisando el listado de clan. **")
-        await fs.async_clear_clanmates_blacklister_db()
-        for clan in fs.our_clans:
-            blacklist_EX = []
-            #clan_list = await fs.async_get_ClanPlayerList(fs.our_clans[0])
-            clan_list = await fs.async_get_ClanPlayerList(clan)
-            if not clan_list:
-                print("Could not load CLAN LIST!!!!!")
-            await asyncio.sleep(0.5)
-            new_clan_list = await fs.async_add_Clanmembers_LastPlayed(clan_list)
-            print("Got last Played for" + str(clan))
-            await asyncio.sleep(0.5)
-            new_clan_list = await fs.async_add_Clanmembers_Battletag(new_clan_list)
-            print("Got Battletags for" + str(clan))
-            await asyncio.sleep(0.5)
-            new_clan_list = await fs.async_add_Clanmembers_ClanName(new_clan_list)
-            print("Got ClanNames for" + str(clan))
-            await asyncio.sleep(0.5)
-            
-            for clanmate in new_clan_list:
-                blacklisted = await fs.async_is_blacklisted(clanmate)
-                if blacklisted:
-                    blacklist_EX.append(blacklisted)
-            print("Got Blacklisters for" + str(clan))
-            await asyncio.sleep(0.5)
-            definitive_blacklist = await fs.async_filter_blacklist(blacklist_EX)
-            if definitive_blacklist:
-                await asyncio.sleep(0.5)
-                await fs.async_push_blacklist(definitive_blacklist)
-            await asyncio.sleep(0.5)
-            print("Filtered Blacklisters for" + str(clan))
-            for i in new_clan_list:
-                del i['last_played']
-            await fs.async_push_clanmates_to_db(new_clan_list)
-            print("Pushed ClanMates for" + str(clan))
-            await asyncio.sleep(0.5)
-            await client.send_message(context.message.channel, "**Termine con %s**" % clan[1])
-            
-        t_stop = time.perf_counter()
-        #print("Elapsed time: %.1f [min]" % ((t_stop-t_start)/60))
-        await client.send_message(context.message.channel, "**Finalizada la generacion de Inactivos y listado de clan, tardé ... %.1f [min]!**"% ((t_stop-t_start)/60))
-    else:
-        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
-    await asyncio.sleep(0.01)
-
-
-@client.command(name='Poblacion',
-                description="Indica los integrantes de discord",
-                brief="poblacion",
-                aliases=['poblacion','pob'],
-                pass_context=True)
-async def poblacion(context):
-    my_server = discord.utils.get(client.servers)
-    user_id = context.message.author.id
-    user=my_server.get_member(user_id)
-    for i in my_server.roles:
-        if "Admin" in i.name:
-                    admin_id=i.id
-    if admin_id in [role.id for role in user.roles]:
-        #4 tests
-        #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
-        #4 Heroku
-        MONGODB_URI = os.environ['MONGO_DB_MLAB']
-        #END Heroku
-        cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
-        db = cursor.get_database("bot_definitivo")
-        discord_users = db.discord_users
-        discord_users.remove({})
-        await client.send_message(context.message.channel, "Populación Discord:")
-        await client.send_message(context.message.channel, "Total Usuarios: " + str(my_server.member_count))
-        bot_num=0
-        member_list = []
-        for memb in my_server.members:
-                if memb.bot:
-                    bot_num = bot_num+1
-                else:
-                    my_dict = {}
-                    my_dict = {"discord_id":memb.id, "name":memb.name, "nick":memb.nick, "last_activity":""}
-                    member_list.append(my_dict)
-        await async_add_discord_users_list(member_list)
-        await client.send_message(context.message.channel, "Guardianes = "+str(my_server.member_count-bot_num) + "\n" + "Bots = "+str(bot_num))
-    else:
-        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
-    await asyncio.sleep(0.01)
-
-
-@client.command(name='Inactivos',
-                description="Expone el listado de inactivos en discord",
-                brief="inactivos",
-                aliases=['inactivos','inac'],
-                pass_context=True)
-async def inactivos(context):
-    my_server = discord.utils.get(client.servers)
-    user_id = context.message.author.id
-    user=my_server.get_member(user_id)
-    for i in my_server.roles:
-        if "Admin" in i.name:
-                    admin_id=i.id
-    if admin_id in [role.id for role in user.roles]:
-        #4 tests
-        #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
-        #4 Heroku
-        MONGODB_URI = os.environ['MONGO_DB_MLAB']
-        #END Heroku
-        
-        cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
-        db = cursor.get_database("bot_definitivo")
-        blacklisters = db.blacklist
-        
-        date_blacklist_generated = await get_blacklist_date(blacklisters)
-        await client.send_message(context.message.channel,":calendar: **Fecha de ultima modificacion: **"+date_blacklist_generated)
-        blacklisters_list = await get_blacklist(blacklisters)
-        
-        my_dict = {}
-        for record in blacklisters_list:
-            #await client.send_message(context.message.channel,record["displayName"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"])    
-            if record["clan"] in my_dict:
-                my_dict[record["clan"]] += record["displayName"]+" ─ "+ record["inactive_time"] +"\n"
-            else:
-                my_dict[record["clan"]] = record["displayName"]+" ─ "+ record["inactive_time"] +"\n"
-                
-        for key, value in my_dict.items():
-            embed = discord.Embed(
-                title = "Inactivos "+str(key),
-                description=value,
-                color=0x00ff00
-            )
-            #embed.set_footer(text='Tis is a footer!')
-            #embed.set_image(url=client.user.avatar_url.replace("webp?size=1024","png"))
-            embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))     
-            #embed.set_author(name=client.user.name)#,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
-            #embed.add_field(name='Field Name', value='Field Value', inline=False)
-            #embed.add_field(name='Field Name', value='Field Value', inline=True)
-            #embed.add_field(name='Field Name', value='Field Value', inline=True)
-            #await client.say(embed=embed)
-            await client.send_message(context.message.channel, embed=embed)
-        await asyncio.sleep(0.2)       
-        await client.send_message(context.message.channel, "Fin.")
-    else:
-        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
-    await asyncio.sleep(0.05)
-
-
-#######################################################################
-#####################COMANDOS COMUNES##################################
-#######################################################################
-
 @client.command(name='Informe Semanal',
                 description="Informe Semanal",
                 brief="Informe Semanal",
@@ -883,17 +713,185 @@ async def riven_quotes(context):
     await client.send_message(context.message.channel, embed=embed)
 
 
-
 @client.command(name='Lore',
                 description="Lore",
                 brief="lore",
                 aliases=['lore'],
                 pass_context=True)
 async def destiny_lore(context):
-    value, destiny_lore = get_random_lore()
-    embed = discord.Embed(title=value, description=destiny_lore, color=0x00FF00)
-    embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
+    title, destiny_lore, img = get_random_lore()
+    embed = discord.Embed(title=title, description=destiny_lore, color=0x00FF00)
+    embed.set_thumbnail(url=img)
     await client.send_message(context.message.channel, embed=embed)
+
+
+#######################################################################
+################## SPECIAL PERMISIONS COMMANDS  #######################
+#######################################################################
+
+
+@client.command(name='Run blacklist and populate clan',
+                description="Genera la lista negra y actualiza la db del clan",
+                brief="run",
+                aliases=['sync'],
+                pass_context=True)
+async def run_sync(context):
+    my_server = discord.utils.get(client.servers)
+    user_id = context.message.author.id
+    user=my_server.get_member(user_id)
+    for i in my_server.roles:
+        if "Admin" in i.name:
+                    admin_id=i.id
+    if admin_id in [role.id for role in user.roles]:
+        #4 tests
+        #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
+        #4 Heroku
+        fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+        #END Heroku
+        t_start = time.perf_counter()
+        await client.send_message(context.message.channel, "**Aguantame la mecha :bomb: ... que estoy creando el listado de inactivos y pisando el listado de clan. **")
+        await fs.async_clear_clanmates_blacklister_db()
+        for clan in fs.our_clans:
+            blacklist_EX = []
+            #clan_list = await fs.async_get_ClanPlayerList(fs.our_clans[0])
+            clan_list = await fs.async_get_ClanPlayerList(clan)
+            if not clan_list:
+                print("Could not load CLAN LIST!!!!!")
+            await asyncio.sleep(0.5)
+            new_clan_list = await fs.async_add_Clanmembers_LastPlayed(clan_list)
+            print("Got last Played for" + str(clan))
+            await asyncio.sleep(0.5)
+            new_clan_list = await fs.async_add_Clanmembers_Battletag(new_clan_list)
+            print("Got Battletags for" + str(clan))
+            await asyncio.sleep(0.5)
+            new_clan_list = await fs.async_add_Clanmembers_ClanName(new_clan_list)
+            print("Got ClanNames for" + str(clan))
+            await asyncio.sleep(0.5)
+            
+            for clanmate in new_clan_list:
+                blacklisted = await fs.async_is_blacklisted(clanmate)
+                if blacklisted:
+                    blacklist_EX.append(blacklisted)
+            print("Got Blacklisters for" + str(clan))
+            await asyncio.sleep(0.5)
+            definitive_blacklist = await fs.async_filter_blacklist(blacklist_EX)
+            if definitive_blacklist:
+                await asyncio.sleep(0.5)
+                await fs.async_push_blacklist(definitive_blacklist)
+            await asyncio.sleep(0.5)
+            print("Filtered Blacklisters for" + str(clan))
+            for i in new_clan_list:
+                del i['last_played']
+            await fs.async_push_clanmates_to_db(new_clan_list)
+            print("Pushed ClanMates for" + str(clan))
+            await asyncio.sleep(0.5)
+            await client.send_message(context.message.channel, "**Termine con %s**" % clan[1])
+            
+        t_stop = time.perf_counter()
+        #print("Elapsed time: %.1f [min]" % ((t_stop-t_start)/60))
+        await client.send_message(context.message.channel, "**Finalizada la generacion de Inactivos y listado de clan, tardé ... %.1f [min]!**"% ((t_stop-t_start)/60))
+    else:
+        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
+    await asyncio.sleep(0.01)
+
+
+@client.command(name='Poblacion',
+                description="Indica los integrantes de discord",
+                brief="poblacion",
+                aliases=['poblacion','pob'],
+                pass_context=True)
+async def poblacion(context):
+    my_server = discord.utils.get(client.servers)
+    user_id = context.message.author.id
+    user=my_server.get_member(user_id)
+    for i in my_server.roles:
+        if "Admin" in i.name:
+                    admin_id=i.id
+    if admin_id in [role.id for role in user.roles]:
+        #4 tests
+        #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
+        #4 Heroku
+        MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        #END Heroku
+        cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+        db = cursor.get_database("bot_definitivo")
+        discord_users = db.discord_users
+        discord_users.remove({})
+        await client.send_message(context.message.channel, "Populación Discord:")
+        await client.send_message(context.message.channel, "Total Usuarios: " + str(my_server.member_count))
+        bot_num=0
+        member_list = []
+        for memb in my_server.members:
+                if memb.bot:
+                    bot_num = bot_num+1
+                else:
+                    my_dict = {}
+                    my_dict = {"discord_id":memb.id, "name":memb.name, "nick":memb.nick, "last_activity":""}
+                    member_list.append(my_dict)
+        await async_add_discord_users_list(member_list)
+        await client.send_message(context.message.channel, "Guardianes = "+str(my_server.member_count-bot_num) + "\n" + "Bots = "+str(bot_num))
+    else:
+        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
+    await asyncio.sleep(0.01)
+
+
+@client.command(name='Inactivos',
+                description="Expone el listado de inactivos en discord",
+                brief="inactivos",
+                aliases=['inactivos','inac'],
+                pass_context=True)
+async def inactivos(context):
+    my_server = discord.utils.get(client.servers)
+    user_id = context.message.author.id
+    user=my_server.get_member(user_id)
+    for i in my_server.roles:
+        if "Admin" in i.name:
+                    admin_id=i.id
+    if admin_id in [role.id for role in user.roles]:
+        #4 tests
+        #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
+        #4 Heroku
+        MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        #END Heroku
+        
+        cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+        db = cursor.get_database("bot_definitivo")
+        blacklisters = db.blacklist
+        
+        date_blacklist_generated = await get_blacklist_date(blacklisters)
+        await client.send_message(context.message.channel,":calendar: **Fecha de ultima modificacion: **"+date_blacklist_generated)
+        blacklisters_list = await get_blacklist(blacklisters)
+        
+        my_dict = {}
+        for record in blacklisters_list:
+            #await client.send_message(context.message.channel,record["displayName"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"])    
+            if record["clan"] in my_dict:
+                my_dict[record["clan"]] += record["displayName"]+" ─ "+ record["inactive_time"] +"\n"
+            else:
+                my_dict[record["clan"]] = record["displayName"]+" ─ "+ record["inactive_time"] +"\n"
+                
+        for key, value in my_dict.items():
+            embed = discord.Embed(
+                title = "Inactivos "+str(key),
+                description=value,
+                color=0x00ff00
+            )
+            #embed.set_footer(text='Tis is a footer!')
+            #embed.set_image(url=client.user.avatar_url.replace("webp?size=1024","png"))
+            embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))     
+            #embed.set_author(name=client.user.name)#,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
+            #embed.add_field(name='Field Name', value='Field Value', inline=False)
+            #embed.add_field(name='Field Name', value='Field Value', inline=True)
+            #embed.add_field(name='Field Name', value='Field Value', inline=True)
+            #await client.say(embed=embed)
+            await client.send_message(context.message.channel, embed=embed)
+        await asyncio.sleep(0.2)       
+        await client.send_message(context.message.channel, "Fin.")
+    else:
+        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
+    await asyncio.sleep(0.05)
+
+
 #######################################################################
 ################################# MUSIC ###############################
 #######################################################################

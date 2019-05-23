@@ -21,6 +21,10 @@ from datetime import date
 from db import *
 import requests  
 from bs4 import BeautifulSoup
+try:
+    from urllib import parse as urllib_parse
+except ImportError:
+	import urlparse as urllib_parse
 
 my_reset_time='1700'
 
@@ -267,30 +271,46 @@ def get_xur_info(fs):
 
 
 def get_random_lore():
-    values= ["Vex","Cabal","Colmena","El_Viajero", "Caídos", "Los_Poseídos"]
+    posible_contents=[]
+    enemy_contents_url = "https://destiny.fandom.com/es/wiki/Categoría:Enemigos"
+    result = requests.get(enemy_contents_url)
+    result.encoding = 'utf-8'
+    soup = BeautifulSoup(result.content, from_encoding='utf-8')
+
+    for link in soup.findAll('div', {'class': 'category-page__members'}):
+        for a in link.find_all('a', href=True):
+            temp_link = urllib_parse.unquote(a['href'])
+            temp_list = temp_link.split("/")
+            print(temp_list[-1])
+            posible_contents.append(temp_list[-1])
+
     lore=[]
-    random_value = random.choice(values)
+    random_value = random.choice(posible_contents)
     print("Entrada  =  "+ str(random_value))
     result = requests.get("https://destiny.fandom.com/es/wiki/"+random_value)
-    #result = requests.get("https://destiny.fandom.com/es/wiki/"+"Cabal")
-    #print(result.text)
-    #soup = BeautifulSoup(r.text, 'html.parser')
     c = result.content
     soup = BeautifulSoup(c, 'html.parser')
     lore = ""
     all_p = soup.find("div", {"id":"mw-content-text"}).findAll('p')
     for index, item in enumerate(all_p):
-        #print(type(item.text))
-        #adding = str(item.text)
-        if index == 0 or index == 1:
+        temp_lore = unicodedata.normalize('NFKD', item.text).encode('ASCII', 'ignore')
+        formated_lore = re.sub(r'\[[^)]*\]', '', temp_lore)
+        lore = lore + formated_lore
+
+    my_list = lore.split("\n")
+    definitive_lore = []
+    for val in my_list:
+        if "." not in val and "?" not in val and "!" not in val and "<<" not in val:
             pass
         else:
-            lore = lore + item.text
-    #print(random_value,lore)
-    #return random.choice(definitive_lore_text)
-    lore2 = (lore.encode('ascii', 'ignore')).decode("utf-8")
-    print(type(lore2))
-    return random_value,lore
+            definitive_lore.append(val)
 
+    lore = " ".join(definitive_lore)
 
-        
+    print("-----------")
+    print(lore)
+    print("-----------")
+
+    img_url = [img['src'] for img in soup.find_all('img')]
+    print(img_url[1])
+    return random_value,lore,img_url[1]
