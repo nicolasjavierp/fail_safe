@@ -742,16 +742,16 @@ async def destiny_lore(context):
             #first_part = int(round(len(destiny_lore)/2))
             #first_half=destiny_lore[0:first_part]
             acum = 0
-            print(int(number_of_parts))
+            #print(int(number_of_parts))
             for i in range(int(number_of_parts)):
                 if i == 0:
-                    print("BEGINING: -----------------")
+                    #print("BEGINING: -----------------")
                     begining = destiny_lore[0:api_discord_char_limit]
                     acum = acum + api_discord_char_limit
                     embed = discord.Embed(title=title, description=begining, color=0x00FF00)
                     await client.send_message(context.message.channel, embed=embed)
                 if i == int(number_of_parts)-1:
-                    print("ENDING -----------------")
+                    #print("ENDING -----------------")
                     ending = destiny_lore[acum:]
                     embed = discord.Embed(title="", description=ending, color=0x00FF00)
                     if "http" in img:
@@ -760,7 +760,7 @@ async def destiny_lore(context):
                     await client.send_message(context.message.channel, embed=embed)
                     
                 if i !=0 and i !=int(number_of_parts)-1: 
-                    print("MIDDLE PART -----------------")
+                    #print("MIDDLE PART -----------------")
                     middle_part = destiny_lore[acum:acum+api_discord_char_limit]
                     acum = acum + api_discord_char_limit
                     embed = discord.Embed(title="", description=middle_part, color=0x00FF00)
