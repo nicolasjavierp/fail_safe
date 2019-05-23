@@ -725,8 +725,10 @@ async def destiny_lore(context):
     title, destiny_lore, img = get_random_lore()
     if title and destiny_lore:
         print("!!!!!!!!!!!!!!!!!!!!!!!!")
-        print(destiny_lore)
-        print(len(destiny_lore))
+        #print(destiny_lore)
+        #print(len(destiny_lore))
+        print("IMG:")
+        print(img)
         print("!!!!!!!!!!!!!!!!!!!!!!!!")
         api_discord_char_limit = 2000
         if len(destiny_lore) < api_discord_char_limit:
