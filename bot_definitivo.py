@@ -723,7 +723,11 @@ async def destiny_lore(context):
     await client.send_message(context.message.channel, embed=embed)
     title, destiny_lore, img = get_random_lore()
     if title and destiny_lore:
-        if len(destiny_lore) >= 1700:
+        print("!!!!!!!!!!!!!!!!!!!!!!!!")
+        print(destiny_lore)
+        print(len(destiny_lore))
+        print("!!!!!!!!!!!!!!!!!!!!!!!!")
+        if len(destiny_lore) >= 1999:
             embed = discord.Embed(title=title, description=destiny_lore, color=0x00FF00)
             if "http" in img:
                 embed.set_image(url=img)

@@ -21,6 +21,7 @@ from datetime import date
 from db import *
 import requests  
 from bs4 import BeautifulSoup
+
 try:
     from urllib import parse as urllib_parse
 except ImportError:
@@ -276,7 +277,7 @@ def get_random_lore():
     result = requests.get(enemy_contents_url)
     if result:
         result.encoding = 'utf-8'
-        soup = BeautifulSoup(result.content, from_encoding='utf-8')
+        soup = BeautifulSoup(result.content, 'html.parser')
 
         for link in soup.findAll('div', {'class': 'category-page__members'}):
             for a in link.find_all('a', href=True):
@@ -314,7 +315,7 @@ def get_random_lore():
             #print("-----------")
 
             img_url = [img['src'] for img in soup.find_all('img')]
-            print(img_url[1])
+            #print(img_url[1])
             return random_value,lore,img_url[1]
         else:
             return None,None,None
