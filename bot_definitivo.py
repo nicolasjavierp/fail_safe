@@ -736,7 +736,7 @@ async def destiny_lore(context):
             embed.add_field(name='Referencia', value="<https://destiny.fandom.com/es/wiki/>", inline=False)
             await client.send_message(context.message.channel, embed=embed)
         else:
-            number_of_parts = math.floor(len(destiny_lore)/api_discord_char_limit)
+            number_of_parts = math.ceil(len(destiny_lore)/api_discord_char_limit)
             #first_part = int(round(len(destiny_lore)/2))
             #first_half=destiny_lore[0:first_part]
             acum = 0
