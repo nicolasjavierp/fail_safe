@@ -722,14 +722,25 @@ async def destiny_lore(context):
     embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
     await client.send_message(context.message.channel, embed=embed)
     title, destiny_lore, img = get_random_lore()
-    if title and destiny_lore:        
-        embed = discord.Embed(title=title, description=destiny_lore, color=0x00FF00)
-        #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
-        #embed.set_footer(text="https://destiny.fandom.com/es/wiki/")
-        if "http" in img:
-            embed.set_image(url=img)
-        embed.add_field(name='Referencia', value="<https://destiny.fandom.com/es/wiki/>", inline=False)
-        await client.send_message(context.message.channel, embed=embed)
+    if title and destiny_lore:
+        if len(destiny_lore) >= 1700:
+            embed = discord.Embed(title=title, description=destiny_lore, color=0x00FF00)
+            if "http" in img:
+                embed.set_image(url=img)
+            embed.add_field(name='Referencia', value="<https://destiny.fandom.com/es/wiki/>", inline=False)
+            await client.send_message(context.message.channel, embed=embed)
+        else:
+            first_part = int(round(len(destiny_lore)/2))
+            first_half=destiny_lore[0:first_part]
+            embed = discord.Embed(title=title, description=first_half, color=0x00FF00)
+            await client.send_message(context.message.channel, embed=embed)
+            second_half=destiny_lore[first_part:]
+            embed = discord.Embed(title="", description=second_half, color=0x00FF00)
+            if "http" in img:
+                embed.set_image(url=img)
+            embed.add_field(name='Referencia', value="<https://destiny.fandom.com/es/wiki/>", inline=False)
+            await client.send_message(context.message.channel, embed=embed)
+
     else:
         embed = discord.Embed(title="Error", description="No pude obtener el lore :cry:.\n Intentá en un toque ...", color=0x00FF00)
         await client.send_message(context.message.channel, embed=embed)
