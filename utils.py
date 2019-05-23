@@ -294,6 +294,8 @@ def get_random_lore():
     all_p = soup.find("div", {"id":"mw-content-text"}).findAll('p')
     for index, item in enumerate(all_p):
         temp_lore = unicodedata.normalize('NFKD', item.text).encode('ASCII', 'ignore')
+        print("HERE:")
+        print(type(temp_lore))
         formated_lore = re.sub(r'\[[^)]*\]', '', temp_lore)
         lore = lore + formated_lore
 
