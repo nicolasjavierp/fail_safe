@@ -281,12 +281,12 @@ def get_random_lore():
         for a in link.find_all('a', href=True):
             temp_link = urllib_parse.unquote(a['href'])
             temp_list = temp_link.split("/")
-            print(temp_list[-1])
+            #print(temp_list[-1])
             posible_contents.append(temp_list[-1])
 
     lore=[]
     random_value = random.choice(posible_contents)
-    print("Entrada  =  "+ str(random_value))
+    #print("Entrada  =  "+ str(random_value))
     result = requests.get("https://destiny.fandom.com/es/wiki/"+random_value)
     c = result.content
     soup = BeautifulSoup(c, 'html.parser')
@@ -294,8 +294,6 @@ def get_random_lore():
     all_p = soup.find("div", {"id":"mw-content-text"}).findAll('p')
     for index, item in enumerate(all_p):
         temp_lore = unicodedata.normalize('NFKD', item.text)#.encode('ASCII', 'ignore')
-        print("HERE:")
-        print(type(temp_lore))
         formated_lore = re.sub(r'\[[^)]*\]', '', temp_lore)
         lore = lore + formated_lore
 
@@ -309,9 +307,9 @@ def get_random_lore():
 
     lore = " ".join(definitive_lore)
 
-    print("-----------")
-    print(lore)
-    print("-----------")
+    #print("-----------")
+    #print(lore)
+    #print("-----------")
 
     img_url = [img['src'] for img in soup.find_all('img')]
     print(img_url[1])
