@@ -274,43 +274,49 @@ def get_random_lore():
     posible_contents=[]
     enemy_contents_url = "https://destiny.fandom.com/es/wiki/Categoría:Enemigos"
     result = requests.get(enemy_contents_url)
-    result.encoding = 'utf-8'
-    soup = BeautifulSoup(result.content, from_encoding='utf-8')
+    if result:
+        result.encoding = 'utf-8'
+        soup = BeautifulSoup(result.content, from_encoding='utf-8')
 
-    for link in soup.findAll('div', {'class': 'category-page__members'}):
-        for a in link.find_all('a', href=True):
-            temp_link = urllib_parse.unquote(a['href'])
-            temp_list = temp_link.split("/")
-            #print(temp_list[-1])
-            posible_contents.append(temp_list[-1])
+        for link in soup.findAll('div', {'class': 'category-page__members'}):
+            for a in link.find_all('a', href=True):
+                temp_link = urllib_parse.unquote(a['href'])
+                temp_list = temp_link.split("/")
+                #print(temp_list[-1])
+                posible_contents.append(temp_list[-1])
 
-    lore=[]
-    random_value = random.choice(posible_contents)
-    #print("Entrada  =  "+ str(random_value))
-    result = requests.get("https://destiny.fandom.com/es/wiki/"+random_value)
-    c = result.content
-    soup = BeautifulSoup(c, 'html.parser')
-    lore = ""
-    all_p = soup.find("div", {"id":"mw-content-text"}).findAll('p')
-    for index, item in enumerate(all_p):
-        temp_lore = unicodedata.normalize('NFKD', item.text)#.encode('ASCII', 'ignore')
-        formated_lore = re.sub(r'\[[^)]*\]', '', temp_lore)
-        lore = lore + formated_lore
+        lore=[]
+        random_value = random.choice(posible_contents)
+        #print("Entrada  =  "+ str(random_value))
+        result = requests.get("https://destiny.fandom.com/es/wiki/"+random_value)
+        if result:
+            c = result.content
+            soup = BeautifulSoup(c, 'html.parser')
+            lore = ""
+            all_p = soup.find("div", {"id":"mw-content-text"}).findAll('p')
+            for index, item in enumerate(all_p):
+                temp_lore = unicodedata.normalize('NFKD', item.text)#.encode('ASCII', 'ignore')
+                formated_lore = re.sub(r'\[[^)]*\]', '', temp_lore)
+                lore = lore + formated_lore
 
-    my_list = lore.split("\n")
-    definitive_lore = []
-    for val in my_list:
-        if "." not in val and "?" not in val and "!" not in val and "<<" not in val:
-            pass
+            my_list = lore.split("\n")
+            definitive_lore = []
+            for val in my_list:
+                if "." not in val and "?" not in val and "!" not in val and "<<" not in val:
+                    pass
+                else:
+                    definitive_lore.append(val)
+
+            lore = " ".join(definitive_lore)
+
+            #print("-----------")
+            #print(lore)
+            #print("-----------")
+
+            img_url = [img['src'] for img in soup.find_all('img')]
+            print(img_url[1])
+            return random_value,lore,img_url[1]
         else:
-            definitive_lore.append(val)
-
-    lore = " ".join(definitive_lore)
-
-    #print("-----------")
-    #print(lore)
-    #print("-----------")
-
-    img_url = [img['src'] for img in soup.find_all('img')]
-    print(img_url[1])
-    return random_value,lore,img_url[1]
+            return None,None,None
+    else:
+        return None,None,None
