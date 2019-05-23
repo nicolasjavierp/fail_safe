@@ -23,6 +23,7 @@ from db import *
 from utils import *
 import tweepy
 import youtube_dl
+import math
 
 
 #4 Heroku
@@ -727,24 +728,50 @@ async def destiny_lore(context):
         print(destiny_lore)
         print(len(destiny_lore))
         print("!!!!!!!!!!!!!!!!!!!!!!!!")
-        if len(destiny_lore) <= 1990:
+        api_discord_char_limit = 2000
+        if len(destiny_lore) < api_discord_char_limit:
             embed = discord.Embed(title=title, description=destiny_lore, color=0x00FF00)
             if "http" in img:
                 embed.set_image(url=img)
             embed.add_field(name='Referencia', value="<https://destiny.fandom.com/es/wiki/>", inline=False)
             await client.send_message(context.message.channel, embed=embed)
         else:
-            first_part = int(round(len(destiny_lore)/2))
-            first_half=destiny_lore[0:first_part]
-            embed = discord.Embed(title=title, description=first_half, color=0x00FF00)
-            await client.send_message(context.message.channel, embed=embed)
-            second_half=destiny_lore[first_part:]
-            embed = discord.Embed(title="", description=second_half, color=0x00FF00)
-            if "http" in img:
-                embed.set_image(url=img)
-            embed.add_field(name='Referencia', value="<https://destiny.fandom.com/es/wiki/>", inline=False)
-            await client.send_message(context.message.channel, embed=embed)
+            number_of_parts = math.floor(len(destiny_lore)/api_discord_char_limit)
+            #first_part = int(round(len(destiny_lore)/2))
+            #first_half=destiny_lore[0:first_part]
+            acum = 0
+            print(int(number_of_parts))
+            for i in range(int(number_of_parts)):
+                if i == 0:
+                    print("BEGINING: -----------------")
+                    begining = destiny_lore[0:api_discord_char_limit]
+                    acum = acum + api_discord_char_limit
+                    embed = discord.Embed(title=title, description=begining, color=0x00FF00)
+                    await client.send_message(context.message.channel, embed=embed)
+                if i == int(number_of_parts)-1:
+                    print("ENDING -----------------")
+                    ending = destiny_lore[acum:]
+                    embed = discord.Embed(title="", description=ending, color=0x00FF00)
+                    if "http" in img:
+                        embed.set_image(url=img)
+                    embed.add_field(name='Referencia', value="<https://destiny.fandom.com/es/wiki/>", inline=False)
+                    await client.send_message(context.message.channel, embed=embed)
+                    
+                if i !=0 and i !=int(number_of_parts)-1: 
+                    print("MIDDLE PART -----------------")
+                    middle_part = destiny_lore[acum:acum+api_discord_char_limit]
+                    acum = acum + api_discord_char_limit
+                    embed = discord.Embed(title="", description=middle_part, color=0x00FF00)
+                    await client.send_message(context.message.channel, embed=embed)
 
+                #embed = discord.Embed(title=title, description=first_half, color=0x00FF00)
+                #await client.send_message(context.message.channel, embed=embed)
+                #second_half=destiny_lore[first_part:]
+                #embed = discord.Embed(title="", description=second_half, color=0x00FF00)
+                #if "http" in img:
+                #    embed.set_image(url=img)
+                #embed.add_field(name='Referencia', value="<https://destiny.fandom.com/es/wiki/>", inline=False)
+                #await client.send_message(context.message.channel, embed=embed)
     else:
         embed = discord.Embed(title="Error", description="No pude obtener el lore :cry:.\n Intentá en un toque ...", color=0x00FF00)
         await client.send_message(context.message.channel, embed=embed)
