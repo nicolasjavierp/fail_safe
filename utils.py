@@ -273,6 +273,7 @@ def get_xur_info(fs):
 
 def get_random_lore():
     posible_contents=[]
+    excluded_contents=["Shank"] 
     enemy_contents_url = "https://destiny.fandom.com/es/wiki/Categoría:Enemigos"
     result = requests.get(enemy_contents_url)
     if result:
@@ -284,7 +285,8 @@ def get_random_lore():
                 temp_link = urllib_parse.unquote(a['href'])
                 temp_list = temp_link.split("/")
                 #print(temp_list[-1])
-                posible_contents.append(temp_list[-1])
+                if temp_list[-1] != "Shank":
+                    posible_contents.append(temp_list[-1])
 
         lore=[]
         random_value = random.choice(posible_contents)
