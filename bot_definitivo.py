@@ -727,7 +727,7 @@ async def destiny_lore(context):
         print(destiny_lore)
         print(len(destiny_lore))
         print("!!!!!!!!!!!!!!!!!!!!!!!!")
-        if len(destiny_lore) >= 1999:
+        if len(destiny_lore) <= 1990:
             embed = discord.Embed(title=title, description=destiny_lore, color=0x00FF00)
             if "http" in img:
                 embed.set_image(url=img)
