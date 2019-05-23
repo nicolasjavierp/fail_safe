@@ -726,8 +726,9 @@ async def destiny_lore(context):
         embed = discord.Embed(title=title, description=destiny_lore, color=0x00FF00)
         #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
         #embed.set_footer(text="https://destiny.fandom.com/es/wiki/")
-        embed.set_image(url=img)
-        embed.add_field(name='Referencia', value="<https://destiny.fandom.com/es/wiki/>", inline=True)
+        if "http" in img:
+            embed.set_image(url=img)
+        embed.add_field(name='Referencia', value="<https://destiny.fandom.com/es/wiki/>", inline=False)
         await client.send_message(context.message.channel, embed=embed)
     else:
         embed = discord.Embed(title="Error", description="No pude obtener el lore :cry:.\n Intentá en un toque ...", color=0x00FF00)
