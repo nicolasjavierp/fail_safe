@@ -273,7 +273,7 @@ def get_xur_info(fs):
 
 def get_random_lore():
     posible_contents=[]
-    excluded_contents=["Shank"] 
+    excluded_contents=["Shank", "Ogre"] 
     enemy_contents_url = "https://destiny.fandom.com/es/wiki/Categoría:Enemigos"
     result = requests.get(enemy_contents_url)
     if result:
@@ -285,11 +285,14 @@ def get_random_lore():
                 temp_link = urllib_parse.unquote(a['href'])
                 temp_list = temp_link.split("/")
                 #print(temp_list[-1])
-                if temp_list[-1] != "Shank":
+                if temp_list[-1] not in excluded_contents:
                     posible_contents.append(temp_list[-1])
-
+                else:
+                    print("Found Excluded content: "+str(temp_list[-1]))
+        extras = ["El_Viajero", "Guardianes"]
+        definitive_contents = posible_contents + extras
         lore=[]
-        random_value = random.choice(posible_contents)
+        random_value = random.choice(definitive_contents)
         #print("Entrada  =  "+ str(random_value))
         result = requests.get("https://destiny.fandom.com/es/wiki/"+random_value)
         if result:
