@@ -287,9 +287,9 @@ def get_random_lore():
                 #print(temp_list[-1])
                 if temp_list[-1] not in excluded_contents:
                     posible_contents.append(temp_list[-1])
-                else:
-                    print("Found Excluded content: "+str(temp_list[-1]))
-        extras = ["El_Viajero", "Guardianes"]
+                #else:
+                #    print("Found Excluded content: "+str(temp_list[-1]))
+        extras = ["El_Viajero", "Guardianes", "Exo", "Insomnes", "Humanos"]
         definitive_contents = posible_contents + extras
         lore=[]
         random_value = random.choice(definitive_contents)
