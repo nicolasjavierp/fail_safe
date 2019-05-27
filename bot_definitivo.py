@@ -548,9 +548,14 @@ async def informe_semanal(context):
         1: ["Nivel de Maldicion 2"],
         2: ["Nivel de Maldicion 3, esta disponible el Trono Destrozado (Mazmorra)!"]
     }
+    HZ_dict={        
+        0: ["Vacio","https://prnt.sc/noo0rb"],
+        1: ["Arco","https://prnt.sc/noo4ct"],
+        2: ["Solar","https://prnt.sc/nrma9l"]
+    }
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
-    #print(key)
+    print(key)
 
     if date.today().weekday() == 0: #and today.hour >= 14: # 0 is for monday
         #print("Today is Monday !")
@@ -565,7 +570,7 @@ async def informe_semanal(context):
         key = key - 1
         if key<0:
             key = 0
-        #print("Week Number: "+str(key))
+        print("Week Number: "+str(key))
         #print(today.hour)
     #print("**************")
     #print("Next Week")
@@ -583,6 +588,10 @@ async def informe_semanal(context):
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/508999396835196950/520269693479551004/Protocolo.png")
     embed.set_image(url=protocol_dict[key%5][1])
     await client.send_message(context.message.channel, embed=embed)
+    embed = discord.Embed(title="" , description=":map: Mapa de Sala de Horno esta semana \n **"+HZ_dict[key%3][0]+"**", color=0x00ff00)
+    embed.set_image(url=HZ_dict[key%3][1])
+    await client.send_message(context.message.channel, embed=embed)
+
 
 
 @client.command(name='Server Status',
