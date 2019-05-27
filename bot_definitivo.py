@@ -588,7 +588,7 @@ async def informe_semanal(context):
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/508999396835196950/520269693479551004/Protocolo.png")
     embed.set_image(url=protocol_dict[key%5][1])
     await client.send_message(context.message.channel, embed=embed)
-    embed = discord.Embed(title="**Configuración "+HZ_dict[key%3][0]+"**" , description=":map: __Mapa de Sala de Horno__", color=0x00ff00)
+    embed = discord.Embed(title="**Esta Semana Configuración "+HZ_dict[key%3][0]+":**" , description=":map: __Mapas de Sala de Horno__", color=0x00ff00)
     embed.set_image(url=HZ_dict[key%3][1])
     await client.send_message(context.message.channel, embed=embed)
 
