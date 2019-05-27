@@ -549,9 +549,9 @@ async def informe_semanal(context):
         2: ["Nivel de Maldicion 3, esta disponible el Trono Destrozado (Mazmorra)!"]
     }
     HZ_dict={        
-        0: ["Vacio","https://prnt.sc/noo0rb"],
-        1: ["Arco","https://prnt.sc/noo4ct"],
-        2: ["Solar","https://prnt.sc/nrma9l"]
+        1: ["Vacio","https://images-ext-2.discordapp.net/external/inJak0x078Kpn6K_f50f61zV_7_u92W92Nonkvcc2Rc/https/i.imgur.com/ikiCD58.png"],
+        2: ["Arco","https://images-ext-2.discordapp.net/external/inJak0x078Kpn6K_f50f61zV_7_u92W92Nonkvcc2Rc/https/i.imgur.com/ikiCD58.png"],
+        0: ["Solar","https://images-ext-2.discordapp.net/external/inJak0x078Kpn6K_f50f61zV_7_u92W92Nonkvcc2Rc/https/i.imgur.com/ikiCD58.png"]
     }
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
