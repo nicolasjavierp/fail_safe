@@ -589,10 +589,9 @@ async def informe_semanal(context):
     embed.set_image(url=protocol_dict[key%5][1])
     await client.send_message(context.message.channel, embed=embed)
 
-    embed = discord.Embed(title="**Esta Semana Configuración "+HZ_dict[key%3][0]+":**" , description="", color=0x00ff00)
+    embed = discord.Embed(title="** Web App **" , url="http://fiddle.jshell.net/pastuleo23/xu1snrc0/show", color=0x00ff00)
     embed.set_image(url=HZ_dict[key%3][1])
-    embed.add_field(name='Web APP:', value="<http://fiddle.jshell.net/pastuleo23/xu1snrc0/show>", inline=False)
-    embed.add_field(name=':map: __Mapas de Sala de Horno__', value="", inline=False)
+    embed.add_field(name=':map: __Mapas de Sala de Horno__', value="**Esta Semana Configuración "+HZ_dict[key%3][0]+":**", inline=False)
     await client.send_message(context.message.channel, embed=embed)
 
 
