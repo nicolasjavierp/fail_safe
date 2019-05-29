@@ -555,7 +555,7 @@ async def informe_semanal(context):
     }
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
-    print(key)
+    #print(key)
 
     if date.today().weekday() == 0: #and today.hour >= 14: # 0 is for monday
         #print("Today is Monday !")
@@ -566,11 +566,11 @@ async def informe_semanal(context):
     #print("Week Number: "+str(key))
         
     if date.today().weekday() == 1 and today.hour < 17:
-        print("Tuesday Before RESET !! Adjusting week number!!")
+        #print("Tuesday Before RESET !! Adjusting week number!!")
         key = key - 1
         if key<0:
             key = 0
-        print("Week Number: "+str(key))
+        #print("Week Number: "+str(key))
         #print(today.hour)
     #print("**************")
     #print("Next Week")
@@ -704,6 +704,7 @@ async def calus_quotes(context):
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/499231830235414529/578589363055755264/unknown.png")
     embed.set_footer(text='Emperor Calus has spoken!')
     await client.send_message(context.message.channel, embed=embed)
+
 
 @client.command(name='Riven Quotes',
                 description="Lineas de Riven",
@@ -1050,6 +1051,7 @@ async def skip(context,url):
 ################################# TEST ################################
 #######################################################################
 
+
 @client.command(name='Test',
                 description="Test",
                 brief="Test",
@@ -1064,8 +1066,8 @@ async def testing(context):
     fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
     print(get_random_lore())
-    pass
-            
+    pass       
+
 
 #######################################################################
 ######################### LOOPS #######################################
