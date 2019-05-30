@@ -678,12 +678,12 @@ class FailSafe(object):
             human_diff = humanize.naturaltime(diff)
             delta_seconds = diff.total_seconds()
             print("----------------PLAYER----------------------")
-            print(human_diff, player)
+            print(human_diff, player, delta_seconds)
             print("---------------------------------------------")
             if (delta_seconds > break_point_seconds):
                 #print("Blacklisted")
-                player["inactive_time"] = human_diff
-                #player["inactive_time"] = delta_seconds
+                #player["inactive_time"] = human_diff
+                player["inactive_time"] = delta_seconds
                 player["date"] = datetime.today().strftime('%Y-%m-%d')
                 return player
             else:
