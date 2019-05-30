@@ -309,6 +309,9 @@ class FailSafe(object):
             now = datetime.utcnow().replace(microsecond=0)
             diff = now - last_played
             human_diff = humanize.naturaltime(diff)
+            print("----------------PLAYER----------------------")
+            print(human_diff, player)
+            print("---------------------------------------------")
             delta_seconds = diff.total_seconds()
             if (delta_seconds > break_point_seconds):
                 #print "Blacklisted"
@@ -666,16 +669,21 @@ class FailSafe(object):
         '''Checks if player is a blacklister'''
         #print(player)
         if player['last_played']:
-            break_point_seconds=1296000*2
+            #break_point_seconds=1296000*2
+            break_point_seconds=2592000
             last = player['last_played']
             last_played = datetime.strptime(last, "%Y-%m-%dT%H:%M:%SZ")
             now = datetime.utcnow().replace(microsecond=0)
             diff = now - last_played
             human_diff = humanize.naturaltime(diff)
             delta_seconds = diff.total_seconds()
+            print("----------------PLAYER----------------------")
+            print(human_diff, player)
+            print("---------------------------------------------")
             if (delta_seconds > break_point_seconds):
                 #print("Blacklisted")
                 player["inactive_time"] = human_diff
+                #player["inactive_time"] = delta_seconds
                 player["date"] = datetime.today().strftime('%Y-%m-%d')
                 return player
             else:
