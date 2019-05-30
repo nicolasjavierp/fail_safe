@@ -403,7 +403,8 @@ class FailSafe(object):
                 await asyncio.sleep(0.05)
                 site_call = "https://www.bungie.net/Platform/GroupV2/" + str(clan[0]) + "/Members/?currentPage=1"
                 request = requests.get(site_call, headers={"X-API-Key":self.api_key})
-                if request.json()['Response']['totalResults']:
+                print(request)
+                if request.json():
                     my_dict={clan[1]:request.json()['Response']['totalResults']}
                     capacity.append(my_dict)
             return capacity
