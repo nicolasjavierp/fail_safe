@@ -639,9 +639,12 @@ async def clan_capacity(context):
     fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
     capacity = await fs.get_clan_capacity()
-    for c in capacity:
-        for key,val in c.items():
-            await client.send_message(context.message.channel, str(key)+": "+str(val)+"/100" )
+    if capacity:
+        for c in capacity:
+            for key,val in c.items():
+                await client.send_message(context.message.channel, str(key)+": "+str(val)+"/100" )
+    else:
+        await client.send_message(context.message.channel, "No obtuve respuesta de la API de Bungie ... debe estar en matenimiento ¯\\_(ツ)_/¯" )
 
 
 @client.command(name='Info Xur',
