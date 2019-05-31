@@ -577,11 +577,11 @@ async def informe_semanal(context):
     #print((key+1)%6)
     #print(ascendant_dict[key%6][0])
     #print(protocol_dict[key%5][0])
-    embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%6][0]+"**", color=0x00ff00)
+    embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%6][0]+"**", color=0xff0000)
     embed.set_image(url=ascendant_dict[key%6][1])
     await client.send_message(context.message.channel, embed=embed)
 
-    embed = discord.Embed(title="" , description="**"+curse_dict[key%3][0]+"**", color=0x00ff00)
+    embed = discord.Embed(title="" , description="**Esta semana la Ciudad Ensoñada tiene"+curse_dict[key%3][0]+"**", color=0x000000)
     await client.send_message(context.message.channel, embed=embed)
     
     embed = discord.Embed(title="" , description= ":calendar: Esta semana en  Protocolo Intensificación: \n **"+protocol_dict[key%5][0]+"**", color=0x00ff00)
@@ -589,7 +589,7 @@ async def informe_semanal(context):
     embed.set_image(url=protocol_dict[key%5][1])
     await client.send_message(context.message.channel, embed=embed)
 
-    embed = discord.Embed(title="**:earth_americas: Web App Secuencia Terminales Hora Cero**" , url="http://fiddle.jshell.net/pastuleo23/xu1snrc0/show", color=0x00ff00)
+    embed = discord.Embed(title="**:earth_americas: Web App Secuencia Terminales Hora Cero**" , url="http://fiddle.jshell.net/pastuleo23/xu1snrc0/show", color=0xffd700)
     embed.set_thumbnail(url="https://www.bungie.net/common/destiny2_content/icons/f0def60d28b4f2a5a7fe8ec3d4764cfa.jpg")
     embed.set_image(url=HZ_dict[key%3][1])
     embed.add_field(name=':map: __Mapas de Sala de Horno__', value="Esta Semana Configuración "+"__**"+HZ_dict[key%3][0]+"**__"+":", inline=False)
