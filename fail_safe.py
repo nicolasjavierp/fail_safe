@@ -683,7 +683,8 @@ class FailSafe(object):
             if (delta_seconds > break_point_seconds):
                 #print("Blacklisted")
                 #player["inactive_time"] = human_diff
-                player["inactive_time"] = str(delta_seconds/break_point_seconds)+" month/s"
+                temp_num = "{0:.2f}".format(delta_seconds/break_point_seconds)
+                player["inactive_time"] = str(temp_num)+" meses"
                 #player["inactive_time"] = delta_seconds
                 player["date"] = datetime.today().strftime('%Y-%m-%d')
                 return player
