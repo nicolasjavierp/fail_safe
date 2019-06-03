@@ -489,7 +489,7 @@ async def raid_this_week(context):
                     #print("/***************************************/")
                     #print(raids_complete_filtered)
                     definitive_complete_raids=get_unique_raids(raids_complete_filtered, fs)
-                    #print(definitive_complete_raids)
+                    print(definitive_complete_raids)
                     for key, value in definitive_complete_raids.items():
                         if value:
                             report = report +" :white_check_mark: "+str(key) +"\n"
