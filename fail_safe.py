@@ -31,7 +31,8 @@ class FailSafe(object):
         '''
         self.api_key = api_key
         self.blacklist = []
-        self.our_clans = [(2943900, "Escuadra 2"), (3084439, "Escuadra 3"), (3111393, "Escuadra 4"), (3144839,"Escuadra 5"), (3635441,"Escuadra 6")]
+        #self.our_clans = [(2943900, "Escuadra 2"), (3084439, "Escuadra 3"), (3111393, "Escuadra 4"), (3144839,"Escuadra 5"), (3635441,"Escuadra 6")]
+        self.our_clans = [(3144839,"Escuadra 5"), (3635441,"Escuadra 6")]
         #self.our_clans = [(2943900, "Escuadra 2")] # for tests
         self.error_members = {}
         self.error_members = set()
@@ -103,8 +104,7 @@ class FailSafe(object):
                                 headers={"X-API-Key":self.api_key})
         return int(request.json()['Response']['bungieNetUser']['membershipId'])
 
-
-    
+ 
     def get_DestinyUserProfile(self, membership_id, components=[100]):
         '''
         membership_id (int): the Destiny membership_id of a player (returned by get_DestinyUserId)
@@ -132,6 +132,7 @@ class FailSafe(object):
             time.sleep(5)
             #print(type(inst))
             return None
+
 
     def get_DestinyUserProfileDetail(self, membership_id, components=[200]):
         '''
@@ -241,6 +242,7 @@ class FailSafe(object):
                                 headers={"X-API-Key":self.api_key})
         return request.json()['Response']
 
+
     def get_postGameStats(self, game_id):
         '''game_id (int): Need to look further into this, but game_ids can be found'''
         site_call = "https://bungie.net/Platform/Destiny2/Stats/PostGameCarnageReport/" + str(game_id)
@@ -254,7 +256,6 @@ class FailSafe(object):
         request = requests.get(site_call,
                                 headers={"X-API-Key":self.api_key})
         return request.json()['Response']
-
 
   
     def get_PlayerStats(self, membership_id):
@@ -433,7 +434,6 @@ class FailSafe(object):
                             self.blacklist.remove(player)
 
     
-    
     def upload_blacklist(self):
         #4 tests
         #with open(my_config_file, 'r') as f:
@@ -479,7 +479,6 @@ class FailSafe(object):
                     clanmate_dict = {"battletag":clanmate[key][4] , "clan": clanmate[key][2], "displayName":clanmate[key][0]}
                     self.push_clanmate_to_db(clanmate_dict,clanmates)
 
-    
     
     def create_blacklist(self):
             '''Generates a list of  blacklisted players'''
