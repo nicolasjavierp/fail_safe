@@ -430,7 +430,7 @@ async def raid_this_week(context):
         #print("Now:")
         #print(datetime.now())
         user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
-        embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie, que a veces tarda unos minutos en registrar la Raid", color=0x00ff00)
+        embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie, que a veces tarda unos minutos en registrar la Raid. \n Un momento por favor ...", color=0x00ff00)
         await client.send_message(context.message.channel, embed=embed)
         user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
         #print(user_destiny)
@@ -563,7 +563,6 @@ async def informe_semanal(context):
     await client.send_message(context.message.channel, embed=embed)
 
 
-
 @client.command(name='Server Status',
                 description="Server Status",
                 brief="Server Status",
@@ -653,7 +652,6 @@ async def xur_info(context):
         embed = discord.Embed(title=":x:__XUR:__", description=info, color=0x00ff00)
         embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
         await client.send_message(context.message.channel, embed=embed)
-
 
 
 @client.command(name='Calus Quotes',
