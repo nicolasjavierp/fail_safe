@@ -463,7 +463,7 @@ async def raid_this_week(context):
                         else:
                             report = report +" :x: "+ str(key) +"\n"
                 else:
-                    for key, value in fs.raids.items():
+                    for key, value in fs.relevant_raids.items():
                         report = report + " :x: "+ value +"\n"
                     
                 res = res + report + "\n"
