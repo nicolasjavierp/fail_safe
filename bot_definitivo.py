@@ -183,7 +183,7 @@ async def on_member_remove(member):
     server = member.server
     print("Bye Bye {0} !".format(member.name))
     for i in server.roles:
-        print(i.id,i.name)
+        #print(i.id,i.name)
         #if i.id == str(544911570258624522):
         #    custom_clan_role_id=i.id
         if i.id == str(387742983249985536):
