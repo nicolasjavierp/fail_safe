@@ -188,17 +188,17 @@ async def on_member_remove(member):
         #    custom_clan_role_id=i.id
         if i.id == str(387742983249985536):
             custom_destiny_clan_role_id = i.id
-        if i.id == str(544915941713248267):
-            custom_division_clan_role_id = i.id
+        #if i.id == str(544915941713248267):
+            #custom_division_clan_role_id = i.id
         if "DJ" in i.name:
             custom_dj_role_id=i.id
     
     #role_Clan = discord.utils.get(server.roles, id=custom_clan_role_id)
     role_DJ = discord.utils.get(server.roles, id=custom_dj_role_id)
     role_Destiny_Clan = discord.utils.get(server.roles, id=custom_destiny_clan_role_id)
-    role_Division_Clan = discord.utils.get(server.roles, id=custom_division_clan_role_id)
+    #role_Division_Clan = discord.utils.get(server.roles, id=custom_division_clan_role_id)
 
-    remove_roles = [role_DJ, role_Destiny_Clan, role_Division_Clan]
+    remove_roles = [role_DJ, role_Destiny_Clan]#, role_Division_Clan]
     await client.remove_roles(member, *remove_roles)
     await asyncio.sleep(0.01)
     #msg = "Bye Bye {0}".format(member.mention)
@@ -264,39 +264,6 @@ async def free_rol_destiny(context):
     `+raids CNorris#4902`\n\
      \n", color=0x00ff00)
     await client.send_message(user, embed=embed2)
-
-
-@client.command(name='Free Roles Division',
-                description="Autoprovisioning de Roles Division y DJ",
-                brief="Autoprovisioning roles Escuadra X",
-                aliases=['division'],
-                pass_context=True)
-async def free_rol_division(context):
-    my_server = discord.utils.get(client.servers)
-    user_id = context.message.author.id
-    user=my_server.get_member(user_id)
-    user_roles_names=[]
-    #Get users roles
-    for i in user.roles:
-        user_roles_names.append(i.name)
-    #Get clan defined roles ids from discord
-    for i in my_server.roles:
-        print(i.id,i.name)
-        #if i.id == str(544911570258624522):
-        #    custom_clan_role_id=i.id
-        if i.id == str(544915941713248267):
-            custom_division_clan_role_id = i.id
-        if "DJ" in i.name:
-            custom_dj_role_id=i.id
-    
-    #role_Clan = discord.utils.get(my_server.roles, id=custom_clan_role_id)
-    role_DJ = discord.utils.get(my_server.roles, id=custom_dj_role_id)
-    role_Division_Clan = discord.utils.get(my_server.roles, id=custom_division_clan_role_id)
-    addroles = [role_DJ, role_Division_Clan]
-    await client.add_roles(user, *addroles)
-    embed = discord.Embed(title="" , description=":white_check_mark: **Listo** "+context.message.author.mention+" \n• Ya podes usar los canales de The Division!", color=0x00ff00)
-    await client.send_message(context.message.channel, embed=embed)
-    await client.send_message(user, embed=embed)
 
 
 @client.command(name='Rol',
