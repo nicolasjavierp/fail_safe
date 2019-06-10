@@ -469,7 +469,8 @@ async def raid_this_week(context):
                 res = res + report + "\n"
             
             embed = discord.Embed(title=":bell:__Tus Raids este reset:__", description=res, color=0x00ff00)
-            embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+            #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/499231830235414529/587653954117173249/9k.png")
             await client.send_message(context.message.channel, embed=embed)
 
 
