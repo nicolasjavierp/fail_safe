@@ -168,16 +168,18 @@ def filter_completed_raids(raids_complete, fs):
 
 def get_unique_raids(filtered_completed_raids, fs):
     unique_raid_complete = {}
-    for key, value in fs.relevant_raids.items():
+    #for key, value in fs.relevant_raids.items():
         #unique_raid_complete[value] = False
         #print(value)
-        unique_raid_complete[str(value)]=False
+        #unique_raid_complete[str(value)]=False
     #print(filter_completed_raids)
     for raid in filtered_completed_raids:
         #print(raid)
         for key, value in fs.relevant_raids.items():
             if value in str(fs.raids[raid['activityDetails']['directorActivityHash']]):
                 unique_raid_complete[str(value)]=True
+            else:
+                unique_raid_complete[str(value)]=False
         #print(str(fs.raids[raid['activityDetails']['directorActivityHash']]))
         #unique_raid_complete[str(fs.raids[raid['activityDetails']['directorActivityHash']])]=True
     #print(unique_raid_complete)
