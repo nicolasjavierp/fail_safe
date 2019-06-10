@@ -170,7 +170,8 @@ def get_unique_raids(filtered_completed_raids, fs):
     unique_raid_complete = {}
     for key, value in fs.relevant_raids.items():
         #unique_raid_complete[value] = False
-        print(value)
+        #print(value)
+        unique_raid_complete[str(value)]=False
     #print(filter_completed_raids)
     for raid in filtered_completed_raids:
         #print(raid)
