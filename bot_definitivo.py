@@ -120,9 +120,9 @@ async def on_message(message):
         #else:
         #    increment_param_in_1_aux("number_of_good_nights")
       
-    if "PUTO" in text.upper():
-        embed = discord.Embed(title="" , description="Puto el que lee ... :punch:", color=0x00ff00)
-        await client.send_message(message.channel, embed=embed)
+    #if "PUTO" in text.upper():
+    #    embed = discord.Embed(title="" , description="Puto el que lee ... :punch:", color=0x00ff00)
+    #    await client.send_message(message.channel, embed=embed)
 
     if (regex_chau) or ("ADIOS" in text.upper()):
         respuestas_posibles = ["Nos vemos en Disney ", "Hasta prontito ", "Nos re vimos ", "Cuidate, querete, ojito ... ","Hasta la próxima amig@ ", "Chau "]
