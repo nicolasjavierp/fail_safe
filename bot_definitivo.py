@@ -86,7 +86,6 @@ async def on_message(message):
         else:
             increment_param_in_1_aux("number_of_hellos")
         
-        
     if regex_buen_dia and not regex_hola:
         if read_param_from_aux("number_of_good_mornings") >=2:
             embed = discord.Embed(title="" , description="Buen Dia para vos"+message.author.mention+" :wave: :sun_with_face:", color=0x00ff00)
