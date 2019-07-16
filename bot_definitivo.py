@@ -61,7 +61,7 @@ async def on_message(message):
     #Normalizo el mensaje
     text = unicodedata.normalize('NFKD', msg).encode('ASCII', 'ignore').decode()
     regex_hola = re.search('^.*H+O+L+A+\s*.*$', text.upper(), re.MULTILINE) 
-    regex_chau = re.search('^.*C+H+A+U+$', text.upper(), re.MULTILINE)
+    #regex_chau = re.search('^.*C+H+A+U+$', text.upper(), re.MULTILINE)
     regex_buen_dia = re.search('^.*B+U+E+N+\s+D+I+A+.*$', text.upper(), re.MULTILINE)
     regex_buenos_dias = re.search('^.*B+U+E+N+O+S+\sD+I+A+S.*$', text.upper(), re.MULTILINE)
     regex_buenas_tardes = re.search('^.*B+U+E+N+A+S+\sT+A+R+D+E+S+.*$', text.upper(), re.MULTILINE)
@@ -123,9 +123,9 @@ async def on_message(message):
     #    embed = discord.Embed(title="" , description="Puto el que lee ... :punch:", color=0x00ff00)
     #    await client.send_message(message.channel, embed=embed)
 
-    if (regex_chau) or ("ADIOS" in text.upper()):
-        respuestas_posibles = ["Nos vemos en Disney ", "Hasta prontito ", "Nos re vimos ", "Cuidate, querete, ojito ... ","Hasta la próxima amig@ ", "Chau "]
-        await client.send_message(message.channel, random.choice(respuestas_posibles) + message.author.mention )
+    #if (regex_chau) or ("ADIOS" in text.upper()):
+    #    respuestas_posibles = ["Nos vemos en Disney ", "Hasta prontito ", "Nos re vimos ", "Cuidate, querete, ojito ... ","Hasta la próxima amig@ ", "Chau "]
+    #    await client.send_message(message.channel, random.choice(respuestas_posibles) + message.author.mention )
     
     if regex_gracias_bot:
         embed = discord.Embed(title="" , description="De nada"+message.author.mention+" ! :vulcan:", color=0x00ff00)
