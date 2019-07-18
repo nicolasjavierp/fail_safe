@@ -1051,9 +1051,13 @@ async def testing(context):
             if "info".upper() in i.name.upper():
                 #print(i.name)
                 canal_info = i
-    print(len(client.logs_from(canal_info)))
+    num_messages = 0
+    #async for x in client.logs_from(canal_info):
     async for x in client.logs_from(canal_info):
-        print(x)
+        num_messages = num_messages+1
+        #print(x)
+    print(num_messages)
+    
 
 
 #######################################################################
