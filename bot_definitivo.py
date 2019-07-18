@@ -1067,7 +1067,7 @@ async def testing(context):
 async def reset_names(context):
     my_server = discord.utils.get(client.servers)
     for memb in my_server.members:
-        if "avu" in memb.nick:
+        if "avu" in str(memb.nick):
             print(dir(memb))
             print(memb.display_name)
             print(memb.id)
