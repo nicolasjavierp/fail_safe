@@ -1059,6 +1059,20 @@ async def testing(context):
     print(num_messages)
     
 
+@client.command(name='Reset Names',
+                description="Reset Names",
+                brief="Reset Names",
+                aliases=['rn'],
+                pass_context=True)
+async def reset_names(context):
+    my_server = discord.utils.get(client.servers)
+    for memb in my_server.members:
+        print(dir(memb))
+        #if memb.bot:
+        #    pass
+        #else:
+        #    await client.change_nickname(member, str(real_battletag)+" ["+clan_alias+"]")
+
 
 #######################################################################
 ######################### LOOPS #######################################
