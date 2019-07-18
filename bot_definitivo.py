@@ -777,6 +777,32 @@ async def clear_channel(ctx, number, my_channel):
 #######################################################################
 
 
+@client.command(name='Reset Names',
+                description="Reset Names",
+                brief="Reset Names",
+                aliases=['rn'],
+                pass_context=True)
+async def reset_names(context):
+    my_server = discord.utils.get(client.servers)
+    user_id = context.message.author.id
+    user=my_server.get_member(user_id)
+    for i in my_server.roles:
+        if "Admin" in i.name:
+                    admin_id=i.id
+    if admin_id in [role.id for role in user.roles]:
+        for memb in my_server.members:
+            if "avu" in str(memb.nick):
+                #print(dir(memb))
+                #print(memb.display_name)
+                #print(memb.id)
+                #print(memb.name)
+                #print(memb.nick)
+                await client.change_nickname(memb, memb.name)
+            #if not memb.bot:
+            #    await client.change_nickname(memb, memb.name)
+    else:
+        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
+
 @client.command(name='Run blacklist and populate clan',
                 description="Genera la lista negra y actualiza la db del clan",
                 brief="run",
@@ -1059,31 +1085,7 @@ async def testing(context):
     print(num_messages)
     
 
-@client.command(name='Reset Names',
-                description="Reset Names",
-                brief="Reset Names",
-                aliases=['rn'],
-                pass_context=True)
-async def reset_names(context):
-    my_server = discord.utils.get(client.servers)
-    user_id = context.message.author.id
-    user=my_server.get_member(user_id)
-    for i in my_server.roles:
-        if "Admin" in i.name:
-                    admin_id=i.id
-    if admin_id in [role.id for role in user.roles]:
-        for memb in my_server.members:
-            if "avu" in str(memb.nick):
-                #print(dir(memb))
-                #print(memb.display_name)
-                #print(memb.id)
-                #print(memb.name)
-                #print(memb.nick)
-                await client.change_nickname(memb, memb.name)
-            #if not memb.bot:
-            #    await client.change_nickname(memb, memb.name)
-    else:
-        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
+
 
 #######################################################################
 ######################### LOOPS #######################################
