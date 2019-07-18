@@ -164,16 +164,16 @@ async def on_member_join(member):
     await asyncio.sleep(0.01)
 
 
-#@client.event
-#async def on_reaction_add(reaction, user):
-    #print("reactioned")
-    #channel = reaction.message.channel
-    #print(dir(reaction.emoji))
-    #print(type(reaction.emoji))
-    #print(reaction.emoji)
-    #await client.send_message(channel,'{} agregó {} al mensaje: {}'.format(user.name, reaction.emoji, reaction.message.content))
-    #if "ʙɪᴇɴᴠᴇɴɪᴅᴏ" in channel.name:
-    #    print(dir(reaction))
+@client.event
+async def on_reaction_add(reaction, user):
+    print("reactioned")
+    channel = reaction.message.channel
+    print(dir(reaction.emoji))
+    print(type(reaction.emoji))
+    print(reaction.emoji)
+    await client.send_message(channel,'{} agregó {} al mensaje: {}'.format(user.name, reaction.emoji, reaction.message.content))
+    if "prestigio" in channel.name:
+        print(dir(reaction))
 
 
 @client.event
@@ -760,6 +760,18 @@ async def destiny_lore(context):
         await client.send_message(context.message.channel, embed=embed)
 
 
+@client.command(name='Clear',
+                description="Clears messages",
+                brief="clear",
+                aliases=['cl'],
+                pass_context=True)
+async def clear_channel(ctx, number, my_channel):
+    mgs = [] #Empty list to put all the messages in the log
+    number = int(number) #Converting the amount of messages to delete to an integer
+    async for x in Client.logs_from(my_channel, limit = number):
+        mgs.append(x)
+    await Client.delete_messages(mgs)
+
 #######################################################################
 ################## SPECIAL PERMISIONS COMMANDS  #######################
 #######################################################################
@@ -1033,8 +1045,14 @@ async def testing(context):
     #4 Heroku
     fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
-    print(get_random_lore())
-    pass       
+    canal_info=None
+    for i in client.get_all_channels():
+            print(i.name, i.id)
+            if "info".upper() in i.name.upper():
+                #print(i.name)
+                canal_info = i
+    async for x in Client.logs_from(canal_info):
+        print(x)
 
 
 #######################################################################
