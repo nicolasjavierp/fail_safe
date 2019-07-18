@@ -768,9 +768,9 @@ async def destiny_lore(context):
 async def clear_channel(ctx, number, my_channel):
     mgs = [] #Empty list to put all the messages in the log
     number = int(number) #Converting the amount of messages to delete to an integer
-    async for x in Client.logs_from(my_channel, limit = number):
+    async for x in client.logs_from(my_channel, limit = number):
         mgs.append(x)
-    await Client.delete_messages(mgs)
+    await client.delete_messages(mgs)
 
 #######################################################################
 ################## SPECIAL PERMISIONS COMMANDS  #######################
@@ -1051,7 +1051,7 @@ async def testing(context):
             if "info".upper() in i.name.upper():
                 #print(i.name)
                 canal_info = i
-    async for x in Client.logs_from(canal_info):
+    async for x in client.logs_from(canal_info):
         print(x)
 
 
