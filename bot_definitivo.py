@@ -791,6 +791,8 @@ async def reset_names(context):
         if "Admin" in i.name:
                     admin_id=i.id
     if admin_id in [role.id for role in user.roles]:
+        await client.send_message(context.message.channel, "**Aguantame la mecha :bomb: ... **")
+        dir(my_server.members)
         for memb in my_server.members:
             #if "avu" in str(memb.nick):
                 #print(dir(memb))
@@ -802,7 +804,9 @@ async def reset_names(context):
             if not memb.bot:
                 print(memb.name)
                 await client.change_nickname(memb, memb.name)
+                await asyncio.sleep(1)
         print("Done!")
+        await client.send_message(context.message.channel, "**Listo** ")
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
 
