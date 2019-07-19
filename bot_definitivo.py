@@ -794,7 +794,7 @@ async def reset_names(context):
         await client.send_message(context.message.channel, "**Aguantame la mecha :bomb: ... **")
         dir(my_server.members)
         for memb in my_server.members:
-            if  memb.id == 219539830055501825 or memb.id == 376055309657047040:
+            if  ((str(memb.id) == "219539830055501825") or (str(memb.id) == "376055309657047040")):
                 #print(dir(memb))
                 print(memb.display_name)
                 print(memb.id)
