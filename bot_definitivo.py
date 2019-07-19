@@ -801,10 +801,12 @@ async def reset_names(context):
                 print(memb.name)
                 print(memb.nick)
                 await client.change_nickname(memb, memb.name)
-            if not memb.bot:
-                print(memb.name)
+            else:
+                print("Still alive ...")
+            #if not memb.bot:
+                #print(memb.name)
                 #await client.change_nickname(memb, memb.name)
-                await asyncio.sleep(1)
+                #await asyncio.sleep(1)
         print("Done!")
         await client.send_message(context.message.channel, "**Listo** ")
     else:
