@@ -794,15 +794,13 @@ async def reset_names(context):
         await client.send_message(context.message.channel, "**Aguantame la mecha :bomb: ... **")
         dir(my_server.members)
         for memb in my_server.members:
-            if "onker" in str(memb.nick) or "avu" in str(memb.nick):
+            if  memb.id == 219539830055501825 or memb.id == 376055309657047040:
                 #print(dir(memb))
                 print(memb.display_name)
                 print(memb.id)
                 print(memb.name)
                 print(memb.nick)
                 await client.change_nickname(memb, memb.name)
-            else:
-                print("Still alive ...")
             #if not memb.bot:
                 #print(memb.name)
                 #await client.change_nickname(memb, memb.name)
