@@ -166,11 +166,12 @@ async def on_member_join(member):
 
 @client.event
 async def on_reaction_add(reaction, user):
-    print("reactioned")
-    channel = reaction.message.channel
-    print(dir(reaction.emoji))
-    print(type(reaction.emoji))
-    print(reaction.emoji)
+    pass
+    #print("reactioned")
+    #channel = reaction.message.channel
+    #print(dir(reaction.emoji))
+    #print(type(reaction.emoji))
+    #print(reaction.emoji)
     #await client.send_message(channel,'{} agregó {} al mensaje: {}'.format(user.name, reaction.emoji, reaction.message.content))
     #if "prestigio" in channel.name:
     #    print(dir(reaction))
@@ -801,6 +802,7 @@ async def reset_names(context):
             if not memb.bot:
                 print(memb.name)
                 await client.change_nickname(memb, memb.name)
+        print("Done!")
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
 
