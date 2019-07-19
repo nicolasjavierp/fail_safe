@@ -792,19 +792,20 @@ async def reset_names(context):
                     admin_id=i.id
     if admin_id in [role.id for role in user.roles]:
         await client.send_message(context.message.channel, "**Aguantame la mecha :bomb: ... **")
-        dir(my_server.members)
+        print(dir(my_server.members))
+        admin_list = ("219539830055501825", "376055309657047040", "198516601497059328", "239122012767911936" )
         for memb in my_server.members:
-            if  ((str(memb.id) == "219539830055501825") or (str(memb.id) == "376055309657047040")):
+            #if  ((str(memb.id) == "219539830055501825") or (str(memb.id) == "376055309657047040")):
                 #print(dir(memb))
-                print(memb.display_name)
-                print(memb.id)
-                print(memb.name)
-                print(memb.nick)
-                await client.change_nickname(memb, memb.name)
-            #if not memb.bot:
+                #print(memb.display_name)
+                #print(memb.id)
                 #print(memb.name)
+                #print(memb.nick)
                 #await client.change_nickname(memb, memb.name)
-                #await asyncio.sleep(1)
+            if ((not memb.bot) or (str(memb.id) in admin_list)):
+                print(memb.name)
+                #await client.change_nickname(memb, memb.name)
+                await asyncio.sleep(1)
         print("Done!")
         await client.send_message(context.message.channel, "**Listo** ")
     else:
