@@ -799,6 +799,7 @@ async def reset_names(context):
                 #print(memb.nick)
                 #await client.change_nickname(memb, memb.name)
             if not memb.bot:
+                print(memb.name)
                 await client.change_nickname(memb, memb.name)
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
