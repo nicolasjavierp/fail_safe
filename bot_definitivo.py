@@ -802,7 +802,7 @@ async def reset_names(context):
                 print(memb.nick)
                 await client.change_nickname(memb, memb.name)
             if not memb.bot:
-                #print(memb.name)
+                print(memb.name)
                 #await client.change_nickname(memb, memb.name)
                 await asyncio.sleep(1)
         print("Done!")
