@@ -794,16 +794,16 @@ async def reset_names(context):
         await client.send_message(context.message.channel, "**Aguantame la mecha :bomb: ... **")
         dir(my_server.members)
         for memb in my_server.members:
-            #if "avu" in str(memb.nick):
+            if "onker" in str(memb.nick):
                 #print(dir(memb))
-                #print(memb.display_name)
-                #print(memb.id)
-                #print(memb.name)
-                #print(memb.nick)
-                #await client.change_nickname(memb, memb.name)
-            if not memb.bot:
+                print(memb.display_name)
+                print(memb.id)
                 print(memb.name)
+                print(memb.nick)
                 await client.change_nickname(memb, memb.name)
+            if not memb.bot:
+                #print(memb.name)
+                #await client.change_nickname(memb, memb.name)
                 await asyncio.sleep(1)
         print("Done!")
         await client.send_message(context.message.channel, "**Listo** ")
