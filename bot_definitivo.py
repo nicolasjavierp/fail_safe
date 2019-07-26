@@ -1113,7 +1113,7 @@ async def testing(context):
                 #print("/***************************************/")
                 print(len(pvp_matches))
                 print("/***************************************/")
-                #print(pvp_matches_filtered = filter_emblems_pvp(pvp_matches))
+                print(pvp_matches_filtered = filter_emblems_pvp(pvp_matches))
                 print("/***************************************/")
                 #raids_complete_filtered = filter_completed_raids(raids_complete,fs)
                 #print("/***************************************/")
