@@ -1106,6 +1106,13 @@ async def testing(context):
         res = "\n"
         for id, info in characters.items():
             character_id = info['characterId']
+            page_num=0
+            while fs.get_CharactersPVP(user_destiny_id,character_id,page_num):
+                page_num = page_num + 1
+                if page_num>100:
+                    break
+            print("Number of pages")
+            print(page_num)
             for i in range(1):
                 pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id,i)
                 #raids_complete = get_completed_raids(info,user_destiny_id,raids)
@@ -1114,7 +1121,8 @@ async def testing(context):
                     #print("/***************************************/")
                     print(len(pvp_matches))
                     print("/***************************************/")
-                    print(pvp_matches_filtered = filter_emblems_pvp(pvp_matches))
+                    #print(pvp_matches_filtered = filter_emblems_pvp(pvp_matches))
+                    print(filter_prismatic_inferno_emblem(pvp_matches))
                     print("/***************************************/")
                     #raids_complete_filtered = filter_completed_raids(raids_complete,fs)
                     #print("/***************************************/")

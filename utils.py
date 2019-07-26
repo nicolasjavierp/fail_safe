@@ -187,14 +187,19 @@ def get_unique_raids(filtered_completed_raids, fs):
     return unique_raid_complete
 
 
-def filter_emblems_pvp(pvp_matches):
+def filter_prismatic_inferno_emblem(pvp_matches):
     filter_emblems_pvp=[]
     for match in pvp_matches:
-        print(match['period'])
-        print(type(match['period']))
-        print(dir(match['period']))
-            #if match['activities']['period'] in fs.raids:
-            #    filtered_completed_raids.append(raid)
+        #print(match['period'])
+        #print(type(match['period']))
+        #print(dir(match['period']))
+        start_time = datetime(2017, 12, 8, 10, 00)
+        end_time = datetime(2017, 12, 12, 10, 00)
+        date = datetime.strptime(match['period'], "%Y-%m-%dT%H:%M:%SZ")
+        if start_time <= date <= end_time:
+            print(match['period'])
+    if not filter_emblems_pvp:
+        filter_emblems_pvp=None
     return filter_emblems_pvp
 
 
