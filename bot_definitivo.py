@@ -1139,6 +1139,7 @@ async def testing(context):
                         if filtered_matches_list:
                             will_obtain_pi_emblem = True
                             print(len(filtered_matches_list))
+                            break
                         print("/***************************************/")
                     else:
                         print("No PVP!!")
