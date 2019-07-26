@@ -1122,7 +1122,7 @@ async def testing(context):
                 for match in pvp_matches:
                     if "2017" in match['period']:
                         eligable=True
-                        print("Player played in 2017")
+                        print("Player played in 2017 !!!!")
                         break
                     #else:
                     #    print("Player DID NOT play in 2017")

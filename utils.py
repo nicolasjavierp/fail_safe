@@ -197,12 +197,14 @@ def filter_prismatic_inferno_emblem(pvp_matches):
         start_time = datetime(2017, 12, 8, 6, 00)
         end_time = datetime(2017, 12, 12, 6, 00)
         date = datetime.strptime(match['period'], "%Y-%m-%dT%H:%M:%SZ")
-        if "2017" in match['period']:
-            print("-------------------------------")
-            print(match['period'])
-            print("-------------------------------")
+        #if "2017" in match['period']:
+        #    print("-------------------------------")
+        #    print(match['period'])
+        #    print("-------------------------------")
         if start_time <= date <= end_time:
+            print("----------PL-------------------")
             print(match['period'])
+            print("-------------------------------")
             page_matches.append(match)
     return page_matches
 
