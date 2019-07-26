@@ -1092,7 +1092,7 @@ async def testing(context):
         #print(x)
     #print(num_messages)
     user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
-    embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie, que a veces tarda unos minutos en registrar la Raid. Un momento por favor ...", color=0x00ff00)
+    embed = discord.Embed(title=":warning: Warning" , description="Testeando. Un momento por favor ...", color=0x00ff00)
     await client.send_message(context.message.channel, embed=embed)
     user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
     #print(user_destiny)
@@ -1112,7 +1112,7 @@ async def testing(context):
                 #print("/***************************************/")
                 print(len(pvp_matches))
                 print("/***************************************/")
-                print(pvp_matches)
+                print(pvp_matches_filtered = filter_emblems_pvp(pvp_matches))
                 print("/***************************************/")
                 #raids_complete_filtered = filter_completed_raids(raids_complete,fs)
                 #print("/***************************************/")

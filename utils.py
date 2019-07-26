@@ -187,6 +187,15 @@ def get_unique_raids(filtered_completed_raids, fs):
     return unique_raid_complete
 
 
+def filter_emblems_pvp(pvp_matches):
+    filter_emblems_pvp=[]
+    for match in pvp_matches:
+        print(match['activities']['period'])
+            #if match['activities']['period'] in fs.raids:
+            #    filtered_completed_raids.append(raid)
+    return filter_emblems_pvp
+
+
 def get_last_tuesday_reset():
     import datetime
     current_time = datetime.datetime.now()
