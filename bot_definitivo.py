@@ -1108,11 +1108,12 @@ async def testing(context):
             character_id = info['characterId']
             pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id)
             #raids_complete = get_completed_raids(info,user_destiny_id,raids)
+            #print(pvp_matches)
             if pvp_matches:
                 #print("/***************************************/")
                 print(len(pvp_matches))
                 print("/***************************************/")
-                print(pvp_matches_filtered = filter_emblems_pvp(pvp_matches))
+                #print(pvp_matches_filtered = filter_emblems_pvp(pvp_matches))
                 print("/***************************************/")
                 #raids_complete_filtered = filter_completed_raids(raids_complete,fs)
                 #print("/***************************************/")
