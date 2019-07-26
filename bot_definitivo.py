@@ -1145,12 +1145,13 @@ async def testing(context):
                     else:
                         print("No PVP!!")
                         res = "ERROR!"
-                if will_obtain_pi_emblem:
-                    res = ":white_check_mark: **Recibiras el emblema !! Felicitaciones !!**"
-                else:
-                    res = ":no_entry: **No sos elegible para el emblema, sorry**"
             else:
                 res = ":no_entry: **No sos elegible para el emblema, sorry**"
+        
+        if will_obtain_pi_emblem:
+                res = ":white_check_mark: **Recibiras el emblema !! Felicitaciones !!**"
+        else:
+            res = ":no_entry: **No sos elegible para el emblema, sorry**"
         
         embed = discord.Embed(title=":bell:__Emblema Infierno Prismatico:__", description=res, color=0x00ff00)
         #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
