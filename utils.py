@@ -188,7 +188,7 @@ def get_unique_raids(filtered_completed_raids, fs):
 
 
 def filter_prismatic_inferno_emblem(pvp_matches):
-    filter_emblems_pvp=[]
+    page_matches = []
     for match in pvp_matches:
         #print(match['period'])
         #print(type(match['period']))
@@ -198,10 +198,8 @@ def filter_prismatic_inferno_emblem(pvp_matches):
         date = datetime.strptime(match['period'], "%Y-%m-%dT%H:%M:%SZ")
         if start_time <= date <= end_time:
             print(match['period'])
-            #filter_emblems_pvp.append(match)
-    if not filter_emblems_pvp:
-        filter_emblems_pvp=None
-    return filter_emblems_pvp
+            page_matches.append(match)
+    return page_matches
 
 
 def get_last_tuesday_reset():

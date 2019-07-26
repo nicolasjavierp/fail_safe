@@ -1118,41 +1118,41 @@ async def testing(context):
             pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id,page_num-1)
             if pvp_matches:
                 for match in pvp_matches:
-                    print(match['period'])
-                    if "2017-12" in match['period']:
+                    if "2017" in match['period']:
                         eligable=True
                         print("Player is eligeble 4 emblem Prismatic Inferno")
-            
-            #for i in reversed(range(page_num-1)):
-            for i in reversed(range(1)):
-                pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id,i)
-                if pvp_matches:
-                    #print("/***************************************/")
-                    #print(len(pvp_matches))
-                    print("/***************************************/")
-                    #print(pvp_matches_filtered = filter_emblems_pvp(pvp_matches))
-                    print(filter_prismatic_inferno_emblem(pvp_matches))
-                    print("/***************************************/")
-                    #raids_complete_filtered = filter_completed_raids(raids_complete,fs)
-                    #print("/***************************************/")
-                    #print(raids_complete_filtered)
-                    #definitive_complete_raids=get_unique_raids(raids_complete_filtered, fs)
-                    #print(definitive_complete_raids)
-                    #for key, value in definitive_complete_raids.items():
-                    #    if value:
-                    #        report = report +" :white_check_mark: "+str(key) +"\n"
-                    #    else:
-                    #        report = report +" :x: "+ str(key) +"\n"
-                else:
-                    #for key, value in fs.relevant_raids.items():
-                    #    report = report + " :x: "+ value +"\n"
-                    print("No PVP!!")
-                    res = "Ninguna"
-                #res = res + report + "\n"
+            if eligable:   
+                will_obtail_pi_emblem = False
+                for i in reversed(range(page_num-1)):
+                    pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id,i)
+                    if pvp_matches:
+                        #print("/***************************************/")
+                        #print(len(pvp_matches))
+                        print("/***************************************/")
+                        #print(pvp_matches_filtered = filter_emblems_pvp(pvp_matches))
+                        print(filter_prismatic_inferno_emblem(pvp_matches))
+                        print("/***************************************/")
+                        #raids_complete_filtered = filter_completed_raids(raids_complete,fs)
+                        #print("/***************************************/")
+                        #print(raids_complete_filtered)
+                        #definitive_complete_raids=get_unique_raids(raids_complete_filtered, fs)
+                        #print(definitive_complete_raids)
+                        #for key, value in definitive_complete_raids.items():
+                        #    if value:
+                        #        report = report +" :white_check_mark: "+str(key) +"\n"
+                        #    else:
+                        #        report = report +" :x: "+ str(key) +"\n"
+                    else:
+                        #for key, value in fs.relevant_raids.items():
+                        #    report = report + " :x: "+ value +"\n"
+                        print("No PVP!!")
+                        res = "Ninguna"
+            else:
+                res = ":no_entry: **No sos elegible para el emblema, sorry**"
         
-        embed = discord.Embed(title=":bell:__PVP:__", description=res, color=0x00ff00)
+        embed = discord.Embed(title=":bell:__Emblema Infierno Prismatico:__", description=res, color=0x00ff00)
         #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
-        #embed.set_thumbnail(url="")
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/499231830235414529/604319122326552586/Prismatic_Inferno_emblem.jpg")
         await client.send_message(context.message.channel, embed=embed)
 
     
