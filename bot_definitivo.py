@@ -1092,7 +1092,7 @@ async def testing(context):
         #print(x)
     #print(num_messages)
     user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
-    embed = discord.Embed(title=":warning: Warning" , description="Buscando partidas de crisol. Un momento por favor ...", color=0x00ff00)
+    embed = discord.Embed(title=":mag_right: Busqueda" , description="Buscando partidas de crisol. Un momento por favor ...", color=0x00ff00)
     await client.send_message(context.message.channel, embed=embed)
     user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
     #print(user_destiny)
@@ -1120,7 +1120,8 @@ async def testing(context):
                 for match in pvp_matches:
                     if "2017" in match['period']:
                         eligable=True
-                        print("Player is eligeble 4 emblem Prismatic Inferno")
+                        break
+                        #print("Player is eligeble 4 emblem Prismatic Inferno")
             if eligable:   
                 will_obtain_pi_emblem = False
                 for i in reversed(range(page_num-1)):
@@ -1151,7 +1152,7 @@ async def testing(context):
                         print("No PVP!!")
                         res = "ERROR!"
                 if will_obtain_pi_emblem:
-                    res = ":white_check: **Recibiras el emblema !! Felicitaciones !!**"
+                    res = ":white_check_mark: **Recibiras el emblema !! Felicitaciones !!**"
             else:
                 res = ":no_entry: **No sos elegible para el emblema, sorry**"
         
