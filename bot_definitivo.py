@@ -777,7 +777,7 @@ async def destiny_lore(context):
 @client.command(name='PIE',
                 description="Prometheus Inferno Emblem",
                 brief="pie",
-                aliases=['emblema', 'pie'],
+                aliases=['emblema'],
                 pass_context=True)
 async def prometheus_inferno_emblem(context):
     #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
@@ -815,6 +815,7 @@ async def prometheus_inferno_emblem(context):
             #print(page_num)
             eligable = False
             pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id,page_num-1)
+            await asyncio.sleep(2)
             if pvp_matches:
                 for match in pvp_matches:
                     if "2017" in match['period']:
@@ -826,6 +827,7 @@ async def prometheus_inferno_emblem(context):
             if eligable:   
                 for i in reversed(range(page_num)):
                     pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id,i)
+                    await asyncio.sleep(1)
                     if pvp_matches:
                         #print("/***************************************/")
                         #print("Number of PVP matches in page: "+ str(len(pvp_matches)))
@@ -843,6 +845,7 @@ async def prometheus_inferno_emblem(context):
                         res = "ERROR!"
             else:
                 res = ":no_entry: **No sos elegible para el emblema, sorry**"
+            await asyncio.sleep(2)
         
         if will_obtain_pi_emblem:
                 res = ":white_check_mark: **Recibiras el emblema !! Felicitaciones !!**"
@@ -853,6 +856,7 @@ async def prometheus_inferno_emblem(context):
         #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
         embed.set_image(url="https://cdn.discordapp.com/attachments/499231830235414529/604319122326552586/Prismatic_Inferno_emblem.jpg")
         await client.send_message(context.message.channel, embed=embed)
+        await asyncio.sleep(1)
 
 #######################################################################
 ################## SPECIAL PERMISIONS COMMANDS  #######################
