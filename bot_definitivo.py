@@ -1128,7 +1128,7 @@ async def testing(context):
                     #    print("Player DID NOT play in 2017")
             if eligable:   
                 will_obtain_pi_emblem = False
-                for i in reversed(range(page_num-1)):
+                for i in reversed(range(page_num)):
                     pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id,i)
                     if pvp_matches:
                         #print("/***************************************/")
