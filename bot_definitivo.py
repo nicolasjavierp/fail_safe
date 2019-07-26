@@ -1098,6 +1098,7 @@ async def testing(context):
     #print(user_destiny)
     if user_destiny:
         user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
+        print(user_destiny_id)
         #real_battletag = user_destiny[0]['displayName']
         profile = fs.get_DestinyUserProfileDetail(user_destiny_id)
         characters = profile['characters']['data']
