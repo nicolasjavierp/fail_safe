@@ -189,7 +189,7 @@ def get_unique_raids(filtered_completed_raids, fs):
 
 def filter_prismatic_inferno_emblem(pvp_matches):
     page_matches = []
-    print("Filtering ... "+str(len(pvp_matches)))
+    #print("Filtering ... "+str(len(pvp_matches)))
     for match in pvp_matches:
         #print(match['period'])
         #print(type(match['period']))

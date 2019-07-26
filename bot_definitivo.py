@@ -1105,6 +1105,7 @@ async def testing(context):
         #print("-------------------------")
         #print(characters)
         res = "\n"
+        will_obtain_pi_emblem = False
         for id, info in characters.items():
             character_id = info['characterId']
             print(character_id)
@@ -1127,7 +1128,6 @@ async def testing(context):
                     #else:
                     #    print("Player DID NOT play in 2017")
             if eligable:   
-                will_obtain_pi_emblem = False
                 for i in reversed(range(page_num)):
                     pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id,i)
                     if pvp_matches:
@@ -1137,6 +1137,7 @@ async def testing(context):
                         #print(pvp_matches_filtered = filter_emblems_pvp(pvp_matches))
                         filtered_matches_list = filter_prismatic_inferno_emblem(pvp_matches)
                         if filtered_matches_list:
+                            print("Will Obtain PIE = TRUE")
                             will_obtain_pi_emblem = True
                             print(len(filtered_matches_list))
                             break
