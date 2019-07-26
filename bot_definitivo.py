@@ -1106,7 +1106,7 @@ async def testing(context):
         res = "\n"
         for id, info in characters.items():
             character_id = info['characterId']
-            for i in range(20):
+            for i in range(1):
                 pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id,i)
                 #raids_complete = get_completed_raids(info,user_destiny_id,raids)
                 #print(pvp_matches)
@@ -1126,7 +1126,6 @@ async def testing(context):
                     #        report = report +" :white_check_mark: "+str(key) +"\n"
                     #    else:
                     #        report = report +" :x: "+ str(key) +"\n"
-                    break
                 else:
                     #for key, value in fs.relevant_raids.items():
                     #    report = report + " :x: "+ value +"\n"
