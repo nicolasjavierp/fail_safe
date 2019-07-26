@@ -191,6 +191,8 @@ def filter_emblems_pvp(pvp_matches):
     filter_emblems_pvp=[]
     for match in pvp_matches:
         print(match['period'])
+        print(type(match['period']))
+        print(dir(match['period']))
             #if match['activities']['period'] in fs.raids:
             #    filtered_completed_raids.append(raid)
     return filter_emblems_pvp

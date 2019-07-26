@@ -1106,32 +1106,33 @@ async def testing(context):
         res = "\n"
         for id, info in characters.items():
             character_id = info['characterId']
-            pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id)
-            #raids_complete = get_completed_raids(info,user_destiny_id,raids)
-            #print(pvp_matches)
-            if pvp_matches:
-                #print("/***************************************/")
-                print(len(pvp_matches))
-                print("/***************************************/")
-                print(pvp_matches_filtered = filter_emblems_pvp(pvp_matches))
-                print("/***************************************/")
-                #raids_complete_filtered = filter_completed_raids(raids_complete,fs)
-                #print("/***************************************/")
-                #print(raids_complete_filtered)
-                #definitive_complete_raids=get_unique_raids(raids_complete_filtered, fs)
-                #print(definitive_complete_raids)
-                #for key, value in definitive_complete_raids.items():
-                #    if value:
-                #        report = report +" :white_check_mark: "+str(key) +"\n"
-                #    else:
-                #        report = report +" :x: "+ str(key) +"\n"
-                pass
-            else:
-                #for key, value in fs.relevant_raids.items():
-                #    report = report + " :x: "+ value +"\n"
-                print("No PVP!!")
-                res = "Ninguna"
-            #res = res + report + "\n"
+            for i in range(20):
+                pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id,i)
+                #raids_complete = get_completed_raids(info,user_destiny_id,raids)
+                #print(pvp_matches)
+                if pvp_matches:
+                    #print("/***************************************/")
+                    print(len(pvp_matches))
+                    print("/***************************************/")
+                    print(pvp_matches_filtered = filter_emblems_pvp(pvp_matches))
+                    print("/***************************************/")
+                    #raids_complete_filtered = filter_completed_raids(raids_complete,fs)
+                    #print("/***************************************/")
+                    #print(raids_complete_filtered)
+                    #definitive_complete_raids=get_unique_raids(raids_complete_filtered, fs)
+                    #print(definitive_complete_raids)
+                    #for key, value in definitive_complete_raids.items():
+                    #    if value:
+                    #        report = report +" :white_check_mark: "+str(key) +"\n"
+                    #    else:
+                    #        report = report +" :x: "+ str(key) +"\n"
+                    break
+                else:
+                    #for key, value in fs.relevant_raids.items():
+                    #    report = report + " :x: "+ value +"\n"
+                    print("No PVP!!")
+                    res = "Ninguna"
+                #res = res + report + "\n"
         
         embed = discord.Embed(title=":bell:__PVP:__", description=res, color=0x00ff00)
         #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
