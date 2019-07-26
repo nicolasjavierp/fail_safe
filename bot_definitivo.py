@@ -1106,6 +1106,7 @@ async def testing(context):
         res = "\n"
         for id, info in characters.items():
             character_id = info['characterId']
+            print(character_id)
             page_num=0
             while fs.get_CharactersPVP(user_destiny_id,character_id,page_num):
                 page_num = page_num + 1
