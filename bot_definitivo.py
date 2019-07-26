@@ -1118,6 +1118,7 @@ async def testing(context):
             pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id,page_num-1)
             if pvp_matches:
                 for match in pvp_matches:
+                    print(match['period'])
                     if "2017-12" in match['period']:
                         eligable=True
                         print("Player is eligeble 4 emblem Prismatic Inferno")
