@@ -1128,9 +1128,9 @@ async def testing(context):
                     if pvp_matches:
                         #print("/***************************************/")
                         #print(len(pvp_matches))
-                        print("/***************************************/")
+                        print("/****************Page "+str(i)+"***********************/")
                         #print(pvp_matches_filtered = filter_emblems_pvp(pvp_matches))
-                        print(filter_prismatic_inferno_emblem(pvp_matches))
+                        filtered_matches = filter_prismatic_inferno_emblem(pvp_matches)
                         print("/***************************************/")
                         #raids_complete_filtered = filter_completed_raids(raids_complete,fs)
                         #print("/***************************************/")
