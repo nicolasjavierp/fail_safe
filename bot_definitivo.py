@@ -761,17 +761,17 @@ async def destiny_lore(context):
         await client.send_message(context.message.channel, embed=embed)
 
 
-@client.command(name='Clear',
-                description="Clears messages",
-                brief="clear",
-                aliases=['cl'],
-                pass_context=True)
-async def clear_channel(ctx, number, my_channel):
-    mgs = [] #Empty list to put all the messages in the log
-    number = int(number) #Converting the amount of messages to delete to an integer
-    async for x in client.logs_from(my_channel, limit = number):
-        mgs.append(x)
-    await client.delete_messages(mgs)
+#@client.command(name='Clear',
+#                description="Clears messages",
+#                brief="clear",
+#                aliases=['cl'],
+#                pass_context=True)
+#async def clear_channel(ctx, number, my_channel):
+    #mgs = [] #Empty list to put all the messages in the log
+    #number = int(number) #Converting the amount of messages to delete to an integer
+    #async for x in client.logs_from(my_channel, limit = number):
+        #mgs.append(x)
+    #await client.delete_messages(mgs)
 
 
 @client.command(name='PIE',
@@ -787,18 +787,6 @@ async def prometheus_inferno_emblem(context):
     #4 Heroku
     fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
-    #canal_info=None
-    #for i in client.get_all_channels():
-            #print(i.name, i.id)
-            #if "info".upper() in i.name.upper():
-                #print(i.name)
-                #canal_info = i
-    #num_messages = 0
-    #async for x in client.logs_from(canal_info):
-    #async for x in client.logs_from(canal_info):
-        #num_messages = num_messages+1
-        #print(x)
-    #print(num_messages)
     user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
     embed = discord.Embed(title=":mag_right: Busqueda" , description="Buscando partidas de crisol. Un momento por favor ...", color=0x00ff00)
     await client.send_message(context.message.channel, embed=embed)
@@ -806,7 +794,7 @@ async def prometheus_inferno_emblem(context):
     #print(user_destiny)
     if user_destiny:
         user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
-        print(user_destiny_id)
+        #print(user_destiny_id)
         #real_battletag = user_destiny[0]['displayName']
         profile = fs.get_DestinyUserProfileDetail(user_destiny_id)
         characters = profile['characters']['data']
@@ -816,15 +804,15 @@ async def prometheus_inferno_emblem(context):
         will_obtain_pi_emblem = False
         for id, info in characters.items():
             character_id = info['characterId']
-            print(character_id)
+            #print(character_id)
             page_num=0
             while fs.get_CharactersPVP(user_destiny_id,character_id,page_num):
                 page_num = page_num + 1
                 if page_num>100:
                     print("WARNING pages > 100 !!!!!!!!!")
                     break
-            print("Number of pages")
-            print(page_num)
+            #print("Number of pages")
+            #print(page_num)
             eligable = False
             pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id,page_num-1)
             if pvp_matches:
@@ -840,16 +828,16 @@ async def prometheus_inferno_emblem(context):
                     pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id,i)
                     if pvp_matches:
                         #print("/***************************************/")
-                        print("Number of PVP matches in page: "+ str(len(pvp_matches)))
-                        print("/****************Page "+str(i)+"***********************/")
+                        #print("Number of PVP matches in page: "+ str(len(pvp_matches)))
+                        #print("/****************Page "+str(i)+"***********************/")
                         #print(pvp_matches_filtered = filter_emblems_pvp(pvp_matches))
                         filtered_matches_list = filter_prismatic_inferno_emblem(pvp_matches)
                         if filtered_matches_list:
-                            print("Will Obtain PIE = TRUE")
+                            #print("Will Obtain PIE = TRUE")
                             will_obtain_pi_emblem = True
-                            print(len(filtered_matches_list))
+                            #print(len(filtered_matches_list))
                             break
-                        print("/***************************************/")
+                        #print("/***************************************/")
                     else:
                         print("No PVP!!")
                         res = "ERROR!"
@@ -1250,11 +1238,6 @@ async def testing(context):
         #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
         embed.set_image(url="https://cdn.discordapp.com/attachments/499231830235414529/604319122326552586/Prismatic_Inferno_emblem.jpg")
         await client.send_message(context.message.channel, embed=embed)
-
-    
-    
-
-
 
 #######################################################################
 ######################### LOOPS #######################################
