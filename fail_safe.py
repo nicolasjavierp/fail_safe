@@ -246,7 +246,7 @@ class FailSafe(object):
         '''
         AllPvP: 5
         '''
-        site_call = "https://www.bungie.net/platform/Destiny2/4/Account/"+ str(membership_id)+"/Character/"+str(character_id)+"/Stats/Activities/?count=250&mode=4&page=0"
+        site_call = "https://www.bungie.net/platform/Destiny2/4/Account/"+ str(membership_id)+"/Character/"+str(character_id)+"/Stats/Activities/?count=250&mode=5&page=0"
         request = requests.get(site_call,
                                 headers={"X-API-Key":self.api_key})
         return request.json()['Response']
