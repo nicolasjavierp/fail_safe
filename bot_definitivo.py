@@ -1092,7 +1092,7 @@ async def testing(context):
         #print(x)
     #print(num_messages)
     user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
-    embed = discord.Embed(title=":warning: Warning" , description="Testeando. Un momento por favor ...", color=0x00ff00)
+    embed = discord.Embed(title=":warning: Warning" , description="Buscando partidas de crisol. Un momento por favor ...", color=0x00ff00)
     await client.send_message(context.message.channel, embed=embed)
     user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
     #print(user_destiny)
@@ -1122,7 +1122,7 @@ async def testing(context):
                         eligable=True
                         print("Player is eligeble 4 emblem Prismatic Inferno")
             if eligable:   
-                will_obtail_pi_emblem = False
+                will_obtain_pi_emblem = False
                 for i in reversed(range(page_num-1)):
                     pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id,i)
                     if pvp_matches:
@@ -1130,7 +1130,10 @@ async def testing(context):
                         #print(len(pvp_matches))
                         print("/****************Page "+str(i)+"***********************/")
                         #print(pvp_matches_filtered = filter_emblems_pvp(pvp_matches))
-                        filtered_matches = filter_prismatic_inferno_emblem(pvp_matches)
+                        filtered_matches_list = filter_prismatic_inferno_emblem(pvp_matches)
+                        if filtered_matches_list:
+                            will_obtain_pi_emblem = True
+                            break
                         print("/***************************************/")
                         #raids_complete_filtered = filter_completed_raids(raids_complete,fs)
                         #print("/***************************************/")
@@ -1146,13 +1149,15 @@ async def testing(context):
                         #for key, value in fs.relevant_raids.items():
                         #    report = report + " :x: "+ value +"\n"
                         print("No PVP!!")
-                        res = "Ninguna"
+                        res = "ERROR!"
+                if will_obtain_pi_emblem:
+                    res = ":white_check: **Recibiras el emblema !! Felicitaciones !!**"
             else:
                 res = ":no_entry: **No sos elegible para el emblema, sorry**"
         
         embed = discord.Embed(title=":bell:__Emblema Infierno Prismatico:__", description=res, color=0x00ff00)
         #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
-        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/499231830235414529/604319122326552586/Prismatic_Inferno_emblem.jpg")
+        embed.set_image(url="https://cdn.discordapp.com/attachments/499231830235414529/604319122326552586/Prismatic_Inferno_emblem.jpg")
         await client.send_message(context.message.channel, embed=embed)
 
     
