@@ -195,10 +195,10 @@ async def on_member_remove(member):
     
     #role_Clan = discord.utils.get(server.roles, id=custom_clan_role_id)
     role_DJ = discord.utils.get(server.roles, id=custom_dj_role_id)
-    role_Destiny_Clan = discord.utils.get(server.roles, id=custom_destiny_clan_role_id)
+    #role_Destiny_Clan = discord.utils.get(server.roles, id=custom_destiny_clan_role_id)
     #role_Division_Clan = discord.utils.get(server.roles, id=custom_division_clan_role_id)
 
-    remove_roles = [role_DJ, role_Destiny_Clan]#, role_Division_Clan]
+    remove_roles = [role_DJ]#, role_Destiny_Clan]#, role_Division_Clan]
     await client.remove_roles(member, *remove_roles)
     await asyncio.sleep(0.01)
     #msg = "Bye Bye {0}".format(member.mention)
@@ -1079,18 +1079,65 @@ async def testing(context):
     #4 Heroku
     fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
-    canal_info=None
-    for i in client.get_all_channels():
-            print(i.name, i.id)
-            if "info".upper() in i.name.upper():
+    #canal_info=None
+    #for i in client.get_all_channels():
+            #print(i.name, i.id)
+            #if "info".upper() in i.name.upper():
                 #print(i.name)
-                canal_info = i
-    num_messages = 0
+                #canal_info = i
+    #num_messages = 0
     #async for x in client.logs_from(canal_info):
-    async for x in client.logs_from(canal_info):
-        num_messages = num_messages+1
+    #async for x in client.logs_from(canal_info):
+        #num_messages = num_messages+1
         #print(x)
-    print(num_messages)
+    #print(num_messages)
+    user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
+    embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie, que a veces tarda unos minutos en registrar la Raid. Un momento por favor ...", color=0x00ff00)
+    await client.send_message(context.message.channel, embed=embed)
+    user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
+    #print(user_destiny)
+    if user_destiny:
+        user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
+        #real_battletag = user_destiny[0]['displayName']
+        profile = fs.get_DestinyUserProfileDetail(user_destiny_id)
+        characters = profile['characters']['data']
+        #print("-------------------------")
+        #print(characters)
+        res = "\n"
+        for id, info in characters.items():
+            character_id = info['characterId']
+            pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id)
+            #raids_complete = get_completed_raids(info,user_destiny_id,raids)
+            if pvp_matches:
+                #print("/***************************************/")
+                print(len(pvp_matches))
+                print("/***************************************/")
+                print(pvp_matches)
+                print("/***************************************/")
+                #raids_complete_filtered = filter_completed_raids(raids_complete,fs)
+                #print("/***************************************/")
+                #print(raids_complete_filtered)
+                #definitive_complete_raids=get_unique_raids(raids_complete_filtered, fs)
+                #print(definitive_complete_raids)
+                #for key, value in definitive_complete_raids.items():
+                #    if value:
+                #        report = report +" :white_check_mark: "+str(key) +"\n"
+                #    else:
+                #        report = report +" :x: "+ str(key) +"\n"
+                pass
+            else:
+                #for key, value in fs.relevant_raids.items():
+                #    report = report + " :x: "+ value +"\n"
+                print("No PVP!!")
+                res = "Ninguna"
+            #res = res + report + "\n"
+        
+        embed = discord.Embed(title=":bell:__PVP:__", description=res, color=0x00ff00)
+        #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+        #embed.set_thumbnail(url="")
+        await client.send_message(context.message.channel, embed=embed)
+
+    
     
 
 
