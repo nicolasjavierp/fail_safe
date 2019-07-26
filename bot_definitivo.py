@@ -1106,21 +1106,28 @@ async def testing(context):
         res = "\n"
         for id, info in characters.items():
             character_id = info['characterId']
-            print(fs.get_CharactersPVP(user_destiny_id,character_id,35))
             page_num=0
             while fs.get_CharactersPVP(user_destiny_id,character_id,page_num):
                 page_num = page_num + 1
                 if page_num>100:
+                    print("WARNING pages > 100 !!!!!!!!!")
                     break
-            print("Number of pages")
-            print(page_num)
-            for i in range(1):
+            #print("Number of pages")
+            #print(page_num)
+            eligable = False
+            pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id,page_num-1)
+            if pvp_matches:
+                for match in pvp_matches:
+                    if "2017-12" in match['period']:
+                        eligable=True
+                        print("Player is eligeble 4 emblem Prismatic Inferno")
+            
+            #for i in reversed(range(page_num-1)):
+            for i in reversed(range(1)):
                 pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id,i)
-                #raids_complete = get_completed_raids(info,user_destiny_id,raids)
-                #print(pvp_matches)
                 if pvp_matches:
                     #print("/***************************************/")
-                    print(len(pvp_matches))
+                    #print(len(pvp_matches))
                     print("/***************************************/")
                     #print(pvp_matches_filtered = filter_emblems_pvp(pvp_matches))
                     print(filter_prismatic_inferno_emblem(pvp_matches))
