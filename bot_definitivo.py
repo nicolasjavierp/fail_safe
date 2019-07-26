@@ -1114,8 +1114,8 @@ async def testing(context):
                 if page_num>100:
                     print("WARNING pages > 100 !!!!!!!!!")
                     break
-            #print("Number of pages")
-            #print(page_num)
+            print("Number of pages")
+            print(page_num)
             eligable = False
             pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id,page_num-1)
             if pvp_matches:
@@ -1123,14 +1123,16 @@ async def testing(context):
                     if "2017" in match['period']:
                         eligable=True
                         break
-                        #print("Player is eligeble 4 emblem Prismatic Inferno")
+                        print("Player played in 2017")
+                    else:
+                        print("Player DID NOT play in 2017")
             if eligable:   
                 will_obtain_pi_emblem = False
                 for i in reversed(range(page_num-1)):
                     pvp_matches = fs.get_CharactersPVP(user_destiny_id,character_id,i)
                     if pvp_matches:
                         #print("/***************************************/")
-                        #print(len(pvp_matches))
+                        print("Number of PVP matches in page: "+ str(len(pvp_matches)))
                         print("/****************Page "+str(i)+"***********************/")
                         #print(pvp_matches_filtered = filter_emblems_pvp(pvp_matches))
                         filtered_matches_list = filter_prismatic_inferno_emblem(pvp_matches)
@@ -1155,6 +1157,8 @@ async def testing(context):
                         res = "ERROR!"
                 if will_obtain_pi_emblem:
                     res = ":white_check_mark: **Recibiras el emblema !! Felicitaciones !!**"
+                else:
+                    res = ":no_entry: **No sos elegible para el emblema, sorry**"
             else:
                 res = ":no_entry: **No sos elegible para el emblema, sorry**"
         
