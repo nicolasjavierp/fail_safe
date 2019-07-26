@@ -1138,8 +1138,7 @@ async def testing(context):
                         filtered_matches_list = filter_prismatic_inferno_emblem(pvp_matches)
                         if filtered_matches_list:
                             will_obtain_pi_emblem = True
-                            print(filtered_matches_list)
-                            break
+                            print(len(filtered_matches_list))
                         print("/***************************************/")
                     else:
                         print("No PVP!!")
