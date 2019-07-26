@@ -249,7 +249,11 @@ class FailSafe(object):
         site_call = "https://www.bungie.net/platform/Destiny2/4/Account/"+ str(membership_id)+"/Character/"+str(character_id)+"/Stats/Activities/?count=250&mode=5&page="+str(page)
         request = requests.get(site_call,
                                 headers={"X-API-Key":self.api_key})
-        return request.json()['Response']['activities']
+        if request.json()['Response']['activities']:
+            return request.json()['Response']['activities']
+        else:
+            return None
+        
 
     def get_postGameStats(self, game_id):
         '''game_id (int): Need to look further into this, but game_ids can be found'''
