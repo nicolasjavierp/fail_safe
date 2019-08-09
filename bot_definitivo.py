@@ -1188,7 +1188,7 @@ async def laughfs(context):
         await client.say('User is in channel: ' + channel)
         vc = await client.join_voice_channel(voice_channel)
         #player = vc.create_ffmpeg_player('crickets.mp3', after=lambda: print('done'))
-        player = await vc.create_ytdl_player("https://www.youtube.com/watch?v=xK1_SyS_cL0", after=check_queue(server.id, my_queues, players))
+        player = await vc.create_ytdl_player("https://www.youtube.com/watch?v=xK1_SyS_cL0", after=lambda: print('done'))
         player.start()
         while not player.is_done():
             await asyncio.sleep(1)
