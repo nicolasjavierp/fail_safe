@@ -1144,7 +1144,6 @@ async def skip(context,url):
                     await client.say("Salteando KPO !")
                 else:
                     await client.say("Nada encolado KPO !")
-            
 
 
 @client.command(
@@ -1196,6 +1195,13 @@ async def laughfs(context):
         await vc.disconnect()
     else:
         await client.say('User is not in a channel.')
+
+
+
+            
+
+
+
 
 #######################################################################
 ################################# TEST ################################
