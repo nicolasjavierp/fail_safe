@@ -1059,7 +1059,7 @@ async def inactivos(context):
 
 
 #######################################################################
-################################# MUSIC ###############################
+################################# MUSIC & Sound #######################
 #######################################################################
 
 
@@ -1145,6 +1145,32 @@ async def skip(context,url):
                 else:
                     await client.say("Nada encolado KPO !")
             
+
+
+@client.command(
+        name='Crickets',
+        description="Plays cricket sound in voice channel",
+        brief="cricket_sound",
+        aliases=['cri'],
+        pass_context=True
+)
+async def crickets(context):
+    # grab the user who sent the command
+    user = context.message.author
+    voice_channel = user.voice.voice_channel
+    channel = None
+    if voice_channel != None:
+        channel = voice_channel.name
+        await client.say('User is in channel: ' + channel)
+        vc = await client.join_voice_channel(voice_channel)
+        player = vc.create_ffmpeg_player('crickets.mp3', after=lambda: print('done'))
+        player.start()
+        while not player.is_done():
+            await asyncio.sleep(1)
+        player.stop()
+        await vc.disconnect()
+    else:
+        await client.say('User is not in a channel.')
 
 #######################################################################
 ################################# TEST ################################
