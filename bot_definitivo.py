@@ -1198,6 +1198,33 @@ async def laughfs(context):
 
 
 
+@client.command(
+        name='Javu',
+        description="Plays Javu's intro in voice channel",
+        brief="javu_intro",
+        aliases=['javu'],
+        pass_context=True)
+async def intro_javu(context):
+    # grab the user who sent the command
+    user = context.message.author
+    voice_channel = user.voice.voice_channel
+    channel = None
+    if voice_channel != None:
+        channel = voice_channel.name
+        await client.say('User is in channel: ' + channel)
+        vc = await client.join_voice_channel(voice_channel)
+        #player = vc.create_ffmpeg_player('crickets.mp3', after=lambda: print('done'))
+        player = await vc.create_ytdl_player("https://www.youtube.com/watch?v=UKTNWI0eYJ4&feature=youtu.be&t=52", after=lambda: print('done'))
+        player.start()
+        while not player.is_done():
+            await asyncio.sleep(1)
+        player.stop()
+        await vc.disconnect()
+    else:
+        await client.say('User is not in a channel.')
+
+
+
 #######################################################################
 ################################# TEST ################################
 #######################################################################
