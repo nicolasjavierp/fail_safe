@@ -1173,7 +1173,7 @@ async def crickets(context):
 
 
 @client.command(
-        name='lol',
+        name='LoL',
         description="Plays laghf sound in voice channel",
         brief="lol_sound",
         aliases=['lol'],
