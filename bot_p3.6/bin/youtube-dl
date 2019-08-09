@@ -1,5 +1,4 @@
-#!/home/njp/Downloads/clan/fail_safe/bot_p3.6/bin/python
-
+#!/home/njp/Downloads/clan/fail_safe/bot_p3.6/bin/python3.6
 # -*- coding: utf-8 -*-
 import re
 import sys
