@@ -1099,7 +1099,7 @@ async def stop(context):
         voice_client = client.voice_client_in(server)
         id = context.message.server.id
         await voice_client.disconnect()
-        if id:
+        if players[id]:
             players[id].stop()
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
