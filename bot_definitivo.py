@@ -1099,7 +1099,8 @@ async def stop(context):
         voice_client = client.voice_client_in(server)
         id = context.message.server.id
         await voice_client.disconnect()
-        players[id].stop()
+        if id:
+            players[id].stop()
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
     
@@ -1240,7 +1241,7 @@ async def intro_kernell(context):
         await client.say('User is in channel: ' + channel)
         vc = await client.join_voice_channel(voice_channel)
         #player = vc.create_ffmpeg_player('crickets.mp3', after=lambda: print('done'))
-        player = await vc.create_ytdl_player("https://youtu.be/YkADj0TPrJA?t=196", after=lambda: print('done'))
+        player = await vc.create_ytdl_player("https://www.youtube.com/watch?v=YkADj0TPrJA&feature=youtu.be&t=196", after=lambda: print('done'))
         player.start()
         while not player.is_done():
             await asyncio.sleep(1)
