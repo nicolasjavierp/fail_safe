@@ -1188,7 +1188,6 @@ async def laughfs(context):
         channel = voice_channel.name
         await client.say('User is in channel: ' + channel)
         vc = await client.join_voice_channel(voice_channel)
-        #player = vc.create_ffmpeg_player('crickets.mp3', after=lambda: print('done'))
         player = await vc.create_ytdl_player("https://www.youtube.com/watch?v=xK1_SyS_cL0", after=lambda: print('done'))
         player.start()
         while not player.is_done():
@@ -1211,17 +1210,19 @@ async def intro_javu(context):
     voice_channel = user.voice.voice_channel
     channel = None
     if voice_channel != None:
-        channel = voice_channel.name
-        await client.say('User is in channel: ' + channel)
-        vc = await client.join_voice_channel(voice_channel)
-        #player = vc.create_ffmpeg_player('crickets.mp3', after=lambda: print('done'))
-        my_intros = ["https://youtu.be/RmbXT_-Vw00","https://youtu.be/4gf82Qli2XM"]
-        player = await vc.create_ytdl_player(random.choice(my_intros), after=lambda: print('done'))
-        player.start()
-        while not player.is_done():
-            await asyncio.sleep(1)
-        player.stop()
-        await vc.disconnect()
+        if user.id == discord_admin_ids["javu"]:
+            channel = voice_channel.name
+            await client.say('LLEGO EL TITAN !!!  ' + channel)
+            vc = await client.join_voice_channel(voice_channel)
+            my_intros = ["https://youtu.be/RmbXT_-Vw00","https://youtu.be/4gf82Qli2XM"]
+            player = await vc.create_ytdl_player(random.choice(my_intros), after=lambda: print('done'))
+            player.start()
+            while not player.is_done():
+                await asyncio.sleep(1)
+            player.stop()
+            await vc.disconnect()
+        else:
+            await client.say('Tu no eres **Javu the Titan** ,'+str(context.message.author.name)+ ', no podes usar su intro ...' )
     else:
         await client.say('User is not in a channel.')
 
@@ -1238,8 +1239,6 @@ async def intro_kernell(context):
     voice_channel = user.voice.voice_channel
     channel = None
     if (voice_channel != None):
-        print(user.id)
-        print(discord_admin_ids["kernell"])
         if user.id == discord_admin_ids["kernell"]:
             channel = voice_channel.name
             #await client.say('User is in channel: ' + channel)
@@ -1253,7 +1252,7 @@ async def intro_kernell(context):
             player.stop()
             await vc.disconnect()
         else:
-            await client.say('Tu no eres Kernell '+str(context.message.author.name)+ ' no podes usar su intro ...' )
+            await client.say('Tu no eres **Kernell** ,'+str(context.message.author.name)+ ', no podes usar su intro ...' )
     else:
         await client.say('User is not in a channel.')
 
