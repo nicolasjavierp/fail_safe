@@ -1238,6 +1238,8 @@ async def intro_kernell(context):
     voice_channel = user.voice.voice_channel
     channel = None
     if (voice_channel != None):
+        print(user.id)
+        print(discord_admin_ids["kernell"])
         if user.id != discord_admin_ids["kernell"]:
             channel = voice_channel.name
             #await client.say('User is in channel: ' + channel)
@@ -1251,7 +1253,7 @@ async def intro_kernell(context):
             player.stop()
             await vc.disconnect()
         else:
-            await client.say('Tu no eres Kernell ...')
+            await client.say('Tu no eres Kernell '+str(context.message.author.name))
     else:
         await client.say('User is not in a channel.')
 
