@@ -1240,10 +1240,10 @@ async def intro_kernell(context):
     if (voice_channel != None):
         print(user.id)
         print(discord_admin_ids["kernell"])
-        if user.id != discord_admin_ids["kernell"]:
+        if user.id == discord_admin_ids["kernell"]:
             channel = voice_channel.name
             #await client.say('User is in channel: ' + channel)
-            await client.say('LLEGO KERNELL !!' + channel)
+            await client.say('LLEGO KERNELL !!  ' + channel)
             vc = await client.join_voice_channel(voice_channel)
             #player = vc.create_ffmpeg_player('crickets.mp3', after=lambda: print('done'))
             player = await vc.create_ytdl_player("https://youtu.be/o9CzMAOxICw", after=lambda: print('done'))
@@ -1253,7 +1253,7 @@ async def intro_kernell(context):
             player.stop()
             await vc.disconnect()
         else:
-            await client.say('Tu no eres Kernell '+str(context.message.author.name))
+            await client.say('Tu no eres Kernell '+str(context.message.author.name)+ ' no podes usar su intro ...' )
     else:
         await client.say('User is not in a channel.')
 
