@@ -1223,7 +1223,7 @@ async def intro_javu(context):
     if voice_channel != None:
         print(user.id, type(user.id))
         print(discord_admin_ids["javu"], type(discord_admin_ids["javu"]))
-        if user.id == discord_admin_ids["javu"]:
+        if int(user.id) == discord_admin_ids["javu"]:
             channel = voice_channel.name
             await client.say('LLEGO EL TITAN !!!  ' + channel)
             vc = await client.join_voice_channel(voice_channel)
