@@ -1251,7 +1251,7 @@ async def intro_kernell(context):
     voice_channel = user.voice.voice_channel
     channel = None
     if (voice_channel != None):
-        if user.id == discord_admin_ids["kernell"]:
+        if int(user.id) == discord_admin_ids["kernell"]:
             channel = voice_channel.name
             await client.say('LLEGO KERNELL !!  ' + channel)
             vc = await client.join_voice_channel(voice_channel)
@@ -1277,7 +1277,7 @@ async def intro_sonker(context):
     voice_channel = user.voice.voice_channel
     channel = None
     if (voice_channel != None):
-        if user.id == discord_admin_ids["sonker"]:
+        if int(user.id) == discord_admin_ids["sonker"]:
             channel = voice_channel.name
             await client.say('Sonker is here !!  ' + channel)
             vc = await client.join_voice_channel(voice_channel)
