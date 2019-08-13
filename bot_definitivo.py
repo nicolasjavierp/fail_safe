@@ -1221,8 +1221,8 @@ async def intro_javu(context):
     voice_channel = user.voice.voice_channel
     channel = None
     if voice_channel != None:
-        print(user.id, type(user.id))
-        print(discord_admin_ids["javu"], type(discord_admin_ids["javu"]))
+        #print(user.id, type(user.id))
+        #print(discord_admin_ids["javu"], type(discord_admin_ids["javu"]))
         if int(user.id) == discord_admin_ids["javu"]:
             channel = voice_channel.name
             await client.say('LLEGO EL TITAN !!!  ' + channel)
@@ -1247,19 +1247,14 @@ async def intro_javu(context):
         aliases=['kernell'],
         pass_context=True)
 async def intro_kernell(context):
-    # grab the user who sent the command
     user = context.message.author
     voice_channel = user.voice.voice_channel
     channel = None
     if (voice_channel != None):
-        print(user.id, type(user.id))
-        print(discord_admin_ids["kernell"], type(discord_admin_ids["kernell"]))
         if user.id == discord_admin_ids["kernell"]:
             channel = voice_channel.name
-            #await client.say('User is in channel: ' + channel)
             await client.say('LLEGO KERNELL !!  ' + channel)
             vc = await client.join_voice_channel(voice_channel)
-            #player = vc.create_ffmpeg_player('crickets.mp3', after=lambda: print('done'))
             player = await vc.create_ytdl_player("https://youtu.be/o9CzMAOxICw", after=lambda: print('done'))
             player.start()
             while not player.is_done():
@@ -1268,6 +1263,32 @@ async def intro_kernell(context):
             await vc.disconnect()
         else:
             await client.say('Tu no eres **Kernell** ,'+str(context.message.author.name)+ ', no podes usar su intro ...' )
+    else:
+        await client.say('User is not in a channel.')
+
+@client.command(
+        name='Sonker',
+        description="Plays Sonker's intro in voice channel",
+        brief="sonker_intro",
+        aliases=['sonker'],
+        pass_context=True)
+async def intro_sonker(context):
+    user = context.message.author
+    voice_channel = user.voice.voice_channel
+    channel = None
+    if (voice_channel != None):
+        if user.id == discord_admin_ids["sonker"]:
+            channel = voice_channel.name
+            await client.say('Sonker is here !!  ' + channel)
+            vc = await client.join_voice_channel(voice_channel)
+            player = await vc.create_ytdl_player("https://youtu.be/TrvCtwvILqI", after=lambda: print('done'))
+            player.start()
+            while not player.is_done():
+                await asyncio.sleep(1)
+            player.stop()
+            await vc.disconnect()
+        else:
+            await client.say('Tu no eres **Sonker** ,'+str(context.message.author.name)+ ', no podes usar su intro ...' )
     else:
         await client.say('User is not in a channel.')
 
