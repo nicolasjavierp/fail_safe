@@ -1148,6 +1148,17 @@ async def skip(context,url):
                     await client.say("Nada encolado KPO !")
 
 
+@client.command(pass_context=True)
+async def quit(context):
+    server = context.message.server
+    if is_user_admin(context):
+        voice_client = client.voice_client_in(server)
+        id = context.message.server.id
+        await voice_client.disconnect()
+    else:
+        await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
+
+
 @client.command(
         name='Crickets',
         description="Plays cricket sound in voice channel",
@@ -1210,6 +1221,8 @@ async def intro_javu(context):
     voice_channel = user.voice.voice_channel
     channel = None
     if voice_channel != None:
+        print(user.id, type(user.id))
+        print(discord_admin_ids["javu"], type(discord_admin_ids["javu"]))
         if user.id == discord_admin_ids["javu"]:
             channel = voice_channel.name
             await client.say('LLEGO EL TITAN !!!  ' + channel)
