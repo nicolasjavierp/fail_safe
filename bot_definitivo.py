@@ -1239,6 +1239,8 @@ async def intro_kernell(context):
     voice_channel = user.voice.voice_channel
     channel = None
     if (voice_channel != None):
+        print(user.id, type(user.id))
+        print(discord_admin_ids["kernell"], type(discord_admin_ids["kernell"]))
         if user.id == discord_admin_ids["kernell"]:
             channel = voice_channel.name
             #await client.say('User is in channel: ' + channel)
