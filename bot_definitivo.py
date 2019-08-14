@@ -1255,7 +1255,7 @@ async def intro_kernell(context):
             channel = voice_channel.name
             await client.say('LLEGO KERNELL !!  ' + channel)
             vc = await client.join_voice_channel(voice_channel)
-            player = await vc.create_ytdl_player("https://youtu.be/o9CzMAOxICw", after=lambda: print('done'))
+            player = await vc.create_ytdl_player("https://youtu.be/NDCSZEWEcb0", after=lambda: print('done'))
             player.start()
             while not player.is_done():
                 await asyncio.sleep(1)
@@ -1265,6 +1265,7 @@ async def intro_kernell(context):
             await client.say('Tu no eres **Kernell** ,'+str(context.message.author.name)+ ', no podes usar su intro ...' )
     else:
         await client.say('User is not in a channel.')
+
 
 @client.command(
         name='Sonker',
