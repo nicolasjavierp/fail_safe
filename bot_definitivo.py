@@ -1227,7 +1227,7 @@ async def intro_javu(context):
             channel = voice_channel.name
             await client.say('LLEGO EL TITAN !!!  ' + channel)
             vc = await client.join_voice_channel(voice_channel)
-            my_intros = ["https://youtu.be/RmbXT_-Vw00","https://youtu.be/4gf82Qli2XM"]
+            my_intros = ["https://youtu.be/RmbXT_-Vw00","https://youtu.be/4gf82Qli2XM","https://youtu.be/UXp59oWuuFQ","https://youtu.be/2VN3X95uu_4"]
             player = await vc.create_ytdl_player(random.choice(my_intros), after=lambda: print('done'))
             player.start()
             while not player.is_done():
