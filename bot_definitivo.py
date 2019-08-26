@@ -187,8 +187,8 @@ async def on_member_remove(member):
         #print(i.id,i.name)
         #if i.id == str(544911570258624522):
         #    custom_clan_role_id=i.id
-        if i.id == str(387742983249985536):
-            custom_destiny_clan_role_id = i.id
+        #if i.id == str(387742983249985536):
+        #    custom_destiny_clan_role_id = i.id
         #if i.id == str(544915941713248267):
             #custom_division_clan_role_id = i.id
         if "DJ" in i.name:
@@ -1225,7 +1225,8 @@ async def intro_javu(context):
         #print(discord_admin_ids["javu"], type(discord_admin_ids["javu"]))
         if int(user.id) == discord_admin_ids["javu"]:
             channel = voice_channel.name
-            await client.say('LLEGO EL TITAN !!!  ' + channel)
+            #await client.say('LLEGO EL TITAN !!!  ' + channel)
+            print('LLEGO EL TITAN !!!  ' + channel)
             vc = await client.join_voice_channel(voice_channel)
             my_intros = ["https://youtu.be/RmbXT_-Vw00","https://youtu.be/4gf82Qli2XM","https://youtu.be/UXp59oWuuFQ","https://youtu.be/2VN3X95uu_4"]
             player = await vc.create_ytdl_player(random.choice(my_intros), after=lambda: print('done'))
@@ -1253,7 +1254,8 @@ async def intro_kernell(context):
     if (voice_channel != None):
         if int(user.id) == discord_admin_ids["kernell"]:
             channel = voice_channel.name
-            await client.say('LLEGO KERNELL !!  ' + channel)
+            #await client.say('LLEGO KERNELL !!  ' + channel)
+            print('LLEGO KERNELL !!  ' + channel)
             vc = await client.join_voice_channel(voice_channel)
             player = await vc.create_ytdl_player("https://youtu.be/NDCSZEWEcb0", after=lambda: print('done'))
             player.start()
@@ -1280,7 +1282,8 @@ async def intro_sonker(context):
     if (voice_channel != None):
         if int(user.id) == discord_admin_ids["sonker"]:
             channel = voice_channel.name
-            await client.say('Sonker is here !!  ' + channel)
+            #await client.say('Sonker is here !!  ' + channel)
+            print('Sonker is here !!  ' + channel)
             vc = await client.join_voice_channel(voice_channel)
             player = await vc.create_ytdl_player("https://youtu.be/TrvCtwvILqI", after=lambda: print('done'))
             player.start()
@@ -1290,6 +1293,33 @@ async def intro_sonker(context):
             await vc.disconnect()
         else:
             await client.say('Tu no eres **Sonker** ,'+str(context.message.author.name)+ ', no podes usar su intro ...' )
+    else:
+        await client.say('User is not in a channel.')
+
+
+@client.command(
+        name='Elenita',
+        description="Plays Elenitas's intro in voice channel",
+        brief="elenita_intro",
+        aliases=['elenita'],
+        pass_context=True)
+async def intro_elenita(context):
+    user = context.message.author
+    voice_channel = user.voice.voice_channel
+    channel = None
+    if (voice_channel != None):
+        if int(user.id) == discord_admin_ids["elenita"]:
+            channel = voice_channel.name
+            print('Elenita is here !!  ' + channel)
+            vc = await client.join_voice_channel(voice_channel)
+            player = await vc.create_ytdl_player("https://youtu.be/bwB6DG0P0x4", after=lambda: print('done'))
+            player.start()
+            while not player.is_done():
+                await asyncio.sleep(1)
+            player.stop()
+            await vc.disconnect()
+        else:
+            await client.say('Tu no eres **Elenita** ,'+str(context.message.author.name)+ ', no podes usar su intro ...' )
     else:
         await client.say('User is not in a channel.')
 
