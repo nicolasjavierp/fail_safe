@@ -301,7 +301,7 @@ def get_xur_info(fs):
             else:
                True, None, None, None 
     else:
-        return False, "Xur solamente esta de Viernes a Martes. Proxima aparición será el reset del "+str(get_last_friday_reset().date()+timedelta(weeks=1)), None, None
+        return False, "Xur solamente esta desde reset del Viernes al reset del Martes. Proxima aparición será a partir del __reset__ el día "+str(get_last_friday_reset().date()+timedelta(weeks=1)), None, None
 
 
 def get_random_lore():
