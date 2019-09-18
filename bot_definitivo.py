@@ -859,6 +859,18 @@ async def prometheus_inferno_emblem(context):
         await client.send_message(context.message.channel, embed=embed)
         await asyncio.sleep(1)
 
+
+@client.command(name='battle_pass',
+                description="BattlePass",
+                brief="battlepass",
+                aliases=['pass'],
+                pass_context=True)
+async def clear_channel(ctx):
+    embed = discord.Embed(title="", description=, color=0x000000)
+    embed.set_image(url="https://cdn.discordapp.com/attachments/499231830235414529/623909296710615072/destiny-2-season-pass.jpg")
+    embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
+    await client.send_message(context.message.channel, embed=embed)
+
 #######################################################################
 ################## SPECIAL PERMISIONS COMMANDS  #######################
 #######################################################################
