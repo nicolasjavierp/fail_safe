@@ -867,7 +867,7 @@ async def prometheus_inferno_emblem(context):
                 pass_context=True)
 async def battlepass(context):
     img_list = ["https://cdn.discordapp.com/attachments/499231830235414529/623930901302345748/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623930983380418581/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931018323165194/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931077320507392/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931110161907734/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931136850264086/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931158769696799/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931181674528809/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931205854691328/unknown.png"]
-    for i in range(len(img_list)-1):
+    for i in range(len(img_list)):
         print(i)
         embed = discord.Embed(title="", description="", color=0x00ff00)
         embed.set_image(url=img_list[i])
