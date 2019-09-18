@@ -868,7 +868,7 @@ async def prometheus_inferno_emblem(context):
 async def battlepass(ctx):
     img_list = ["https://cdn.discordapp.com/attachments/499231830235414529/623930868356087808/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623930901302345748/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623930983380418581/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931018323165194/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931077320507392/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931110161907734/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931136850264086/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931158769696799/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931181674528809/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931205854691328/unknown.png"]
     for i in range(9):
-        embed = discord.Embed(title="", description=, color=0x000000)
+        embed = discord.Embed(title="", description="", color=0x000000)
         embed.set_image(url=img_list[i])
         embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
         await client.send_message(context.message.channel, embed=embed)
