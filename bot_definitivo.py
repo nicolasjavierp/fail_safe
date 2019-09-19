@@ -875,7 +875,7 @@ async def battlepass(context):
         #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
         #await client.send_message(context.message.channel, embed=embed)
         #await asyncio.sleep(0.5)
-    embed = discord.Embed(title="__**BattlePass**__", description="recompensas:", color=0x00ff00)
+    embed = discord.Embed(title="__**BattlePass**__", description="Recompensas generales:", color=0x00ff00)
     embed.set_image(url=img)
     await client.send_message(context.message.channel, embed=embed)
 
