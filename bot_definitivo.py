@@ -866,14 +866,18 @@ async def prometheus_inferno_emblem(context):
                 aliases=['pass'],
                 pass_context=True)
 async def battlepass(context):
-    img_list = ["https://cdn.discordapp.com/attachments/499231830235414529/623930901302345748/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623930983380418581/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931018323165194/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931077320507392/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931110161907734/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931136850264086/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931158769696799/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931181674528809/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931205854691328/unknown.png"]
-    for i in range(len(img_list)):
-        print(i)
-        embed = discord.Embed(title="", description="", color=0x00ff00)
-        embed.set_image(url=img_list[i])
+    img = "https://cdn.discordapp.com/attachments/457673718982901761/624248839297302566/70633858_10157612166659521_8316506064719708160_n.png"
+    #img_list = ["https://cdn.discordapp.com/attachments/499231830235414529/623930901302345748/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623930983380418581/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931018323165194/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931077320507392/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931110161907734/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931136850264086/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931158769696799/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931181674528809/unknown.png","https://cdn.discordapp.com/attachments/499231830235414529/623931205854691328/unknown.png"]
+    #for i in range(len(img_list)):
+        #print(i)
+        #embed = discord.Embed(title="", description="", color=0x00ff00)
+        #embed.set_image(url=img_list[i])
         #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
-        await client.send_message(context.message.channel, embed=embed)
-        await asyncio.sleep(0.5)
+        #await client.send_message(context.message.channel, embed=embed)
+        #await asyncio.sleep(0.5)
+    embed = discord.Embed(title="__**BattlePass**__", description="recompensas:", color=0x00ff00)
+    embed.set_image(url=img)
+    await client.send_message(context.message.channel, embed=embed)
 
 #######################################################################
 ################## SPECIAL PERMISIONS COMMANDS  #######################
