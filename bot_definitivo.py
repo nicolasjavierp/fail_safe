@@ -1192,7 +1192,7 @@ async def crickets(context):
     channel = None
     if voice_channel != None:
         channel = voice_channel.name
-        await client.say('User is in channel: ' + channel)
+        #await client.say('User is in channel: ' + channel)
         vc = await client.join_voice_channel(voice_channel)
         player = vc.create_ffmpeg_player('crickets.mp3', after=lambda: print('done'))
         player.start()
@@ -1206,20 +1206,45 @@ async def crickets(context):
 
 @client.command(
         name='LoL',
-        description="Plays laghf sound in voice channel",
+        description="Plays croud laghf sound in voice channel",
         brief="lol_sound",
         aliases=['lol'],
         pass_context=True)
-async def laughfs(context):
+async def croud_laghfs(context):
     # grab the user who sent the command
     user = context.message.author
     voice_channel = user.voice.voice_channel
     channel = None
     if voice_channel != None:
         channel = voice_channel.name
-        await client.say('User is in channel: ' + channel)
+        #await client.say('User is in channel: ' + channel)
         vc = await client.join_voice_channel(voice_channel)
         player = await vc.create_ytdl_player("https://youtu.be/Wyzg-hDHpMk", after=lambda: print('done'))
+        player.start()
+        while not player.is_done():
+            await asyncio.sleep(1)
+        player.stop()
+        await vc.disconnect()
+    else:
+        await client.say('User is not in a channel.')
+
+
+@client.command(
+        name='LoLC',
+        description="Plays croud laghf and clap sound in voice channel",
+        brief="lolc_sound",
+        aliases=['lolc'],
+        pass_context=True)
+async def croud_laghfs_claps(context):
+    # grab the user who sent the command
+    user = context.message.author
+    voice_channel = user.voice.voice_channel
+    channel = None
+    if voice_channel != None:
+        channel = voice_channel.name
+        #await client.say('User is in channel: ' + channel)
+        vc = await client.join_voice_channel(voice_channel)
+        player = await vc.create_ytdl_player("https://youtu.be/JOOKK_JG3ho", after=lambda: print('done'))
         player.start()
         while not player.is_done():
             await asyncio.sleep(1)
