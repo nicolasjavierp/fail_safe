@@ -1422,6 +1422,7 @@ async def testing(context):
 
 async def list_servers():
     await client.wait_until_ready()
+    await client.remove_command('help')
     while not client.is_closed:
         print("Current servers:")
         for server in client.servers:
@@ -1523,4 +1524,5 @@ async def get_server_status_tweets():
 #######################################################################
 #client.loop.create_task(list_servers())
 #client.loop.create_task(get_server_status_tweets())
+
 client.run(BOT_TOKEN)
