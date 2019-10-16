@@ -682,7 +682,7 @@ class FailSafe(object):
         #print(player)
         if player['last_played']:
             #break_point_seconds=1296000*2
-            break_point_seconds=2592000
+            break_point_seconds=1814400
             last = player['last_played']
             last_played = datetime.strptime(last, "%Y-%m-%dT%H:%M:%SZ")
             now = datetime.utcnow().replace(microsecond=0)

@@ -1422,8 +1422,7 @@ async def testing(context):
 
 
 async def list_servers():
-    await client.wait_until_ready()
-    
+    await client.wait_until_ready() 
     while not client.is_closed:
         print("Current servers:")
         for server in client.servers:
