@@ -3,7 +3,7 @@
 
 import random
 import asyncio
-import aiohttp
+#import aiohttp
 from discord.ext.commands import Bot
 from discord.voice_client import VoiceClient
 from fail_safe import FailSafe
@@ -775,7 +775,7 @@ async def destiny_lore(context):
         #mgs.append(x)
     #await client.delete_messages(mgs)
 
-
+"""
 @client.command(name='PIE',
                 description="Prometheus Inferno Emblem",
                 brief="pie",
@@ -879,7 +879,7 @@ async def battlepass(context):
     embed = discord.Embed(title="__**BattlePass**__", description="Recompensas generales:", color=0x00ff00)
     embed.set_image(url=img)
     await client.send_message(context.message.channel, embed=embed)
-
+"""
 #######################################################################
 ################## SPECIAL PERMISIONS COMMANDS  #######################
 #######################################################################
@@ -1204,7 +1204,7 @@ async def crickets(context):
     else:
         await client.say('User is not in a channel.')
 
-
+"""
 @client.command(
         name='LoL',
         description="Plays croud laghf sound in voice channel",
@@ -1218,7 +1218,7 @@ async def croud_laghfs(context):
     channel = None
     if voice_channel != None:
         channel = voice_channel.name
-        await client.say('Palyin claps sound in channel: ' + channel)
+        await client.say('Playin claps sound in channel: ' + channel)
         vc = await client.join_voice_channel(voice_channel)
         player = await vc.create_ytdl_player("https://youtu.be/Wyzg-hDHpMk", after=lambda: print('done'))
         player.start()
@@ -1279,7 +1279,7 @@ async def sad_violin(context):
     else:
         await client.say('User is not in a channel.')
 
-
+"""
 @client.command(
         name='Javu',
         description="Plays Javu's intro in voice channel",
