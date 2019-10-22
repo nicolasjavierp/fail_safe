@@ -1218,7 +1218,7 @@ async def croud_laghfs(context):
     channel = None
     if voice_channel != None:
         channel = voice_channel.name
-        #await client.say('User is in channel: ' + channel)
+        await client.say('Palyin claps sound in channel: ' + channel)
         vc = await client.join_voice_channel(voice_channel)
         player = await vc.create_ytdl_player("https://youtu.be/Wyzg-hDHpMk", after=lambda: print('done'))
         player.start()
