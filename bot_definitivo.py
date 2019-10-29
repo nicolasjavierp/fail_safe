@@ -1047,33 +1047,35 @@ async def inactivos(context):
         blacklisters = db.blacklist
         
         date_blacklist_generated = await get_blacklist_date(blacklisters)
-        await client.send_message(context.message.channel,":calendar: **Fecha de ultima modificacion: **"+date_blacklist_generated)
-        blacklisters_list = await get_blacklist(blacklisters)
-        
-        my_dict = {}
-        for record in blacklisters_list:
-            #await client.send_message(context.message.channel,record["displayName"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"])    
-            if record["clan"] in my_dict:
-                my_dict[record["clan"]] += record["displayName"]+" ─ "+ record["inactive_time"] +"\n"
-            else:
-                my_dict[record["clan"]] = record["displayName"]+" ─ "+ record["inactive_time"] +"\n"
-                
-        for key, value in my_dict.items():
-            embed = discord.Embed(
-                title = "Inactivos "+str(key),
-                description=value,
-                color=0x00ff00
-            )
-            #embed.set_footer(text='Tis is a footer!')
-            #embed.set_image(url=client.user.avatar_url.replace("webp?size=1024","png"))
-            embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))     
-            #embed.set_author(name=client.user.name)#,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
-            #embed.add_field(name='Field Name', value='Field Value', inline=False)
-            #embed.add_field(name='Field Name', value='Field Value', inline=True)
-            #embed.add_field(name='Field Name', value='Field Value', inline=True)
-            #await client.say(embed=embed)
-            await client.send_message(context.message.channel, embed=embed)
-        await asyncio.sleep(0.2)       
+        #TODO IF date_blacklist_generated do something else no blacklisters
+        if date_blacklist_generated:
+            await client.send_message(context.message.channel,":calendar: **Fecha de ultima modificacion: **"+date_blacklist_generated)
+            blacklisters_list = await get_blacklist(blacklisters)
+            
+            my_dict = {}
+            for record in blacklisters_list:
+                #await client.send_message(context.message.channel,record["displayName"]+" \t"+ record["clan"]+" \t"+ record["inactive_time"])    
+                if record["clan"] in my_dict:
+                    my_dict[record["clan"]] += record["displayName"]+" ─ "+ record["inactive_time"] +"\n"
+                else:
+                    my_dict[record["clan"]] = record["displayName"]+" ─ "+ record["inactive_time"] +"\n"
+                    
+            for key, value in my_dict.items():
+                embed = discord.Embed(
+                    title = "Inactivos "+str(key),
+                    description=value,
+                    color=0x00ff00
+                )
+                #embed.set_footer(text='Tis is a footer!')
+                #embed.set_image(url=client.user.avatar_url.replace("webp?size=1024","png"))
+                embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))     
+                #embed.set_author(name=client.user.name)#,icon_url=client.user.avatar_url.replace("webp?size=1024","png"))
+                #embed.add_field(name='Field Name', value='Field Value', inline=False)
+                #embed.add_field(name='Field Name', value='Field Value', inline=True)
+                #embed.add_field(name='Field Name', value='Field Value', inline=True)
+                #await client.say(embed=embed)
+                await client.send_message(context.message.channel, embed=embed)
+            await asyncio.sleep(0.2)       
         await client.send_message(context.message.channel, "Fin.")
     else:
         await client.send_message(context.message.channel, ":no_entry: **No tenés permisos para ejecutar este comando**")
