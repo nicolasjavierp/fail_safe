@@ -770,8 +770,10 @@ class FailSafe(object):
         client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = client.get_database("bot_definitivo")
         clanmates = db.clan_members
-
-        clanmates.insert_many(clan_list, ordered=False)
+        if clan_list:
+            clanmates.insert_many(clan_list, ordered=False)
+        else:
+            clanmates.insert_many(["None"], ordered=False)
 
 
     async def async_clear_clanmates_blacklister_db(self):
