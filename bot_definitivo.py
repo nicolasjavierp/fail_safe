@@ -1047,7 +1047,7 @@ async def inactivos(context):
         blacklisters = db.blacklist
         
         date_blacklist_generated = await get_blacklist_date(blacklisters)
-        #TODO IF date_blacklist_generated do something else no blacklisters
+        #IF date_blacklist_generated do something else no blacklisters
         if date_blacklist_generated:
             await client.send_message(context.message.channel,":calendar: **Fecha de ultima modificacion: **"+date_blacklist_generated)
             blacklisters_list = await get_blacklist(blacklisters)

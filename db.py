@@ -31,13 +31,19 @@ from datetime import date
 async def get_blacklist(blacklisters):
     document = blacklisters.find({})
     await asyncio.sleep(0.01)
-    return document
+    if document:
+        return document
+    else:
+        return None
 
 
 async def get_blacklist_date(blacklisters):
     document = blacklisters.find_one()
     await asyncio.sleep(0.01)
-    return str(document["date"])
+    if document:
+        return str(document["date"])
+    else:
+        return None
 
 
 ######
@@ -49,16 +55,19 @@ async def push_clanmate_to_db(record, clanmates):
 
 
 def get_one_Clanmate(clanmate_id, clanmates):
-        document = clanmates.find_one({'battletag':clanmate_id})
+    document = clanmates.find_one({'battletag':clanmate_id})
+    if document:
         return document
+    else:
+        return None
 
 
 def is_clanmate_in_db(clanmate_id, clanmates):
-        document = clanmates.find_one({'battletag':clanmate_id})
-        if document:
-            return True
-        else:
-            return False
+    document = clanmates.find_one({'battletag':clanmate_id})
+    if document:
+        return True
+    else:
+        return False
 
 
 ######
@@ -70,28 +79,28 @@ async def push_discord_user_db(record, discord_users):
 
 
 def get_all_discord_users_by_last_activity(discord_users):
-        document = discord_users.find({}).sort('last_activity',pymongo.DESCENDING)
-        #await asyncio.sleep(0.01)
-        return document
+    document = discord_users.find({}).sort('last_activity',pymongo.DESCENDING)
+    #await asyncio.sleep(0.01)
+    return document
 
 
 def get_one_discord_user(discord_id, discord_users):
-        document = discord_users.find_one({'discord_id':discord_id})
-        return document
+    document = discord_users.find_one({'discord_id':discord_id})
+    return document
 
 
 def is_discord_id_in_db(discord_id, discord_users):
-        document = discord_users.find_one({'discord_id':discord_id})
-        if document:
-                return True
-        else:
-                return False
+    document = discord_users.find_one({'discord_id':discord_id})
+    if document:
+            return True
+    else:
+            return False
 
 
 def update_discord_user(record, updates, discord_users):
-        discord_users.update_one({'_id': record['_id']},{
-                                '$set': updates
-                                }, upsert=False)
+    discord_users.update_one({'_id': record['_id']},{
+                            '$set': updates
+                            }, upsert=False)
 
 
 async def async_add_discord_users_list(discord_users_list):
@@ -117,9 +126,9 @@ async def get_server_status(server_status):
 
 
 async def update_server_status(record, updates, server_status):
-        server_status.update_one({'_id': record['_id']},{
-                                '$set': updates
-                                }, upsert=False)
+    server_status.update_one({'_id': record['_id']},{
+                            '$set': updates
+                            }, upsert=False)
 
 
 #//////////////////////////////////////////////////////////////////////
