@@ -970,8 +970,12 @@ async def run_sync(context):
             print("Filtered Blacklisters for" + str(clan))
             for i in new_clan_list:
                 del i['last_played']
-            await fs.async_push_clanmates_to_db(new_clan_list)
-            print("Pushed ClanMates for" + str(clan))
+            if new_clan_list:
+                await fs.async_push_clanmates_to_db(new_clan_list)
+                print("Pushed ClanMates for" + str(clan))
+            else:
+                print("Not pushing to DB empty clanmates list for : " + str(clan))
+            
             await asyncio.sleep(0.5)
             await client.send_message(context.message.channel, "**Termine con %s**" % clan[1])
             

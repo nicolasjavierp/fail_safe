@@ -773,7 +773,7 @@ class FailSafe(object):
         if clan_list:
             clanmates.insert_many(clan_list, ordered=False)
         else:
-            clanmates.insert_many(["None"], ordered=False)
+            print("Empty Clanmate list .... not pushing to db")
 
 
     async def async_clear_clanmates_blacklister_db(self):
