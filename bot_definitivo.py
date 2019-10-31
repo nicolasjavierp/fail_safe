@@ -565,6 +565,71 @@ async def informe_semanal(context):
     embed.add_field(name=':map: __Mapas de Sala de Horno__', value="Esta Semana Configuración "+"__**"+HZ_dict[key%3][0]+"**__"+":", inline=False)
     await client.send_message(context.message.channel, embed=embed)
 
+@client.command(name='Informe Lunar',
+                description="Informe Lunar",
+                brief="Informe Lunar",
+                aliases=['luna'],
+                pass_context=True)
+async def informe_lunar(context):
+    #pass
+    #lunar_nightmares_dict={
+    #    4: ["ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs","https://cdn.discordapp.com/attachments/508999396835196950/520280396366086154/Espina_de_Keres.png"],
+    #    5: ["ғᴏʀᴛᴀʟᴇᴢᴀ ᴅᴇ ғɪʟᴏs ᴄᴏʀᴛᴀɴᴛᴇs - ʀᴇᴛɪʀᴏ ᴅᴇʟ ʜᴇʀᴀʟᴅᴏ","https://cdn.discordapp.com/attachments/508999396835196950/520280494722514964/Reclusion_del_Heraldo.png"],
+    #    0: ["ᴀʙɪsᴍᴏ ᴀɢᴏɴᴀʀᴄʜ – ʙᴀʜɪᴀ ᴅᴇ ʟᴏs ᴅᴇsᴇᴏs ᴀʜᴏɢᴀᴅᴏs","https://cdn.discordapp.com/attachments/508999396835196950/520280295413514253/Bahia_de_los_Deseos_Ahogados.png"],
+    #    1: ["ɢᴜᴀʀɴɪᴄɪᴏɴ ᴄɪᴍᴇʀᴀ - ᴄᴀᴍᴀʀᴀ ᴅᴇ ʟᴜᴢ ᴅᴇ ᴇsᴛʀᴇʟʟᴀs","https://cdn.discordapp.com/attachments/508999396835196950/520280358630064149/Camara_de_Luz_Estelar.png"],
+    #    2: ["ᴏᴜʀᴏʙᴏʀᴇᴀ – ʀᴇᴘᴏsᴏ ᴅᴇʟ ᴀғᴇʟɪᴏ","https://cdn.discordapp.com/attachments/508999396835196950/520280560724344862/Reposo_de_Afelio.png"],
+    #    3: ["ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ","https://cdn.discordapp.com/attachments/508999396835196950/520280444277751828/Jardines_de_Esila.png"]
+    #}
+
+    altar_dict={
+        0: ["Escopeta"],
+        1: ["Sniper"],
+        2: ["Lanza_cohetes"]
+    }
+    
+    today = datetime.now()
+    key = datetime.date(today).isocalendar()[1]
+    #print(key)
+
+    if date.today().weekday() == 0: #and today.hour >= 14: # 0 is for monday
+        #print("Today is Monday !")
+        key = key - 1
+        if key<0:
+            key = 52
+    print(today)
+    print("Week Number: "+str(key))
+        
+    if date.today().weekday() == 1 and today.hour < 17:
+        #print("Tuesday Before RESET !! Adjusting week number!!")
+        key = key - 1
+        if key<0:
+            key = 0
+        #print("Week Number: "+str(key))
+        #print(today.hour)
+    #print("**************")
+    #print("Next Week")
+    #print((key+1)%6)
+    #print(ascendant_dict[key%6][0])
+    #print(protocol_dict[key%5][0])
+    #embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%6][0]+"**", color=0xff0000)
+    #embed.set_image(url=ascendant_dict[key%6][1])
+    #await client.send_message(context.message.channel, embed=embed)
+
+    #embed = discord.Embed(title="" , description="**Esta semana la Ciudad Ensoñada tiene,  "+curse_dict[key%3][0]+"**", color=0x000000)
+    #await client.send_message(context.message.channel, embed=embed)
+    
+    #embed = discord.Embed(title="" , description= ":calendar: Esta semana en  Protocolo Intensificación: \n **"+protocol_dict[key%5][0]+"**", color=0x00ff00)
+    #embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/508999396835196950/520269693479551004/Protocolo.png")
+    #embed.set_image(url=protocol_dict[key%5][1])
+    #await client.send_message(context.message.channel, embed=embed)
+
+    #embed = discord.Embed(title="**:earth_americas: Web App Secuencia Terminales Hora Cero**" , url="http://fiddle.jshell.net/pastuleo23/xu1snrc0/show", color=0xffd700)
+    #embed.set_thumbnail(url="https://www.bungie.net/common/destiny2_content/icons/f0def60d28b4f2a5a7fe8ec3d4764cfa.jpg")
+    #embed.set_image(url=HZ_dict[key%3][1])
+    #embed.add_field(name=':map: __Mapas de Sala de Horno__', value="Esta Semana Configuración "+"__**"+HZ_dict[key%3][0]+"**__"+":", inline=False)
+    #await client.send_message(context.message.channel, embed=embed)
+
+
 
 @client.command(name='Server Status',
                 description="Server Status",
