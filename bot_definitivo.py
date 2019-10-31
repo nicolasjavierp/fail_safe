@@ -589,6 +589,7 @@ async def informe_lunar(context):
     
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
+    day_of_year=today.strftime("%j"))
     #print(key)
 
     if date.today().weekday() == 0: #and today.hour >= 14: # 0 is for monday
@@ -606,6 +607,14 @@ async def informe_lunar(context):
             key = 0
         #print("Week Number: "+str(key))
         #print(today.hour)
+    
+    if today.hour < 17:
+        print("It is AFTER daily reset !!!")
+        day_of_year = day_of_year-1
+    else:
+        print("It is BEFORE daily reset !!!")
+
+    print("Day Number: " +str(day_of_year))
     #print("**************")
     #print("Next Week")
     #print((key+1)%6)
@@ -615,8 +624,9 @@ async def informe_lunar(context):
     #embed.set_image(url=ascendant_dict[key%6][1])
     #await client.send_message(context.message.channel, embed=embed)
 
-    #embed = discord.Embed(title="" , description="**Esta semana la Ciudad Ensoñada tiene,  "+curse_dict[key%3][0]+"**", color=0x000000)
-    #await client.send_message(context.message.channel, embed=embed)
+    embed = discord.Embed(title="" , description="**Hoy el Altar del Dolor entrega,  "+altar_dict[day_of_year%3][0]+"**", color=0x000000)
+    #embed.set_image(url=altar_dict[day_of_year%3][1])
+    await client.send_message(context.message.channel, embed=embed)
     
     #embed = discord.Embed(title="" , description= ":calendar: Esta semana en  Protocolo Intensificación: \n **"+protocol_dict[key%5][0]+"**", color=0x00ff00)
     #embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/508999396835196950/520269693479551004/Protocolo.png")
