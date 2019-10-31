@@ -599,6 +599,7 @@ async def informe_lunar(context):
             key = 52
     print(today)
     print("Week Number: "+str(key))
+    print("unoficial Day Number: "+str(day_of_year))
         
     if date.today().weekday() == 1 and today.hour < 17:
         #print("Tuesday Before RESET !! Adjusting week number!!")
@@ -610,12 +611,13 @@ async def informe_lunar(context):
        
     print(today)
     if today.hour < 17:
-        print("It is AFTER daily reset !!!")
+        print("It is BEFORE daily reset !!!")
         day_of_year = day_of_year-1
     else:
-        print("It is BEFORE daily reset !!!")
+        print("It is AFTER daily reset !!!")
 
     print("Day Number: " +str(day_of_year))
+    print(type(day_of_year))
     #print("**************")
     #print("Next Week")
     #print((key+1)%6)
