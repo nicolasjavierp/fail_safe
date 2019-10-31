@@ -615,6 +615,7 @@ async def informe_lunar(context):
         day_of_year = day_of_year-1
     else:
         print("It is AFTER daily reset !!!")
+        day_of_year = day_of_year-1
 
     print("Day Number: " +str(day_of_year))
     print(type(day_of_year))
