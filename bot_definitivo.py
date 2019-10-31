@@ -582,9 +582,9 @@ async def informe_lunar(context):
     #}
 
     altar_dict={
-        0: ["Escopeta"],
-        1: ["Sniper"],
-        2: ["Lanza_cohetes"]
+        2: ["Escopeta"],
+        0: ["Sniper"],
+        1: ["Lanza_cohetes"]
     }
     
     today = datetime.now()
@@ -618,7 +618,7 @@ async def informe_lunar(context):
         day_of_year = day_of_year-1
 
     print("Day Number: " +str(day_of_year))
-    print(type(day_of_year))
+    
     #print("**************")
     #print("Next Week")
     #print((key+1)%6)
