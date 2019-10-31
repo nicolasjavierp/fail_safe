@@ -589,7 +589,7 @@ async def informe_lunar(context):
     
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
-    day_of_year = today.strftime("%j"))
+    day_of_year = today.strftime("%j")
     #print(key)
 
     if date.today().weekday() == 0: #and today.hour >= 14: # 0 is for monday
