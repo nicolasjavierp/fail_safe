@@ -572,19 +572,17 @@ async def informe_semanal(context):
                 pass_context=True)
 async def informe_lunar(context):
     #pass
-    #lunar_nightmares_dict={
-    #    4: ["ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs","https://cdn.discordapp.com/attachments/508999396835196950/520280396366086154/Espina_de_Keres.png"],
-    #    5: ["ғᴏʀᴛᴀʟᴇᴢᴀ ᴅᴇ ғɪʟᴏs ᴄᴏʀᴛᴀɴᴛᴇs - ʀᴇᴛɪʀᴏ ᴅᴇʟ ʜᴇʀᴀʟᴅᴏ","https://cdn.discordapp.com/attachments/508999396835196950/520280494722514964/Reclusion_del_Heraldo.png"],
-    #    0: ["ᴀʙɪsᴍᴏ ᴀɢᴏɴᴀʀᴄʜ – ʙᴀʜɪᴀ ᴅᴇ ʟᴏs ᴅᴇsᴇᴏs ᴀʜᴏɢᴀᴅᴏs","https://cdn.discordapp.com/attachments/508999396835196950/520280295413514253/Bahia_de_los_Deseos_Ahogados.png"],
-    #    1: ["ɢᴜᴀʀɴɪᴄɪᴏɴ ᴄɪᴍᴇʀᴀ - ᴄᴀᴍᴀʀᴀ ᴅᴇ ʟᴜᴢ ᴅᴇ ᴇsᴛʀᴇʟʟᴀs","https://cdn.discordapp.com/attachments/508999396835196950/520280358630064149/Camara_de_Luz_Estelar.png"],
-    #    2: ["ᴏᴜʀᴏʙᴏʀᴇᴀ – ʀᴇᴘᴏsᴏ ᴅᴇʟ ᴀғᴇʟɪᴏ","https://cdn.discordapp.com/attachments/508999396835196950/520280560724344862/Reposo_de_Afelio.png"],
-    #    3: ["ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ","https://cdn.discordapp.com/attachments/508999396835196950/520280444277751828/Jardines_de_Esila.png"]
-    #}
+    lunar_nightmares_dict={
+        0: ["Pesadilla de Xortal Sworn of Crota",""],
+        1: ["Pesadilla de Jaxx Claw of Xivu Arath",""],
+        2: ["Pesadilla de Hokris Fear of Mithrax",""],
+        3: ["Fallen Council",""]
+    }
 
     altar_dict={
-        2: ["Escopeta"],
-        0: ["Sniper"],
-        1: ["Lanza_cohetes"]
+        2: ["Escopeta","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/2f61559b7c57894703b6aaa52a44630c.jpg"],
+        0: ["Sniper","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/b990412136d220fd641078418a4903fe.jpg"],
+        1: ["Lanza_cohetes","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/eaf113dbb5cea03526009e6030b8c8ee.jpg"]
     }
     
     today = datetime.now()
@@ -597,9 +595,9 @@ async def informe_lunar(context):
         key = key - 1
         if key<0:
             key = 52
-    print(today)
-    print("Week Number: "+str(key))
-    print("unoficial Day Number: "+str(day_of_year))
+    #print(today)
+    #print("Week Number: "+str(key))
+    #print("unoficial Day Number: "+str(day_of_year))
         
     if date.today().weekday() == 1 and today.hour < 17:
         #print("Tuesday Before RESET !! Adjusting week number!!")
@@ -609,26 +607,27 @@ async def informe_lunar(context):
         #print("Week Number: "+str(key))
         #print(today.hour)
        
-    print(today)
+    #print(today)
     if today.hour < 17:
-        print("It is BEFORE daily reset !!!")
+        #print("It is BEFORE daily reset !!!")
         day_of_year = day_of_year-1
     else:
-        print("It is AFTER daily reset !!!")
+        pass
+        #print("It is AFTER daily reset !!!")
 
-    print("Day Number: " +str(day_of_year))
+    #print("Day Number: " +str(day_of_year))
     
     #print("**************")
     #print("Next Week")
     #print((key+1)%6)
     #print(ascendant_dict[key%6][0])
     #print(protocol_dict[key%5][0])
-    #embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%6][0]+"**", color=0xff0000)
+    embed = discord.Embed(title="" , description=":calendar: Esta semana esta la \n **"+lunar_nightmares_dict[key%4][0]+"**", color=0xff0000)
     #embed.set_image(url=ascendant_dict[key%6][1])
-    #await client.send_message(context.message.channel, embed=embed)
+    await client.send_message(context.message.channel, embed=embed)
 
     embed = discord.Embed(title="" , description="**Hoy el Altar del Dolor entrega,  "+altar_dict[day_of_year%3][0]+"**", color=0x000000)
-    #embed.set_image(url=altar_dict[day_of_year%3][1])
+    embed.set_image(url=altar_dict[day_of_year%3][1])
     await client.send_message(context.message.channel, embed=embed)
     
     #embed = discord.Embed(title="" , description= ":calendar: Esta semana en  Protocolo Intensificación: \n **"+protocol_dict[key%5][0]+"**", color=0x00ff00)
