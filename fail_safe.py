@@ -610,7 +610,7 @@ class FailSafe(object):
         for clanmember in clan_list:
             await asyncio.sleep(1)
             last_played = await self.async_get_Clanmate_LastPlayed(clanmember["membershipId"])
-            print("Player"+str(clanmember['displayName'])+" "+str(clanmember['membershipId'])+ " last played on "+ str(last_played))
+            print("Player "+str(clanmember['displayName'])+" "+str(clanmember['membershipId'])+ " last played on "+ str(last_played))
             if last_played:
                 clanmember["platform"] = "PC"
                 clanmember["last_played"] = last_played

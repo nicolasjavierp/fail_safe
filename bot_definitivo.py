@@ -1016,7 +1016,7 @@ async def run_sync(context):
                 print("Could not load CLAN LIST!!!!!")
             await asyncio.sleep(0.5)
             new_clan_list = await fs.async_add_Clanmembers_LastPlayed(clan_list)
-            print("Got last Played for" + str(clan))
+            print("Got last Played for " + str(clan))
             #await asyncio.sleep(0.5)
             #new_clan_list = await fs.async_add_Clanmembers_Battletag(new_clan_list)
             #print("Got Battletags for" + str(clan))
@@ -1024,12 +1024,11 @@ async def run_sync(context):
             new_clan_list = await fs.async_add_Clanmembers_ClanName(new_clan_list)
             print("Got ClanNames for" + str(clan))
             await asyncio.sleep(0.5)
-            print("-----------------------")
-            print("    FINAL CLAN LIST    ")
-            print("-----------------------")
-            print(new_clan_list)
-            print("-----------------------")
-            
+            #print("-----------------------")
+            #print("    FINAL CLAN LIST    ")
+            #print("-----------------------")
+            #print(new_clan_list)
+            #print("-----------------------")
             for clanmate in new_clan_list:
                 blacklisted = await fs.async_is_blacklisted(clanmate)
                 if blacklisted:
@@ -1042,8 +1041,8 @@ async def run_sync(context):
                 await fs.async_push_blacklist(definitive_blacklist)
             await asyncio.sleep(0.5)
             print("Filtered Blacklisters for" + str(clan))
-            for i in new_clan_list:
-                del i['last_played']
+            #for i in new_clan_list:
+            #    del i['last_played']
             if new_clan_list:
                 await fs.async_push_clanmates_to_db(new_clan_list)
                 print("Pushed ClanMates for" + str(clan))
