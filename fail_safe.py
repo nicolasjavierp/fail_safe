@@ -116,7 +116,7 @@ class FailSafe(object):
         #while True:
         try:
             components = "?components=" + ','.join([str(c) for c in components])
-            site_call = "https://bungie.net/Platform/Destiny2/4/Profile/" + str(membership_id) + "/" + components
+            site_call = "https://bungie.net/Platform/Destiny2/3/Profile/" + str(membership_id) + "/" + components
             request = requests.get(site_call, headers={"X-API-Key":self.api_key})
             if request.json()['ErrorCode']==1:
                 return request.json()['Response']
@@ -145,7 +145,7 @@ class FailSafe(object):
         #while True:
         try:
             components = "?components=" + ','.join([str(c) for c in components])
-            site_call = "https://bungie.net/Platform/Destiny2/4/Profile/" + str(membership_id) + "/" + components
+            site_call = "https://bungie.net/Platform/Destiny2/3/Profile/" + str(membership_id) + "/" + components
             request = requests.get(site_call, headers={"X-API-Key":self.api_key})
             if request.json()['ErrorCode']==1:
                 return request.json()['Response']
@@ -237,7 +237,7 @@ class FailSafe(object):
         GambitPrime: 75
         Reckoning: 76
         '''
-        site_call = "https://www.bungie.net/platform/Destiny2/4/Account/"+ str(membership_id)+"/Character/"+str(character_id)+"/Stats/Activities/?count=250&mode=4&page=0"
+        site_call = "https://www.bungie.net/platform/Destiny2/3/Account/"+ str(membership_id)+"/Character/"+str(character_id)+"/Stats/Activities/?count=250&mode=4&page=0"
         request = requests.get(site_call,
                                 headers={"X-API-Key":self.api_key})
         return request.json()['Response']
@@ -246,7 +246,7 @@ class FailSafe(object):
         '''
         AllPvP: 5
         '''
-        site_call = "https://www.bungie.net/platform/Destiny2/4/Account/"+ str(membership_id)+"/Character/"+str(character_id)+"/Stats/Activities/?count=250&mode=5&page="+str(page)
+        site_call = "https://www.bungie.net/platform/Destiny2/3/Account/"+ str(membership_id)+"/Character/"+str(character_id)+"/Stats/Activities/?count=250&mode=5&page="+str(page)
         request = requests.get(site_call,
                                 headers={"X-API-Key":self.api_key})
         if request.json()['Response']:
@@ -588,7 +588,7 @@ class FailSafe(object):
 
 
     async def async_get_Clanmate_LastPlayed(self, clanmember_membership_id):
-        site_call = "https://bungie.net/Platform/Destiny2/4/Profile/" +clanmember_membership_id+ "/" + "?components=100,200"
+        site_call = "https://bungie.net/Platform/Destiny2/3/Profile/" +clanmember_membership_id+ "/" + "?components=100,200"
         headers={"X-API-Key":self.api_key}
         #jar = aiohttp.CookieJar(unsafe=True)
         #async with aiohttp.ClientSession(cookie_jar=jar) as s:
