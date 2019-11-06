@@ -287,7 +287,7 @@ class FailSafe(object):
     def get_PlayerClanName(self, membership_id):
             '''Returns the players clan name'''
             if membership_id:
-                site_call = "https://www.bungie.net/Platform/GroupV2/User/4/{}/0/1/".format(str(membership_id))
+                site_call = "https://www.bungie.net/Platform/GroupV2/User/3/{}/0/1/".format(str(membership_id))
                 request = requests.get(site_call,
                                         headers={"X-API-Key":self.api_key})
                 if request.json()['Response']['results']:
@@ -597,7 +597,7 @@ class FailSafe(object):
                 try:
                     json = await request.json()
                     if json['Response']['profile']['data']['dateLastPlayed']:
-                            return json['Response']['profile']['data']['dateLastPlayed']
+                        return json['Response']['profile']['data']['dateLastPlayed']
                     else:
                         print("RETRY: Response 200 but no data")
                         return None
@@ -621,7 +621,7 @@ class FailSafe(object):
 
     async def async_get_Clanmate_ClanName(self, clanmember_membership_id):
         '''Gets the players clan name'''
-        site_call = "https://www.bungie.net/Platform/GroupV2/User/4/{}/0/1/".format(str(clanmember_membership_id))
+        site_call = "https://www.bungie.net/Platform/GroupV2/User/3/{}/0/1/".format(str(clanmember_membership_id))
         headers={"X-API-Key":self.api_key}
         async with aiohttp.get(site_call,headers=headers) as request:
             if request.status == 200:
