@@ -1010,6 +1010,7 @@ async def run_sync(context):
             blacklist_EX = []
             #clan_list = await fs.async_get_ClanPlayerList(fs.our_clans[0])
             clan_list = await fs.async_get_ClanPlayerList(clan)
+            print(clan_list)
             if not clan_list:
                 print("Could not load CLAN LIST!!!!!")
             await asyncio.sleep(0.5)

@@ -583,7 +583,6 @@ class FailSafe(object):
                         clanmate_dict = {'membershipId':item['destinyUserInfo']['membershipId'], 'displayName':item['destinyUserInfo']['displayName'], "bungie_id":None, "battletag":item['destinyUserInfo']['displayName']}
                     #clanmate_dict = {'membershipId':item['destinyUserInfo']['membershipId'], 'displayName':item['destinyUserInfo']['displayName'], "bungie_id":item["bungieNetUserInfo"]["membershipId"]}
                     temp_list.append(clanmate_dict)
-
             return temp_list
 
 
