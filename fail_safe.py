@@ -33,7 +33,7 @@ class FailSafe(object):
         self.blacklist = []
         #self.our_clans = [(2943900, "Escuadra 2"), (3084439, "Escuadra 3"), (3111393, "Escuadra 4"), (3144839,"Escuadra 5"), (3635441,"Escuadra 6")]
         self.our_clans = [(3144839,"REVENANTS Delta"), (3635441,"REVENANTS Beta"), (2943900, "REVENANTS Lambda"), (3836085, "REVENANTS Epsilon"), (3989167, "REVENANTS Omega")]
-        #self.our_clans = [(2943900, "Escuadra 2")] # for tests
+        #self.our_clans = [(2943900, "REVENANTS Lambda")] # for tests
         self.error_members = {}
         self.error_members = set()
         self.retrys = []
@@ -115,7 +115,7 @@ class FailSafe(object):
         #print membership_id
         #while True:
         try:
-            components = "?components=" + ','.join([str(c) for c in components])
+            components = "?components=" + ','.join([str(c) for c in membershipIdcomponents])
             site_call = "https://bungie.net/Platform/Destiny2/3/Profile/" + str(membership_id) + "/" + components
             request = requests.get(site_call, headers={"X-API-Key":self.api_key})
             if request.json()['ErrorCode']==1:
@@ -596,6 +596,7 @@ class FailSafe(object):
                 try:
                     json = await request.json()
                     if json['Response']['profile']['data']['dateLastPlayed']:
+                        print("GOT LAST PLAYED FOR: "+str(clanmember_membership_id))
                         return json['Response']['profile']['data']['dateLastPlayed']
                     else:
                         print("RETRY: Response 200 but no data")
@@ -609,6 +610,7 @@ class FailSafe(object):
         for clanmember in clan_list:
             await asyncio.sleep(1)
             last_played = await self.async_get_Clanmate_LastPlayed(clanmember["membershipId"])
+            print("Player"+str(clanmember['displayName'])+" "+str(clanmember['membershipId'])+ " last played on "+ str(last_played))
             if last_played:
                 clanmember["platform"] = "PC"
                 clanmember["last_played"] = last_played
@@ -700,7 +702,7 @@ class FailSafe(object):
                 player["date"] = datetime.today().strftime('%Y-%m-%d')
                 return player
             else:
-                #print "NOT Blacklisted"
+                print "NOT Blacklisted"
                 return None
         else:
             return None

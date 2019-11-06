@@ -565,6 +565,7 @@ async def informe_semanal(context):
     embed.add_field(name=':map: __Mapas de Sala de Horno__', value="Esta Semana Configuración "+"__**"+HZ_dict[key%3][0]+"**__"+":", inline=False)
     await client.send_message(context.message.channel, embed=embed)
 
+
 @client.command(name='Informe Lunar',
                 description="Informe Lunar",
                 brief="Informe Lunar",
@@ -1010,7 +1011,7 @@ async def run_sync(context):
             blacklist_EX = []
             #clan_list = await fs.async_get_ClanPlayerList(fs.our_clans[0])
             clan_list = await fs.async_get_ClanPlayerList(clan)
-            print(clan_list)
+            #print(clan_list)
             if not clan_list:
                 print("Could not load CLAN LIST!!!!!")
             await asyncio.sleep(0.5)
