@@ -121,13 +121,13 @@ class FailSafe(object):
             if request.json()['ErrorCode']==1:
                 return request.json()['Response']
             if request.json()['ErrorCode']==217:
-                print (str(request.json()['ErrorCode'])+" For membership_id: "+str(membership_id))
+                print(str(request.json()['ErrorCode'])+" For membership_id: "+str(membership_id))
                 self.error_members.add(membership_id)
                 return None
         except Exception as inst:
             self.retrys.append(membership_id)
             #print("----------------------")
-            print ("ERROR:"+membership_id)
+            print("ERROR:"+membership_id)
             #print("----------------------")
             time.sleep(5)
             #print(type(inst))
@@ -156,7 +156,7 @@ class FailSafe(object):
         except Exception as inst:
             self.retrys.append(membership_id)
             #print("----------------------")
-            print ("ERROR:"+membership_id)
+            print("ERROR:"+membership_id)
             #print("----------------------")
             time.sleep(5)
             #print(type(inst))
@@ -702,7 +702,7 @@ class FailSafe(object):
                 player["date"] = datetime.today().strftime('%Y-%m-%d')
                 return player
             else:
-                print "NOT Blacklisted"
+                #print("NOT Blacklisted")
                 return None
         else:
             return None
