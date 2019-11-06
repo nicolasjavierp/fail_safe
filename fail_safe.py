@@ -617,6 +617,7 @@ class FailSafe(object):
             else:
                 clanmember["platform"] = "Console"
                 clanmember["last_played"] = None
+        #print(clan_list)
         return clan_list
 
 

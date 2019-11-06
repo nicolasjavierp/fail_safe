@@ -1024,6 +1024,11 @@ async def run_sync(context):
             new_clan_list = await fs.async_add_Clanmembers_ClanName(new_clan_list)
             print("Got ClanNames for" + str(clan))
             await asyncio.sleep(0.5)
+            print("-----------------------")
+            print("    FINAL CLAN LIST    ")
+            print("-----------------------")
+            print(new_clan_list)
+            print("-----------------------")
             
             for clanmate in new_clan_list:
                 blacklisted = await fs.async_is_blacklisted(clanmate)
