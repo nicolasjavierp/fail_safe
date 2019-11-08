@@ -1378,14 +1378,15 @@ async def intro_javu(context):
             #await client.say('LLEGO EL TITAN !!!  ' + channel)
             print('LLEGO EL TITAN !!!  ' + channel)
             vc = await client.join_voice_channel(voice_channel)
+            print(vc)
             my_intros = ["https://youtu.be/RmbXT_-Vw00","https://youtu.be/4gf82Qli2XM","https://youtu.be/UXp59oWuuFQ","https://youtu.be/2VN3X95uu_4"]
-            use_avconv = ('use_avconv', False)
-            opts = {
-                    'format': 'webm[abr>0]/bestaudio/best',
-                    'prefer_ffmpeg': not use_avconv
-                }
+            #use_avconv = ('use_avconv', False)
+            #opts = {'format': 'webm[abr>0]/bestaudio/best','prefer_ffmpeg': not use_avconv}
             #player = await vc.create_ytdl_player(random.choice(my_intros), after=lambda: print('done'))
-            player = await vc.create_ytdl_player(random.choice(my_intros), ytdl_options=opts)
+            #player = await vc.create_ytdl_player(random.choice(my_intros), ytdl_options=opts)
+            player = await vc.create_ytdl_player(random.choice(my_intros))
+            print(player)
+            #player.volume = 0.05
             player.start()
             while not player.is_done():
                 await asyncio.sleep(1)
