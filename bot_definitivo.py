@@ -576,8 +576,8 @@ async def informe_lunar(context):
     user=await client.get_user_info(user_id)
     lunar_nightmares_dict={
         0: ["Pesadilla de Xortal Sworn of Crota",""],
-        1: ["Pesadilla de Jaxx Claw of Xivu Arath",""],
-        2: ["Pesadilla de Hokris Fear of Mithrax",""],
+        2: ["Pesadilla de Jaxx Claw of Xivu Arath",""],
+        1: ["Pesadilla de Hokris Fear of Mithrax",""],
         3: ["Fallen Council",""]
     }
 
@@ -1379,7 +1379,13 @@ async def intro_javu(context):
             print('LLEGO EL TITAN !!!  ' + channel)
             vc = await client.join_voice_channel(voice_channel)
             my_intros = ["https://youtu.be/RmbXT_-Vw00","https://youtu.be/4gf82Qli2XM","https://youtu.be/UXp59oWuuFQ","https://youtu.be/2VN3X95uu_4"]
-            player = await vc.create_ytdl_player(random.choice(my_intros), after=lambda: print('done'))
+            use_avconv = ('use_avconv', False)
+            opts = {
+                    'format': 'webm[abr>0]/bestaudio/best',
+                    'prefer_ffmpeg': not use_avconv
+                }
+            #player = await vc.create_ytdl_player(random.choice(my_intros), after=lambda: print('done'))
+            player = await vc.create_ytdl_player(random.choice(my_intros), ytdl_options=opts)
             player.start()
             while not player.is_done():
                 await asyncio.sleep(1)
