@@ -1368,7 +1368,7 @@ async def sad_violin(context):
 async def intro_javu(context):
     # grab the user who sent the command
     user = context.message.author
-    voice_channel = user.voice.voice_channel
+    voice_channel = user.voice_channel
     channel = None
     if voice_channel != None:
         #print(user.id, type(user.id))
