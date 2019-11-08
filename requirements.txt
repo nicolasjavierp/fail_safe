@@ -40,7 +40,8 @@ termcolor==1.1.0
 traitlets==4.3.2
 tweepy==3.7.0
 typed-ast==1.1.0
-urllib3==1.23
+#urllib3==1.23
+urllib3==1.24.2
 wcwidth==0.1.7
 websockets==3.4
 wrapt==1.10.11
