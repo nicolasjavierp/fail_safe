@@ -98,7 +98,8 @@ class FailSafe(object):
     
     def get_DestinyUserId(self, gamertag):
         '''gamertag (str): The PC gamertag a player uses on Destiny 2'''
-        info = self.get_playerByTagName(gamertag)
+        #info = self.get_playerByTagName(gamertag)
+        info = self.get_playerBySteamTag(gamertag)
         if info:
             return int(info[0]['membershipId'])
         else:
