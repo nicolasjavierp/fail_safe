@@ -240,6 +240,9 @@ class FailSafe(object):
         site_call = "https://www.bungie.net/platform/Destiny2/3/Account/"+ str(membership_id)+"/Character/"+str(character_id)+"/Stats/Activities/?count=250&mode=4&page=0"
         request = requests.get(site_call,
                                 headers={"X-API-Key":self.api_key})
+        print("Player Raids:")
+            print("=============")
+            print(request.json()['Response'])
         return request.json()['Response']
 
     def get_CharactersPVP(self, membership_id, character_id, page):
@@ -250,9 +253,6 @@ class FailSafe(object):
         request = requests.get(site_call,
                                 headers={"X-API-Key":self.api_key})
         if request.json()['Response']:
-            print("Player Raids:")
-            print("=============")
-            print(request.json()['Response']['activities'])
             return request.json()['Response']['activities']
         else:
             return None
