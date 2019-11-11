@@ -241,8 +241,8 @@ class FailSafe(object):
         request = requests.get(site_call,
                                 headers={"X-API-Key":self.api_key})
         print("Player Raids:")
-            print("=============")
-            print(request.json()['Response'])
+        print("=============")
+        print(request.json()['Response'])
         return request.json()['Response']
 
     def get_CharactersPVP(self, membership_id, character_id, page):
