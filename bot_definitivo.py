@@ -422,8 +422,9 @@ async def rol(context):
                 aliases=['raids'],
                 pass_context=True)
 async def raid_this_week(context):
-    valid_battle_tag_ending = bool(re.match('^.*#[0-9]{4,5}$', context.message.content))
-    if len(context.message.content)>=4 and valid_battle_tag_ending:
+    #valid_battle_tag_ending = bool(re.match('^.*#[0-9]{4,5}$', context.message.content))
+    #if len(context.message.content)>=4 and valid_battle_tag_ending:
+    if len(context.message.content)>=4:
         #4 Tests
         #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
         #4 Heroku
@@ -431,10 +432,15 @@ async def raid_this_week(context):
         #END Heroku
         #print("Now:")
         #print(datetime.now())
-        user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
+        #user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
+        user_steam_tag = context.message.content.split(' ',1)[1]
+        print("USER STEAM TAG:")
+        print("===============")
+        print(user_steam_tag)
         embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie, que a veces tarda unos minutos en registrar la Raid. Un momento por favor ...", color=0x00ff00)
         await client.send_message(context.message.channel, embed=embed)
-        user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
+        #user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
+        user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_steam_tag)) #Search for player battletag NOT Case Sensitive
         #print(user_destiny)
         if user_destiny:
             user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
