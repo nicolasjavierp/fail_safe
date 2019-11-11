@@ -440,7 +440,7 @@ async def raid_this_week(context):
         embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie, que a veces tarda unos minutos en registrar la Raid. Un momento por favor ...", color=0x00ff00)
         await client.send_message(context.message.channel, embed=embed)
         #user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
-        user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_steam_tag)) #Search for player battletag NOT Case Sensitive
+        user_destiny = fs.get_playerBySteamTag(user_steam_tag) #Search for player Steam tag
         #print(user_destiny)
         if user_destiny:
             user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
