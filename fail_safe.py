@@ -60,6 +60,17 @@ class FailSafe(object):
             return None
 
 
+    def get_playerBySteamTag(self, steam_tag):
+        '''steam_tag (str): The PC steam_tag a player uses on Destiny 2'''
+        site_call = "https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/3/" + steam_tag
+        request = requests.get(site_call,
+                                headers={"X-API-Key":self.api_key})
+        if request:
+            return request.json()['Response']
+        else:
+            return None
+
+
     def get_manifest_item_info(self, itemHash):
         '''Get info on item manifest in Destiny 2'''
         site_call = "http://www.bungie.net/platform/Destiny2/Manifest/DestinyInventoryItemDefinition/" + itemHash
