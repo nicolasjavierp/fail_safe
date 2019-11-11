@@ -267,7 +267,7 @@ async def free_rol_destiny(context):
      \n", color=0x00ff00)
     await client.send_message(user, embed=embed2)
 
-
+"""
 @client.command(name='Rol',
                 description="Autoprovisioning de Roles Clan y DJ",
                 brief="Autoprovisioning Escuadra X",
@@ -414,7 +414,7 @@ async def rol(context):
     #delets the message
     #await client.delete_message(context.message)
     await asyncio.sleep(0.01)
-
+"""
 
 @client.command(name='RES',
                 description="Responde por PJ si hizo raid esta semana",
@@ -434,9 +434,9 @@ async def raid_this_week(context):
         #print(datetime.now())
         #user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
         user_steam_tag = context.message.content.split(' ',1)[1]
-        print("USER STEAM TAG:")
-        print("===============")
-        print(user_steam_tag)
+        #print("USER STEAM TAG:")
+        #print("===============")
+        #print(user_steam_tag)
         embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie, que a veces tarda unos minutos en registrar la Raid. Un momento por favor ...", color=0x00ff00)
         await client.send_message(context.message.channel, embed=embed)
         #user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
