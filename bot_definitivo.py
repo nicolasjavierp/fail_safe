@@ -448,7 +448,7 @@ async def raid_this_week(context):
         if user_destiny:
             print(type(user_destiny))
             print(user_destiny)
-            if len(user_destiny)=1:
+            if len(user_destiny)==1:
                 user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
                 #real_battletag = user_destiny[0]['displayName']
                 profile = fs.get_DestinyUserProfileDetail(user_destiny_id)
