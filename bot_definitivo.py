@@ -448,44 +448,49 @@ async def raid_this_week(context):
         if user_destiny:
             print(type(user_destiny))
             print(user_destiny)
-            user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
-            #real_battletag = user_destiny[0]['displayName']
-            profile = fs.get_DestinyUserProfileDetail(user_destiny_id)
-            characters = profile['characters']['data']
-            #print("-------------------------")
-            #print(characters)
-            res = "\n"
-            for id, info in characters.items():
-                report = "**"+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" "+str(fs.guardian_gender[info['genderHash']])+":** \n"
-                #print(str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" "+str(fs.guardian_gender[info['genderHash']]))
-                character_id = info['characterId']
-                raids = fs.get_CharactersRaids(user_destiny_id,character_id)
-                raids_complete = get_completed_raids(info,user_destiny_id,raids)
-                if raids_complete:
-                    #print("/***************************************/")
-                    #print(len(raids_complete))
-                    #print("/***************************************/")
-                    raids_complete_filtered = filter_completed_raids(raids_complete,fs)
-                    #print("/***************************************/")
-                    #print(raids_complete_filtered)
-                    definitive_complete_raids=get_unique_raids(raids_complete_filtered, fs)
-                    #print(definitive_complete_raids)
-                    for key, value in definitive_complete_raids.items():
-                        if value:
-                            report = report +" :white_check_mark: "+str(key) +"\n"
-                        else:
-                            report = report +" :x: "+ str(key) +"\n"
-                else:
-                    for key, value in fs.relevant_raids.items():
-                        report = report + " :x: "+ value +"\n"
-                    
-                res = res + report + "\n"
-            
-            embed = discord.Embed(title=":bell:__Tus Raids este reset:__", description=res, color=0x00ff00)
-            #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
-            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/499231830235414529/587653954117173249/9k.png")
-            #await client.send_message(context.message.channel, embed=embed)
-            await client.send_message(user, embed=embed)
+            if len(user_destiny)=1:
+                user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
+                #real_battletag = user_destiny[0]['displayName']
+                profile = fs.get_DestinyUserProfileDetail(user_destiny_id)
+                characters = profile['characters']['data']
+                #print("-------------------------")
+                #print(characters)
+                res = "\n"
+                for id, info in characters.items():
+                    report = "**"+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" "+str(fs.guardian_gender[info['genderHash']])+":** \n"
+                    #print(str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" "+str(fs.guardian_gender[info['genderHash']]))
+                    character_id = info['characterId']
+                    raids = fs.get_CharactersRaids(user_destiny_id,character_id)
+                    raids_complete = get_completed_raids(info,user_destiny_id,raids)
+                    if raids_complete:
+                        #print("/***************************************/")
+                        #print(len(raids_complete))
+                        #print("/***************************************/")
+                        raids_complete_filtered = filter_completed_raids(raids_complete,fs)
+                        #print("/***************************************/")
+                        #print(raids_complete_filtered)
+                        definitive_complete_raids=get_unique_raids(raids_complete_filtered, fs)
+                        #print(definitive_complete_raids)
+                        for key, value in definitive_complete_raids.items():
+                            if value:
+                                report = report +" :white_check_mark: "+str(key) +"\n"
+                            else:
+                                report = report +" :x: "+ str(key) +"\n"
+                    else:
+                        for key, value in fs.relevant_raids.items():
+                            report = report + " :x: "+ value +"\n"
+                        
+                    res = res + report + "\n"
+                
+                embed = discord.Embed(title=":bell:__Tus Raids este reset:__", description=res, color=0x00ff00)
+                #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+                embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/499231830235414529/587653954117173249/9k.png")
+                #await client.send_message(context.message.channel, embed=embed)
+                await client.send_message(user, embed=embed)
+            else:
+                embed = discord.Embed(title="Error!", description="Tu SteamTag es muy generico, por favor actualizalo a algo mas especifico para usar el comando", color=0x00ff00)
+                #await client.send_message(context.message.channel, embed=embed)
+                await client.send_message(user, embed=embed)
         else:
             embed = discord.Embed(title="Error!", description="No pude encontrar la info relacionada con tu SteamTag: Verifica y proba quitando iconos", color=0x00ff00)
             #await client.send_message(context.message.channel, embed=embed)
