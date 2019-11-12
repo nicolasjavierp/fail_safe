@@ -485,7 +485,7 @@ async def raid_this_week(context):
 @client.command(name='Ayuda',
                 description="Ayuda del Bot definitivo",
                 brief="ayuda",
-                aliases=['ayuda'],
+                aliases=['ayuda', 'help'],
                 pass_context=True)
 async def ayuda(context):
     user_id = context.message.author.id
@@ -584,7 +584,8 @@ async def informe_semanal(context):
 async def informe_semanal(context):
     user_id = context.message.author.id
     user=await client.get_user_info(user_id)
-        protocol_dict={
+    
+    protocol_dict={
         3: ["IKELOS_SMG_v1.0.1 (Subfusil)","https://cdn.discordapp.com/attachments/508999396835196950/520269508728979467/Subfusil.png"],
         4: ["IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520269665478508544/Francotirador.png"],
         0: ["IKELOS_SG_v1.0.1 (Escopeta), IKELOS_SMG_v1.0.1 (Subfusil), IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png"],
