@@ -483,20 +483,23 @@ async def raid_this_week(context):
 
 
 @client.command(name='Ayuda',
-                description="Ayuda del bot definitivo",
+                description="Ayuda del Bot definitivo",
                 brief="ayuda",
                 aliases=['ayuda'],
                 pass_context=True)
 async def ayuda(context):
+    user_id = context.message.author.id
+    user=await client.get_user_info(user_id)
     msg = 'Hola {0.author.mention} estos son mis comandos : \n \
     `+ayuda` Imprime este mensage \n \
-    `+pro` (Calendario Armas Protocolo)\n\
-    `+asc` (Calendario Desafío Ascendente)\n\
-    `+rol` auto-otorga roles a la gente que esta en el clan Escuadra 2,3,4,5 , ejemplo: +rol CNorris#2234\n\
-    ´+semana´ informa actividades tipica de esa semana'.format(context.message)
-    await client.send_message(context.message.channel, msg )
+    `+marte` Reporte de Armas Protocolo\n\
+    `+dc` Reporte de Desafío Ascendente en Dreaming City (Ciudad Ensoñada)\n\
+    `+brote` Informe de rotación elemental semanal de Hora Zero\n\
+    `+luna` Información de rotación diaria del arma de Altar del Dolor y la rotación semanal de las Pesadillas Deambulantes\n\
+    `+raids` Reporte de las raids realizadas despues del reset semanal. Este es un comando que necesita de un dato adicional que es el SteamTag, ejemplo: +raids Javu the TITAN'.format(context.message)
+    await client.send_message(user, embed=embed)
 
-
+"""
 @client.command(name='Informe Semanal',
                 description="Informe Semanal",
                 brief="Informe Semanal",
@@ -570,6 +573,96 @@ async def informe_semanal(context):
     embed.set_image(url=HZ_dict[key%3][1])
     embed.add_field(name=':map: __Mapas de Sala de Horno__', value="Esta Semana Configuración "+"__**"+HZ_dict[key%3][0]+"**__"+":", inline=False)
     await client.send_message(context.message.channel, embed=embed)
+"""
+
+
+@client.command(name='Informe Marte',
+                description="Informe Marte",
+                brief="Informe Marte",
+                aliases=['marte'],
+                pass_context=True)
+async def informe_semanal(context):
+    user_id = context.message.author.id
+    user=await client.get_user_info(user_id)
+        protocol_dict={
+        3: ["IKELOS_SMG_v1.0.1 (Subfusil)","https://cdn.discordapp.com/attachments/508999396835196950/520269508728979467/Subfusil.png"],
+        4: ["IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520269665478508544/Francotirador.png"],
+        0: ["IKELOS_SG_v1.0.1 (Escopeta), IKELOS_SMG_v1.0.1 (Subfusil), IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png"],
+        1: ["IKELOS_SG_v1.0.1 (Escopeta), IKELOS_SMG_v1.0.1 (Subfusil), IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png"],
+        2: ["IKELOS_SG_v1.0.1 (Escopeta)","https://cdn.discordapp.com/attachments/508999396835196950/520269571253600271/Escopeta.png"]
+    }
+    
+    today = datetime.now()
+    key = datetime.date(today).isocalendar()[1]
+    #print(key)
+
+    if date.today().weekday() == 0: #and today.hour >= 14: # 0 is for monday
+        #print("Today is Monday !")
+        key = key - 1
+        if key<0:
+            key = 52
+            
+    if date.today().weekday() == 1 and today.hour < 17:
+        #print("Tuesday Before RESET !! Adjusting week number!!")
+        key = key - 1
+        if key<0:
+            key = 0
+     
+    embed = discord.Embed(title="" , description= ":calendar: Esta semana en  Protocolo Intensificación: \n **"+protocol_dict[key%5][0]+"**", color=0x00ff00)
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/508999396835196950/520269693479551004/Protocolo.png")
+    embed.set_image(url=protocol_dict[key%5][1])
+    await client.send_message(user, embed=embed)
+
+
+@client.command(name='Informe Dreaming City',
+                description="Informe Dreaming City",
+                brief="Dreaming City",
+                aliases=['dc'],
+                pass_context=True)
+async def dreaming_city(context):
+    user_id = context.message.author.id
+    user=await client.get_user_info(user_id)
+    ascendant_dict={
+        4: ["ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs","https://cdn.discordapp.com/attachments/508999396835196950/520280396366086154/Espina_de_Keres.png"],
+        5: ["ғᴏʀᴛᴀʟᴇᴢᴀ ᴅᴇ ғɪʟᴏs ᴄᴏʀᴛᴀɴᴛᴇs - ʀᴇᴛɪʀᴏ ᴅᴇʟ ʜᴇʀᴀʟᴅᴏ","https://cdn.discordapp.com/attachments/508999396835196950/520280494722514964/Reclusion_del_Heraldo.png"],
+        0: ["ᴀʙɪsᴍᴏ ᴀɢᴏɴᴀʀᴄʜ – ʙᴀʜɪᴀ ᴅᴇ ʟᴏs ᴅᴇsᴇᴏs ᴀʜᴏɢᴀᴅᴏs","https://cdn.discordapp.com/attachments/508999396835196950/520280295413514253/Bahia_de_los_Deseos_Ahogados.png"],
+        1: ["ɢᴜᴀʀɴɪᴄɪᴏɴ ᴄɪᴍᴇʀᴀ - ᴄᴀᴍᴀʀᴀ ᴅᴇ ʟᴜᴢ ᴅᴇ ᴇsᴛʀᴇʟʟᴀs","https://cdn.discordapp.com/attachments/508999396835196950/520280358630064149/Camara_de_Luz_Estelar.png"],
+        2: ["ᴏᴜʀᴏʙᴏʀᴇᴀ – ʀᴇᴘᴏsᴏ ᴅᴇʟ ᴀғᴇʟɪᴏ","https://cdn.discordapp.com/attachments/508999396835196950/520280560724344862/Reposo_de_Afelio.png"],
+        3: ["ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ","https://cdn.discordapp.com/attachments/508999396835196950/520280444277751828/Jardines_de_Esila.png"]
+    }
+
+    #curse_dict={
+    #    0: ["Nivel de Maldicion 1, esta disponible el Trono Destrozado (Mazmorra)!"],
+    #    1: ["Nivel de Maldicion 2, esta disponible el Trono Destrozado (Mazmorra)!"],
+    #    2: ["Nivel de Maldicion 3, esta disponible el Trono Destrozado (Mazmorra)!"]
+    #}
+    
+    today = datetime.now()
+    key = datetime.date(today).isocalendar()[1]
+    #print(key)
+
+    if date.today().weekday() == 0: #and today.hour >= 14: # 0 is for monday
+        #print("Today is Monday !")
+        key = key - 1
+        if key<0:
+            key = 52
+    #print(today)
+    #print("Week Number: "+str(key))
+        
+    if date.today().weekday() == 1 and today.hour < 17:
+        #print("Tuesday Before RESET !! Adjusting week number!!")
+        key = key - 1
+        if key<0:
+            key = 0
+    
+    embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%6][0]+"**", color=0xff0000)
+    embed.set_image(url=ascendant_dict[key%6][1])
+    #await client.send_message(context.message.channel, embed=embed)
+    await client.send_message(user, embed=embed)
+
+    #embed = discord.Embed(title="" , description="**Esta semana la Ciudad Ensoñada tiene,  "+curse_dict[key%3][0]+"**", color=0x000000)
+    #await client.send_message(context.message.channel, embed=embed)
+
 
 
 @client.command(name='Brote',
