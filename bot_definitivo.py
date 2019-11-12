@@ -497,7 +497,7 @@ async def ayuda(context):
     `+brote` Informe de rotación elemental semanal de Hora Zero\n\
     `+luna` Información de rotación diaria del arma de Altar del Dolor y la rotación semanal de las Pesadillas Deambulantes\n\
     `+raids` Reporte de las raids realizadas despues del reset semanal. Este es un comando que necesita de un dato adicional que es el SteamTag, ejemplo: +raids Javu the TITAN'.format(context.message)
-    await client.send_message(user, embed=embed)
+    await client.send_message(user, msg)
 
 """
 @client.command(name='Informe Semanal',
@@ -584,7 +584,7 @@ async def informe_semanal(context):
 async def informe_semanal(context):
     user_id = context.message.author.id
     user=await client.get_user_info(user_id)
-    
+
     protocol_dict={
         3: ["IKELOS_SMG_v1.0.1 (Subfusil)","https://cdn.discordapp.com/attachments/508999396835196950/520269508728979467/Subfusil.png"],
         4: ["IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520269665478508544/Francotirador.png"],
