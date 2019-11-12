@@ -422,6 +422,8 @@ async def rol(context):
                 aliases=['raids'],
                 pass_context=True)
 async def raid_this_week(context):
+    user_id = context.message.author.id
+    user=await client.get_user_info(user_id)
     #valid_battle_tag_ending = bool(re.match('^.*#[0-9]{4,5}$', context.message.content))
     #if len(context.message.content)>=4 and valid_battle_tag_ending:
     if len(context.message.content)>=4:
@@ -479,7 +481,12 @@ async def raid_this_week(context):
             embed = discord.Embed(title=":bell:__Tus Raids este reset:__", description=res, color=0x00ff00)
             #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/499231830235414529/587653954117173249/9k.png")
-            await client.send_message(context.message.channel, embed=embed)
+            #await client.send_message(context.message.channel, embed=embed)
+            await client.send_message(user, embed=embed)
+        else:
+            embed = discord.Embed(title="Error!", description="No pude encontrar la info relacionada con tu SteamTag: Verifica y proba quitando iconos", color=0x00ff00)
+            #await client.send_message(context.message.channel, embed=embed)
+            await client.send_message(user, embed=embed)
 
 
 @client.command(name='Ayuda',
@@ -496,6 +503,7 @@ async def ayuda(context):
     `+dc` Reporte de Desafío Ascendente en Dreaming City (Ciudad Ensoñada)\n\
     `+brote` Informe de rotación elemental semanal de Hora Zero\n\
     `+luna` Información de rotación diaria del arma de Altar del Dolor y la rotación semanal de las Pesadillas Deambulantes\n\
+    `+xur` Informe de la ubicacion y inventario semanal de Xur\n\
     `+raids` Reporte de las raids realizadas despues del reset semanal. Este es un comando que necesita de un dato adicional que es el SteamTag, ejemplo: +raids Javu the TITAN'.format(context.message)
     await client.send_message(user, msg)
 
