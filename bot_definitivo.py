@@ -572,6 +572,44 @@ async def informe_semanal(context):
     await client.send_message(context.message.channel, embed=embed)
 
 
+@client.command(name='Brote',
+                description="Informe Brote Semanal",
+                brief="Brote Info",
+                aliases=['brote'],
+                pass_context=True)
+async def hora_zero(context):
+    user_id = context.message.author.id
+    user=await client.get_user_info(user_id)
+    HZ_dict={        
+        1: ["Vacio","https://images-ext-2.discordapp.net/external/inJak0x078Kpn6K_f50f61zV_7_u92W92Nonkvcc2Rc/https/i.imgur.com/ikiCD58.png"],
+        2: ["Arco","https://images-ext-2.discordapp.net/external/inJak0x078Kpn6K_f50f61zV_7_u92W92Nonkvcc2Rc/https/i.imgur.com/ikiCD58.png"],
+        0: ["Solar","https://images-ext-2.discordapp.net/external/inJak0x078Kpn6K_f50f61zV_7_u92W92Nonkvcc2Rc/https/i.imgur.com/ikiCD58.png"]
+    }
+    today = datetime.now()
+    key = datetime.date(today).isocalendar()[1]
+    #print(key)
+    if date.today().weekday() == 0: #and today.hour >= 14: # 0 is for monday
+        #print("Today is Monday !")
+        key = key - 1
+        if key<0:
+            key = 52
+    #print(today)
+    #print("Week Number: "+str(key))
+    if date.today().weekday() == 1 and today.hour < 17:
+        #print("Tuesday Before RESET !! Adjusting week number!!")
+        key = key - 1
+        if key<0:
+            key = 0
+        #print("Week Number: "+str(key))
+        #print(today.hour)
+    #print("**************")
+    embed = discord.Embed(title="**:earth_americas: Web App Secuencia Terminales Hora Cero**" , url="http://fiddle.jshell.net/pastuleo23/xu1snrc0/show", color=0xffd700)
+    embed.set_thumbnail(url="https://www.bungie.net/common/destiny2_content/icons/f0def60d28b4f2a5a7fe8ec3d4764cfa.jpg")
+    embed.set_image(url=HZ_dict[key%3][1])
+    embed.add_field(name=':map: __Mapas de Sala de Horno__', value="Esta Semana Configuración "+"__**"+HZ_dict[key%3][0]+"**__"+":", inline=False)
+    await client.send_message(user, embed=embed)
+
+
 @client.command(name='Informe Lunar',
                 description="Informe Lunar",
                 brief="Informe Lunar",
