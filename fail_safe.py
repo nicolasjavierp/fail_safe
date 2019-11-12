@@ -68,7 +68,7 @@ class FailSafe(object):
         if request:
             #print("USER ID:")
             #print("========")
-            print(request.json()['Response'])
+            #print(request.json()['Response'])
             return request.json()['Response']
         else:
             return None
