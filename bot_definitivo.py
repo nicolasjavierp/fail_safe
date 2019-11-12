@@ -443,7 +443,8 @@ async def raid_this_week(context):
         await client.send_message(context.message.channel, embed=embed)
         #user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
         user_destiny = fs.get_playerBySteamTag(user_steam_tag) #Search for player Steam tag
-        #print(user_destiny)
+        print("User_destiny_length!!!")
+        print(len(user_destiny))
         if user_destiny:
             user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
             #real_battletag = user_destiny[0]['displayName']
@@ -497,17 +498,18 @@ async def raid_this_week(context):
 async def ayuda(context):
     user_id = context.message.author.id
     user=await client.get_user_info(user_id)
-    msg = 'Hola {0.author.mention} estos son mis comandos : \n\
-    `+ayuda` Imprime este mensage \n\
-    `+marte` Reporte de Armas Protocolo\n\
-    `+dc` Reporte de Desafío Ascendente en Dreaming City (Ciudad Ensoñada)\n\
-    `+brote` Informe de rotación elemental semanal de Hora Zero\n\
-    `+luna` Información de rotación diaria del arma de Altar del Dolor y la rotación semanal de las Pesadillas Deambulantes\n\
-    `+calus` Dialogo random del Emperador Calus\n\
-    `+riven` Dialogo random de la Sirena de Riven\n\
-    `+lore` Elemento de lore de Destiny random\n\
-    `+xur` Informe de la ubicacion y inventario semanal de Xur\n\
-    `+raids` Reporte de las raids realizadas despues del reset semanal. Este es un comando que necesita de un dato adicional que es el SteamTag, ejemplo: +raids Javu the TITAN'.format(context.message)
+    msg = 'Hola {0.author.mention} estos son mis comandos :\n\
+    `+ayuda` Imprime este mensage.\n\
+    `+marte` Reporte de Armas Protocolo.\n\
+    `+dc` Reporte de Desafío Ascendente en Dreaming City (Ciudad Ensoñada).\n\
+    `+brote` Informe de rotación elemental semanal de Hora Zero.\n\
+    `+luna` Información de rotación diaria del arma de Altar del Dolor y la rotación semanal de las Pesadillas Deambulantes.\n\
+    `+calus` Dialogo random del Emperador Calus.\n\
+    `+riven` Dialogo random de la Sirena de Riven.\n\
+    `+lore` Elemento de lore de Destiny random.\n\
+    `+xur` Informe de la ubicacion y inventario semanal de Xur.\n\
+    `+raids` Reporte de las raids realizadas despues del reset semanal. Este es un comando que necesita de un dato adicional que es el SteamTag.\n\
+    \t Ejemplo: `+raids Javu the TITAN`\n'.format(context.message)
     await client.send_message(user, msg)
 
 """

@@ -66,8 +66,8 @@ class FailSafe(object):
         request = requests.get(site_call,
                                 headers={"X-API-Key":self.api_key})
         if request:
-            print("USER ID:")
-            print("========")
+            #print("USER ID:")
+            #print("========")
             print(request.json()['Response'])
             return request.json()['Response']
         else:
