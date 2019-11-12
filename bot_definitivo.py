@@ -37,7 +37,7 @@ client.remove_command('help')
 
 players = {}
 my_queues = {}
-discord_admin_ids = {"javu":376055309657047040,"kernell":198516601497059328, "sonker":219539830055501825, "elenita":239122012767911936}
+discord_admin_ids = {"javu":376055309657047040,"kernell":198516601497059328, "sonker":219539830055501825, "elenita":239122012767911936, "john":325898163518963712}
 
 #######################################################################
 ################## EVENTS  ############################################
@@ -497,12 +497,15 @@ async def raid_this_week(context):
 async def ayuda(context):
     user_id = context.message.author.id
     user=await client.get_user_info(user_id)
-    msg = 'Hola {0.author.mention} estos son mis comandos : \n \
-    `+ayuda` Imprime este mensage \n \
+    msg = 'Hola {0.author.mention} estos son mis comandos : \n\
+    `+ayuda` Imprime este mensage \n\
     `+marte` Reporte de Armas Protocolo\n\
     `+dc` Reporte de Desafío Ascendente en Dreaming City (Ciudad Ensoñada)\n\
     `+brote` Informe de rotación elemental semanal de Hora Zero\n\
     `+luna` Información de rotación diaria del arma de Altar del Dolor y la rotación semanal de las Pesadillas Deambulantes\n\
+    `+calus` Dialogo random del Emperador Calus\n\
+    `+riven` Dialogo random de la Sirena de Riven\n\
+    `+lore` Elemento de lore de Destiny random\n\
     `+xur` Informe de la ubicacion y inventario semanal de Xur\n\
     `+raids` Reporte de las raids realizadas despues del reset semanal. Este es un comando que necesita de un dato adicional que es el SteamTag, ejemplo: +raids Javu the TITAN'.format(context.message)
     await client.send_message(user, msg)
