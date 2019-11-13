@@ -439,7 +439,9 @@ async def raid_this_week(context):
         #print("USER STEAM TAG:")
         #print("===============")
         #print(user_steam_tag)
-        embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie, que a veces tarda unos minutos en registrar la Raid. Un momento por favor ...", color=0x00ff00)
+        embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing por la migracion a Steam, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
+        await client.send_message(context.message.channel, embed=embed)
+        embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie, que a veces tarda unos minutos en registrar las Raids recientes. Un momento por favor ...", color=0x00ff00)
         await client.send_message(context.message.channel, embed=embed)
         #user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
         user_destiny = fs.get_playerBySteamTag(user_steam_tag) #Search for player Steam tag
@@ -517,7 +519,7 @@ async def ayuda(context):
     `+lore` Elemento de lore de Destiny random.\n\
     `+xur` Informe de la ubicacion y inventario semanal de Xur.\n\
     `+raids` Reporte de las raids realizadas despues del reset semanal. Este es un comando que necesita de un dato adicional que es el SteamTag.\n\
-    \t \t \t Ejemplo: `+raids Javu the TITAN`\n'.format(context.message)
+    \t \t \t Ejemplo: `+raids Titan Javu`\n'.format(context.message)
     await client.send_message(user, msg)
 
 """
