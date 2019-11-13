@@ -34,7 +34,7 @@ BOT_TOKEN = os.environ['BOT_TOKEN']
 
 BOT_PREFIX = ("+") #("+", "!")
 client = Bot(command_prefix=BOT_PREFIX)
-status = ["Organizando Proximo Iron Banner", "Creando nuevos Shaders", "Evaluando desempeño de Guardianes"]
+status = ["Iron Banner", "Cometitive", "Strike", "Ordeal", "Story"]
 client.remove_command('help')
 
 players = {}
