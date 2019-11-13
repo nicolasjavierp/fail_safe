@@ -24,6 +24,7 @@ from utils import *
 import tweepy
 import youtube_dl
 import math
+from itertools import cycle
 
 
 #4 Heroku
@@ -33,6 +34,7 @@ BOT_TOKEN = os.environ['BOT_TOKEN']
 
 BOT_PREFIX = ("+") #("+", "!")
 client = Bot(command_prefix=BOT_PREFIX)
+status = ["Organizando Proximo Iron Banner", "Creando nuevos Shaders", "Evaluando desempeño de Guardianes"]
 client.remove_command('help')
 
 players = {}
@@ -205,6 +207,8 @@ async def on_member_remove(member):
     await asyncio.sleep(0.01)
     #msg = "Bye Bye {0}".format(member.mention)
     #await client.send_message(serverchannel, msg)
+
+
 
 #######################################################################
 ################## COMMON COMMANDS  ###################################
@@ -440,9 +444,9 @@ async def raid_this_week(context):
         print("===============")
         print(user_steam_tag)
         embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing por la migracion a Steam, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
-        await client.send_message(context.message.channel, embed=embed)
+        await client.send_message(user, embed=embed)
         embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie, que a veces tarda unos minutos en registrar las Raids recientes. Un momento por favor ...", color=0x00ff00)
-        await client.send_message(context.message.channel, embed=embed)
+        await client.send_message(user, embed=embed)
         #user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
         user_destiny = fs.get_playerBySteamTag(user_steam_tag) #Search for player Steam tag
         print("User_destiny_length!!!")
@@ -1779,10 +1783,18 @@ async def get_server_status_tweets():
                         await client.send_message(canal_avisos, embed=embed2)
         await asyncio.sleep(30)
 
+async def change_status():
+    await client.wait_until_ready()
+    msgs = cycle(status)
+    while not client.is_closed:
+        current_status = next(msgs)
+        await client.change_presence(game=discord.Game(name=current_status))
+        await asyncio.sleep(86400)
 
 #######################################################################
 ######################### MAIN ########################################
 #######################################################################
 #client.loop.create_task(list_servers())
 #client.loop.create_task(get_server_status_tweets())
+client.loop.create_task(change_status())
 client.run(BOT_TOKEN)
