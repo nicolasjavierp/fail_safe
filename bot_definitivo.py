@@ -209,7 +209,7 @@ async def on_member_remove(member):
 #######################################################################
 ################## COMMON COMMANDS  ###################################
 #######################################################################
-
+"""
 @client.command(name='Free Roles Destiny',
                 description="Autoprovisioning de Roles Destiny y DJ",
                 brief="Autoprovisioning roles Escuadra X",
@@ -266,7 +266,7 @@ async def free_rol_destiny(context):
     `+raids CNorris#4902`\n\
      \n", color=0x00ff00)
     await client.send_message(user, embed=embed2)
-
+"""
 """
 @client.command(name='Rol',
                 description="Autoprovisioning de Roles Clan y DJ",
