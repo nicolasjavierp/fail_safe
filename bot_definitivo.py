@@ -436,17 +436,17 @@ async def raid_this_week(context):
         #print(datetime.now())
         #user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
         user_steam_tag = context.message.content.split(' ',1)[1]
-        #print("USER STEAM TAG:")
-        #print("===============")
-        #print(user_steam_tag)
+        print("USER STEAM TAG:")
+        print("===============")
+        print(user_steam_tag)
         embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing por la migracion a Steam, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
         await client.send_message(context.message.channel, embed=embed)
         embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie, que a veces tarda unos minutos en registrar las Raids recientes. Un momento por favor ...", color=0x00ff00)
         await client.send_message(context.message.channel, embed=embed)
         #user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
         user_destiny = fs.get_playerBySteamTag(user_steam_tag) #Search for player Steam tag
-        #print("User_destiny_length!!!")
-        #print(len(user_destiny))
+        print("User_destiny_length!!!")
+        print(len(user_destiny))
         if user_destiny:
             #print(type(user_destiny))
             #print(user_destiny)
@@ -463,21 +463,24 @@ async def raid_this_week(context):
                     #print(str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" "+str(fs.guardian_gender[info['genderHash']]))
                     character_id = info['characterId']
                     raids = fs.get_CharactersRaids(user_destiny_id,character_id)
-                    raids_complete = get_completed_raids(info,user_destiny_id,raids)
-                    if raids_complete:
-                        #print("/***************************************/")
-                        #print(len(raids_complete))
-                        #print("/***************************************/")
-                        raids_complete_filtered = filter_completed_raids(raids_complete,fs)
-                        #print("/***************************************/")
-                        #print(raids_complete_filtered)
-                        definitive_complete_raids=get_unique_raids(raids_complete_filtered, fs)
-                        #print(definitive_complete_raids)
-                        for key, value in definitive_complete_raids.items():
-                            if value:
-                                report = report +" :white_check_mark: "+str(key) +"\n"
-                            else:
-                                report = report +" :x: "+ str(key) +"\n"
+                    if raids:    
+                        raids_complete = get_completed_raids(info,user_destiny_id,raids)
+                        if raids_complete:
+                            #print("/***************************************/")
+                            #print(len(raids_complete))
+                            #print("/***************************************/")
+                            raids_complete_filtered = filter_completed_raids(raids_complete,fs)
+                            #print("/***************************************/")
+                            #print(raids_complete_filtered)
+                            definitive_complete_raids=get_unique_raids(raids_complete_filtered, fs)
+                            #print(definitive_complete_raids)
+                            for key, value in definitive_complete_raids.items():
+                                if value:
+                                    report = report +" :white_check_mark: "+str(key) +"\n"
+                                else:
+                                    report = report +" :x: "+ str(key) +"\n"
+                        else:
+                            print("Error getting raids")
                     else:
                         for key, value in fs.relevant_raids.items():
                             report = report + " :x: "+ value +"\n"
