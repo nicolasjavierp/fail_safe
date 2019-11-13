@@ -517,7 +517,7 @@ async def ayuda(context):
     `+lore` Elemento de lore de Destiny random.\n\
     `+xur` Informe de la ubicacion y inventario semanal de Xur.\n\
     `+raids` Reporte de las raids realizadas despues del reset semanal. Este es un comando que necesita de un dato adicional que es el SteamTag.\n\
-    \t Ejemplo: `+raids Javu the TITAN`\n'.format(context.message)
+    \t \t \t Ejemplo: `+raids Javu the TITAN`\n'.format(context.message)
     await client.send_message(user, msg)
 
 """
@@ -856,6 +856,8 @@ async def xur_info(context):
     #4 Heroku
     fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
+    user_id = context.message.author.id
+    user=await client.get_user_info(user_id)
     await client.say("Juntando información ... un momento por favor.")
     is_xur_here, info, inventory, xur_map = get_xur_info(fs)
     if is_xur_here: 
@@ -864,7 +866,7 @@ async def xur_info(context):
         embed.add_field(name='Referencia', value="<https://ftw.in/game/destiny-2/find-xur>", inline=False)
         embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
         embed.set_image(url=xur_map)
-        await client.send_message(context.message.channel, embed=embed)
+        await client.send_message(user, embed=embed)
         if inventory and info:
             for idx, val in enumerate(inventory):
                 destiny_class=""
@@ -872,16 +874,17 @@ async def xur_info(context):
                 destiny_class = index_xur[idx]
                 embed = discord.Embed(title=destiny_class, description="", color=0x00ff00)
                 embed.set_image(url=url_bungie+val)
-                await client.send_message(context.message.channel, embed=embed)
+                await client.send_message(user, embed=embed)
         else:
             #embed = discord.Embed(title="Error!", description="No pude obtener los datos, intenta mas tarde ...", color=0x00ff00)
             embed = discord.Embed(title="Error!", description="Todavía no esta la info KP@, aguantá la mecha un toque y intenta mas tarde ...", color=0x00ff00)
-            await client.send_message(context.message.channel, embed=embed)
+            await client.send_message(user, embed=embed)
         
     else:
         embed = discord.Embed(title=":x:__XUR:__", description=info, color=0x00ff00)
         embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
-        await client.send_message(context.message.channel, embed=embed)
+        await client.send_message(user, embed=embed)
+        #await client.send_message(context.message.channel, embed=embed)
 
 
 @client.command(name='Calus Quotes',
@@ -890,6 +893,8 @@ async def xur_info(context):
                 aliases=['calus'],
                 pass_context=True)
 async def calus_quotes(context):
+    user_id = context.message.author.id
+    user=await client.get_user_info(user_id)
     calus_quotes = ["Everything you know is a lie. There is a truth beyond what your people and your Speaker have told you. I can take you to that truth, if you seek me out. These gifts are a reminder of my words."\
                     ,"If you seek the means to live to your potential, I can guide you to it. There is a power in this universe beyond your feeble Light. I leave you with those words, and these parting gifts. Take them, and grow fat from strength."\
                     ,"Now you’ve seen everything. Do you still believe you’re on the right side? Mull it over, and enjoy my gifts to you. I possess the means to true agency beyond your feeble Light. Seek me out and perhaps I’ll show you how to grow fat from strength."\
@@ -901,7 +906,7 @@ async def calus_quotes(context):
     embed = discord.Embed(title="", description=random.choice(calus_quotes), color=0xffd700)
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/499231830235414529/578589363055755264/unknown.png")
     embed.set_footer(text='Emperor Calus has spoken!')
-    await client.send_message(context.message.channel, embed=embed)
+    await client.send_message(user, embed=embed)
 
 
 @client.command(name='Riven Quotes',
@@ -910,6 +915,8 @@ async def calus_quotes(context):
                 aliases=['riven'],
                 pass_context=True)
 async def riven_quotes(context):
+    user_id = context.message.author.id
+    user=await client.get_user_info(user_id)
     riven_quotes = ["You are finally here, Brother slayer. Spawn killer. All that strength and you're still nothing but a retainer to the Awoken Queen. You could be so much more...all you need do is wish it. Come. I would quite like to meet you."\
                     ,"Have you come to free the Witches? They will resist. Darkness is their shape now ..."\
                     ,"I can give you anything. What is it you want? Weapons? Glory? Peace? Or is it simpler than that?"\
@@ -922,7 +929,7 @@ async def riven_quotes(context):
                     ,"I thought they'd never leave. You and I are not done. We're inseparable now. Through your actions, we've forged an age-old-bond between my kind and yours. One wish granted deserves another. And I cannot wait to show you what SHE asked for. O murderer mine..."]
     embed = discord.Embed(title="", description=random.choice(riven_quotes), color=0x000000)
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/499231830235414529/578935863992516608/Riven1.png")
-    await client.send_message(context.message.channel, embed=embed)
+    await client.send_message(user, embed=embed)
 
 
 @client.command(name='Lore',
@@ -931,8 +938,10 @@ async def riven_quotes(context):
                 aliases=['lore'],
                 pass_context=True)
 async def destiny_lore(context):
+    user_id = context.message.author.id
+    user=await client.get_user_info(user_id)
     embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
-    await client.send_message(context.message.channel, embed=embed)
+    await client.send_message(user, embed=embed)
     title, destiny_lore, img = get_random_lore()
     if title and destiny_lore:
         #print("!!!!!!!!!!!!!!!!!!!!!!!!")
@@ -987,7 +996,7 @@ async def destiny_lore(context):
                 #await client.send_message(context.message.channel, embed=embed)
     else:
         embed = discord.Embed(title="Error", description="No pude obtener el lore :cry:.\n Intentá en un toque ...", color=0x00FF00)
-        await client.send_message(context.message.channel, embed=embed)
+        await client.send_message(user, embed=embed)
 
 
 #@client.command(name='Clear',
