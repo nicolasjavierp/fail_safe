@@ -489,7 +489,7 @@ async def raid_this_week(context):
                 await client.send_message(user, embed=embed)
             else:
                 embed = discord.Embed(title="Error!", description="Tu SteamTag es muy generico hay multiples Guardianes con el mismo nombre, por favor actualizalo a algo mas especifico para usar el comando. \n\
-                     Ejemplo: Javu --> Javu the TITAN", color=0x00ff00)
+                     Ejemplo: Javu --> Titan Javu", color=0x00ff00)
                 #await client.send_message(context.message.channel, embed=embed)
                 await client.send_message(user, embed=embed)
         else:
