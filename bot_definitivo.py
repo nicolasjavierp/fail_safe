@@ -861,7 +861,8 @@ async def xur_info(context):
     #END Heroku
     user_id = context.message.author.id
     user=await client.get_user_info(user_id)
-    await client.say("Juntando información ... un momento por favor.")
+    await client.send_message(user, "Juntando información ... un momento por favor.")
+    #await client.say("Juntando información ... un momento por favor.")
     is_xur_here, info, inventory, xur_map = get_xur_info(fs)
     if is_xur_here: 
         url_bungie="http://www.bungie.net/"   
