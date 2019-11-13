@@ -940,8 +940,8 @@ async def riven_quotes(context):
 async def destiny_lore(context):
     user_id = context.message.author.id
     user=await client.get_user_info(user_id)
-    embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
-    await client.send_message(user, embed=embed)
+    #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
+    #await client.send_message(user, embed=embed)
     title, destiny_lore, img = get_random_lore()
     if title and destiny_lore:
         #print("!!!!!!!!!!!!!!!!!!!!!!!!")
