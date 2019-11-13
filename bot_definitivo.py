@@ -785,7 +785,7 @@ async def informe_lunar(context):
     #print(ascendant_dict[key%6][0])
     #print(protocol_dict[key%5][0])
     embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
-    await client.send_message(context.message.channel, embed=embed)
+    await client.send_message(user, embed=embed)
     embed = discord.Embed(title="" , description=":calendar: Esta semana esta la \n **"+lunar_nightmares_dict[key%4][0]+"**", color=0xff0000)
     #embed.set_image(url=ascendant_dict[key%6][1])
     await client.send_message(user, embed=embed)
@@ -795,7 +795,7 @@ async def informe_lunar(context):
     embed.set_image(url=altar_dict[day_of_year%3][1])
     await client.send_message(user, embed=embed)
 
-
+"""
 @client.command(name='Server Status',
                 description="Server Status",
                 brief="Server Status",
@@ -824,7 +824,7 @@ async def server(context):
         embed2.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
         embed2.set_image(url="https://media.giphy.com/media/ZGarmJwETJ0He/giphy.gif")
         await client.send_message(context.message.channel, embed=embed2)
-
+"""
 
 @client.command(name='Get Clans Capacity',
                 description="Genera el listado de capacidad del clan",
