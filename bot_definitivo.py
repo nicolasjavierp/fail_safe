@@ -469,22 +469,19 @@ async def raid_this_week(context):
                     raids = fs.get_CharactersRaids(user_destiny_id,character_id)
                     if raids:    
                         raids_complete = get_completed_raids(info,user_destiny_id,raids)
-                        if raids_complete:
-                            #print("/***************************************/")
-                            #print(len(raids_complete))
-                            #print("/***************************************/")
-                            raids_complete_filtered = filter_completed_raids(raids_complete,fs)
-                            #print("/***************************************/")
-                            #print(raids_complete_filtered)
-                            definitive_complete_raids=get_unique_raids(raids_complete_filtered, fs)
-                            #print(definitive_complete_raids)
-                            for key, value in definitive_complete_raids.items():
-                                if value:
-                                    report = report +" :white_check_mark: "+str(key) +"\n"
-                                else:
-                                    report = report +" :x: "+ str(key) +"\n"
-                        else:
-                            print("Error getting raids")
+                        #print("/***************************************/")
+                        #print(len(raids_complete))
+                        #print("/***************************************/")
+                        raids_complete_filtered = filter_completed_raids(raids_complete,fs)
+                        #print("/***************************************/")
+                        #print(raids_complete_filtered)
+                        definitive_complete_raids=get_unique_raids(raids_complete_filtered, fs)
+                        #print(definitive_complete_raids)
+                        for key, value in definitive_complete_raids.items():
+                            if value:
+                                report = report +" :white_check_mark: "+str(key) +"\n"
+                            else:
+                                report = report +" :x: "+ str(key) +"\n"
                     else:
                         for key, value in fs.relevant_raids.items():
                             report = report + " :x: "+ value +"\n"
