@@ -443,11 +443,11 @@ async def raid_this_week(context):
         await client.send_message(context.message.channel, embed=embed)
         #user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
         user_destiny = fs.get_playerBySteamTag(user_steam_tag) #Search for player Steam tag
-        print("User_destiny_length!!!")
-        print(len(user_destiny))
+        #print("User_destiny_length!!!")
+        #print(len(user_destiny))
         if user_destiny:
-            print(type(user_destiny))
-            print(user_destiny)
+            #print(type(user_destiny))
+            #print(user_destiny)
             if len(user_destiny)==1:
                 user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
                 #real_battletag = user_destiny[0]['displayName']
@@ -684,7 +684,6 @@ async def dreaming_city(context):
 
     #embed = discord.Embed(title="" , description="**Esta semana la Ciudad Ensoñada tiene,  "+curse_dict[key%3][0]+"**", color=0x000000)
     #await client.send_message(context.message.channel, embed=embed)
-
 
 
 @client.command(name='Brote',
