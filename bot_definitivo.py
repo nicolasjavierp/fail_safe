@@ -956,7 +956,7 @@ async def destiny_lore(context):
             if "http" in img:
                 embed.set_image(url=img)
             embed.add_field(name='Referencia', value="<https://destiny.fandom.com/es/wiki/>", inline=False)
-            await client.send_message(context.message.channel, embed=embed)
+            await client.send_message(user, embed=embed)
         else:
             number_of_parts = math.ceil(len(destiny_lore)/api_discord_char_limit)
             #first_part = int(round(len(destiny_lore)/2))
@@ -969,7 +969,7 @@ async def destiny_lore(context):
                     begining = destiny_lore[0:api_discord_char_limit]
                     acum = acum + api_discord_char_limit
                     embed = discord.Embed(title=title, description=begining, color=0x00FF00)
-                    await client.send_message(context.message.channel, embed=embed)
+                    await client.send_message(user, embed=embed)
                 if i == int(number_of_parts)-1:
                     #print("ENDING -----------------")
                     ending = destiny_lore[acum:]
@@ -977,14 +977,14 @@ async def destiny_lore(context):
                     if "http" in img:
                         embed.set_image(url=img)
                     embed.add_field(name='Referencia', value="<https://destiny.fandom.com/es/wiki/>", inline=False)
-                    await client.send_message(context.message.channel, embed=embed)
+                    await client.send_message(user, embed=embed)
                     
                 if i !=0 and i !=int(number_of_parts)-1: 
                     #print("MIDDLE PART -----------------")
                     middle_part = destiny_lore[acum:acum+api_discord_char_limit]
                     acum = acum + api_discord_char_limit
                     embed = discord.Embed(title="", description=middle_part, color=0x00FF00)
-                    await client.send_message(context.message.channel, embed=embed)
+                    await client.send_message(user, embed=embed)
 
                 #embed = discord.Embed(title=title, description=first_half, color=0x00FF00)
                 #await client.send_message(context.message.channel, embed=embed)
