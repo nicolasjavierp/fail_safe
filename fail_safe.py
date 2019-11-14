@@ -40,8 +40,8 @@ class FailSafe(object):
         self.guardian_class = {3655393761:"Titan", 2271682572:"Hechicero", 671679327:"Cazador"}
         self.guardian_race = {2803282938:"Insomne", 898834093:"Exo", 3887404748:"Humano"}
         self.guardian_gender = {3111576190: "Masculino", 2204441813:"Femenino"}
-        self.raids = {2122313384: "Ultimo Deseo", 548750096:"Azote del Pasado", 1661734046: "Ultimo Deseo_Guiado", 2214608156: "Ultimo Deseo_58", 2812525063:"Azote del Pasado_Guiado", 3333172150:"Corona del Dolor", 960175301:"Corona del Dolor_Guiada", 2659723068:"Gardin de Salvacion"} #Spire of stars 119944200 // Eater of worlds 3089205900 // Leviathan 89727599
-        self.relevant_raids = {0: "Ultimo Deseo", 1:"Azote del Pasado", 2:"Corona del Dolor", 3:"Gardin de Salvacion"}
+        self.raids = {2122313384: "Ultimo Deseo", 548750096:"Azote del Pasado", 1661734046: "Ultim Deseo_Guiado", 2214608156: "Ultimo Deseo_58", 2812525063:"Azote del Pasado_Guiado", 3333172150:"Corona del Dolor", 960175301:"Corona del Dolor_Guiada", 2659723068:"Jardin de Salvacion"} #Spire of stars 119944200 // Eater of worlds 3089205900 // Leviathan 89727599
+        self.relevant_raids = {0: "Ultimo Deseo", 1:"Azote del Pasado", 2:"Corona del Dolor", 3:"Jardin de Salvacion"}
         self.xur_locations={'IO':['Xur esta en IO en la zona de Cicatriz del Gigante',"https://cdn.discordapp.com/attachments/383420850738823186/565192090347372564/io.jpg"],
                             'TITAN':['Xur esta en Titan en la zona Plataforma',"https://cdn.discordapp.com/attachments/383420850738823186/565192132898586627/titan.jpg"],
                             'EDZ':['Xur esta la Tierra (ZME), en la zona Bahía del Viento',"https://cdn.discordapp.com/attachments/383420850738823186/565192115005423651/tierra.jpg"],
