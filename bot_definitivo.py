@@ -428,6 +428,7 @@ async def rol(context):
 async def raid_this_week(context):
     user_id = context.message.author.id
     user=await client.get_user_info(user_id)
+    await client.say(":white_check_mark: Mensaje directo enviado.")
     #valid_battle_tag_ending = bool(re.match('^.*#[0-9]{4,5}$', context.message.content))
     #if len(context.message.content)>=4 and valid_battle_tag_ending:
     if len(context.message.content)>=4:
@@ -440,17 +441,17 @@ async def raid_this_week(context):
         #print(datetime.now())
         #user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
         user_steam_tag = context.message.content.split(' ',1)[1]
-        print("USER STEAM TAG:")
-        print("===============")
-        print(user_steam_tag)
+        #print("USER STEAM TAG:")
+        #print("===============")
+        #print(user_steam_tag)
         embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing por la migracion a Steam, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
         await client.send_message(user, embed=embed)
         embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie, que a veces tarda unos minutos en registrar las Raids recientes. Un momento por favor ...", color=0x00ff00)
         await client.send_message(user, embed=embed)
         #user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
         user_destiny = fs.get_playerBySteamTag(user_steam_tag) #Search for player Steam tag
-        print("User_destiny_length!!!")
-        print(len(user_destiny))
+        #print("User_destiny_length!!!")
+        #print(len(user_destiny))
         if user_destiny:
             #print(type(user_destiny))
             #print(user_destiny)
@@ -469,16 +470,16 @@ async def raid_this_week(context):
                     raids = fs.get_CharactersRaids(user_destiny_id,character_id)
                     if raids:    
                         raids_complete = get_completed_raids(info,user_destiny_id,raids)
-                        print("/***************************************/")
-                        print(len(raids_complete))
-                        print("/***************************************/")
+                        #print("/***************************************/")
+                        #print(len(raids_complete))
+                        #print("/***************************************/")
                         raids_complete_filtered = filter_completed_raids(raids_complete,fs)
-                        print("/***************************************/")
-                        print(raids_complete_filtered)
-                        print("/***************************************/")
+                        #print("/***************************************/")
+                        #print(raids_complete_filtered)
+                        #print("/***************************************/")
                         definitive_complete_raids=get_unique_raids(raids_complete_filtered, fs)
-                        print(definitive_complete_raids)
-                        print("/***************************************/")
+                        #print(definitive_complete_raids)
+                        #print("/***************************************/")
                         for key, value in definitive_complete_raids.items():
                             if value:
                                 report = report +" :white_check_mark: "+str(key) +"\n"
@@ -514,6 +515,7 @@ async def raid_this_week(context):
 async def ayuda(context):
     user_id = context.message.author.id
     user=await client.get_user_info(user_id)
+    await client.say(":white_check_mark: Mensaje directo enviado.")
     msg = 'Hola {0.author.mention} estos son mis comandos :\n\
     `+ayuda` Imprime este mensage.\n\
     `+marte` Reporte de Armas Protocolo.\n\
@@ -613,7 +615,7 @@ async def informe_semanal(context):
 async def informe_semanal(context):
     user_id = context.message.author.id
     user=await client.get_user_info(user_id)
-
+    await client.say(":white_check_mark: Mensaje directo enviado.")
     protocol_dict={
         3: ["IKELOS_SMG_v1.0.1 (Subfusil)","https://cdn.discordapp.com/attachments/508999396835196950/520269508728979467/Subfusil.png"],
         4: ["IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520269665478508544/Francotirador.png"],
@@ -652,6 +654,7 @@ async def informe_semanal(context):
 async def dreaming_city(context):
     user_id = context.message.author.id
     user=await client.get_user_info(user_id)
+    await client.say(":white_check_mark: Mensaje directo enviado.")
     ascendant_dict={
         4: ["ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs","https://cdn.discordapp.com/attachments/508999396835196950/520280396366086154/Espina_de_Keres.png"],
         5: ["ғᴏʀᴛᴀʟᴇᴢᴀ ᴅᴇ ғɪʟᴏs ᴄᴏʀᴛᴀɴᴛᴇs - ʀᴇᴛɪʀᴏ ᴅᴇʟ ʜᴇʀᴀʟᴅᴏ","https://cdn.discordapp.com/attachments/508999396835196950/520280494722514964/Reclusion_del_Heraldo.png"],
@@ -702,6 +705,7 @@ async def dreaming_city(context):
 async def hora_zero(context):
     user_id = context.message.author.id
     user=await client.get_user_info(user_id)
+    await client.say(":white_check_mark: Mensaje directo enviado.")
     HZ_dict={        
         1: ["Vacio","https://images-ext-2.discordapp.net/external/inJak0x078Kpn6K_f50f61zV_7_u92W92Nonkvcc2Rc/https/i.imgur.com/ikiCD58.png"],
         2: ["Arco","https://images-ext-2.discordapp.net/external/inJak0x078Kpn6K_f50f61zV_7_u92W92Nonkvcc2Rc/https/i.imgur.com/ikiCD58.png"],
@@ -740,6 +744,7 @@ async def hora_zero(context):
 async def informe_lunar(context):
     user_id = context.message.author.id
     user=await client.get_user_info(user_id)
+    await client.say(":white_check_mark: Mensaje directo enviado.")
     lunar_nightmares_dict={
         0: ["Pesadilla de Xortal Sworn of Crota",""],
         2: ["Pesadilla de Jaxx Claw of Xivu Arath",""],
@@ -844,6 +849,7 @@ async def clan_capacity(context):
     fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
     capacity = await fs.get_clan_capacity()
+    
     if capacity:
         for c in capacity:
             for key,val in c.items():
@@ -867,6 +873,7 @@ async def xur_info(context):
     #END Heroku
     user_id = context.message.author.id
     user=await client.get_user_info(user_id)
+    await client.say(":white_check_mark: Mensaje directo enviado.")
     await client.send_message(user, "Juntando información ... un momento por favor.")
     #await client.say("Juntando información ... un momento por favor.")
     is_xur_here, info, inventory, xur_map = get_xur_info(fs)
@@ -905,6 +912,7 @@ async def xur_info(context):
 async def calus_quotes(context):
     user_id = context.message.author.id
     user=await client.get_user_info(user_id)
+    await client.say(":white_check_mark: Mensaje directo enviado.")
     calus_quotes = ["Everything you know is a lie. There is a truth beyond what your people and your Speaker have told you. I can take you to that truth, if you seek me out. These gifts are a reminder of my words."\
                     ,"If you seek the means to live to your potential, I can guide you to it. There is a power in this universe beyond your feeble Light. I leave you with those words, and these parting gifts. Take them, and grow fat from strength."\
                     ,"Now you’ve seen everything. Do you still believe you’re on the right side? Mull it over, and enjoy my gifts to you. I possess the means to true agency beyond your feeble Light. Seek me out and perhaps I’ll show you how to grow fat from strength."\
@@ -927,6 +935,7 @@ async def calus_quotes(context):
 async def riven_quotes(context):
     user_id = context.message.author.id
     user=await client.get_user_info(user_id)
+    await client.say(":white_check_mark: Mensaje directo enviado.")
     riven_quotes = ["You are finally here, Brother slayer. Spawn killer. All that strength and you're still nothing but a retainer to the Awoken Queen. You could be so much more...all you need do is wish it. Come. I would quite like to meet you."\
                     ,"Have you come to free the Witches? They will resist. Darkness is their shape now ..."\
                     ,"I can give you anything. What is it you want? Weapons? Glory? Peace? Or is it simpler than that?"\
@@ -950,6 +959,7 @@ async def riven_quotes(context):
 async def destiny_lore(context):
     user_id = context.message.author.id
     user=await client.get_user_info(user_id)
+    await client.say(":white_check_mark: Mensaje directo enviado.")
     #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
     #await client.send_message(user, embed=embed)
     title, destiny_lore, img = get_random_lore()
