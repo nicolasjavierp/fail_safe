@@ -34,7 +34,7 @@ BOT_TOKEN = os.environ['BOT_TOKEN']
 
 BOT_PREFIX = ("+") #("+", "!")
 client = Bot(command_prefix=BOT_PREFIX)
-status = ["Iron Banner", "Cometitive", "Strike", "Ordeal", "Story"]
+status = ["Iron Banner", "Cometitive", "Strike", "Ordeal", "Story", "for glimmer", "for shards"]
 client.remove_command('help')
 
 players = {}
@@ -1798,7 +1798,7 @@ async def change_status():
     while not client.is_closed:
         current_status = next(msgs)
         await client.change_presence(game=discord.Game(name=current_status))
-        await asyncio.sleep(86400)
+        await asyncio.sleep(28800)
 
 #######################################################################
 ######################### MAIN ########################################
