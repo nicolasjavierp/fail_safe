@@ -608,8 +608,9 @@ class FailSafe(object):
             return temp_list
 
 
-    async def async_get_BungieOnline(self):
+    async def async_isBungieOnline(self):
         '''Generates list of dicts of all players with membersip id, profile and clan name currently in Clan corresponding with clan id'''
+        print(self.our_clans[0][0])
         site_call = "https://www.bungie.net/Platform/GroupV2/" + str(self.our_clans[0][0])
         headers={"X-API-Key":self.api_key}
         async with aiohttp.get(site_call,headers=headers) as request:
