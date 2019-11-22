@@ -904,7 +904,7 @@ async def xur_info(context):
             await client.send_message(user, embed=embed)
             #await client.send_message(context.message.channel, embed=embed)
     else:
-        embed = discord.Embed(title=":x: Servidores de Destiny estan deshabilitados! Intenta mas tarde ...", description=info, color=0x00ff00)
+        embed = discord.Embed(title=":x: Servidores de Destiny estan deshabilitados! Intenta mas tarde ...", description="¯\\_(ツ)_/¯", color=0x00ff00)
         await client.send_message(user, embed=embed)
 
 
