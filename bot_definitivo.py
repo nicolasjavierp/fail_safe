@@ -1688,7 +1688,8 @@ async def testing(context):
     fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
     #canal_info=None
-    pass
+    print(fs.async_get_BungieOnline())
+    
 
 #######################################################################
 ######################### LOOPS #######################################

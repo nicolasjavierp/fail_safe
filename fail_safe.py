@@ -608,6 +608,18 @@ class FailSafe(object):
             return temp_list
 
 
+    async def async_get_BungieOnline(self):
+        '''Generates list of dicts of all players with membersip id, profile and clan name currently in Clan corresponding with clan id'''
+        site_call = "https://www.bungie.net/Platform/GroupV2/" + str(self.our_clans[0][0])
+        headers={"X-API-Key":self.api_key}
+        async with aiohttp.get(site_call,headers=headers) as request:
+            if request.status == 200:
+                return True
+            else:
+                return False
+            
+
+
     async def async_get_Clanmate_LastPlayed(self, clanmember_membership_id):
         site_call = "https://bungie.net/Platform/Destiny2/3/Profile/" +clanmember_membership_id+ "/" + "?components=100,200"
         headers={"X-API-Key":self.api_key}
