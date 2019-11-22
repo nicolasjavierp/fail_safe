@@ -537,6 +537,9 @@ async def ayuda(context):
                 aliases=['semana'],
                 pass_context=True)
 async def informe_semanal(context):
+    user_id = context.message.author.id
+    user=await client.get_user_info(user_id)
+    await client.say(":white_check_mark: Mensaje directo enviado.")
     ascendant_dict={
         4: ["ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs","https://cdn.discordapp.com/attachments/508999396835196950/520280396366086154/Espina_de_Keres.png"],
         5: ["ғᴏʀᴛᴀʟᴇᴢᴀ ᴅᴇ ғɪʟᴏs ᴄᴏʀᴛᴀɴᴛᴇs - ʀᴇᴛɪʀᴏ ᴅᴇʟ ʜᴇʀᴀʟᴅᴏ","https://cdn.discordapp.com/attachments/508999396835196950/520280494722514964/Reclusion_del_Heraldo.png"],
@@ -600,18 +603,18 @@ async def informe_semanal(context):
     #print(protocol_dict[key%5][0])
     embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%6][0]+"**", color=0xff0000)
     embed.set_image(url=ascendant_dict[key%6][1])
-    await client.send_message(context.message.channel, embed=embed)
+    await client.send_message(user, embed=embed)
     
     embed = discord.Embed(title="" , description= ":calendar: Esta semana en  Protocolo Intensificación: \n **"+protocol_dict[key%5][0]+"**", color=0x00ff00)
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/508999396835196950/520269693479551004/Protocolo.png")
     embed.set_image(url=protocol_dict[key%5][1])
-    await client.send_message(context.message.channel, embed=embed)
+    await client.send_message(user, embed=embed)
 
     embed = discord.Embed(title="**:earth_americas: Web App Secuencia Terminales Hora Cero**" , url="http://fiddle.jshell.net/pastuleo23/xu1snrc0/show", color=0xffd700)
     embed.set_thumbnail(url="https://www.bungie.net/common/destiny2_content/icons/f0def60d28b4f2a5a7fe8ec3d4764cfa.jpg")
     embed.set_image(url=HZ_dict[key%3][1])
     embed.add_field(name=':map: __Mapas de Sala de Horno__', value="Esta Semana Configuración "+"__**"+HZ_dict[key%3][0]+"**__"+":", inline=False)
-    await client.send_message(context.message.channel, embed=embed)
+    await client.send_message(user, embed=embed)
 
     embed = discord.Embed(title="" , description=":calendar: Esta semana esta la \n **"+lunar_nightmares_dict[key%4][0]+"**", color=0xff0000)
     #embed.set_image(url=ascendant_dict[key%6][1])
