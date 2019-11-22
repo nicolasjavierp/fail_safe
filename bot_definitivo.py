@@ -429,82 +429,86 @@ async def raid_this_week(context):
     user_id = context.message.author.id
     user=await client.get_user_info(user_id)
     await client.say(":white_check_mark: Mensaje directo enviado.")
-    #valid_battle_tag_ending = bool(re.match('^.*#[0-9]{4,5}$', context.message.content))
-    #if len(context.message.content)>=4 and valid_battle_tag_ending:
-    if len(context.message.content)>=4:
-        #4 Tests
-        #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
-        #4 Heroku
-        fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
-        #END Heroku
-        #print("Now:")
-        #print(datetime.now())
-        #user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
-        user_steam_tag = context.message.content.split(' ',1)[1]
-        #print("USER STEAM TAG:")
-        #print("===============")
-        #print(user_steam_tag)
-        embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing por la migracion a Steam, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
-        await client.send_message(user, embed=embed)
-        embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie, que a veces tarda unos minutos en registrar las Raids recientes. Un momento por favor ...", color=0x00ff00)
-        await client.send_message(user, embed=embed)
-        #user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
-        user_destiny = fs.get_playerBySteamTag(user_steam_tag) #Search for player Steam tag
-        #print("User_destiny_length!!!")
-        #print(len(user_destiny))
-        if user_destiny:
-            #print(type(user_destiny))
-            #print(user_destiny)
-            if len(user_destiny)==1:
-                user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
-                #real_battletag = user_destiny[0]['displayName']
-                profile = fs.get_DestinyUserProfileDetail(user_destiny_id)
-                characters = profile['characters']['data']
-                #print("-------------------------")
-                #print(characters)
-                res = "\n"
-                for id, info in characters.items():
-                    report = "**"+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" "+str(fs.guardian_gender[info['genderHash']])+":** \n"
-                    #print(str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" "+str(fs.guardian_gender[info['genderHash']]))
-                    character_id = info['characterId']
-                    raids = fs.get_CharactersRaids(user_destiny_id,character_id)
-                    if raids:    
-                        raids_complete = get_completed_raids(info,user_destiny_id,raids)
-                        #print("/***************************************/")
-                        #print(len(raids_complete))
-                        #print("/***************************************/")
-                        raids_complete_filtered = filter_completed_raids(raids_complete,fs)
-                        #print("/***************************************/")
-                        #print(raids_complete_filtered)
-                        #print("/***************************************/")
-                        definitive_complete_raids=get_unique_raids(raids_complete_filtered, fs)
-                        #print(definitive_complete_raids)
-                        #print("/***************************************/")
-                        for key, value in definitive_complete_raids.items():
-                            if value:
-                                report = report +" :white_check_mark: "+str(key) +"\n"
-                            else:
-                                report = report +" :x: "+ str(key) +"\n"
-                    else:
-                        for key, value in fs.relevant_raids.items():
-                            report = report + " :x: "+ value +"\n"
-                        
-                    res = res + report + "\n"
-                
-                embed = discord.Embed(title=":bell:__Tus Raids este reset:__", description=res, color=0x00ff00)
-                #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
-                embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/499231830235414529/587653954117173249/9k.png")
-                #await client.send_message(context.message.channel, embed=embed)
-                await client.send_message(user, embed=embed)
-            else:
-                embed = discord.Embed(title="Error!", description="Tu SteamTag es muy generico hay multiples Guardianes con el mismo nombre, por favor actualizalo a algo mas especifico para usar el comando. \n\
-                     Ejemplo: Javu --> Titan Javu", color=0x00ff00)
-                #await client.send_message(context.message.channel, embed=embed)
-                await client.send_message(user, embed=embed)
-        else:
-            embed = discord.Embed(title="Error!", description="No pude encontrar la info relacionada con tu SteamTag: Verifica y proba quitando iconos", color=0x00ff00)
-            #await client.send_message(context.message.channel, embed=embed)
+    if await fs.async_isBungieOnline():
+        #valid_battle_tag_ending = bool(re.match('^.*#[0-9]{4,5}$', context.message.content))
+        #if len(context.message.content)>=4 and valid_battle_tag_ending:
+        if len(context.message.content)>=4:
+            #4 Tests
+            #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
+            #4 Heroku
+            fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+            #END Heroku
+            #print("Now:")
+            #print(datetime.now())
+            #user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
+            user_steam_tag = context.message.content.split(' ',1)[1]
+            #print("USER STEAM TAG:")
+            #print("===============")
+            #print(user_steam_tag)
+            embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing por la migracion a Steam, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
             await client.send_message(user, embed=embed)
+            embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie, que a veces tarda unos minutos en registrar las Raids recientes. Un momento por favor ...", color=0x00ff00)
+            await client.send_message(user, embed=embed)
+            #user_destiny = fs.get_playerByTagName(fs.format_PlayerBattleTag(user_battletag)) #Search for player battletag NOT Case Sensitive
+            user_destiny = fs.get_playerBySteamTag(user_steam_tag) #Search for player Steam tag
+            #print("User_destiny_length!!!")
+            #print(len(user_destiny))
+            if user_destiny:
+                #print(type(user_destiny))
+                #print(user_destiny)
+                if len(user_destiny)==1:
+                    user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
+                    #real_battletag = user_destiny[0]['displayName']
+                    profile = fs.get_DestinyUserProfileDetail(user_destiny_id)
+                    characters = profile['characters']['data']
+                    #print("-------------------------")
+                    #print(characters)
+                    res = "\n"
+                    for id, info in characters.items():
+                        report = "**"+str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" "+str(fs.guardian_gender[info['genderHash']])+":** \n"
+                        #print(str(fs.guardian_class[info['classHash']])+" "+str(fs.guardian_race[info['raceHash']])+" "+str(fs.guardian_gender[info['genderHash']]))
+                        character_id = info['characterId']
+                        raids = fs.get_CharactersRaids(user_destiny_id,character_id)
+                        if raids:    
+                            raids_complete = get_completed_raids(info,user_destiny_id,raids)
+                            #print("/***************************************/")
+                            #print(len(raids_complete))
+                            #print("/***************************************/")
+                            raids_complete_filtered = filter_completed_raids(raids_complete,fs)
+                            #print("/***************************************/")
+                            #print(raids_complete_filtered)
+                            #print("/***************************************/")
+                            definitive_complete_raids=get_unique_raids(raids_complete_filtered, fs)
+                            #print(definitive_complete_raids)
+                            #print("/***************************************/")
+                            for key, value in definitive_complete_raids.items():
+                                if value:
+                                    report = report +" :white_check_mark: "+str(key) +"\n"
+                                else:
+                                    report = report +" :x: "+ str(key) +"\n"
+                        else:
+                            for key, value in fs.relevant_raids.items():
+                                report = report + " :x: "+ value +"\n"
+                            
+                        res = res + report + "\n"
+                    
+                    embed = discord.Embed(title=":bell:__Tus Raids este reset:__", description=res, color=0x00ff00)
+                    #embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+                    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/499231830235414529/587653954117173249/9k.png")
+                    #await client.send_message(context.message.channel, embed=embed)
+                    await client.send_message(user, embed=embed)
+                else:
+                    embed = discord.Embed(title="Error!", description="Tu SteamTag es muy generico hay multiples Guardianes con el mismo nombre, por favor actualizalo a algo mas especifico para usar el comando. \n\
+                        Ejemplo: Javu --> Titan Javu", color=0x00ff00)
+                    #await client.send_message(context.message.channel, embed=embed)
+                    await client.send_message(user, embed=embed)
+            else:
+                embed = discord.Embed(title="Error!", description="No pude encontrar la info relacionada con tu SteamTag: Verifica y proba quitando iconos", color=0x00ff00)
+                #await client.send_message(context.message.channel, embed=embed)
+                await client.send_message(user, embed=embed)
+    else:
+        embed = discord.Embed(title=":x: Servidores de Destiny estan deshabilitados! Intenta mas tarde ...", description="¯\\_(ツ)_/¯", color=0x00ff00)
+        await client.send_message(user, embed=embed)
 
 
 @client.command(name='Ayuda',
@@ -518,8 +522,9 @@ async def ayuda(context):
     await client.say(":white_check_mark: Mensaje directo enviado.")
     msg = 'Hola {0.author.mention} estos son mis comandos :\n\
     `+ayuda` Imprime este mensage.\n\
+    `+semana` Reporte de todas las actividades del reset.\n\
     `+marte` Reporte de Armas Protocolo.\n\
-    `+dc` Reporte de Desafío Ascendente en Dreaming City (Ciudad Ensoñada).\n\
+    `+dc` Reporte de Desafio Ascendente en Dreaming City (Ciudad Ensoñada).\n\
     `+brote` Informe de rotación elemental semanal de Hora Zero.\n\
     `+luna` Información de rotación diaria del arma de Altar del Dolor y la rotación semanal de las Pesadillas Deambulantes.\n\
     `+calus` Dialogo random del Emperador Calus.\n\
