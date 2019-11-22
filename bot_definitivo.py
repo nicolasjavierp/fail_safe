@@ -426,6 +426,11 @@ async def rol(context):
                 aliases=['raids'],
                 pass_context=True)
 async def raid_this_week(context):
+    #4 Tests
+    #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
+    #4 Heroku
+    fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+    #END Heroku
     user_id = context.message.author.id
     user=await client.get_user_info(user_id)
     await client.say(":white_check_mark: Mensaje directo enviado.")
@@ -433,11 +438,7 @@ async def raid_this_week(context):
         #valid_battle_tag_ending = bool(re.match('^.*#[0-9]{4,5}$', context.message.content))
         #if len(context.message.content)>=4 and valid_battle_tag_ending:
         if len(context.message.content)>=4:
-            #4 Tests
-            #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
-            #4 Heroku
-            fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
-            #END Heroku
+            
             #print("Now:")
             #print(datetime.now())
             #user_battletag = context.message.content.split(' ', 1)[1]   #separate +rol from message
