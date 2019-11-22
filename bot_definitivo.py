@@ -530,7 +530,7 @@ async def ayuda(context):
     \t \t \t Ejemplo: `+raids Titan Javu`\n'.format(context.message)
     await client.send_message(user, msg)
 
-"""
+
 @client.command(name='Informe Semanal',
                 description="Informe Semanal",
                 brief="Informe Semanal",
@@ -553,18 +553,29 @@ async def informe_semanal(context):
         1: ["IKELOS_SG_v1.0.1 (Escopeta), IKELOS_SMG_v1.0.1 (Subfusil), IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png"],
         2: ["IKELOS_SG_v1.0.1 (Escopeta)","https://cdn.discordapp.com/attachments/508999396835196950/520269571253600271/Escopeta.png"]
     }
-    curse_dict={
-        0: ["Nivel de Maldicion 1"],
-        1: ["Nivel de Maldicion 2"],
-        2: ["Nivel de Maldicion 3, esta disponible el Trono Destrozado (Mazmorra)!"]
-    }
+
     HZ_dict={        
         1: ["Vacio","https://images-ext-2.discordapp.net/external/inJak0x078Kpn6K_f50f61zV_7_u92W92Nonkvcc2Rc/https/i.imgur.com/ikiCD58.png"],
         2: ["Arco","https://images-ext-2.discordapp.net/external/inJak0x078Kpn6K_f50f61zV_7_u92W92Nonkvcc2Rc/https/i.imgur.com/ikiCD58.png"],
         0: ["Solar","https://images-ext-2.discordapp.net/external/inJak0x078Kpn6K_f50f61zV_7_u92W92Nonkvcc2Rc/https/i.imgur.com/ikiCD58.png"]
     }
+
+    lunar_nightmares_dict={
+        0: ["Pesadilla de Xortal Sworn of Crota",""],
+        2: ["Pesadilla de Jaxx Claw of Xivu Arath",""],
+        1: ["Pesadilla de Hokris Fear of Mithrax",""],
+        3: ["Fallen Council",""]
+    }
+
+    altar_dict={
+        2: ["Escopeta","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/2f61559b7c57894703b6aaa52a44630c.jpg"],
+        0: ["Sniper","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/b990412136d220fd641078418a4903fe.jpg"],
+        1: ["Lanza_cohetes","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/eaf113dbb5cea03526009e6030b8c8ee.jpg"]
+    }
+
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
+    day_of_year = int(today.strftime("%j"))
     #print(key)
 
     if date.today().weekday() == 0: #and today.hour >= 14: # 0 is for monday
@@ -590,9 +601,6 @@ async def informe_semanal(context):
     embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%6][0]+"**", color=0xff0000)
     embed.set_image(url=ascendant_dict[key%6][1])
     await client.send_message(context.message.channel, embed=embed)
-
-    embed = discord.Embed(title="" , description="**Esta semana la Ciudad Ensoñada tiene,  "+curse_dict[key%3][0]+"**", color=0x000000)
-    await client.send_message(context.message.channel, embed=embed)
     
     embed = discord.Embed(title="" , description= ":calendar: Esta semana en  Protocolo Intensificación: \n **"+protocol_dict[key%5][0]+"**", color=0x00ff00)
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/508999396835196950/520269693479551004/Protocolo.png")
@@ -604,7 +612,15 @@ async def informe_semanal(context):
     embed.set_image(url=HZ_dict[key%3][1])
     embed.add_field(name=':map: __Mapas de Sala de Horno__', value="Esta Semana Configuración "+"__**"+HZ_dict[key%3][0]+"**__"+":", inline=False)
     await client.send_message(context.message.channel, embed=embed)
-"""
+
+    embed = discord.Embed(title="" , description=":calendar: Esta semana esta la \n **"+lunar_nightmares_dict[key%4][0]+"**", color=0xff0000)
+    #embed.set_image(url=ascendant_dict[key%6][1])
+    await client.send_message(user, embed=embed)
+    
+    embed = discord.Embed(title="" , description="**Hoy el Altar del Dolor entrega,  "+altar_dict[day_of_year%3][0]+"**", color=0x000000)
+    embed.set_image(url=altar_dict[day_of_year%3][1])
+    await client.send_message(user, embed=embed)
+
 
 
 @client.command(name='Informe Marte',
@@ -795,8 +811,8 @@ async def informe_lunar(context):
     #print((key+1)%6)
     #print(ascendant_dict[key%6][0])
     #print(protocol_dict[key%5][0])
-    embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
-    await client.send_message(user, embed=embed)
+    #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
+    #await client.send_message(user, embed=embed)
     embed = discord.Embed(title="" , description=":calendar: Esta semana esta la \n **"+lunar_nightmares_dict[key%4][0]+"**", color=0xff0000)
     #embed.set_image(url=ascendant_dict[key%6][1])
     await client.send_message(user, embed=embed)
