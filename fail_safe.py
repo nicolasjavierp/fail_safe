@@ -608,6 +608,18 @@ class FailSafe(object):
             return temp_list
 
 
+    async def async_get_XurInventory(self):
+        '''Calls the api with Xurs inventory'''
+        site_call = "https://bungie.net/Platform/Destiny2/Vendors/?components=402"
+        #request = requests.get(site_call, headers={"X-API-Key":self.api_key})
+        headers={"X-API-Key":self.api_key}
+        async with aiohttp.get(site_call,headers=headers) as request:
+            if request.status == 200:
+                json = await request.json()
+                #print(type(json))
+                print(json.keys)
+
+
     async def async_isBungieOnline(self):
         '''Generates list of dicts of all players with membersip id, profile and clan name currently in Clan corresponding with clan id'''
         #print(self.our_clans[2][0])

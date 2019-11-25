@@ -1718,6 +1718,7 @@ async def testing(context):
     #END Heroku
     #canal_info=None
     print(await fs.async_isBungieOnline())
+    await fs.async_get_XurInventory()
     
 
 #######################################################################
