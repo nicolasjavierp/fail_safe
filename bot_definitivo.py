@@ -1725,8 +1725,11 @@ async def testing(context):
     final_list=[]
     for i in xurs_items_ids:
         valid = await fs.get_manifest_item_info(str(i))
-        print(type(valid))
-        print(valid)
+        if valid:
+            print(type(valid))
+            print(valid)
+        else:
+            print("ERROR")
         
     
 
