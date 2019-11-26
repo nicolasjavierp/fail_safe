@@ -625,10 +625,8 @@ class FailSafe(object):
                 print(type(vendor_data))
                 #print(vendor_data.keys)
                 for key, value in vendor_data.items():
-                    if value['cost']:
-                        print(i)
-                    #if i['cost']:
-                    #    print(i)
+                    print(type(value))
+                    print(value)
 
 
     async def async_isBungieOnline(self):
