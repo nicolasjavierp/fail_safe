@@ -617,11 +617,11 @@ class FailSafe(object):
             if request.status == 200:
                 json = await request.json()
                 #print(type(json))
-                print(json.keys)
+                #print(json.keys)
                 vendor_list = json['Response']['sales']['data']['2190858386']['saleItems']
                 for i in vendor_list:
-                    if i['cost']:
-                        print(i)
+                    print(type(i))
+                    print(i)
 
 
     async def async_isBungieOnline(self):
