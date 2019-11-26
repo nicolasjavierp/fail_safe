@@ -618,7 +618,7 @@ class FailSafe(object):
                 data = await request.json()
                 #print(type(data))
                 #print(data.keys)
-                vendor_list = json['Response']['sales']['data']['2190858386']['saleItems']
+                vendor_list = data['Response']['sales']['data']['2190858386']['saleItems']
                 vendor_data = json.dump(vendor_list)
                 print(type(vendor_data))
                 print(vendor_data.keys)
