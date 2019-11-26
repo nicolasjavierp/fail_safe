@@ -629,7 +629,7 @@ class FailSafe(object):
                 for key, value in vendor_data.items():
                     if value['costs']:
                         #print(value)              
-                        xurs_items_ids=append(value)
+                        xurs_items_ids=xurs_items_ids.append(value)
                 return xurs_items_ids
             else:
                 return None
