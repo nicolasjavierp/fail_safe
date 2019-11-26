@@ -619,7 +619,7 @@ class FailSafe(object):
                 #print(type(data))
                 #print(data.keys)
                 #vendor_list = data['Response']['sales']['data']['2190858386']['saleItems']
-                vendor_data = json.dumps(data)
+                vendor_data = json.loads(data)
                 print(type(vendor_data))
                 #print(vendor_data.keys)
                 for i in vendor_data:
