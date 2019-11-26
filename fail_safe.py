@@ -615,12 +615,12 @@ class FailSafe(object):
         headers={"X-API-Key":self.api_key}
         async with aiohttp.get(site_call,headers=headers) as request:
             if request.status == 200:
-                json = await request.json()
-                #print(type(json))
-                #print(json.keys)
+                data = await request.json()
+                print(type(data))
+                print(data.keys)
                 vendor_list = json['Response']['sales']['data']['2190858386']['saleItems']
-                python_dict = json.loads(vendor_list)
-                for i in data:
+                vendor_data = json.loads(vendor_list)
+                for i in vendor_data:
                     if i['cost']:
                         print(i)
 
