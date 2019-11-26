@@ -1725,19 +1725,21 @@ async def testing(context):
     final_items={}
     for i in xurs_items_ids:
         valid = await fs.async_get_item_info(str(i))
-        if valid:
-            #print(type(valid))
-            if valid['itemCategoryHashes']:
+        if valid and valid['itemCategoryHashes']:
                 for key, value in fs.guardian_category_gear.items():
+                    print("///////////////////////////")
+                    print(key)
+                    print(valid['itemCategoryHashes'])
+                    print("///////////////////////////")
                     if key in valid['itemCategoryHashes']:
+                        #print("Adding "+str(key) " a "+ str())
                         final_items[value] = i
                     else:
                         final_items['weapon'] = i
         else:
             print("ERROR")
     print(final_items)
-        
-    
+
 
 #######################################################################
 ######################### LOOPS #######################################
