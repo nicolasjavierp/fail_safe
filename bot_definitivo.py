@@ -1737,7 +1737,7 @@ async def testing(context):
                     #else:
                     #    final_items['weapon'] = i
         else:
-            print("ERROR")
+            print("Removing ..."+str(i))
     print(final_items)
 
 
