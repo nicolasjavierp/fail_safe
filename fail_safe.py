@@ -616,15 +616,17 @@ class FailSafe(object):
         async with aiohttp.get(site_call,headers=headers) as request:
             if request.status == 200:
                 data = await request.json()
-                #print(type(data))
+                print(type(data))
                 #print(data.keys)
-                #vendor_list = data['Response']['sales']['data']['2190858386']['saleItems']
-                vendor_data = json.loads(data)
-                print(type(vendor_data))
+                vendor_list = data['Response']['sales']['data']['2190858386']['saleItems']
+                print(type(vendor_list))
+                #vendor_data = json.dumps()
+                #print(type(vendor_data))
                 #print(vendor_data.keys)
-                for i in vendor_data:
-                    if i['cost']:
-                        print(i)
+                #for i in vendor_data:
+                #    print(i)
+                    #if i['cost']:
+                    #    print(i)
 
 
     async def async_isBungieOnline(self):
