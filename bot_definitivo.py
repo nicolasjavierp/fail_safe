@@ -1718,7 +1718,16 @@ async def testing(context):
     #END Heroku
     #canal_info=None
     print(await fs.async_isBungieOnline())
-    await fs.async_get_XurInventory()
+    xurs_items_ids = await fs.async_get_XurInventory()
+    #4 Testing
+    xurs_items_ids = [1508896098,2428181146,1474735277,2578771006,312904089]
+    
+    final_list=[]
+    for i in xurs_items_ids:
+        valid = await fs.get_manifest_item_info(i)
+        print(type(valid))
+        print(valid)
+        
     
 
 #######################################################################
