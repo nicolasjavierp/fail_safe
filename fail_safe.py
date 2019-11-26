@@ -618,6 +618,9 @@ class FailSafe(object):
                 json = await request.json()
                 #print(type(json))
                 print(json.keys)
+                print(json['Response']['sales']['data']['2190858386']['saleItems'])
+                #for target_list in expression_list:
+                #    pass
 
 
     async def async_isBungieOnline(self):
@@ -629,8 +632,7 @@ class FailSafe(object):
             if request.status == 200:
                 return True
             else:
-                return False
-            
+                return False     
 
 
     async def async_get_Clanmate_LastPlayed(self, clanmember_membership_id):
