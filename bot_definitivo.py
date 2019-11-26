@@ -1728,7 +1728,7 @@ async def testing(context):
         if valid:
             #print(type(valid))
             #print(valid['Response']['itemCategoryHashes'])
-            for x in valid['Response']:
+            for x in valid:
                 print(x)
         else:
             print("ERROR")
