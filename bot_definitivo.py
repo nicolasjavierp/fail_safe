@@ -1726,8 +1726,10 @@ async def testing(context):
     for i in xurs_items_ids:
         valid = await fs.async_get_item_info(str(i))
         if valid:
-            print(type(valid))
-            print(valid['itemCategoryHashes'])
+            #print(type(valid))
+            #print(valid['itemCategoryHashes'])
+            for x in valid:
+                print(x)
         else:
             print("ERROR")
         
