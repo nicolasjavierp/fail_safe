@@ -609,6 +609,17 @@ class FailSafe(object):
             return temp_list
 
 
+    async def async_get_item_info(self, itemHash):
+            '''Get Async info on item manifest in Destiny 2'''
+            site_call = "http://www.bungie.net/platform/Destiny2/Manifest/DestinyInventoryItemDefinition/" + itemHash
+            headers={"X-API-Key":self.api_key}
+            async with aiohttp.get(site_call,headers=headers) as request:
+                if request.status == 200:
+                    return request.json()['Response']
+                else:
+                    return None
+
+
     async def async_get_XurInventory(self):
         '''Calls the api with Xurs inventory'''
         site_call = "https://bungie.net/Platform/Destiny2/Vendors/?components=402"
