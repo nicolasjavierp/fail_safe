@@ -1727,15 +1727,15 @@ async def testing(context):
         valid = await fs.async_get_item_info(str(i))
         if valid and valid['itemCategoryHashes']:
                 for key, value in fs.guardian_category_gear.items():
-                    print("///////////////////////////")
-                    print(key)
-                    print(valid['itemCategoryHashes'])
-                    print("///////////////////////////")
                     if key in valid['itemCategoryHashes']:
+                        print("//////// FOUND  //////////////")
+                        print(key)
+                        print(valid['itemCategoryHashes'])
+                        print("///////////////////////////")
                         #print("Adding "+str(key) " a "+ str())
                         final_items[value] = i
-                    else:
-                        final_items['weapon'] = i
+                    #else:
+                    #    final_items['weapon'] = i
         else:
             print("ERROR")
     print(final_items)
