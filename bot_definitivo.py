@@ -1727,9 +1727,7 @@ async def testing(context):
         valid = await fs.async_get_item_info(str(i))
         if valid:
             #print(type(valid))
-            #print(valid['Response']['itemCategoryHashes'])
-            for x in valid:
-                print(x)
+            print(valid['itemCategoryHashes'])
         else:
             print("ERROR")
         

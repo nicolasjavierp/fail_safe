@@ -616,9 +616,6 @@ class FailSafe(object):
             async with aiohttp.get(site_call,headers=headers) as request:
                 if request.status == 200:
                     data = await request.json()
-                    print("**************")
-                    print(data['Response'])
-                    print("**************")
                     return (data['Response'])
                 else:
                     return None
