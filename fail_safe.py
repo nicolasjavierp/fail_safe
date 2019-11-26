@@ -624,8 +624,8 @@ class FailSafe(object):
                 vendor_data = json.loads(vendor_temp)
                 print(type(vendor_data))
                 #print(vendor_data.keys)
-                #for i in vendor_data:
-                #    print(i)
+                for i in vendor_data:
+                    print(i)
                     #if i['cost']:
                     #    print(i)
 
