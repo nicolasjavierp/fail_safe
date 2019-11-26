@@ -38,7 +38,7 @@ class FailSafe(object):
         self.error_members = set()
         self.retrys = []
         self.guardian_class = {3655393761:"Titan", 2271682572:"Hechicero", 671679327:"Cazador"}
-        self.guardian_category_gear = [21, 22, 23]#{22:"Titan", 21:"Hechicero", 23:"Cazador"}
+        self.guardian_category_gear = {22:"Titan", 21:"Hechicero", 23:"Cazador"}
         self.guardian_race = {2803282938:"Insomne", 898834093:"Exo", 3887404748:"Humano"}
         self.guardian_gender = {3111576190: "Masculino", 2204441813:"Femenino"}
         self.raids = {2122313384: "Ultimo Deseo", 548750096:"Azote del Pasado", 1661734046: "Ultimo Deseo_Guiado", 2214608156: "Ultimo Deseo_58", 2812525063:"Azote del Pasado_Guiado", 3333172150:"Corona del Dolor", 960175301:"Corona del Dolor_Guiada", 2659723068:"Jardin de Salvacion"} #Spire of stars 119944200 // Eater of worlds 3089205900 // Leviathan 89727599
