@@ -830,7 +830,8 @@ async def informe_lunar(context):
 
     embed = discord.Embed(title="" , description="**Hoy el Altar del Dolor entrega,  "+altar_dict[day_of_year%3][0]+"**", color=0x000000)
     embed.set_image(url=altar_dict[day_of_year%3][1])
-    await client.send_message(user, embed=embed)
+    #await client.send_message(user, embed=embed)
+    await message.channel.send(user, embed=embed)
 
 """
 @client.command(name='Server Status',
