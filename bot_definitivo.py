@@ -768,6 +768,7 @@ async def hora_zero(context):
                 aliases=['luna'],
                 pass_context=True)
 async def informe_lunar(context):
+    print("Entered Luna")
     user_id = context.message.author.id
     user=await client.fetch_user(user_id)
     await context.send(":white_check_mark: Mensaje directo enviado.")
