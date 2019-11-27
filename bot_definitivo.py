@@ -24,7 +24,7 @@ from utils import *
 import tweepy
 import youtube_dl
 import math
-from Pillow import Image
+import Pillow
 from itertools import cycle
 
 
