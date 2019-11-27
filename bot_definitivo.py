@@ -433,7 +433,7 @@ async def raid_this_week(context):
     fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
     user_id = context.message.author.id
-    user=await client.fetch_user(user_id)
+    user=await client.get_user_info(user_id)
     await client.say(":white_check_mark: Mensaje directo enviado.")
     if await fs.async_isBungieOnline():
         #valid_battle_tag_ending = bool(re.match('^.*#[0-9]{4,5}$', context.message.content))
@@ -520,7 +520,7 @@ async def raid_this_week(context):
                 pass_context=True)
 async def ayuda(context):
     user_id = context.message.author.id
-    user=await client.fetch_user(user_id)
+    user=await client.get_user_info(user_id)
     await client.say(":white_check_mark: Mensaje directo enviado.")
     msg = 'Hola {0.author.mention} estos son mis comandos :\n\
     `+ayuda` Imprime este mensage.\n\
@@ -545,7 +545,7 @@ async def ayuda(context):
                 pass_context=True)
 async def informe_semanal(context):
     user_id = context.message.author.id
-    user=await client.fetch_user(user_id)
+    user=await client.get_user_info(user_id)
     await client.say(":white_check_mark: Mensaje directo enviado.")
     ascendant_dict={
         4: ["ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs","https://cdn.discordapp.com/attachments/508999396835196950/520280396366086154/Espina_de_Keres.png"],
@@ -640,7 +640,7 @@ async def informe_semanal(context):
                 pass_context=True)
 async def informe_semanal(context):
     user_id = context.message.author.id
-    user=await client.fetch_user(user_id)
+    user=await client.get_user_info(user_id)
     await client.say(":white_check_mark: Mensaje directo enviado.")
     protocol_dict={
         3: ["IKELOS_SMG_v1.0.1 (Subfusil)","https://cdn.discordapp.com/attachments/508999396835196950/520269508728979467/Subfusil.png"],
@@ -679,7 +679,7 @@ async def informe_semanal(context):
                 pass_context=True)
 async def dreaming_city(context):
     user_id = context.message.author.id
-    user=await client.fetch_user(user_id)
+    user=await client.get_user_info(user_id)
     await client.say(":white_check_mark: Mensaje directo enviado.")
     ascendant_dict={
         4: ["ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs","https://cdn.discordapp.com/attachments/508999396835196950/520280396366086154/Espina_de_Keres.png"],
@@ -730,7 +730,7 @@ async def dreaming_city(context):
                 pass_context=True)
 async def hora_zero(context):
     user_id = context.message.author.id
-    user=await client.fetch_user(user_id)
+    user=await client.get_user_info(user_id)
     await client.say(":white_check_mark: Mensaje directo enviado.")
     HZ_dict={        
         1: ["Vacio","https://images-ext-2.discordapp.net/external/inJak0x078Kpn6K_f50f61zV_7_u92W92Nonkvcc2Rc/https/i.imgur.com/ikiCD58.png"],
@@ -768,10 +768,9 @@ async def hora_zero(context):
                 aliases=['luna'],
                 pass_context=True)
 async def informe_lunar(context):
-    print("Entered Luna")
     user_id = context.message.author.id
-    user=await client.fetch_user(user_id)
-    await context.send(":white_check_mark: Mensaje directo enviado.")
+    user=await client.get_user_info(user_id)
+    await client.say(":white_check_mark: Mensaje directo enviado.")
     lunar_nightmares_dict={
         0: ["Pesadilla de Xortal Sworn of Crota",""],
         2: ["Pesadilla de Jaxx Claw of Xivu Arath",""],
@@ -826,14 +825,12 @@ async def informe_lunar(context):
     #await client.send_message(user, embed=embed)
     embed = discord.Embed(title="" , description=":calendar: Esta semana la pesadilla deambulante es \n **"+lunar_nightmares_dict[key%4][0]+"**", color=0xff0000)
     #embed.set_image(url=ascendant_dict[key%6][1])
-    #await client.send_message(user, embed=embed)
-    await user.send(embed=embed)
+    await client.send_message(user, embed=embed)
     
 
     embed = discord.Embed(title="" , description="**Hoy el Altar del Dolor entrega,  "+altar_dict[day_of_year%3][0]+"**", color=0x000000)
     embed.set_image(url=altar_dict[day_of_year%3][1])
-    #await client.send_message(user, embed=embed)
-    await user.send(embed=embed)
+    await client.send_message(user, embed=embed)
 
 """
 @client.command(name='Server Status',
@@ -901,7 +898,7 @@ async def xur_info(context):
     fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
     user_id = context.message.author.id
-    user=await client.fetch_user(user_id)
+    user=await client.get_user_info(user_id)
     await client.say(":white_check_mark: Mensaje directo enviado.")
     if await fs.async_isBungieOnline():
         await client.send_message(user, "Juntando información ... un momento por favor.")
@@ -944,7 +941,7 @@ async def xur_info(context):
                 pass_context=True)
 async def calus_quotes(context):
     user_id = context.message.author.id
-    user=await client.fetch_user(user_id)
+    user=await client.get_user_info(user_id)
     await client.say(":white_check_mark: Mensaje directo enviado.")
     calus_quotes = ["Everything you know is a lie. There is a truth beyond what your people and your Speaker have told you. I can take you to that truth, if you seek me out. These gifts are a reminder of my words."\
                     ,"If you seek the means to live to your potential, I can guide you to it. There is a power in this universe beyond your feeble Light. I leave you with those words, and these parting gifts. Take them, and grow fat from strength."\
@@ -967,7 +964,7 @@ async def calus_quotes(context):
                 pass_context=True)
 async def riven_quotes(context):
     user_id = context.message.author.id
-    user=await client.fetch_user(user_id)
+    user=await client.get_user_info(user_id)
     await client.say(":white_check_mark: Mensaje directo enviado.")
     riven_quotes = ["You are finally here, Brother slayer. Spawn killer. All that strength and you're still nothing but a retainer to the Awoken Queen. You could be so much more...all you need do is wish it. Come. I would quite like to meet you."\
                     ,"Have you come to free the Witches? They will resist. Darkness is their shape now ..."\
@@ -991,7 +988,7 @@ async def riven_quotes(context):
                 pass_context=True)
 async def destiny_lore(context):
     user_id = context.message.author.id
-    user=await client.fetch_user(user_id)
+    user=await client.get_user_info(user_id)
     await client.say(":white_check_mark: Mensaje directo enviado.")
     #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
     #await client.send_message(user, embed=embed)
@@ -1744,7 +1741,7 @@ async def testing(context):
     print(final_items['weapon'])
     #weapon = Image.open(final_items['weapon'])
     area1 = (55, 105, 151, 201)
-    #background.paste()
+    #background
 
 #######################################################################
 ######################### LOOPS #######################################
