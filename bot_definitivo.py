@@ -24,6 +24,7 @@ from utils import *
 import tweepy
 import youtube_dl
 import math
+from PIL import Image
 from itertools import cycle
 
 
@@ -1729,14 +1730,18 @@ async def testing(context):
                 for key, value in fs.guardian_category_gear.items():
                     if key in valid['itemCategoryHashes'] and valid['itemType']==2:
                         #print("Adding "+str(key) " a "+ str())
-                        final_items[value] = valid['displayProperties']['icon']
+                        final_items[value] = 'https://www.bungie.net/' + valid['displayProperties']['icon']
                     if (key not in fs.guardian_category_gear.items()) and valid['itemType']==3:
-                        final_items['weapon'] = valid['displayProperties']['icon']
+                        final_items['weapon'] = 'https://www.bungie.net/' + valid['displayProperties']['icon']
         else:
             print("Removing ..."+str(i)+"Contracts of the 9")
             xurs_items_ids.remove(i)
     print(final_items)
-
+    background = Image.open('xur_bg.png')
+    print(final_items['weapon'])
+    #weapon = Image.open(final_items['weapon'])
+    area1 = (55, 105, 151, 201)
+    #background.paste(area1)
 
 #######################################################################
 ######################### LOOPS #######################################
