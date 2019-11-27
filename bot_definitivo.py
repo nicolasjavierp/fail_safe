@@ -770,7 +770,7 @@ async def hora_zero(context):
 async def informe_lunar(context):
     user_id = context.message.author.id
     user=await client.fetch_user(user_id)
-    await client.say(":white_check_mark: Mensaje directo enviado.")
+    await context.say(":white_check_mark: Mensaje directo enviado.")
     lunar_nightmares_dict={
         0: ["Pesadilla de Xortal Sworn of Crota",""],
         2: ["Pesadilla de Jaxx Claw of Xivu Arath",""],
