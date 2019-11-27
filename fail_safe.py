@@ -639,6 +639,7 @@ class FailSafe(object):
                 #print(type(vendor_data))
                 #print(vendor_data.keys)
                 for key, value in vendor_data.items():
+                    #Filtering out 5 of swords
                     if value['costs']:
                         #print(value)              
                         xurs_items_ids=xurs_items_ids.append(value)
