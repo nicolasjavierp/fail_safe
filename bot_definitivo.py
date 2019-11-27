@@ -777,52 +777,30 @@ async def informe_lunar(context):
         1: ["Pesadilla de Hokris Fear of Mithrax",""],
         3: ["Fallen Council",""]
     }
-
     altar_dict={
         2: ["Escopeta","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/2f61559b7c57894703b6aaa52a44630c.jpg"],
         0: ["Sniper","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/b990412136d220fd641078418a4903fe.jpg"],
         1: ["Lanza_cohetes","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/eaf113dbb5cea03526009e6030b8c8ee.jpg"]
     }
-    
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
     day_of_year = int(today.strftime("%j"))
-    #print(key)
 
-    if date.today().weekday() == 0: #and today.hour >= 14: # 0 is for monday
-        #print("Today is Monday !")
+    if date.today().weekday() == 0: 
         key = key - 1
         if key<0:
             key = 52
-    #print(today)
-    #print("Week Number: "+str(key))
-    #print("unoficial Day Number: "+str(day_of_year))
-        
+
     if date.today().weekday() == 1 and today.hour < 17:
-        #print("Tuesday Before RESET !! Adjusting week number!!")
         key = key - 1
         if key<0:
             key = 0
-        #print("Week Number: "+str(key))
-        #print(today.hour)
-       
-    #print(today)
+
     if today.hour < 17:
-        #print("It is BEFORE daily reset !!!")
         day_of_year = day_of_year-1
     else:
         pass
-        #print("It is AFTER daily reset !!!")
-
-    #print("Day Number: " +str(day_of_year))
     
-    #print("**************")
-    #print("Next Week")
-    #print((key+1)%6)
-    #print(ascendant_dict[key%6][0])
-    #print(protocol_dict[key%5][0])
-    #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
-    #await client.send_message(user, embed=embed)
     embed = discord.Embed(title="" , description=":calendar: Esta semana la pesadilla deambulante es \n **"+lunar_nightmares_dict[key%4][0]+"**", color=0xff0000)
     #embed.set_image(url=ascendant_dict[key%6][1])
     await client.send_message(user, embed=embed)
