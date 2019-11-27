@@ -586,28 +586,23 @@ async def informe_semanal(context):
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
     day_of_year = int(today.strftime("%j"))
-    #print(key)
+    print("$$$$$$$$$$$$$$$$$$")
+    print(day_of_year)
+    print("$$$$$$$$$$$$$$$$$$")
 
     if date.today().weekday() == 0: #and today.hour >= 14: # 0 is for monday
         #print("Today is Monday !")
         key = key - 1
         if key<0:
             key = 52
-    #print(today)
-    #print("Week Number: "+str(key))
+
         
     if date.today().weekday() == 1 and today.hour < 17:
-        #print("Tuesday Before RESET !! Adjusting week number!!")
         key = key - 1
         if key<0:
             key = 0
-        #print("Week Number: "+str(key))
-        #print(today.hour)
-    #print("**************")
-    #print("Next Week")
-    #print((key+1)%6)
-    #print(ascendant_dict[key%6][0])
-    #print(protocol_dict[key%5][0])
+
+
     embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%6][0]+"**", color=0xff0000)
     embed.set_image(url=ascendant_dict[key%6][1])
     await client.send_message(user, embed=embed)
@@ -800,7 +795,7 @@ async def informe_lunar(context):
         day_of_year = day_of_year-1
     else:
         pass
-    
+
     embed = discord.Embed(title="" , description=":calendar: Esta semana la pesadilla deambulante es \n **"+lunar_nightmares_dict[key%4][0]+"**", color=0xff0000)
     #embed.set_image(url=ascendant_dict[key%6][1])
     await client.send_message(user, embed=embed)
