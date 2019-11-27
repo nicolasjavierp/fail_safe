@@ -24,7 +24,7 @@ from utils import *
 import tweepy
 import youtube_dl
 import math
-import Pillow
+from PIL import Image
 from itertools import cycle
 
 
@@ -1741,7 +1741,7 @@ async def testing(context):
     print(final_items['weapon'])
     #weapon = Image.open(final_items['weapon'])
     area1 = (55, 105, 151, 201)
-    #background.paste(area1)
+    #background.paste()
 
 #######################################################################
 ######################### LOOPS #######################################
