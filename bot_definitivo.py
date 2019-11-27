@@ -780,6 +780,9 @@ async def informe_lunar(context):
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
     day_of_year = int(today.strftime("%j"))
+    print("$$$$$$$$$$$$$$$$$$")
+    print(day_of_year)
+    print("$$$$$$$$$$$$$$$$$$")
 
     if date.today().weekday() == 0: 
         key = key - 1
