@@ -1727,22 +1727,11 @@ async def testing(context):
         valid = await fs.async_get_item_info(str(i))
         if valid and valid['itemCategoryHashes']:
                 for key, value in fs.guardian_category_gear.items():
-                    print("??????????????????????")
-                    print(type(valid['itemType']))
-                    print("??????????????????????")
                     if key in valid['itemCategoryHashes'] and valid['itemType']==2:
-                        print("//////// FOUND Armour //////////////")
-                        print(key)
-                        print(valid['itemCategoryHashes'])
-                        print("///////////////////////////")
                         #print("Adding "+str(key) " a "+ str())
-                        final_items[value] = i
+                        final_items[value] = valid['displayProperties']['icon']
                     if (key not in fs.guardian_category_gear.items()) and valid['itemType']==3:
-                        print("//////// FOUND weapon //////////////")
-                        print(key)
-                        print(valid['itemCategoryHashes'])
-                        print("///////////////////////////")
-                        final_items['weapon'] = i
+                        final_items['weapon'] = valid['displayProperties']['icon']
         else:
             print("Removing ..."+str(i)+"Contracts of the 9")
             xurs_items_ids.remove(i)
