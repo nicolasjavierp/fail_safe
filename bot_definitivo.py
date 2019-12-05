@@ -248,8 +248,10 @@ async def ayuda(ctx):
     `+ayuda` Imprime este mensage.\n\
     `+semana` Reporte de todas las actividades del reset.\n\
     `+marte` Reporte de Armas Protocolo.\n\
-    `+dc` Reporte de Desafio Ascendente en Dreaming City (Ciudad Ensoñada).\n\
-    `+brote` Informe de rotación elemental semanal de Hora Zero.\n\
+    `+ascendente` Reporte de Desafio Ascendente en Dreaming City (Ciudad Ensoñada).\n\
+    `+horacero` Informe de rotación elemental semanal de Hora Zero.\n\
+    `+desicion` Información de rotación diaria de Forjas y su orden.\n\
+    `+forja` Información de rotación diaria de Forjas y su orden.\n\
     `+luna` Información de rotación diaria del arma de Altar del Dolor y la rotación semanal de las Pesadillas Deambulantes.\n\
     `+calus` Dialogo random del Emperador Calus.\n\
     `+riven` Dialogo random de la Sirena de Riven.\n\
@@ -352,7 +354,7 @@ async def informe_semanal(ctx):
                 brief="Informe Marte",
                 aliases=['marte'],
                 pass_ctx=True)
-async def informe_semanal(ctx):
+async def informe_marte(ctx):
     user_id = ctx.message.author.id
     user=await client.fetch_user(user_id)
     private_channel = await user.create_dm()
@@ -393,7 +395,7 @@ async def informe_semanal(ctx):
                 brief="Dreaming City",
                 aliases=['ascendente'],
                 pass_ctx=True)
-async def dreaming_city(ctx):
+async def informe_dreaming_city(ctx):
     user_id = ctx.message.author.id
     user=await client.fetch_user(user_id)
     private_channel = await user.create_dm()
@@ -435,7 +437,7 @@ async def dreaming_city(ctx):
                 brief="Brote Info",
                 aliases=['horacero'],
                 pass_ctx=True)
-async def hora_zero(ctx):
+async def informe_hora_zero(ctx):
     user_id = ctx.message.author.id
     user=await client.fetch_user(user_id)
     private_channel = await user.create_dm()
@@ -576,7 +578,7 @@ async def informe_forja(ctx):
                 brief="Informe Decision",
                 aliases=['decision'],
                 pass_ctx=True)
-async def informe_lunar(ctx):
+async def informe_decision(ctx):
     user_id = ctx.message.author.id
     user=await client.fetch_user(user_id)
     private_channel = await user.create_dm()
