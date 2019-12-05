@@ -1253,6 +1253,8 @@ async def intro_elenita(ctx):
         await client.say('User is not in a channel.')
 
 
+
+
 #######################################################################
 ################################# TEST ################################
 #######################################################################
@@ -1324,7 +1326,7 @@ async def testing(ctx):
         #print("////////////"+str(value[3])+"///////////////////")
         backgroundCopy.paste(image, value[3])
         backgroundCopy.save("./misc/test.png", "PNG")
-    #background.save("./misc/xur_bg", "PNG")
+    
     await private_channel.send('', file=discord.File("./misc/test.png"))
     embed = discord.Embed(title="Iventario Xur" , description=test, color=0x00ff00)
     
