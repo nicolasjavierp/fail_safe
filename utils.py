@@ -2,25 +2,17 @@
 # Works with Python 3.6
 
 import random
-import asyncio
-import aiohttp
-from discord.ext.commands import Bot
-from fail_safe import FailSafe
-import os, time
-import discord
+import os
 import re
 import json
-import pymongo
-from datetime import datetime
-from boto.s3.connection import S3Connection
 import unicodedata
-from urllib.request import urlopen
-from pymongo import MongoClient
+from datetime import datetime
 from datetime import timedelta 
 from datetime import date 
 from db import *
 import requests  
 from bs4 import BeautifulSoup
+
 
 try:
     from urllib import parse as urllib_parse
@@ -28,6 +20,43 @@ except ImportError:
 	import urlparse as urllib_parse
 
 my_reset_time='1700'
+
+
+def load_param_from_config(item):
+    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+    my_config_file = os.path.join(THIS_FOLDER, 'config.json')
+    with open(my_config_file, 'r') as f:
+        config = json.load(f)
+        return config['DEFAULT'][item]
+
+def read_param_from_aux(item):
+    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+    my_config_file = os.path.join(THIS_FOLDER, 'aux.json')
+    with open(my_config_file, 'r') as f:
+        aux = json.load(f)
+        return aux[item]
+
+
+def increment_param_in_1_aux(item):
+    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+    my_aux_file = os.path.join(THIS_FOLDER, 'aux.json')
+    with open(my_aux_file, 'r') as f:
+        aux = json.load(f)
+        tmp = aux[item]
+        aux[item] = tmp+1
+    with open("aux.json", "w") as f:
+        json.dump(aux, f)
+
+
+def reset_param_aux(item):
+    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+    my_aux_file = os.path.join(THIS_FOLDER, 'aux.json')
+    with open(my_aux_file, 'r') as f:
+        aux = json.load(f)
+        aux[item] = 0
+    with open("aux.json", "w") as f:
+        json.dump(aux, f)
+
 
 def is_user_in_users(user):
     with open('users.json', 'r') as f:

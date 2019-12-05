@@ -1,23 +1,9 @@
 # -*- coding: utf-8 -*-
 # Works with Python 3.6
 
-import random
 import asyncio
-import aiohttp
-from discord.ext.commands import Bot
-from fail_safe import FailSafe
-import os, time
-import discord
-import re
-import json
-import pymongo
-from datetime import datetime
-from boto.s3.connection import S3Connection
-import unicodedata
-from urllib.request import urlopen
 from pymongo import MongoClient
-from datetime import timedelta 
-from datetime import date 
+
 
 #//////////////////////////////////////////////////////////////////////
 #////////////////   DB SECTION           //////////////////////////////

@@ -270,3 +270,56 @@ class BucketEnum:
     KINETIC_WEAPONS = 1498876634
     SEASONAL_ARTIFACT = 1506418338
     CLASS_ARMOR = 158578786
+
+
+
+
+
+@client.command(name='Info Xur',
+                description="Entrega la ubicación de Xur en Destiny2",
+                brief="Ubicacion Xur",
+                aliases=['xur'],
+                pass_context=True)
+async def xur_info(context):
+    #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
+    #await client.send_message(context.message.channel, embed=embed)
+    #4 Tests
+    #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
+    #4 Heroku
+    fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+    #END Heroku
+    user_id = context.message.author.id
+    user=await client.get_user_info(user_id)
+    await client.say(":white_check_mark: Mensaje directo enviado.")
+    if await fs.async_isBungieOnline():
+        await client.send_message(user, "Juntando información ... un momento por favor.")
+        #await client.say("Juntando información ... un momento por favor.")
+        is_xur_here, info, inventory, xur_map = get_xur_info(fs)
+        if is_xur_here: 
+            url_bungie="http://www.bungie.net/"   
+            embed = discord.Embed(title=":squid:__XUR:__", description=info, color=0x00ff00)
+            embed.add_field(name='Referencia', value="<https://ftw.in/game/destiny-2/find-xur>", inline=False)
+            embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
+            embed.set_image(url=xur_map)
+            await client.send_message(user, embed=embed)
+            if inventory and info:
+                for idx, val in enumerate(inventory):
+                    destiny_class=""
+                    index_xur = {0:":gun: **Arma:**",1:":knife: **Cazador:**",2:":punch: **Titan:**",3:":bulb: **Hechicero:**"}
+                    destiny_class = index_xur[idx]
+                    embed = discord.Embed(title=destiny_class, description="", color=0x00ff00)
+                    embed.set_image(url=url_bungie+val)
+                    await client.send_message(user, embed=embed)
+            else:
+                #embed = discord.Embed(title="Error!", description="No pude obtener los datos, intenta mas tarde ...", color=0x00ff00)
+                embed = discord.Embed(title="Error!", description="Todavía no esta la info KP@, aguantá la mecha un toque y intenta mas tarde ...", color=0x00ff00)
+                await client.send_message(user, embed=embed)
+            
+        else:
+            embed = discord.Embed(title=":x:__XUR:__", description=info, color=0x00ff00)
+            embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+            await client.send_message(user, embed=embed)
+            #await client.send_message(context.message.channel, embed=embed)
+    else:
+        embed = discord.Embed(title=":x: Servidores de Destiny estan deshabilitados! Intenta mas tarde ...", description="¯\\_(ツ)_/¯", color=0x00ff00)
+        await client.send_message(user, embed=embed)
