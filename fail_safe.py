@@ -284,7 +284,7 @@ class FailSafe(object):
         #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
         #END tests
         #4 Heroku
-        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
         client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = client.get_database("bot_definitivo")
@@ -314,7 +314,7 @@ class FailSafe(object):
         #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
         #END tests
         #4 Heroku
-        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
         client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = client.get_database("bot_definitivo")
@@ -334,7 +334,7 @@ class FailSafe(object):
         #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
         #END tests
         #4 Heroku
-        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
         client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = client.get_database("bot_definitivo")
@@ -354,7 +354,7 @@ class FailSafe(object):
         #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
         #END tests
         #4 Heroku
-        MONGODB_URI = config['DEFAULT']['MONGO_DB_MLAB']
+        MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
         client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = client.get_database("bot_definitivo")
