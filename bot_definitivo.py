@@ -1354,4 +1354,5 @@ async def change_status():
 ######################### MAIN ########################################
 #######################################################################
 client.loop.create_task(change_status())
-client.run(load_param_from_config('BOT_TOKEN'))
+#client.run(load_param_from_config('BOT_TOKEN'))
+client.run(BOT_TOKEN)
