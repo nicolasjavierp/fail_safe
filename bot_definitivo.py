@@ -250,7 +250,7 @@ async def ayuda(ctx):
     `+marte` Reporte de Armas Protocolo.\n\
     `+ascendente` Reporte de Desafio Ascendente en Dreaming City (Ciudad Ensoñada).\n\
     `+horacero` Informe de rotación elemental semanal de Hora Zero.\n\
-    `+desicion` Información de rotación diaria de Forjas y su orden.\n\
+    `+decision` Información de rotación semanal de las armas farmeables de Decision.\n\
     `+forja` Información de rotación diaria de Forjas y su orden.\n\
     `+luna` Información de rotación diaria del arma de Altar del Dolor y la rotación semanal de las Pesadillas Deambulantes.\n\
     `+calus` Dialogo random del Emperador Calus.\n\
