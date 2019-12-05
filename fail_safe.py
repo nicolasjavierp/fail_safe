@@ -101,6 +101,32 @@ class FailSafe(object):
                         return None
 
 
+    async def async_get_playerBySteamTag(self, steam_tag):
+        '''Get Async Destiny 2 info on steam tag'''
+        site_call = "https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/3/" + steam_tag
+        headers={"X-API-Key":self.api_key}
+        async with aiohttp.ClientSession() as session:
+            async with session.get(site_call,headers=headers) as request:
+                if request.status == 200:
+                    data = await request.json()
+                    return data['Response']
+                else:
+                    return None
+
+
+    async def async_get_DestinyUserProfileDetail(self, membership_id):
+        '''Get Destiny 2 user profile'''
+        site_call = "https://bungie.net/Platform/Destiny2/3/Profile/"+membership_id+"/?components=100,200"
+        headers={"X-API-Key":self.api_key}
+        async with aiohttp.ClientSession() as session:
+            async with session.get(site_call,headers=headers) as request:
+                if request.status == 200:
+                    data = await request.json()
+                    return data['Response']
+                else:
+                    return None
+
+
     async def async_get_XurInventory(self):
         '''Calls the api with Xurs inventory'''
         site_call = "https://bungie.net/Platform/Destiny2/Vendors/?components=402"

@@ -193,11 +193,13 @@ async def raid_this_week(ctx):
             await private_channel.send(embed=embed)
             embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie, que a veces tarda unos minutos en registrar las Raids recientes. Un momento por favor ...", color=0x00ff00)
             await private_channel.send(embed=embed)
-            user_destiny = fs.get_playerBySteamTag(user_steam_tag) #Search for player Steam tag
+            user_destiny = fs.async_get_playerBySteamTag(user_steam_tag) #Search for player Steam tag
             if user_destiny:
+                print(user_destiny)
                 if len(user_destiny)==1:
                     user_destiny_id = user_destiny[0]['membershipId'] #From response extract the ID
-                    profile = fs.get_DestinyUserProfileDetail(user_destiny_id)
+                    profile = fs.async_get_DestinyUserProfileDetail(user_destiny_id)
+                    print(profile)
                     characters = profile['characters']['data']
                     res = "\n"
                     for id, info in characters.items():
