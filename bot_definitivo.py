@@ -178,9 +178,9 @@ async def on_member_remove(member):
                 pass_ctx=True)
 async def raid_this_week(ctx):
     #4 Tests
-    fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
+    #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
     #4 Heroku
-    #fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+    fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
     user_id = ctx.message.author.id
     user=await client.fetch_user(user_id)
@@ -619,9 +619,9 @@ async def informe_lunar(ctx):
                 pass_ctx=True)
 async def clan_capacity(ctx):
     #4 tests
-    fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
+    #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
     #4 Heroku
-    #fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+    fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
     await ctx.message.channel.send("Juntando info. Un momento por favor.")
     capacity = await fs.get_clan_capacity()
@@ -750,9 +750,9 @@ async def run_sync(ctx):
                     admin_id=i.id
     if admin_id in [role.id for role in user.roles]:
         #4 tests
-        fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
+        #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
         #4 Heroku
-        #fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+        fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
         #END Heroku
         t_start = time.perf_counter()
         await ctx.message.channel.send( "**Aguantame la mecha :bomb: ... que estoy creando el listado de inactivos y pisando el listado de clan. **")
@@ -824,9 +824,9 @@ async def poblacion(ctx):
                     admin_id=i.id
     if admin_id in [role.id for role in user.roles]:
         #4 tests
-        MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
+        #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
         #4 Heroku
-        #MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
         cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         db = cursor.get_database("bot_definitivo")
@@ -864,9 +864,9 @@ async def inactivos(ctx):
                     admin_id=i.id
     if admin_id in [role.id for role in user.roles]:
         #4 tests
-        MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
+        #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
         #4 Heroku
-        #MONGODB_URI = os.environ['MONGO_DB_MLAB']
+        MONGODB_URI = os.environ['MONGO_DB_MLAB']
         #END Heroku
         
         cursor = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
@@ -1265,9 +1265,9 @@ async def testing(ctx):
     #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
     #await message.channel.send( embed=embed)
     #4 Tests
-    fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
+    #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
     #4 Heroku
-    #fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+    fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
     #END Heroku
     #canal_info=None
     user_id = ctx.message.author.id
