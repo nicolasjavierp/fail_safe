@@ -1122,18 +1122,22 @@ async def sad_violin(ctx):
 async def intro_javu(ctx):
     # grab the user who sent the command
     user = ctx.message.author
-    
+    print(user)
     voice_channel = None
     if not ctx.author.voice is None:
         voice_channel = ctx.author.voice.channel
-    if not voice_channel is None:
+        print("Selecting voice channel... ")
+    if voice_channel:
         vc = await voice_channel.connect()
         print(dir(vc))
         my_intros = ["https://youtu.be/RmbXT_-Vw00","https://youtu.be/4gf82Qli2XM","https://youtu.be/UXp59oWuuFQ","https://youtu.be/2VN3X95uu_4"]
         #vc.play(discord.FFmpegPCMAudio(executable="/home/njp/Documents/warmind/warmind/lib/python3.6/site-packages/ffmpeg",source=random.choice(my_intros)))
-        player = await YTDLSource.from_url(random.choice(my_intros))
-        ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-        await ctx.send('Now playing: {}'.format(player.title))
+        vc.play(discord.FFmpegPCMAudio(random.choice(my_intros)))
+        player.volume = 0.5
+        player.start()
+        #player = await YTDLSource.from_url(random.choice(my_intros))
+        #ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+        await ctx.message.channel.send('Now playing: {}'.format(player.title))
 
         #vc.play(discord.FFmpegPCMAudio(random.choice(my_intros)))
         #player = await vc.create_ytdl_player(random.choice(my_intros))
@@ -1144,6 +1148,8 @@ async def intro_javu(ctx):
         #player.stop()
         #await vc.disconnect()
         #vc.play(discord.FFmpegPCMAudio('https://youtu.be/RmbXT_-Vw00'))
+    else:
+        await ctx.message.channel.send(('User is not in a channel.')
     '''
     if voice_channel != None:
         #print(user.id, type(user.id))
