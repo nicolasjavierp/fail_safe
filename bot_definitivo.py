@@ -154,7 +154,7 @@ async def on_reaction_add(reaction, user):
     #print(dir(reaction.emoji))
     #print(type(reaction.emoji))
     #print(reaction.emoji)
-    #await client.send_message(channel,'{} agregó {} al mensaje: {}'.format(user.name, reaction.emoji, reaction.message.content))
+    #await private_channel.send(channel,'{} agregó {} al mensaje: {}'.format(user.name, reaction.emoji, reaction.message.content))
     #if "prestigio" in channel.name:
     #    print(dir(reaction))
 
@@ -732,6 +732,57 @@ async def destiny_lore(ctx):
     else:
         embed = discord.Embed(title="Error", description="No pude obtener el lore :cry:.\n Intentá en un toque ...", color=0x00FF00)
         await private_channel.send(embed=embed)
+
+
+@client.command(name='Info Xur',
+                description="Entrega la ubicación de Xur en Destiny2",
+                brief="Ubicacion Xur",
+                aliases=['xur'],
+                pass_ctx=True)
+async def xur_info(ctx):
+    #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
+    #await private_channel.send(ctx.message.channel, embed=embed)
+    #4 Tests
+    #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
+    #4 Heroku
+    fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+    #END Heroku
+    user_id = ctx.message.author.id
+    user=await client.fetch_user(user_id)
+    private_channel = await user.create_dm()
+    await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
+    if await fs.async_isBungieOnline():
+        await private_channel.send(user, "Juntando información ... un momento por favor.")
+        #await client.say("Juntando información ... un momento por favor.")
+        is_xur_here, info, inventory, xur_map = get_xur_info(fs)
+        if is_xur_here: 
+            url_bungie="http://www.bungie.net/"   
+            embed = discord.Embed(title=":squid:__XUR:__", description=info, color=0x00ff00)
+            embed.add_field(name='Referencia', value="<https://ftw.in/game/destiny-2/find-xur>", inline=False)
+            embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
+            embed.set_image(url=xur_map)
+            await private_channel.send(user, embed=embed)
+            if inventory and info:
+                for idx, val in enumerate(inventory):
+                    destiny_class=""
+                    index_xur = {0:":gun: **Arma:**",1:":knife: **Cazador:**",2:":punch: **Titan:**",3:":bulb: **Hechicero:**"}
+                    destiny_class = index_xur[idx]
+                    embed = discord.Embed(title=destiny_class, description="", color=0x00ff00)
+                    embed.set_image(url=url_bungie+val)
+                    await private_channel.send(user, embed=embed)
+            else:
+                #embed = discord.Embed(title="Error!", description="No pude obtener los datos, intenta mas tarde ...", color=0x00ff00)
+                embed = discord.Embed(title="Error!", description="Todavía no esta la info KP@, aguantá la mecha un toque y intenta mas tarde ...", color=0x00ff00)
+                await private_channel.send(user, embed=embed)
+            
+        else:
+            embed = discord.Embed(title=":x:__XUR:__", description=info, color=0x00ff00)
+            embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
+            await private_channel.send(user, embed=embed)
+            #await private_channel.send(ctx.message.channel, embed=embed)
+    else:
+        embed = discord.Embed(title=":x: Servidores de Destiny estan deshabilitados! Intenta mas tarde ...", description="¯\\_(ツ)_/¯", color=0x00ff00)
+        await private_channel.send(user, embed=embed)
 
 
 
