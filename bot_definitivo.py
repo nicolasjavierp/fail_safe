@@ -752,7 +752,7 @@ async def xur_info(ctx):
     private_channel = await user.create_dm()
     await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
     if await fs.async_isBungieOnline():
-        await private_channel.send(user, "Juntando información ... un momento por favor.")
+        await private_channel.send("Juntando información ... un momento por favor.")
         #await client.say("Juntando información ... un momento por favor.")
         is_xur_here, info, inventory, xur_map = get_xur_info(fs)
         if is_xur_here: 
@@ -761,7 +761,7 @@ async def xur_info(ctx):
             embed.add_field(name='Referencia', value="<https://ftw.in/game/destiny-2/find-xur>", inline=False)
             embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png"))
             embed.set_image(url=xur_map)
-            await private_channel.send(user, embed=embed)
+            await private_channel.send(embed=embed)
             if inventory and info:
                 for idx, val in enumerate(inventory):
                     destiny_class=""
@@ -769,11 +769,11 @@ async def xur_info(ctx):
                     destiny_class = index_xur[idx]
                     embed = discord.Embed(title=destiny_class, description="", color=0x00ff00)
                     embed.set_image(url=url_bungie+val)
-                    await private_channel.send(user, embed=embed)
+                    await private_channel.send(embed=embed)
             else:
                 #embed = discord.Embed(title="Error!", description="No pude obtener los datos, intenta mas tarde ...", color=0x00ff00)
                 embed = discord.Embed(title="Error!", description="Todavía no esta la info KP@, aguantá la mecha un toque y intenta mas tarde ...", color=0x00ff00)
-                await private_channel.send(user, embed=embed)
+                await private_channel.send(embed=embed)
             
         else:
             embed = discord.Embed(title=":x:__XUR:__", description=info, color=0x00ff00)
