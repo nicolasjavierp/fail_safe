@@ -1149,7 +1149,7 @@ async def intro_javu(ctx):
         #await vc.disconnect()
         #vc.play(discord.FFmpegPCMAudio('https://youtu.be/RmbXT_-Vw00'))
     else:
-        await ctx.message.channel.send(('User is not in a channel.')
+        await ctx.message.channel.send('User is not in a channel.')
     '''
     if voice_channel != None:
         #print(user.id, type(user.id))
