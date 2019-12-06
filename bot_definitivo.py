@@ -1133,11 +1133,11 @@ async def intro_javu(ctx):
         my_intros = ["https://youtu.be/RmbXT_-Vw00","https://youtu.be/4gf82Qli2XM","https://youtu.be/UXp59oWuuFQ","https://youtu.be/2VN3X95uu_4"]
         #vc.play(discord.FFmpegPCMAudio(executable="/home/njp/Documents/warmind/warmind/lib/python3.6/site-packages/ffmpeg",source=random.choice(my_intros)))
         vc.play(discord.FFmpegPCMAudio(random.choice(my_intros)))
-        player.volume = 0.5
-        player.start()
+        #player.volume = 0.5
+        #player.start()
         #player = await YTDLSource.from_url(random.choice(my_intros))
         #ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-        await ctx.message.channel.send('Now playing: {}'.format(player.title))
+        await ctx.message.channel.send('Now playing ...')
 
         #vc.play(discord.FFmpegPCMAudio(random.choice(my_intros)))
         #player = await vc.create_ytdl_player(random.choice(my_intros))
