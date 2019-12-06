@@ -482,3 +482,14 @@ class FailSafe(object):
         #removes all documents from blacklisters
         blacklist.remove({})
         print("Cleared Blacklist and Clanmates!")
+
+
+async def get_manifest_item_info(self, itemHash):
+        '''Get info on item manifest in Destiny 2'''
+        site_call = "http://www.bungie.net/platform/Destiny2/Manifest/DestinyInventoryItemDefinition/" + itemHash
+        request = requests.get(site_call,
+                                headers={"X-API-Key":self.api_key})
+        if request:
+            return request.json()['Response']
+        else:
+            return None

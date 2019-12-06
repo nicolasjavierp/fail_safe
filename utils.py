@@ -301,7 +301,7 @@ def get_xur_info(fs):
         #print("XUR esta !!")
         if inventory:
             for x in inventory:
-                item = fs.get_manifest_item_info(x)
+                item = await fs.get_manifest_item_info(x)
                 if item:
                     #print("Item manifest FOUND: ")
                     #print(item['displayProperties']['icon'])
