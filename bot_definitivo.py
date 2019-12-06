@@ -808,6 +808,7 @@ async def run_sync(ctx):
             
         t_stop = time.perf_counter()
         #print("Elapsed time: %.1f [min]" % ((t_stop-t_start)/60))
+        print("Done and Done !!")
         await ctx.message.channel.send( "**Finalizada la generacion de Inactivos y listado de clan, tardé ... %.1f [min]!**"% ((t_stop-t_start)/60))
     else:
         await ctx.message.channel.send( ":no_entry: **No tenés permisos para ejecutar este comando**")

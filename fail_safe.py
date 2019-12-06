@@ -120,7 +120,7 @@ class FailSafe(object):
         components (list of ints): the type of info you want returned according the Bungie API docs.
         Defaults to 100: basic profile info ([100, 200] would also return more detailed info by Destiny character
         Uses new Destiny 2 endpoint for PC player using the Destiny membershipId.
-        
+
         Get Destiny 2 user profile'''
         site_call = "https://bungie.net/Platform/Destiny2/3/Profile/"+membership_id+"/?components=100,200"
         headers={"X-API-Key":self.api_key}
@@ -216,7 +216,6 @@ class FailSafe(object):
             return request.json()['Response']
         else:
             return None
-
 
 
     async def async_get_XurInventory(self):
