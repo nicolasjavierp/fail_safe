@@ -521,6 +521,8 @@ async def informe_lunar(ctx):
     embed = discord.Embed(title="" , description="**Hoy el Altar del Dolor entrega,  "+altar_dict[day_of_year%3][0]+"** \n"+altar_dict[day_of_year%3][2], color=0x000000)
     #embed.set_image(url=altar_dict[day_of_year%3][1])
     await private_channel.send(embed=embed)
+
+
 '''
 @client.command(name='Informe Forja',
                 description="Informe Forja",
