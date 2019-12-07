@@ -129,7 +129,7 @@ async def on_message(message):
     await asyncio.sleep(0.01)
     await client.process_commands(message)
 
-
+'''
 @client.event
 async def on_member_join(member):  
     server = member.server
@@ -144,7 +144,7 @@ async def on_member_join(member):
     addroles = [role_DJ]
     await client.add_roles(member, *addroles)
     await asyncio.sleep(0.01)
-
+'''
 
 @client.event
 async def on_reaction_add(reaction, user):
@@ -523,7 +523,7 @@ async def informe_lunar(ctx):
     await private_channel.send(embed=embed)
 
 
-'''
+
 @client.command(name='Informe Forja',
                 description="Informe Forja",
                 brief="Informe Forja",
@@ -566,7 +566,7 @@ async def informe_forja(ctx):
     embed = discord.Embed(title="" , description="Hoy la Forja activa es: \n\n**"+temp_string+"**", color=0xff0000)
     embed.set_thumbnail(url=forge_dict[day_of_year%4][1])
     await private_channel.send(embed=embed)
-'''
+
 
 @client.command(name='Informe Decision',
                 description="Informe Decision",
