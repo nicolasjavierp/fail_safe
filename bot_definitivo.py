@@ -561,6 +561,7 @@ async def informe_forja(ctx):
             temp_string = temp_string + ":white_check_mark: "+i+"\n"
         else:
             temp_string = temp_string + ":x: "+i+"\n"
+            
     embed = discord.Embed(title="" , description="Hoy la Forja activa es: \n\n**"+temp_string+"**", color=0xff0000)
     embed.set_thumbnail(url=forge_dict[day_of_year%4][1])
     await private_channel.send(embed=embed)
