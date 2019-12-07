@@ -536,8 +536,8 @@ async def informe_forja(ctx):
 
     forge_dict={
         0: ["Volundr","https://cdn.discordapp.com/attachments/649313400370757666/651887840803815464/Volundr.jpg"],
-        2: ["Gofannon","https://cdn.discordapp.com/attachments/649313400370757666/651887815197720580/Gofannon.jpg"],
-        1: ["Izanami","https://cdn.discordapp.com/attachments/649313400370757666/651887829479325758/Izanami.jpg"],
+        1: ["Gofannon","https://cdn.discordapp.com/attachments/649313400370757666/651887815197720580/Gofannon.jpg"],
+        2: ["Izanami","https://cdn.discordapp.com/attachments/649313400370757666/651887829479325758/Izanami.jpg"],
         3: ["Bergusia","https://cdn.discordapp.com/attachments/649313400370757666/651887795727630357/Bergusia.jpg"]
     }
 
@@ -548,7 +548,10 @@ async def informe_forja(ctx):
         day_of_year = day_of_year-1
     else:
         pass
-    
+    print("--------------------")
+    print(day_of_year)
+    print(day_of_year%4)
+    print("--------------------")
     active_forge=forge_dict[day_of_year%4][0]
     forge_ordered_list=["Volundr","Gofannon","Izanami","Bergusia"]
 
