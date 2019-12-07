@@ -1,1 +1,1 @@
-worker: python3 bot_definitivo.py
+worker: python bot_definitivo.py
