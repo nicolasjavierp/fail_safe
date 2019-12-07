@@ -557,7 +557,7 @@ async def informe_forja(ctx):
 
     temp_string=""
     for i in forge_ordered_list:
-        if i==forge_dict[key%4][0]:
+        if i==forge_dict[day_of_year%4][0]:
             temp_string = temp_string + ":white_check_mark: "+i+"\n"
         else:
             temp_string = temp_string + ":x: "+i+"\n"
