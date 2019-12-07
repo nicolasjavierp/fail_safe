@@ -542,25 +542,14 @@ async def informe_forja(ctx):
     }
 
     today = datetime.now()
-    key = datetime.date(today).isocalendar()[1]
     day_of_year = int(today.strftime("%j"))
-
-    if date.today().weekday() == 0: 
-        key = key - 1
-        if key<0:
-            key = 52
-
-    if date.today().weekday() == 1 and today.hour < 17:
-        key = key - 1
-        if key<0:
-            key = 0
 
     if today.hour < 17:
         day_of_year = day_of_year-1
     else:
         pass
     
-    active_forge=forge_dict[key%4][0]
+    active_forge=forge_dict[day_of_year%4][0]
     forge_ordered_list=["Volundr","Gofannon","Izanami","Bergusia"]
 
     temp_string=""
@@ -570,8 +559,7 @@ async def informe_forja(ctx):
         else:
             temp_string = temp_string + ":x: "+i+"\n"
     embed = discord.Embed(title="" , description="Hoy la Forja activa es: \n\n**"+temp_string+"**", color=0xff0000)
-    #embed.set_footer(text='Mañana estará disponible '+forge_dict[(key+1)%4][0])
-    embed.set_thumbnail(url=forge_dict[key%4][1])
+    embed.set_thumbnail(url=forge_dict[day_of_year%4][1])
     await private_channel.send(embed=embed)
 
 
