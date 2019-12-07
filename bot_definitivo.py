@@ -536,10 +536,10 @@ async def informe_forja(ctx):
     await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
 
     forge_dict={
-        0: ["Volundr","https://cdn.discordapp.com/attachments/649313400370757666/651887840803815464/Volundr.jpg"],
-        1: ["Gofannon","https://cdn.discordapp.com/attachments/649313400370757666/651887815197720580/Gofannon.jpg"],
-        2: ["Izanami","https://cdn.discordapp.com/attachments/649313400370757666/651887829479325758/Izanami.jpg"],
-        3: ["Bergusia","https://cdn.discordapp.com/attachments/649313400370757666/651887795727630357/Bergusia.jpg"]
+        1: ["Volundr","https://cdn.discordapp.com/attachments/649313400370757666/651887840803815464/Volundr.jpg"],
+        2: ["Gofannon","https://cdn.discordapp.com/attachments/649313400370757666/651887815197720580/Gofannon.jpg"],
+        3: ["Izanami","https://cdn.discordapp.com/attachments/649313400370757666/651887829479325758/Izanami.jpg"],
+        0: ["Bergusia","https://cdn.discordapp.com/attachments/649313400370757666/651887795727630357/Bergusia.jpg"]
     }
 
     today = datetime.now()
