@@ -129,10 +129,10 @@ async def on_message(message):
     await asyncio.sleep(0.01)
     await client.process_commands(message)
 
-'''
+
 @client.event
 async def on_member_join(member):  
-    server = member.server
+    server = member.guild
     for i in server.channels:
         if "ʙɪᴇɴᴠᴇɴɪᴅᴏ".upper() in i.name.upper() :
             canal_bienvenida = i            
@@ -144,7 +144,7 @@ async def on_member_join(member):
     addroles = [role_DJ]
     await client.add_roles(member, *addroles)
     await asyncio.sleep(0.01)
-'''
+
 
 @client.event
 async def on_reaction_add(reaction, user):
@@ -162,7 +162,7 @@ async def on_reaction_add(reaction, user):
 @client.event
 async def on_member_remove(member):
     #print("Someone Left!!")
-    server = member.server
+    server = member.guild
     print("Bye Bye {0} !".format(member.name))
     await asyncio.sleep(0.01)
 
