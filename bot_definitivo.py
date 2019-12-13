@@ -1329,7 +1329,7 @@ async def testing(ctx):
     user_id = ctx.message.author.id
     user=await client.fetch_user(user_id)
     private_channel = await user.create_dm()
-    #await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
+    await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
     if await fs.async_isBungieOnline():
         #4 tests
         #xur_data = await fs.async_get_Xur_info(load_param_from_config('XUR_API_KEY'))
