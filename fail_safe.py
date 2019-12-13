@@ -493,3 +493,18 @@ class FailSafe(object):
             return request.json()['Response']
         else:
             return None
+
+
+    async def async_get_Xur_info(self, xur_api_key):
+        '''Gets Xurs location ID'''
+        site_call = "https://api.xur.wiki/?api_key={}&user_id=nicolas".format(xur_api_key)
+        async with aiohttp.ClientSession() as session:
+            async with session.get(site_call) as request:
+                if request.status == 200:
+                    json = await request.json()
+                    if json['location_id']:
+                        return json
+                    else:
+                        return None
+                else:
+                    return None
