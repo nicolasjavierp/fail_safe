@@ -28,7 +28,7 @@ from itertools import cycle
 #4 Heroku
 BUNGIE_API_KEY = os.environ['BUNGIE_API_KEY']
 BOT_TOKEN = os.environ['BOT_TOKEN']
-
+XUR_API_KEY = os.environ['XUR_API_KEY']
 
 BOT_PREFIX = ("+") #("+", "!")
 client = Bot(command_prefix=BOT_PREFIX)
@@ -1331,7 +1331,10 @@ async def testing(ctx):
     private_channel = await user.create_dm()
     #await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
     if await fs.async_isBungieOnline():
-        xur_data = await fs.async_get_Xur_info(load_param_from_config('XUR_API_KEY'))
+        #4 tests
+        #xur_data = await fs.async_get_Xur_info(load_param_from_config('XUR_API_KEY'))
+        #4 Heroku
+        xur_data = await fs.async_get_Xur_info(XUR_API_KEY)
         #await asyncio.sleep(5)
         print(xur_data)
         print(xur_data['is_here'])
