@@ -514,12 +514,24 @@ async def informe_lunar(ctx):
     else:
         pass
 
+    active_altar_weapon=altar_dict[day_of_year%3][0]
+    altar_ordered_list=["Escopeta","Francotirador","Lanzacohetes"]
+
+    temp_string=""
+    for i in altar_ordered_list:
+        if i==active_altar_weapon:
+            temp_string = temp_string + ":white_check_mark: "+i+"  "+altar_dict[day_of_year%3][2]+"\n"
+        if i==altar_dict[(day_of_year+1)%3][0]:
+            temp_string = temp_string + ":x: "+i+"  "+altar_dict[(day_of_year+1)%3][2]+"\n"
+        if i==altar_dict[(day_of_year+2)%3][0]:
+            temp_string = temp_string + ":x: "+i+"  "+altar_dict[(day_of_year+2)%3][2]+"\n"
+
     embed = discord.Embed(title="" , description=":calendar: Esta semana la pesadilla deambulante es \n **"+lunar_nightmares_dict[key%4][0]+"**", color=0xff0000)
     #embed.set_image(url=ascendant_dict[key%6][1])
     await private_channel.send(embed=embed)
 
-    embed = discord.Embed(title="" , description="**Hoy el Altar del Dolor entrega,  "+altar_dict[day_of_year%3][0]+"** \n"+altar_dict[day_of_year%3][2], color=0x000000)
-    #embed.set_image(url=altar_dict[day_of_year%3][1])
+    embed = discord.Embed(title="" , description="**Hoy el Altar del Dolor entrega: ** \n"+temp_string, color=0x000000)
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/649313400370757666/655078464197623821/unknown.png")
     await private_channel.send(embed=embed)
 
 
