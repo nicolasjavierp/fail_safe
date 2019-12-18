@@ -790,6 +790,72 @@ async def xur_info(ctx):
         await private_channel.send(user, embed=embed)
 
 
+@client.command(name='Informe Recetas Aurora',
+                description="Informe Recetas Aurora",
+                brief="Informe Recetas Aurora",
+                aliases=['aurora','recetas'],
+                pass_ctx=True)
+async def informe_recetas_aurora(ctx):
+    user_id = ctx.message.author.id
+    user=await client.fetch_user(user_id)
+    private_channel = await user.create_dm()
+    today = datetime.now()
+    dawning_end = datetime(2020, 1, 14, 17, 00, 1, 342380)
+    if today < dawning_end:
+        await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
+
+        ingredientes_enemigos = "**Leche Vex** - Eliminaciones Vex \n \
+        **Caña de Éter** - Eliminaciones Caidos\n \
+        **Aceite Cabal** - Eliminaciones Cabal\n \
+        **Polvo de Quitina** - Eliminaciones Colmena\n \
+        **Mantequilla Poseida** - Eliminaciones Poseidos\n \
+        **Caña de Éter Moreno** - Eliminaciones Desdeñados"
+        ingredientes_de_eliminaciones="**Deliciosa Explosión** - Bajas con explosivos (granadas, lanzacohetes, etc.)\n \
+        **Sabor Cortante** - Bajas con espada\n \
+        **Calor Imposible** - Bajas solares\n \
+        **Sabor Eléctrico** - Bajas de arco\n \
+        **Sabor Nulo** -  Bajas de vacío\n \
+        **Destello de Inspiración** - Generar orbes de luz (armas con obra maestra o súper)\n \
+        **Toque Personal** - Bajas cuerpo a cuerpo\n \
+        **Sabor Perfecto** - Bajas de precisión\n \
+        **Aerosol de Balas** - Bajas con fusiles automáticos, subfusiles y ametralladoras\n \
+        **Toque Final** - Bajas con rematadores\n \
+        **Sabores Equilibrados** - Bajas con arcos, fusiles de explorador y francotirador\n \
+        **Pizca de Luz** - Recolecta orbes de luz\n \
+        **Sabores Multifacéticos** - Bajas múltiples\n \
+        **Excelente Textura** - Bajas con súper"
+        recetas="**Gjalletas** `(Comandante Zavala)`  -  Caña de Éter + Deliciosa Explosión\n \
+        **Pastelitos del Viajero** `(Ikora Rey)`  -  Aceite Cabal + Destello de Inspiración\n \
+        **Galletas Espaciales de Chocolate** `(Amanda Holliday)`  -  Aceite Cabal + Sabor Nulo\n \
+        **Flan Telemétrico** `(Banshee-44)`  -  Leche Vex + Aerosol de Balas\n \
+        **Tránsitos por la Orilla Flameados** `(Maestro Rahool)`  -  Aceite Cabal + Toque Personal\n \
+        **Alpiste Elixni** `(Suraya Hawthorne)`  -  Caña de Éter + Toque Personal\n \
+        **Bizcochos de Caballero** `(Devrim Kay)`  -  Caña de Éter + Sabor Perfecto\n \
+        **Peladillas Alcanas** `(Sloane)`  -  Polvo de Quitina + Aerosol de Balas\n \
+        **Pastel Bosque Infinito** `(FailSafe)`  -  Leche Vex + Calor Imposible\n \
+        **Budín Radiolario** `(Asher Mir)`  -  Leche Vex + Sabor Eléctrico\n \
+        **Cuchillas de Vainilla** `(Lord Shaxx)`  -  Aceite Cabal + Sabor Cortante\n \
+        **Pastel de Jabaluna** `(Ana Bray)`  -  Polvo de Quitina + Sabor Cortante\n \
+        **Chocomotas** `(Vagabundo)`  -  Mantequilla Poseída + Sabor Nulo\n \
+        **Caramelos de Espectros Muertos** `(Araña)`  -  Caña de Éter Moreno + Destello de Inspiración\n \
+        **Galletas de la Mala Suerte** `(Petra Venj)`  -  Caña de Éter Moreno + Calor Imposible\n \
+        **Galletas Extrañas** `(Xur)`  -  Mantequilla Poseída + Sabor Eléctrico\n \
+        **Panecillos Fractales** `(Hermano Vance)`  -  Leche Vex + Pizca de Luz\n \
+        **Galleta Milhojas** `(Riven de las Mil Voces)`  -  Mantequilla Poseída + Deliciosa Explosión\n \
+        **Galletas de Cinta de Lavanda** `(Saint-14)`  -  Leche Vex + Toque Personal\n \
+        **Masa Frita Opulenta** `(Semblante de Calus)`  -  Caña de Éter Moreno + Excelente Textura\n \
+        **Bollos Fuego Cruzado** `(Ada-1)`  -  Caña de Éter + Sabores Equilibrados\n \
+        **Galletas Ascendentes de Avena y Pasas** `(Eris Morn)`  -  Polvo de Quitina + Toque Final\n \
+        **Tarta Saboteada** `(Benedict 99-40)`  -  Aceite Cabal + Sabores Multifacéticos"
+        embed = discord.Embed(title=":chocolate_bar: INGREDIENTES DE ENEMIGOS" , description=ingredientes_enemigos, color=0xff0000)
+        await private_channel.send(embed=embed)
+        embed = discord.Embed(title=":candy: INGREDIENTES DE ELIMINACIONES" , description=ingredientes_de_eliminaciones, color=0xff0000)
+        await private_channel.send(embed=embed)
+        embed = discord.Embed(title=":bowl_with_spoon: RECETAS" , description=recetas, color=0xff0000)
+        await private_channel.send(embed=embed)
+    await ctx.message.channel.send(":x: Termino la aurora Master ...")
+
+
 
 #######################################################################
 ################## SPECIAL PERMISIONS COMMANDS  #######################
