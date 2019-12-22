@@ -227,12 +227,12 @@ class FailSafe(object):
         async with aiohttp.ClientSession() as session:
             async with session.get(site_call,headers=headers) as request:
                 if request.status == 200:
-                    #print(request.status)
+                    print(request.status)
                     data = await request.json()
-                    #print(type(data))
-                    #print(data.keys)
+                    print(type(data))
+                    print(data)
                     vendor_list = data['Response']['sales']['data']['2190858386']['saleItems']
-                    #print(type(vendor_list))
+                    print(type(vendor_list))
                     vendor_temp = json.dumps(vendor_list)
                     vendor_data = json.loads(vendor_temp)
                     #print(type(vendor_data))
