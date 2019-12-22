@@ -1399,9 +1399,9 @@ async def testing(ctx):
     #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
     #await message.channel.send( embed=embed)
     #4 Tests
-    fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
+    #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
     #4 Heroku
-    #fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+    fs = FailSafe(BUNGIE_API_KEY)        
     #END Heroku
     #canal_info=None
     user_id = ctx.message.author.id
@@ -1410,11 +1410,11 @@ async def testing(ctx):
     await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
     if await fs.async_isBungieOnline():
         #4 Heroku
-        #fs = FailSafe(XUR_API_KEY)         #Start Fail_Safe 4 Heroku
-        #xur_data = await fs.async_get_Xur_info(XUR_API_KEY)
+        #fs = FailSafe(XUR_API_KEY)
+        xur_data = await fs.async_get_Xur_info(XUR_API_KEY)
         #END Heroku
         #4 Tests
-        xur_data = await fs.async_get_Xur_info(load_param_from_config('XUR_API_KEY'))
+        #xur_data = await fs.async_get_Xur_info(load_param_from_config('XUR_API_KEY'))
         #await asyncio.sleep(5)
         #print(xur_data)
         if xur_data['is_here']=='1':
@@ -1435,7 +1435,6 @@ async def testing(ctx):
             #4 Tests
             #xurs_location_id = 3
             #######
-            await asyncio.sleep(5)
             embed = discord.Embed(title=":squid:__Ubicacion XUR:__" , description=location_ids[int(xurs_location_id)][0], color=0x00ff00)
             if location_ids[int(xurs_location_id)][1]:
                 embed.set_image(url=location_ids[int(xurs_location_id)][1])
