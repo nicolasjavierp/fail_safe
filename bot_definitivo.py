@@ -745,6 +745,7 @@ async def destiny_lore(ctx):
                 aliases=['xur'],
                 pass_ctx=True)
 async def xur_info(ctx):
+    '''
     #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
     #await private_channel.send(ctx.message.channel, embed=embed)
     #4 Tests
@@ -785,6 +786,110 @@ async def xur_info(ctx):
             embed.set_thumbnail(url=client.user.avatar_url.replace("webp?size=1024","png")) 
             await private_channel.send(user, embed=embed)
             #await private_channel.send(ctx.message.channel, embed=embed)
+    else:
+        embed = discord.Embed(title=":x: Servidores de Destiny estan deshabilitados! Intenta mas tarde ...", description="¯\\_(ツ)_/¯", color=0x00ff00)
+        await private_channel.send(user, embed=embed)
+    '''
+    #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
+    #await message.channel.send( embed=embed)
+    #4 Tests
+    #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
+    #4 Heroku
+    fs = FailSafe(BUNGIE_API_KEY)         #Start Fail_Safe 4 Heroku
+    #END Heroku
+    #canal_info=None
+    user_id = ctx.message.author.id
+    user=await client.fetch_user(user_id)
+    private_channel = await user.create_dm()
+    await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
+    if await fs.async_isBungieOnline():
+        #4 Heroku
+        fs = FailSafe(XUR_API_KEY)         #Start Fail_Safe 4 Heroku
+        xur_data = await fs.async_get_Xur_info(XUR_API_KEY)
+        #END Heroku
+        #4 Tests
+        #xur_data = await fs.async_get_Xur_info(load_param_from_config('XUR_API_KEY'))
+        #await asyncio.sleep(5)
+        #print(xur_data)
+        if xur_data['is_here']=='1':
+            #print(await fs.async_isBungieOnline())
+            embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie ... Un momento por favor ...", color=0x00ff00)
+            await private_channel.send(embed=embed)
+            xurs_location_id = xur_data['location_id']
+            #print(xurs_location_id)
+            location_ids = {
+                0:['Todavia no llego !! Aguanta la Mecha !', None],
+                1:['Xur esta la Torre en la zona de Hangar detras de Orbita Muerta',"https://cdn.discordapp.com/attachments/383420850738823186/565192126330044430/torre.jpg"],
+                2:['Xur esta la Tierra (ZME), en la zona Bahía del Viento',"https://cdn.discordapp.com/attachments/383420850738823186/565192115005423651/tierra.jpg"],
+                3:['Xur esta en IO en la zona de Cicatriz del Gigante',"https://cdn.discordapp.com/attachments/383420850738823186/565192090347372564/io.jpg"],
+                4:['Xur esta en Titan en la zona Plataforma',"https://cdn.discordapp.com/attachments/383420850738823186/565192132898586627/titan.jpg"],
+                5:['Xur esta en Nessus en la zona de Tumba del Vigia',"https://cdn.discordapp.com/attachments/383420850738823186/565192144978182144/nessus.jpg"],
+                10:['Xur no esta !!!', None]
+            }
+            #4 Tests
+            #xurs_location_id = 3
+            #######
+            await asyncio.sleep(5)
+            embed = discord.Embed(title=":squid:__Ubicacion XUR:__" , description=location_ids[int(xurs_location_id)][0], color=0x00ff00)
+            if location_ids[int(xurs_location_id)][1]:
+                embed.set_image(url=location_ids[int(xurs_location_id)][1])
+            await private_channel.send(embed=embed)
+            await private_channel.send("Juntando info de inventario ... :clock1: ")
+            xurs_items_ids = await fs.async_get_XurInventory()
+            #print("-----------------")
+            #print(xurs_items_ids)
+            #print("-----------------")
+            #4 Testing
+            #xurs_items_ids = [{'itemHash':1508896098},{'itemHash':2428181146},{'itemHash':1474735277},{'itemHash':2578771006},{'itemHash':312904089}]
+            
+            final_items={}
+            for i in xurs_items_ids:
+                #print("============")
+                #print(i['itemHash'])
+                #print("============")
+                valid = await fs.async_get_item_info(str(i['itemHash']))
+                if valid and valid['itemCategoryHashes']:
+                        for key, value in fs.guardian_category_gear.items():
+                            if key in valid['itemCategoryHashes'] and valid['itemType']==2:
+                                #print("Adding "+str(key) " a "+ str())
+                                #print(value)
+                                if str(value) == "Titan" :
+                                    final_items[value] = [valid['displayProperties']['name'], 'https://www.bungie.net/' + valid['displayProperties']['icon'], 'https://www.light.gg/db/items/'+str(i['itemHash']),(620, 115)]
+                                if str(value) == "Hechicero" :
+                                    final_items[value] = [valid['displayProperties']['name'], 'https://www.bungie.net/' + valid['displayProperties']['icon'], 'https://www.light.gg/db/items/'+str(i['itemHash']),(620, 220)]
+                                if str(value) == "Cazador" :
+                                    final_items[value] = [valid['displayProperties']['name'], 'https://www.bungie.net/' + valid['displayProperties']['icon'], 'https://www.light.gg/db/items/'+str(i['itemHash']),(620,328)]
+                            if (key not in fs.guardian_category_gear.items()) and valid['itemType']==3:
+                                final_items['Arma'] = [valid['displayProperties']['name'], 'https://www.bungie.net/' + valid['displayProperties']['icon'], 'https://www.light.gg/db/items/'+str(i['itemHash']),(620, 10)]
+                else:
+                    #print("Removing ..."+str(i)+"Contracts of the 9")
+                    xurs_items_ids.remove(i)
+            #print(final_items)
+            background = Image.open('./misc/xur_bg.png')
+            backgroundCopy = background.copy()
+            #print("////////////// BG //////////////")
+            #print(background.format, background.size, background.mode)
+            #print("////////////////////////////////")
+            for key, value in final_items.items():
+                image = Image.open(urllib.request.urlopen(value[1]))
+                #print("////////////// Web IMG //////////////")
+                #print(image.format, image.size, image.mode, value[3])
+                #print("////////////"+str(value[3])+"///////////////////")
+                backgroundCopy.paste(image, value[3])
+                backgroundCopy.save("./misc/test.png", "PNG")
+            
+            msg=""
+            ordered_list=['Arma','Titan','Hechicero','Cazador']
+            for i in ordered_list:
+                msg=msg + i +": **"+ final_items[i][0] + "** <"+final_items[i][2]+">\n"
+            #print(msg)
+            await private_channel.send('', file=discord.File("./misc/test.png"))
+            embed = discord.Embed(title="Iventario Xur" , description=msg, color=0x00ff00)
+            await private_channel.send(embed=embed)
+        else:
+            msg = "Xur solamente esta desde reset del Viernes al reset del Martes. Proxima aparición será a partir del __reset__ el día "+str(get_last_friday_reset().date()+timedelta(weeks=1))
+            embed = discord.Embed(title="LLegada de Xur" , description=msg, color=0xff0000)
+            await private_channel.send(embed=embed)
     else:
         embed = discord.Embed(title=":x: Servidores de Destiny estan deshabilitados! Intenta mas tarde ...", description="¯\\_(ツ)_/¯", color=0x00ff00)
         await private_channel.send(user, embed=embed)
