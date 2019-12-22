@@ -247,6 +247,7 @@ class FailSafe(object):
                     #print("=====================")
                     return xurs_items_ids
                 else:
+                    print(request.status)
                     #print(request.status)
                     return None
 
