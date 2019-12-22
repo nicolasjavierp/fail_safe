@@ -227,6 +227,7 @@ class FailSafe(object):
         #headers={"X-API-Key":self.api_key}
         #async with aiohttp.ClientSession() as session:
         #    async with session.get(site_call,headers=headers) as request:
+        print(request.status_code)
         if request.json()['Response']:
                 if request.status == 200:
                     print(request.status)
