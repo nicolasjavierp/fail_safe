@@ -810,7 +810,7 @@ async def xur_info(ctx):
         #4 Tests
         #xur_data = await fs.async_get_Xur_info(load_param_from_config('XUR_API_KEY'))
         #await asyncio.sleep(5)
-        #print(xur_data)
+        print(xur_data)
         if xur_data['is_here']=='1':
             #print(await fs.async_isBungieOnline())
             embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie ... Un momento por favor ...", color=0x00ff00)
@@ -829,16 +829,15 @@ async def xur_info(ctx):
             #4 Tests
             #xurs_location_id = 3
             #######
-            await asyncio.sleep(5)
             embed = discord.Embed(title=":squid:__Ubicacion XUR:__" , description=location_ids[int(xurs_location_id)][0], color=0x00ff00)
             if location_ids[int(xurs_location_id)][1]:
                 embed.set_image(url=location_ids[int(xurs_location_id)][1])
             await private_channel.send(embed=embed)
             await private_channel.send("Juntando info de inventario ... :clock1: ")
             xurs_items_ids = await fs.async_get_XurInventory()
-            #print("-----------------")
-            #print(xurs_items_ids)
-            #print("-----------------")
+            print("-----------------")
+            print(xurs_items_ids)
+            print("-----------------")
             #4 Testing
             #xurs_items_ids = [{'itemHash':1508896098},{'itemHash':2428181146},{'itemHash':1474735277},{'itemHash':2578771006},{'itemHash':312904089}]
             
