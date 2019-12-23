@@ -809,7 +809,6 @@ async def xur_info(ctx):
         #END Heroku
         #4 Tests
         #xur_data = await fs.async_get_Xur_info(load_param_from_config('XUR_API_KEY'))
-        #await asyncio.sleep(5)
         #print(xur_data)
         if xur_data['is_here']=='1':
             #print(await fs.async_isBungieOnline())
@@ -840,7 +839,6 @@ async def xur_info(ctx):
             #print("-----------------")
             #4 Testing
             #xurs_items_ids = [{'itemHash':1508896098},{'itemHash':2428181146},{'itemHash':1474735277},{'itemHash':2578771006},{'itemHash':312904089}]
-            
             final_items={}
             for i in xurs_items_ids:
                 #print("============")
@@ -1090,8 +1088,9 @@ async def inactivos(ctx):
     user_id = ctx.message.author.id
     user=my_server.get_member(user_id)
     for i in my_server.roles:
+        print(i.name)
         if "Admin" in i.name:
-                    admin_id=i.id
+            admin_id=i.id
     if admin_id in [role.id for role in user.roles]:
         #4 tests
         #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
