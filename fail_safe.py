@@ -220,7 +220,7 @@ class FailSafe(object):
 
     async def async_get_XurInventory(self):
         '''Calls the api with Xurs inventory'''
-        site_call = "https://bungie.net/Platform/Destiny2/Vendors/?components=402"
+        site_call = "http://bungie.net/Platform/Destiny2/Vendors/?components=402"
         #request = requests.get(site_call, headers={"X-API-Key":self.api_key})
         xurs_items_ids = []
         headers={"X-API-Key":self.api_key}
