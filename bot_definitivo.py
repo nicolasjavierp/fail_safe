@@ -1087,11 +1087,14 @@ async def inactivos(ctx):
     my_server = discord.utils.get(client.guilds)
     user_id = ctx.message.author.id
     user=my_server.get_member(user_id)
+    admin_privileges=False
     for i in my_server.roles:
         if "Admin" in i.name:
             admin_id=i.id
-            print(i.name)
-    if admin_id in [role.id for role in user.roles]:
+            print(i.name, i.id)
+            admin_privileges=True
+    #if admin_id in [role.id for role in user.roles]:
+    if admin_privileges:
         #4 tests
         #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
         #4 Heroku
