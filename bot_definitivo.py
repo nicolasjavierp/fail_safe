@@ -1088,9 +1088,9 @@ async def inactivos(ctx):
     user_id = ctx.message.author.id
     user=my_server.get_member(user_id)
     for i in my_server.roles:
-        print(i.name)
         if "Admin" in i.name:
             admin_id=i.id
+            print(i.name)
     if admin_id in [role.id for role in user.roles]:
         #4 tests
         #MONGODB_URI = load_param_from_config('MONGO_DB_MLAB')
