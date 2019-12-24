@@ -812,7 +812,7 @@ async def xur_info(ctx):
         #print(xur_data)
         if xur_data['is_here']=='1':
             #print(await fs.async_isBungieOnline())
-            embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie ... Un momento por favor ...", color=0x00ff00)
+            #embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie ... Un momento por favor ...", color=0x00ff00)
             await private_channel.send(embed=embed)
             xurs_location_id = xur_data['location_id']
             #print(xurs_location_id)
@@ -832,7 +832,7 @@ async def xur_info(ctx):
             if location_ids[int(xurs_location_id)][1]:
                 embed.set_image(url=location_ids[int(xurs_location_id)][1])
             await private_channel.send(embed=embed)
-            await private_channel.send("Juntando info de inventario ... :clock1: ")
+            #await private_channel.send("Juntando info de inventario ... :clock1: ")
             xurs_items_ids = await fs.async_get_XurInventory()
             #print("-----------------")
             #print(xurs_items_ids)
@@ -1091,7 +1091,7 @@ async def inactivos(ctx):
     for i in my_server.roles:
         if "Admin" in i.name:
             admin_id=i.id
-            print(i.name, i.id)
+            #print(i.name, i.id)
             admin_privileges=True
     #if admin_id in [role.id for role in user.roles]:
     if admin_privileges:
