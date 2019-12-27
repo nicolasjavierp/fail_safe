@@ -813,7 +813,7 @@ async def xur_info(ctx):
         if xur_data['is_here']=='1':
             #print(await fs.async_isBungieOnline())
             #embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie ... Un momento por favor ...", color=0x00ff00)
-            await private_channel.send(embed=embed)
+            #await private_channel.send(embed=embed)
             xurs_location_id = xur_data['location_id']
             #print(xurs_location_id)
             location_ids = {
