@@ -403,12 +403,12 @@ async def informe_dreaming_city(ctx):
     private_channel = await user.create_dm()
     await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
     ascendant_dict={
-        4: ["ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs","https://cdn.discordapp.com/attachments/508999396835196950/520280396366086154/Espina_de_Keres.png"],
-        5: ["ғᴏʀᴛᴀʟᴇᴢᴀ ᴅᴇ ғɪʟᴏs ᴄᴏʀᴛᴀɴᴛᴇs - ʀᴇᴛɪʀᴏ ᴅᴇʟ ʜᴇʀᴀʟᴅᴏ","https://cdn.discordapp.com/attachments/508999396835196950/520280494722514964/Reclusion_del_Heraldo.png"],
-        0: ["ᴀʙɪsᴍᴏ ᴀɢᴏɴᴀʀᴄʜ – ʙᴀʜɪᴀ ᴅᴇ ʟᴏs ᴅᴇsᴇᴏs ᴀʜᴏɢᴀᴅᴏs","https://cdn.discordapp.com/attachments/508999396835196950/520280295413514253/Bahia_de_los_Deseos_Ahogados.png"],
-        1: ["ɢᴜᴀʀɴɪᴄɪᴏɴ ᴄɪᴍᴇʀᴀ - ᴄᴀᴍᴀʀᴀ ᴅᴇ ʟᴜᴢ ᴅᴇ ᴇsᴛʀᴇʟʟᴀs","https://cdn.discordapp.com/attachments/508999396835196950/520280358630064149/Camara_de_Luz_Estelar.png"],
-        2: ["ᴏᴜʀᴏʙᴏʀᴇᴀ – ʀᴇᴘᴏsᴏ ᴅᴇʟ ᴀғᴇʟɪᴏ","https://cdn.discordapp.com/attachments/508999396835196950/520280560724344862/Reposo_de_Afelio.png"],
-        3: ["ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ","https://cdn.discordapp.com/attachments/508999396835196950/520280444277751828/Jardines_de_Esila.png"]
+        0: ["ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs","https://cdn.discordapp.com/attachments/508999396835196950/520280396366086154/Espina_de_Keres.png"],
+        1: ["ғᴏʀᴛᴀʟᴇᴢᴀ ᴅᴇ ғɪʟᴏs ᴄᴏʀᴛᴀɴᴛᴇs - ʀᴇᴛɪʀᴏ ᴅᴇʟ ʜᴇʀᴀʟᴅᴏ","https://cdn.discordapp.com/attachments/508999396835196950/520280494722514964/Reclusion_del_Heraldo.png"],
+        2: ["ᴀʙɪsᴍᴏ ᴀɢᴏɴᴀʀᴄʜ – ʙᴀʜɪᴀ ᴅᴇ ʟᴏs ᴅᴇsᴇᴏs ᴀʜᴏɢᴀᴅᴏs","https://cdn.discordapp.com/attachments/508999396835196950/520280295413514253/Bahia_de_los_Deseos_Ahogados.png"],
+        3: ["ɢᴜᴀʀɴɪᴄɪᴏɴ ᴄɪᴍᴇʀᴀ - ᴄᴀᴍᴀʀᴀ ᴅᴇ ʟᴜᴢ ᴅᴇ ᴇsᴛʀᴇʟʟᴀs","https://cdn.discordapp.com/attachments/508999396835196950/520280358630064149/Camara_de_Luz_Estelar.png"],
+        4: ["ᴏᴜʀᴏʙᴏʀᴇᴀ – ʀᴇᴘᴏsᴏ ᴅᴇʟ ᴀғᴇʟɪᴏ","https://cdn.discordapp.com/attachments/508999396835196950/520280560724344862/Reposo_de_Afelio.png"],
+        5: ["ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ","https://cdn.discordapp.com/attachments/508999396835196950/520280444277751828/Jardines_de_Esila.png"]
     }
     
     today = datetime.now()
@@ -445,9 +445,9 @@ async def informe_hora_zero(ctx):
     private_channel = await user.create_dm()
     await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
     HZ_dict={        
-        1: ["Vacio","https://cdn.discordapp.com/attachments/649313400370757666/650353356191170573/ikiCD58.png"],
-        2: ["Arco","https://cdn.discordapp.com/attachments/649313400370757666/650353356191170573/ikiCD58.png"],
-        0: ["Solar","https://cdn.discordapp.com/attachments/649313400370757666/650353356191170573/ikiCD58.png"]
+        0: ["Vacio","https://cdn.discordapp.com/attachments/649313400370757666/650353356191170573/ikiCD58.png"],
+        1: ["Arco","https://cdn.discordapp.com/attachments/649313400370757666/650353356191170573/ikiCD58.png"],
+        2: ["Solar","https://cdn.discordapp.com/attachments/649313400370757666/650353356191170573/ikiCD58.png"]
     }
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
@@ -491,9 +491,9 @@ async def informe_lunar(ctx):
         3: ["Fallen Council",""]
     }
     altar_dict={
-        2: ["Escopeta","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/2f61559b7c57894703b6aaa52a44630c.jpg","https://www.light.gg/db/items/2782847179"],
-        0: ["Francotirador","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/b990412136d220fd641078418a4903fe.jpg","https://www.light.gg/db/items/2164448701"],
-        1: ["Lanzacohetes","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/eaf113dbb5cea03526009e6030b8c8ee.jpg","https://www.light.gg/db/items/3067821200"]
+        1: ["Escopeta","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/2f61559b7c57894703b6aaa52a44630c.jpg","https://www.light.gg/db/items/2782847179"],
+        2: ["Francotirador","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/b990412136d220fd641078418a4903fe.jpg","https://www.light.gg/db/items/2164448701"],
+        0: ["Lanzacohetes","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/eaf113dbb5cea03526009e6030b8c8ee.jpg","https://www.light.gg/db/items/3067821200"]
     }
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
@@ -548,10 +548,10 @@ async def informe_forja(ctx):
     await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
 
     forge_dict={
-        1: ["Volundr","https://cdn.discordapp.com/attachments/649313400370757666/651887840803815464/Volundr.jpg"],
-        2: ["Gofannon","https://cdn.discordapp.com/attachments/649313400370757666/651887815197720580/Gofannon.jpg"],
-        3: ["Izanami","https://cdn.discordapp.com/attachments/649313400370757666/651887829479325758/Izanami.jpg"],
-        0: ["Bergusia","https://cdn.discordapp.com/attachments/649313400370757666/651887795727630357/Bergusia.jpg"]
+        0: ["Volundr","https://cdn.discordapp.com/attachments/649313400370757666/651887840803815464/Volundr.jpg"],
+        1: ["Gofannon","https://cdn.discordapp.com/attachments/649313400370757666/651887815197720580/Gofannon.jpg"],
+        2: ["Izanami","https://cdn.discordapp.com/attachments/649313400370757666/651887829479325758/Izanami.jpg"],
+        3: ["Bergusia","https://cdn.discordapp.com/attachments/649313400370757666/651887795727630357/Bergusia.jpg"]
     }
 
     today = datetime.now()
