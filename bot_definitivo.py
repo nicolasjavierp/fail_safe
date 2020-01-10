@@ -362,20 +362,20 @@ async def informe_marte(ctx):
     private_channel = await user.create_dm()
     await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
     protocol_dict={
-        3: ["IKELOS_SMG_v1.0.1 (Subfusil)","https://cdn.discordapp.com/attachments/508999396835196950/520269508728979467/Subfusil.png","<https://www.light.gg/db/items/1723472487>"],
-        4: ["IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520269665478508544/Francotirador.png","<https://www.light.gg/db/items/847450546>"],
-        0: ["IKELOS_SG_v1.0.1 (Escopeta), IKELOS_SMG_v1.0.1 (Subfusil), IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png","<https://www.light.gg/db/items/1887808042>\n<https://www.light.gg/db/items/847450546>\n<https://www.light.gg/db/items/1723472487>"],
-        1: ["IKELOS_SG_v1.0.1 (Escopeta), IKELOS_SMG_v1.0.1 (Subfusil), IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png","<https://www.light.gg/db/items/1887808042>\n<https://www.light.gg/db/items/847450546>\n<https://www.light.gg/db/items/1723472487>"],
-        2: ["IKELOS_SG_v1.0.1 (Escopeta)","https://cdn.discordapp.com/attachments/508999396835196950/520269571253600271/Escopeta.png","<https://www.light.gg/db/items/1887808042>"]
+        1: ["IKELOS_SMG_v1.0.1 (Subfusil)","https://cdn.discordapp.com/attachments/508999396835196950/520269508728979467/Subfusil.png","<https://www.light.gg/db/items/1723472487>"],
+        2: ["IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520269665478508544/Francotirador.png","<https://www.light.gg/db/items/847450546>"],
+        3: ["IKELOS_SG_v1.0.1 (Escopeta), IKELOS_SMG_v1.0.1 (Subfusil), IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png","<https://www.light.gg/db/items/1887808042>\n<https://www.light.gg/db/items/847450546>\n<https://www.light.gg/db/items/1723472487>"],
+        4: ["IKELOS_SG_v1.0.1 (Escopeta), IKELOS_SMG_v1.0.1 (Subfusil), IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png","<https://www.light.gg/db/items/1887808042>\n<https://www.light.gg/db/items/847450546>\n<https://www.light.gg/db/items/1723472487>"],
+        0: ["IKELOS_SG_v1.0.1 (Escopeta)","https://cdn.discordapp.com/attachments/508999396835196950/520269571253600271/Escopeta.png","<https://www.light.gg/db/items/1887808042>"]
     }
-    max_mod = 5
+    max_mod_weekly = 5
 
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
-    
+
     print("Week number: ",key)
-    if key < max_mod:
-        key = key + max_mod
+    if key < max_mod_weekly:
+        key = key + max_mod_weekly
         print("New week number: ",key)
     
     if date.today().weekday() == 0: #and today.hour >= 14: # 0 is for monday
@@ -415,11 +415,16 @@ async def informe_dreaming_city(ctx):
         4: ["ᴏᴜʀᴏʙᴏʀᴇᴀ – ʀᴇᴘᴏsᴏ ᴅᴇʟ ᴀғᴇʟɪᴏ","https://cdn.discordapp.com/attachments/508999396835196950/520280560724344862/Reposo_de_Afelio.png"],
         5: ["ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ","https://cdn.discordapp.com/attachments/508999396835196950/520280444277751828/Jardines_de_Esila.png"]
     }
-    
+    max_mod_weekly = 6
+
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
     #print(key)
-
+    print("Week number: ",key)
+    if key < max_mod_weekly:
+        key = key + max_mod_weekly
+        print("New week number: ",key)
+    
     if date.today().weekday() == 0: #and today.hour >= 14: # 0 is for monday
         #print("Today is Monday !")
         key = key - 1
@@ -454,9 +459,13 @@ async def informe_hora_zero(ctx):
         1: ["Arco","https://cdn.discordapp.com/attachments/649313400370757666/650353356191170573/ikiCD58.png"],
         2: ["Solar","https://cdn.discordapp.com/attachments/649313400370757666/650353356191170573/ikiCD58.png"]
     }
+    max_mod_weekly = 3
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
-    #print(key)
+    print("Week number: ",key)
+    if key < max_mod_weekly:
+        key = key + max_mod_weekly
+        print("New week number: ",key) 
     if date.today().weekday() == 0: #and today.hour >= 14: # 0 is for monday
         #print("Today is Monday !")
         key = key - 1
@@ -500,9 +509,20 @@ async def informe_lunar(ctx):
         1: ["Francotirador","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/b990412136d220fd641078418a4903fe.jpg","https://www.light.gg/db/items/2164448701"],
         2: ["Lanzacohetes","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/eaf113dbb5cea03526009e6030b8c8ee.jpg","https://www.light.gg/db/items/3067821200"]
     }
+    
+    max_mod_daily = 3
+
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
     day_of_year = int(today.strftime("%j"))
+    max_mod_weekly = 4
+    if key < max_mod_weekly:
+        key = key + max_mod_weekly
+        print("New week number: ",key)
+
+    if day_of_year < max_mod_daily:
+        day_of_year = day_of_year + max_mod_daily
+        print("New day number: ",day_of_year)
 
     if date.today().weekday() == 0: 
         key = key - 1
@@ -519,8 +539,6 @@ async def informe_lunar(ctx):
     else:
         pass
     
-    print(key)
-    print(day_of_year)
     active_altar_weapon=altar_dict[day_of_year%3][0]
     altar_ordered_list=["Escopeta","Francotirador","Lanzacohetes"]
 
@@ -563,6 +581,11 @@ async def informe_forja(ctx):
 
     today = datetime.now()
     day_of_year = int(today.strftime("%j"))
+
+    max_mod_weekly = 4
+    if key < max_mod_weekly:
+        key = key + max_mod_weekly
+        print("New week number: ",key)
 
     if today.hour < 17:
         day_of_year = day_of_year-1
@@ -607,6 +630,11 @@ async def informe_decision(ctx):
     today = datetime.now()
     key = datetime.date(today).isocalendar()[1]
 
+    max_mod_weekly = 2
+    if key < max_mod_weekly:
+        key = key + max_mod_weekly
+        print("New week number: ",key)
+    
     if date.today().weekday() == 0: 
         key = key - 1
         if key<0:
