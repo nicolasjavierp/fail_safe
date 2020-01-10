@@ -582,10 +582,10 @@ async def informe_forja(ctx):
     today = datetime.now()
     day_of_year = int(today.strftime("%j"))
 
-    max_mod_weekly = 4
-    if key < max_mod_weekly:
-        key = key + max_mod_weekly
-        print("New week number: ",key)
+    max_mod_dailly = 4
+    if day_of_year < max_mod_dailly:
+        day_of_year = day_of_year + max_mod_dailly
+        print("New week number: ",day_of_year)
 
     if today.hour < 17:
         day_of_year = day_of_year-1
