@@ -274,6 +274,17 @@ async def informe_semanal(ctx):
     user=await client.fetch_user(user_id)
     private_channel = await user.create_dm()
     await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
+
+    today = datetime.now()
+    key = datetime.date(today).isocalendar()[1]
+    day_of_year = int(today.strftime("%j"))
+    ascendant_key = key
+    marte_key = key
+    horacero_key = key
+    luna_key = key
+    altar_key = day_of_year
+
+
     ascendant_dict={
         0: ["ʀᴜɪɴᴀs ǫᴜᴇsʙʀᴀᴊᴀᴅᴀs – ᴇsᴘɪɴᴀ ᴅᴇ ᴋᴇʀᴇs","https://cdn.discordapp.com/attachments/508999396835196950/520280396366086154/Espina_de_Keres.png"],
         1: ["ғᴏʀᴛᴀʟᴇᴢᴀ ᴅᴇ ғɪʟᴏs ᴄᴏʀᴛᴀɴᴛᴇs - ʀᴇᴛɪʀᴏ ᴅᴇʟ ʜᴇʀᴀʟᴅᴏ","https://cdn.discordapp.com/attachments/508999396835196950/520280494722514964/Reclusion_del_Heraldo.png"],
@@ -282,37 +293,49 @@ async def informe_semanal(ctx):
         4: ["ᴏᴜʀᴏʙᴏʀᴇᴀ – ʀᴇᴘᴏsᴏ ᴅᴇʟ ᴀғᴇʟɪᴏ","https://cdn.discordapp.com/attachments/508999396835196950/520280560724344862/Reposo_de_Afelio.png"],
         5: ["ᴀʟᴛᴀʀ ᴀʙᴀɴᴅᴏɴᴀᴅᴏ - ᴊᴀʀᴅɪɴᴇs ᴅᴇ ᴇsɪʟᴀ","https://cdn.discordapp.com/attachments/508999396835196950/520280444277751828/Jardines_de_Esila.png"]
     }
-
+    max_mod_ascendant=6
+    if ascendant_key < max_mod_ascendant:
+        ascendant_key = ascendant_key + max_mod_ascendant
+    
     protocol_dict={
-        3: ["IKELOS_SMG_v1.0.1 (Subfusil)","https://cdn.discordapp.com/attachments/508999396835196950/520269508728979467/Subfusil.png","<https://www.light.gg/db/items/1723472487>"],
-        4: ["IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520269665478508544/Francotirador.png","<https://www.light.gg/db/items/847450546>"],
-        0: ["IKELOS_SG_v1.0.1 (Escopeta), IKELOS_SMG_v1.0.1 (Subfusil), IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png","<https://www.light.gg/db/items/1887808042>\n<https://www.light.gg/db/items/847450546>\n<https://www.light.gg/db/items/1723472487>"],
-        1: ["IKELOS_SG_v1.0.1 (Escopeta), IKELOS_SMG_v1.0.1 (Subfusil), IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png","<https://www.light.gg/db/items/1887808042>\n<https://www.light.gg/db/items/847450546>\n<https://www.light.gg/db/items/1723472487>"],
-        2: ["IKELOS_SG_v1.0.1 (Escopeta)","https://cdn.discordapp.com/attachments/508999396835196950/520269571253600271/Escopeta.png","<https://www.light.gg/db/items/1887808042>"]
+        1: ["IKELOS_SMG_v1.0.1 (Subfusil)","https://cdn.discordapp.com/attachments/508999396835196950/520269508728979467/Subfusil.png","<https://www.light.gg/db/items/1723472487>"],
+        2: ["IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520269665478508544/Francotirador.png","<https://www.light.gg/db/items/847450546>"],
+        3: ["IKELOS_SG_v1.0.1 (Escopeta), IKELOS_SMG_v1.0.1 (Subfusil), IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png","<https://www.light.gg/db/items/1887808042>\n<https://www.light.gg/db/items/847450546>\n<https://www.light.gg/db/items/1723472487>"],
+        4: ["IKELOS_SG_v1.0.1 (Escopeta), IKELOS_SMG_v1.0.1 (Subfusil), IKELOS_SR_v1.0.1 (Francotirador)","https://cdn.discordapp.com/attachments/508999396835196950/520270412421267456/unknown.png","<https://www.light.gg/db/items/1887808042>\n<https://www.light.gg/db/items/847450546>\n<https://www.light.gg/db/items/1723472487>"],
+        0: ["IKELOS_SG_v1.0.1 (Escopeta)","https://cdn.discordapp.com/attachments/508999396835196950/520269571253600271/Escopeta.png","<https://www.light.gg/db/items/1887808042>"]
     }
-
+    max_mod_marte=5
+    if marte_key < max_mod_marte:
+        marte_key = marte_key + max_mod_marte
+    
     HZ_dict={        
-        1: ["Vacio","https://cdn.discordapp.com/attachments/649313400370757666/650353356191170573/ikiCD58.png"],
-        2: ["Arco","https://cdn.discordapp.com/attachments/649313400370757666/650353356191170573/ikiCD58.png"],
-        0: ["Solar","https://cdn.discordapp.com/attachments/649313400370757666/650353356191170573/ikiCD58.png"]
+        0: ["Vacio","https://cdn.discordapp.com/attachments/649313400370757666/650353356191170573/ikiCD58.png"],
+        1: ["Arco","https://cdn.discordapp.com/attachments/649313400370757666/650353356191170573/ikiCD58.png"],
+        2: ["Solar","https://cdn.discordapp.com/attachments/649313400370757666/650353356191170573/ikiCD58.png"]
     }
-
+    max_mod_horacero=3
+    if horacero_key < max_mod_horacero:
+        horacero_key = horacero_key + max_mod_horacero
+    
     lunar_nightmares_dict={
         0: ["Pesadilla de Xortal Sworn of Crota",""],
         2: ["Pesadilla de Jaxx Claw of Xivu Arath",""],
         1: ["Pesadilla de Hokris Fear of Mithrax",""],
         3: ["Fallen Council",""]
     }
-
+    max_mod_luna=4
+    if luna_key < max_mod_luna:
+        luna_key = luna_key + max_mod_luna
+    
     altar_dict={
-        2: ["Escopeta","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/2f61559b7c57894703b6aaa52a44630c.jpg"],
-        0: ["Sniper","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/b990412136d220fd641078418a4903fe.jpg"],
-        1: ["Lanza_cohetes","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/eaf113dbb5cea03526009e6030b8c8ee.jpg"]
+        0: ["Escopeta","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/2f61559b7c57894703b6aaa52a44630c.jpg"],
+        1: ["Sniper","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/b990412136d220fd641078418a4903fe.jpg"],
+        2: ["Lanza_cohetes","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/eaf113dbb5cea03526009e6030b8c8ee.jpg"]
     }
+    max_mod_altar=3
+    if altar_key < max_mod_altar:
+        altar_key = altar_key + max_mod_altar
 
-    today = datetime.now()
-    key = datetime.date(today).isocalendar()[1]
-    day_of_year = int(today.strftime("%j"))
 
     if date.today().weekday() == 0: #and today.hour >= 14: # 0 is for monday
         #print("Today is Monday !")
@@ -327,27 +350,27 @@ async def informe_semanal(ctx):
             key = 0
 
 
-    embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[key%6][0]+"**", color=0xff0000)
-    embed.set_image(url=ascendant_dict[key%6][1])
+    embed = discord.Embed(title="" , description=":calendar: Esta semana el Desafío Ascendente es en: \n **"+ascendant_dict[ascendant_key%6][0]+"**", color=0xff0000)
+    embed.set_image(url=ascendant_dict[ascendant_key%6][1])
     await private_channel.send(embed=embed)
     
-    embed = discord.Embed(title="" , description= ":calendar: Esta semana en  Protocolo Intensificación: \n **"+protocol_dict[key%5][0]+"**"+protocol_dict[key%5][2], color=0x00ff00)
+    embed = discord.Embed(title="" , description= ":calendar: Esta semana en  Protocolo Intensificación: \n **"+protocol_dict[marte_key%5][0]+"**"+protocol_dict[marte_key%5][2], color=0x00ff00)
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/508999396835196950/520269693479551004/Protocolo.png")
     #embed.set_image(url=protocol_dict[key%5][1])
     await private_channel.send(embed=embed)
 
     embed = discord.Embed(title="**Web App Secuencia Terminales Hora Cero**" , url="http://fiddle.jshell.net/pastuleo23/xu1snrc0/show", color=0xffd700)
     embed.set_thumbnail(url="https://www.bungie.net/common/destiny2_content/icons/f0def60d28b4f2a5a7fe8ec3d4764cfa.jpg")
-    embed.set_image(url=HZ_dict[key%3][1])
-    embed.add_field(name=':map: __Mapas de Sala de Horno__', value="Esta Semana la configuracion es "+"**"+HZ_dict[key%3][0]+"**", inline=False)
+    embed.set_image(url=HZ_dict[horacero_key%3][1])
+    embed.add_field(name=':map: __Mapas de Sala de Horno__', value="Esta Semana la configuracion es "+"**"+HZ_dict[horacero_key%3][0]+"**", inline=False)
     await private_channel.send(embed=embed)
 
-    embed = discord.Embed(title="" , description=":calendar: Esta semana la pesadilla deambulante es \n **"+lunar_nightmares_dict[key%4][0]+"**", color=0xff0000)
+    embed = discord.Embed(title="" , description=":calendar: Esta semana la pesadilla deambulante es \n **"+lunar_nightmares_dict[luna_key%4][0]+"**", color=0xff0000)
     #embed.set_image(url=ascendant_dict[key%6][1])
     await private_channel.send(embed=embed)
     
-    embed = discord.Embed(title="" , description="**Hoy el Altar del Dolor entrega,  "+altar_dict[day_of_year%3][0]+"**", color=0x000000)
-    embed.set_image(url=altar_dict[day_of_year%3][1])
+    embed = discord.Embed(title="" , description="**Hoy el Altar del Dolor entrega,  "+altar_dict[altar_key%3][0]+"**", color=0x000000)
+    embed.set_image(url=altar_dict[altar_key%3][1])
     await private_channel.send(embed=embed)
 
 
