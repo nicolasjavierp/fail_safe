@@ -954,70 +954,70 @@ async def xur_info(ctx):
         await private_channel.send(user, embed=embed)
 
 
-@client.command(name='Informe Recetas Aurora',
-                description="Informe Recetas Aurora",
-                brief="Informe Recetas Aurora",
-                aliases=['aurora','recetas'],
-                pass_ctx=True)
-async def informe_recetas_aurora(ctx):
-    user_id = ctx.message.author.id
-    user=await client.fetch_user(user_id)
-    private_channel = await user.create_dm()
-    today = datetime.now()
-    dawning_end = datetime(2020, 1, 14, 17, 00, 1, 342380)
-    #if today < dawning_end:
-    await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
-
-    ingredientes_enemigos = "**Leche Vex** - Eliminaciones Vex \n \
-    **Caña de Éter** - Eliminaciones Caidos\n \
-    **Aceite Cabal** - Eliminaciones Cabal\n \
-    **Polvo de Quitina** - Eliminaciones Colmena\n \
-    **Mantequilla Poseida** - Eliminaciones Poseidos\n \
-    **Caña de Éter Moreno** - Eliminaciones Desdeñados"
-    ingredientes_de_eliminaciones="**Deliciosa Explosión** - Bajas con explosivos (granadas, lanzacohetes, etc.)\n \
-    **Sabor Cortante** - Bajas con espada\n \
-    **Calor Imposible** - Bajas solares\n \
-    **Sabor Eléctrico** - Bajas de arco\n \
-    **Sabor Nulo** -  Bajas de vacío\n \
-    **Destello de Inspiración** - Generar orbes de luz (armas con obra maestra o súper)\n \
-    **Toque Personal** - Bajas cuerpo a cuerpo\n \
-    **Sabor Perfecto** - Bajas de precisión\n \
-    **Aerosol de Balas** - Bajas con fusiles automáticos, subfusiles y ametralladoras\n \
-    **Toque Final** - Bajas con rematadores\n \
-    **Sabores Equilibrados** - Bajas con arcos, fusiles de explorador y francotirador\n \
-    **Pizca de Luz** - Recolecta orbes de luz\n \
-    **Sabores Multifacéticos** - Bajas múltiples\n \
-    **Excelente Textura** - Bajas con súper"
-    recetas="**Gjalletas** `(Comandante Zavala)`  -  Caña de Éter + Deliciosa Explosión\n \
-    **Pastelitos del Viajero** `(Ikora Rey)`  -  Aceite Cabal + Destello de Inspiración\n \
-    **Galletas Espaciales de Chocolate** `(Amanda Holliday)`  -  Aceite Cabal + Sabor Nulo\n \
-    **Flan Telemétrico** `(Banshee-44)`  -  Leche Vex + Aerosol de Balas\n \
-    **Tránsitos por la Orilla Flameados** `(Maestro Rahool)`  -  Aceite Cabal + Toque Personal\n \
-    **Alpiste Elixni** `(Suraya Hawthorne)`  -  Caña de Éter + Toque Personal\n \
-    **Bizcochos de Caballero** `(Devrim Kay)`  -  Caña de Éter + Sabor Perfecto\n \
-    **Peladillas Alcanas** `(Sloane)`  -  Polvo de Quitina + Aerosol de Balas\n \
-    **Pastel Bosque Infinito** `(FailSafe)`  -  Leche Vex + Calor Imposible\n \
-    **Budín Radiolario** `(Asher Mir)`  -  Leche Vex + Sabor Eléctrico\n \
-    **Cuchillas de Vainilla** `(Lord Shaxx)`  -  Aceite Cabal + Sabor Cortante\n \
-    **Pastel de Jabaluna** `(Ana Bray)`  -  Polvo de Quitina + Sabor Cortante\n \
-    **Chocomotas** `(Vagabundo)`  -  Mantequilla Poseída + Sabor Nulo\n \
-    **Caramelos de Espectros Muertos** `(Araña)`  -  Caña de Éter Moreno + Destello de Inspiración\n \
-    **Galletas de la Mala Suerte** `(Petra Venj)`  -  Caña de Éter Moreno + Calor Imposible\n \
-    **Galletas Extrañas** `(Xur)`  -  Mantequilla Poseída + Sabor Eléctrico\n \
-    **Panecillos Fractales** `(Hermano Vance)`  -  Leche Vex + Pizca de Luz\n \
-    **Galleta Milhojas** `(Riven de las Mil Voces)`  -  Mantequilla Poseída + Deliciosa Explosión\n \
-    **Galletas de Cinta de Lavanda** `(Saint-14)`  -  Leche Vex + Toque Personal\n \
-    **Masa Frita Opulenta** `(Semblante de Calus)`  -  Caña de Éter Moreno + Excelente Textura\n \
-    **Bollos Fuego Cruzado** `(Ada-1)`  -  Caña de Éter + Sabores Equilibrados\n \
-    **Galletas Ascendentes de Avena y Pasas** `(Eris Morn)`  -  Polvo de Quitina + Toque Final\n \
-    **Tarta Saboteada** `(Benedict 99-40)`  -  Aceite Cabal + Sabores Multifacéticos"
-    embed = discord.Embed(title=":chocolate_bar: INGREDIENTES DE ENEMIGOS" , description=ingredientes_enemigos, color=0xff0000)
-    await private_channel.send(embed=embed)
-    embed = discord.Embed(title=":candy: INGREDIENTES DE ELIMINACIONES" , description=ingredientes_de_eliminaciones, color=0xff0000)
-    await private_channel.send(embed=embed)
-    embed = discord.Embed(title=":bowl_with_spoon: RECETAS" , description=recetas, color=0xff0000)
-    await private_channel.send(embed=embed)
-    #await ctx.message.channel.send(":x: Termino la aurora Master ...")
+#@client.command(name='Informe Recetas Aurora',
+##                description="Informe Recetas Aurora",
+#                brief="Informe Recetas Aurora",
+#                aliases=['aurora','recetas'],
+#                pass_ctx=True)
+#async def informe_recetas_aurora(ctx):
+#    user_id = ctx.message.author.id
+#    user=await client.fetch_user(user_id)
+#    private_channel = await user.create_dm()
+#    today = datetime.now()
+#    dawning_end = datetime(2020, 1, 14, 17, 00, 1, 342380)
+#    #if today < dawning_end:
+#    await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
+#
+#    ingredientes_enemigos = "**Leche Vex** - Eliminaciones Vex \n \
+#    **Caña de Éter** - Eliminaciones Caidos\n \
+#    **Aceite Cabal** - Eliminaciones Cabal\n \
+#    **Polvo de Quitina** - Eliminaciones Colmena\n \
+#    **Mantequilla Poseida** - Eliminaciones Poseidos\n \
+#    **Caña de Éter Moreno** - Eliminaciones Desdeñados"
+#    ingredientes_de_eliminaciones="**Deliciosa Explosión** - Bajas con explosivos (granadas, lanzacohetes, etc.)\n \
+#    **Sabor Cortante** - Bajas con espada\n \
+#    **Calor Imposible** - Bajas solares\n \
+#    **Sabor Eléctrico** - Bajas de arco\n \
+#    **Sabor Nulo** -  Bajas de vacío\n \
+#    **Destello de Inspiración** - Generar orbes de luz (armas con obra maestra o súper)\n \
+#    **Toque Personal** - Bajas cuerpo a cuerpo\n \
+#    **Sabor Perfecto** - Bajas de precisión\n \
+#    **Aerosol de Balas** - Bajas con fusiles automáticos, subfusiles y ametralladoras\n \
+#    **Toque Final** - Bajas con rematadores\n \
+#    **Sabores Equilibrados** - Bajas con arcos, fusiles de explorador y francotirador\n \
+#    **Pizca de Luz** - Recolecta orbes de luz\n \
+#    **Sabores Multifacéticos** - Bajas múltiples\n \
+#    **Excelente Textura** - Bajas con súper"
+#    recetas="**Gjalletas** `(Comandante Zavala)`  -  Caña de Éter + Deliciosa Explosión\n \
+#    **Pastelitos del Viajero** `(Ikora Rey)`  -  Aceite Cabal + Destello de Inspiración\n \
+#    **Galletas Espaciales de Chocolate** `(Amanda Holliday)`  -  Aceite Cabal + Sabor Nulo\n \
+#    **Flan Telemétrico** `(Banshee-44)`  -  Leche Vex + Aerosol de Balas\n \
+#    **Tránsitos por la Orilla Flameados** `(Maestro Rahool)`  -  Aceite Cabal + Toque Personal\n \
+#    **Alpiste Elixni** `(Suraya Hawthorne)`  -  Caña de Éter + Toque Personal\n \
+#    **Bizcochos de Caballero** `(Devrim Kay)`  -  Caña de Éter + Sabor Perfecto\n \
+#    **Peladillas Alcanas** `(Sloane)`  -  Polvo de Quitina + Aerosol de Balas\n \
+#    **Pastel Bosque Infinito** `(FailSafe)`  -  Leche Vex + Calor Imposible\n \
+#    **Budín Radiolario** `(Asher Mir)`  -  Leche Vex + Sabor Eléctrico\n \
+#    **Cuchillas de Vainilla** `(Lord Shaxx)`  -  Aceite Cabal + Sabor Cortante\n \
+#    **Pastel de Jabaluna** `(Ana Bray)`  -  Polvo de Quitina + Sabor Cortante\n \
+#    **Chocomotas** `(Vagabundo)`  -  Mantequilla Poseída + Sabor Nulo\n \
+#    **Caramelos de Espectros Muertos** `(Araña)`  -  Caña de Éter Moreno + Destello de Inspiración\n \
+#    **Galletas de la Mala Suerte** `(Petra Venj)`  -  Caña de Éter Moreno + Calor Imposible\n \
+#    **Galletas Extrañas** `(Xur)`  -  Mantequilla Poseída + Sabor Eléctrico\n \
+#    **Panecillos Fractales** `(Hermano Vance)`  -  Leche Vex + Pizca de Luz\n \
+#    **Galleta Milhojas** `(Riven de las Mil Voces)`  -  Mantequilla Poseída + Deliciosa Explosión\n \
+#    **Galletas de Cinta de Lavanda** `(Saint-14)`  -  Leche Vex + Toque Personal\n \
+#    **Masa Frita Opulenta** `(Semblante de Calus)`  -  Caña de Éter Moreno + Excelente Textura\n \
+#    **Bollos Fuego Cruzado** `(Ada-1)`  -  Caña de Éter + Sabores Equilibrados\n \
+#    **Galletas Ascendentes de Avena y Pasas** `(Eris Morn)`  -  Polvo de Quitina + Toque Final\n \
+#    **Tarta Saboteada** `(Benedict 99-40)`  -  Aceite Cabal + Sabores Multifacéticos"
+#    embed = discord.Embed(title=":chocolate_bar: INGREDIENTES DE ENEMIGOS" , description=ingredientes_enemigos, color=0xff0000)
+#    await private_channel.send(embed=embed)
+#    embed = discord.Embed(title=":candy: INGREDIENTES DE ELIMINACIONES" , description=ingredientes_de_eliminaciones, color=0xff0000)
+#    await private_channel.send(embed=embed)
+#    embed = discord.Embed(title=":bowl_with_spoon: RECETAS" , description=recetas, color=0xff0000)
+#    await private_channel.send(embed=embed)
+#    #await ctx.message.channel.send(":x: Termino la aurora Master ...")
 
 
 
@@ -1572,100 +1572,16 @@ async def testing(ctx):
     fs = FailSafe(BUNGIE_API_KEY)        
     #END Heroku
     #canal_info=None
-    user_id = ctx.message.author.id
-    user=await client.fetch_user(user_id)
-    private_channel = await user.create_dm()
-    await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
-    if await fs.async_isBungieOnline():
-        #4 Heroku
-        #fs = FailSafe(XUR_API_KEY)
-        xur_data = await fs.async_get_Xur_info(XUR_API_KEY)
-        #END Heroku
-        #4 Tests
-        #xur_data = await fs.async_get_Xur_info(load_param_from_config('XUR_API_KEY'))
-        #await asyncio.sleep(5)
-        #print(xur_data)
-        if xur_data['is_here']=='1':
-            #print(await fs.async_isBungieOnline())
-            embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie ... Un momento por favor ...", color=0x00ff00)
-            await private_channel.send(embed=embed)
-            xurs_location_id = xur_data['location_id']
-            #print(xurs_location_id)
-            location_ids = {
-                0:['Todavia no llego !! Aguanta la Mecha !', None],
-                1:['Xur esta la Torre en la zona de Hangar detras de Orbita Muerta',"https://cdn.discordapp.com/attachments/383420850738823186/565192126330044430/torre.jpg"],
-                2:['Xur esta la Tierra (ZME), en la zona Bahía del Viento',"https://cdn.discordapp.com/attachments/383420850738823186/565192115005423651/tierra.jpg"],
-                3:['Xur esta en IO en la zona de Cicatriz del Gigante',"https://cdn.discordapp.com/attachments/383420850738823186/565192090347372564/io.jpg"],
-                4:['Xur esta en Titan en la zona Plataforma',"https://cdn.discordapp.com/attachments/383420850738823186/565192132898586627/titan.jpg"],
-                5:['Xur esta en Nessus en la zona de Tumba del Vigia',"https://cdn.discordapp.com/attachments/383420850738823186/565192144978182144/nessus.jpg"],
-                10:['Xur no esta !!!', None]
-            }
-            #4 Tests
-            #xurs_location_id = 3
-            #######
-            embed = discord.Embed(title=":squid:__Ubicacion XUR:__" , description=location_ids[int(xurs_location_id)][0], color=0x00ff00)
-            if location_ids[int(xurs_location_id)][1]:
-                embed.set_image(url=location_ids[int(xurs_location_id)][1])
-            await private_channel.send(embed=embed)
-            await private_channel.send("Juntando info de inventario ... :clock1: ")
-            xurs_items_ids = await fs.async_get_XurInventory()
-            #print("-----------------")
-            #print(xurs_items_ids)
-            #print("-----------------")
-            #4 Testing
-            #xurs_items_ids = [{'itemHash':1508896098},{'itemHash':2428181146},{'itemHash':1474735277},{'itemHash':2578771006},{'itemHash':312904089}]
-            
-            final_items={}
-            for i in xurs_items_ids:
-                #print("============")
-                #print(i['itemHash'])
-                #print("============")
-                valid = await fs.async_get_item_info(str(i['itemHash']))
-                if valid and valid['itemCategoryHashes']:
-                        for key, value in fs.guardian_category_gear.items():
-                            if key in valid['itemCategoryHashes'] and valid['itemType']==2:
-                                #print("Adding "+str(key) " a "+ str())
-                                #print(value)
-                                if str(value) == "Titan" :
-                                    final_items[value] = [valid['displayProperties']['name'], 'https://www.bungie.net/' + valid['displayProperties']['icon'], 'https://www.light.gg/db/items/'+str(i['itemHash']),(620, 115)]
-                                if str(value) == "Hechicero" :
-                                    final_items[value] = [valid['displayProperties']['name'], 'https://www.bungie.net/' + valid['displayProperties']['icon'], 'https://www.light.gg/db/items/'+str(i['itemHash']),(620, 220)]
-                                if str(value) == "Cazador" :
-                                    final_items[value] = [valid['displayProperties']['name'], 'https://www.bungie.net/' + valid['displayProperties']['icon'], 'https://www.light.gg/db/items/'+str(i['itemHash']),(620,328)]
-                            if (key not in fs.guardian_category_gear.items()) and valid['itemType']==3:
-                                final_items['Arma'] = [valid['displayProperties']['name'], 'https://www.bungie.net/' + valid['displayProperties']['icon'], 'https://www.light.gg/db/items/'+str(i['itemHash']),(620, 10)]
-                else:
-                    #print("Removing ..."+str(i)+"Contracts of the 9")
-                    xurs_items_ids.remove(i)
-            #print(final_items)
-            background = Image.open('./misc/xur_bg.png')
-            backgroundCopy = background.copy()
-            #print("////////////// BG //////////////")
-            #print(background.format, background.size, background.mode)
-            #print("////////////////////////////////")
-            for key, value in final_items.items():
-                image = Image.open(urllib.request.urlopen(value[1]))
-                #print("////////////// Web IMG //////////////")
-                #print(image.format, image.size, image.mode, value[3])
-                #print("////////////"+str(value[3])+"///////////////////")
-                backgroundCopy.paste(image, value[3])
-                backgroundCopy.save("./misc/test.png", "PNG")
-            
-            msg=""
-            ordered_list=['Arma','Titan','Hechicero','Cazador']
-            for i in ordered_list:
-                msg=msg + i +": **"+ final_items[i][0] + "** <"+final_items[i][2]+">\n"
-            #print(msg)
-            await private_channel.send('', file=discord.File("./misc/test.png"))
-            embed = discord.Embed(title="Iventario Xur" , description=msg, color=0x00ff00)
-            await private_channel.send(embed=embed)
-        else:
-            msg = "Xur solamente esta desde reset del Viernes al reset del Martes. Proxima aparición será a partir del __reset__ el día "+str(get_last_friday_reset().date()+timedelta(weeks=1))
-            embed = discord.Embed(title="LLegada de Xur" , description=msg, color=0xff0000)
-            await private_channel.send(embed=embed)
-    else:
-        embed = discord.Embed(title=":x: Servidores de Destiny estan deshabilitados! Intenta mas tarde ...", description="¯\\_(ツ)_/¯", color=0x00ff00)
-        await private_channel.send(user, embed=embed)
+    server = member.guild         
+    for i in server.roles:
+        print(i.name)
+        if "DJ" in i.name:
+            custom_dj_role_id=i.id
+    
+    #role_DJ = discord.utils.get(server.roles, id=custom_dj_role_id)
+    #addroles = [role_DJ]
+    #await client.add_roles(member, *addroles)
+    await asyncio.sleep(0.01)
 
 
 #######################################################################
