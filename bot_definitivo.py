@@ -1577,7 +1577,9 @@ async def testing(ctx):
         print(i.name, i.id)
         #if "DJ" in i.name:
         #    custom_dj_role_id=i.id
-    print(dir(my_server))
+    #Base role New Ligght id 587790064256417802
+    print(type(my_server.members))
+    
     #role_DJ = discord.utils.get(server.roles, id=custom_dj_role_id)
     #addroles = [role_DJ]
     #await client.add_roles(member, *addroles)
