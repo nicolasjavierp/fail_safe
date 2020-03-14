@@ -1571,14 +1571,45 @@ async def testing(ctx):
     #4 Heroku
     fs = FailSafe(BUNGIE_API_KEY)        
     #END Heroku
+    # CLIENT DIR
+    #['_PREMIUM_GUILD_LIMITS', '__class__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', \
+    # '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__',\
+    #  '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__',\
+    #  '__slots__', '__str__', '__subclasshook__', '_add_channel', '_add_member', '_add_role', '_channels', '_create_channel',\
+    #  '_default_role', '_from_data', '_large', '_member_count', '_members', '_remove_channel', '_remove_member', \
+    # '_remove_role', '_roles', '_state', '_sync', '_system_channel_flags', '_system_channel_id', '_update_voice_state', \
+    # '_voice_state_for', '_voice_states',\
+    #
+    #  'ack', 'afk_channel', 'afk_timeout', 'audit_logs', 'ban', 'banner', 'banner_url', 'banner_url_as',\
+    #  'bans', 'bitrate_limit', 'by_category', 'categories', 'channels', 'chunked', 'create_category', \
+    # 'create_category_channel', 'create_custom_emoji', 'create_role', 'create_text_channel', 'create_voice_channel',\
+    #  'created_at', 'default_notifications', 'default_role', 'delete', 'description', 'edit', 'emoji_limit', 'emojis',\
+    #  'estimate_pruned_members', 'explicit_content_filter', 'features', 'fetch_ban', 'fetch_channels', 'fetch_emoji',\
+    #  'fetch_emojis', 'fetch_member', 'filesize_limit', 'get_channel', 'get_member', 'get_member_named', 'get_role',\
+    #  'icon', 'icon_url', 'icon_url_as', 'id', 'invites', 'is_icon_animated', 'kick', 'large', 'leave', 'max_members', \
+    # 'max_presences', 'me', 'member_count', 'members', 'mfa_level', 'name', 'owner', 'owner_id', 'premium_subscribers',\
+    #  'premium_subscription_count', 'premium_tier', 'prune_members', 'region', 'roles', 'shard_id', 'splash', \
+    # 'splash_url', 'splash_url_as', 'system_channel', 'system_channel_flags', 'text_channels', 'unavailable',\
+    #  'unban', 'vanity_invite', 'verification_level', 'voice_channels', 'voice_client', 'webhooks', 'widget']
+
     #canal_info=None
     roles_to_remove = [587790059328110603,587790054177636362,587790049282752512,587790044971008040,587790042844364801,601115502378745868,601115840430997524,601115841635024929,601115984593420308]
     my_server = discord.utils.get(client.guilds)
     for i in my_server.members:
-        print(dir(i))
-        #if "DJ" in i.name:
+        if  i.id == 376055309657047040:
+            await client.remove_roles(i, roles_to_remove)
+        #for rol in roles_to_remove:
+        #    if  in i.name:
         #    custom_dj_role_id=i.id
-    
+    # USER DIR
+    #['activities', 'activity', 'add_roles', 'avatar', 'avatar_url', 'avatar_url_as', 'ban', \
+    # 'block', 'bot', 'color', 'colour', 'create_dm', 'created_at', 'default_avatar', 'default_avatar_url', \
+    # 'desktop_status', 'discriminator', 'display_name', 'dm_channel', 'edit', 'fetch_message', 'guild', \
+    # 'guild_permissions', 'history', 'id', 'is_avatar_animated', 'is_blocked', 'is_friend', 'is_on_mobile',\
+    #  'joined_at', 'kick', 'mention', 'mentioned_in', 'mobile_status', 'move_to', 'mutual_friends', 'name',\
+    #  'nick', 'permissions_in', 'pins', 'premium_since', 'profile', 'relationship', 'remove_friend', \
+    # 'remove_roles', 'roles', 'send', 'send_friend_request', 'status', 'top_role', 'trigger_typing', 'typing', \
+    # 'unban', 'unblock', 'voice', 'web_status']
     #Base role New Ligght id 587790064256417802
     #print(type(my_server.members))
     
