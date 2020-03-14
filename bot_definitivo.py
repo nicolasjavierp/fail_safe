@@ -1594,10 +1594,16 @@ async def testing(ctx):
 
     #canal_info=None
     roles_to_remove = [587790059328110603,587790054177636362,587790049282752512,587790044971008040,587790042844364801,601115502378745868,601115840430997524,601115841635024929,601115984593420308]
+    roles_list = []
+
     my_server = discord.utils.get(client.guilds)
+    for rol in my_server.roles:
+        if rol.id in roles_to_remove:
+            roles_list.append(rol)
+    
     for i in my_server.members:
         if  i.id == 376055309657047040:
-            await i.remove_roles(roles_to_remove)
+            await i.remove_roles(roles_list)
         #for rol in roles_to_remove:
         #    if  in i.name:
         #    custom_dj_role_id=i.id
