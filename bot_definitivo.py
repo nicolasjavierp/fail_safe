@@ -1597,7 +1597,7 @@ async def testing(ctx):
     my_server = discord.utils.get(client.guilds)
     for i in my_server.members:
         if  i.id == 376055309657047040:
-            await client.remove_roles(i, roles_to_remove)
+            await my_server.remove_roles(i, roles_to_remove)
         #for rol in roles_to_remove:
         #    if  in i.name:
         #    custom_dj_role_id=i.id
