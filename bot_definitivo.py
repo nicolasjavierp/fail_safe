@@ -1572,13 +1572,15 @@ async def testing(ctx):
     fs = FailSafe(BUNGIE_API_KEY)        
     #END Heroku
     #canal_info=None
+    roles_to_remove = [587790059328110603,587790054177636362,587790049282752512,587790044971008040,587790042844364801,601115502378745868,601115840430997524,601115841635024929,601115984593420308]
     my_server = discord.utils.get(client.guilds)
-    for i in my_server.roles:
-        print(i.name, i.id)
+    for i in my_server.members:
+        print(dir(i))
         #if "DJ" in i.name:
         #    custom_dj_role_id=i.id
+    
     #Base role New Ligght id 587790064256417802
-    print(type(my_server.members))
+    #print(type(my_server.members))
     
     #role_DJ = discord.utils.get(server.roles, id=custom_dj_role_id)
     #addroles = [role_DJ]
