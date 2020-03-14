@@ -1572,12 +1572,12 @@ async def testing(ctx):
     fs = FailSafe(BUNGIE_API_KEY)        
     #END Heroku
     #canal_info=None
-    server = member.guild         
-    for i in server.roles:
+    my_server = discord.utils.get(client.guilds)
+    for i in my_server.roles:
         print(i.name, i.id)
-        if "DJ" in i.name:
-            custom_dj_role_id=i.id
-    
+        #if "DJ" in i.name:
+        #    custom_dj_role_id=i.id
+    print(dir(my_server))
     #role_DJ = discord.utils.get(server.roles, id=custom_dj_role_id)
     #addroles = [role_DJ]
     #await client.add_roles(member, *addroles)
