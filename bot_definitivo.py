@@ -1574,7 +1574,7 @@ async def testing(ctx):
     #canal_info=None
     server = member.guild         
     for i in server.roles:
-        print(i.name)
+        print(i.name, i.id)
         if "DJ" in i.name:
             custom_dj_role_id=i.id
     
