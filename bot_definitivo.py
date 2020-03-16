@@ -1599,7 +1599,7 @@ async def testing(ctx):
     my_server = discord.utils.get(client.guilds)
     #get(guild.roles, name="Jail")
     for rol in my_server.roles:
-        print(rol.name, i.id)
+        print(rol.name, rol.id)
         #if rol.id in roles_to_remove:
         #    roles_list.append(rol)
     
