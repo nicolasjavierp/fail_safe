@@ -1621,9 +1621,10 @@ async def testing(ctx):
     
     print(roles_list)
 
-    #for i in my_server.members:
-    #    if  i.id == 376055309657047040:
-    #        await i.remove_roles(roles_list)
+    for i in my_server.members:
+        if  i.id == 376055309657047040:
+            print(i.name)
+            await i.remove_roles(roles_list)
 
         #for rol in roles_to_remove:
         #    if  in i.name:
