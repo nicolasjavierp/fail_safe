@@ -1619,15 +1619,16 @@ async def testing(ctx):
         #if rol.id in roles_to_remove:
         #    roles_list.append(rol)
     
-    print(roles_list)
+    #print(roles_list)
 
     for i in my_server.members:
-        if  i.id == 376055309657047040:
+        #if  i.id == 376055309657047040:
             #print(i.name)
-            for deleting_rol in roles_list:
-                await i.remove_roles(deleting_rol)
-                await asyncio.sleep(0.01)
-
+        for deleting_rol in roles_list:
+            await i.remove_roles(deleting_rol)
+            await asyncio.sleep(0.01)
+    
+    print("Done")
     # USER DIR
     #['activities', 'activity', 'add_roles', 'avatar', 'avatar_url', 'avatar_url_as', 'ban', \
     # 'block', 'bot', 'color', 'colour', 'create_dm', 'created_at', 'default_avatar', 'default_avatar_url', \
