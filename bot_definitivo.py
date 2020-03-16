@@ -1624,8 +1624,8 @@ async def testing(ctx):
     for i in my_server.members:
         if  i.id == 376055309657047040:
             #print(i.name)
-            for rol_to_remove in roles_list:
-                await i.remove_roles(roles_to_remove)
+            for deleting_rol in roles_list:
+                await i.remove_roles(deleting_rol)
                 await asyncio.sleep(0.01)
 
     # USER DIR
