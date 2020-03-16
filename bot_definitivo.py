@@ -1623,12 +1623,12 @@ async def testing(ctx):
     
     #print(roles_list)
 
-    for i in my_server.members:
+    for idx, i in enumerate(my_server.members):
         #if  i.id == 376055309657047040:
             #print(i.name)
         #for idx, deleting_rol in enumerate(roles_list):
         #    print(idx, val)
-        for idx, deleting_rol in enumerate(roles_list):
+        for deleting_rol in roles_list:
         #for deleting_rol in roles_list:
             if idx % 20 == 0:
                 await ctx.message.channel.send( "**Voy **"+str(idx)+"/"+str(len(my_server.members)))
