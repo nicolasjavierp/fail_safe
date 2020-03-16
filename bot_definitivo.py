@@ -1592,18 +1592,34 @@ async def testing(ctx):
     # 'splash_url', 'splash_url_as', 'system_channel', 'system_channel_flags', 'text_channels', 'unavailable',\
     #  'unban', 'vanity_invite', 'verification_level', 'voice_channels', 'voice_client', 'webhooks', 'widget']
 
+    #(I) Nueva Luz 587790064256417802
+    #(II) Caminante 587790059328110603
+    #(III) Cronista 587790054177636362
+    #(IV) Dredgen 587790049282752512
+    #(V) Intrepido 587790044971008040
+    #(VI) Herrero 587790042844364801
+    #(VII) Irrompible 601115502378745868
+    #(VIII) Cruz de Riven 601115840430997524
+    #(IX) Rompemaldiciones 601115841635024929
+    #(X) Sombra 601115984593420308
+
     #canal_info=None
-    #roles_to_remove = [{"id":587790059328110603, "name":"Caminante" },{"id":587790054177636362, "name": },{"id":587790049282752512, "name": },{"id":587790044971008040},{"id":587790042844364801},{"id":601115502378745868},{"id":601115840430997524},{"id":601115841635024929},{"id":601115984593420308}]
+    roles_to_remove = [{"name":"Caminante", "id":587790059328110603},{"name":"Cronista","id":587790054177636362},\
+        {"name":"Dredgen", "id":587790049282752512} ,{"name":"Intrepido", "id":587790044971008040},{"name":"Herrero", "id":587790042844364801},\
+        {"name":"Irrompible", "id":601115502378745868},{"name":"Cruz de Riven", "id":601115840430997524},\
+        {"name":"Rompemaldiciones", "id":601115841635024929},{"name":"Sombra", "id":601115984593420308}]
     roles_list = []
 
     my_server = discord.utils.get(client.guilds)
     #get(guild.roles, name="Jail")
     for rol in my_server.roles:
-        print(rol.name, rol.id)
+        for part in roles_to_remove:
+            if rol.id == part.id:
+                roles_list.append(rol)
         #if rol.id in roles_to_remove:
         #    roles_list.append(rol)
     
-    #print(roles_list)
+    print(roles_list)
 
     #for i in my_server.members:
     #    if  i.id == 376055309657047040:
