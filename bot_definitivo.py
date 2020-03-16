@@ -1614,7 +1614,7 @@ async def testing(ctx):
     #get(guild.roles, name="Jail")
     for rol in my_server.roles:
         for part in roles_to_remove:
-            if rol.id == part.id:
+            if rol.id == part["id"]:
                 roles_list.append(rol)
         #if rol.id in roles_to_remove:
         #    roles_list.append(rol)
