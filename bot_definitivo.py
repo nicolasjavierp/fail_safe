@@ -1571,6 +1571,8 @@ async def testing(ctx):
     #4 Heroku
     fs = FailSafe(BUNGIE_API_KEY)        
     #END Heroku
+    await ctx.message.channel.send( "**Aguantame la mecha :bomb: ... que estoy reseteando los roles de todos los del discord. **")
+    t_start = time.perf_counter()
     # CLIENT DIR
     #['_PREMIUM_GUILD_LIMITS', '__class__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', \
     # '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__',\
@@ -1624,11 +1626,17 @@ async def testing(ctx):
     for i in my_server.members:
         #if  i.id == 376055309657047040:
             #print(i.name)
-        for deleting_rol in roles_list:
+        #for idx, deleting_rol in enumerate(roles_list):
+        #    print(idx, val)
+        for idx, deleting_rol in enumerate(roles_list):
+        #for deleting_rol in roles_list:
+            if idx % 20 == 0:
+                await ctx.message.channel.send( "**Voy **"+str(idx)+"/"+str(len(my_server.members)))
             await i.remove_roles(deleting_rol)
             await asyncio.sleep(0.01)
-    
-    print("Done")
+
+    t_stop = time.perf_counter()
+    await ctx.message.channel.send( "**Finalizada el reset de roles, tardé ... %.1f [min]!**"% ((t_stop-t_start)/60))
     # USER DIR
     #['activities', 'activity', 'add_roles', 'avatar', 'avatar_url', 'avatar_url_as', 'ban', \
     # 'block', 'bot', 'color', 'colour', 'create_dm', 'created_at', 'default_avatar', 'default_avatar_url', \
