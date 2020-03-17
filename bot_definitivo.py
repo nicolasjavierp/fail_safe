@@ -1203,6 +1203,104 @@ async def inactivos(ctx):
     await asyncio.sleep(0.05)
 
 
+@client.command(name='Reset_Rol',
+                description="Resetea el rol al principio de la temporada",
+                brief="reset_rol",
+                aliases=['reset_roles'],
+                pass_ctx=True)
+async def reseteo_de_roles(ctx):
+    #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
+    #await message.channel.send( embed=embed)
+    my_server = discord.utils.get(client.guilds)
+    user_id = ctx.message.author.id
+    user=my_server.get_member(user_id)
+    admin_privileges=False
+    for i in my_server.roles:
+        if "Admin" in i.name:
+            admin_id=i.id
+            admin_privileges=True
+    if admin_privileges:
+        #4 Tests
+        #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
+        #4 Heroku
+        fs = FailSafe(BUNGIE_API_KEY)        
+        #END Heroku
+        await ctx.message.channel.send( "**Aguantame la mecha :bomb: ... que estoy reseteando los roles de todos los del discord. **")
+        t_start = time.perf_counter()
+        # CLIENT DIR
+        #['_PREMIUM_GUILD_LIMITS', '__class__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', \
+        # '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__',\
+        #  '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__',\
+        #  '__slots__', '__str__', '__subclasshook__', '_add_channel', '_add_member', '_add_role', '_channels', '_create_channel',\
+        #  '_default_role', '_from_data', '_large', '_member_count', '_members', '_remove_channel', '_remove_member', \
+        # '_remove_role', '_roles', '_state', '_sync', '_system_channel_flags', '_system_channel_id', '_update_voice_state', \
+        # '_voice_state_for', '_voice_states',\
+        #
+        #  'ack', 'afk_channel', 'afk_timeout', 'audit_logs', 'ban', 'banner', 'banner_url', 'banner_url_as',\
+        #  'bans', 'bitrate_limit', 'by_category', 'categories', 'channels', 'chunked', 'create_category', \
+        # 'create_category_channel', 'create_custom_emoji', 'create_role', 'create_text_channel', 'create_voice_channel',\
+        #  'created_at', 'default_notifications', 'default_role', 'delete', 'description', 'edit', 'emoji_limit', 'emojis',\
+        #  'estimate_pruned_members', 'explicit_content_filter', 'features', 'fetch_ban', 'fetch_channels', 'fetch_emoji',\
+        #  'fetch_emojis', 'fetch_member', 'filesize_limit', 'get_channel', 'get_member', 'get_member_named', 'get_role',\
+        #  'icon', 'icon_url', 'icon_url_as', 'id', 'invites', 'is_icon_animated', 'kick', 'large', 'leave', 'max_members', \
+        # 'max_presences', 'me', 'member_count', 'members', 'mfa_level', 'name', 'owner', 'owner_id', 'premium_subscribers',\
+        #  'premium_subscription_count', 'premium_tier', 'prune_members', 'region', 'roles', 'shard_id', 'splash', \
+        # 'splash_url', 'splash_url_as', 'system_channel', 'system_channel_flags', 'text_channels', 'unavailable',\
+        #  'unban', 'vanity_invite', 'verification_level', 'voice_channels', 'voice_client', 'webhooks', 'widget']
+
+        #(I) Nueva Luz 587790064256417802
+        #(II) Caminante 587790059328110603
+        #(III) Cronista 587790054177636362
+        #(IV) Dredgen 587790049282752512
+        #(V) Intrepido 587790044971008040
+        #(VI) Herrero 587790042844364801
+        #(VII) Irrompible 601115502378745868
+        #(VIII) Cruz de Riven 601115840430997524
+        #(IX) Rompemaldiciones 601115841635024929
+        #(X) Sombra 601115984593420308
+
+        #canal_info=None
+        roles_to_remove = [{"name":"Caminante", "id":587790059328110603},{"name":"Cronista","id":587790054177636362},\
+            {"name":"Dredgen", "id":587790049282752512} ,{"name":"Intrepido", "id":587790044971008040},{"name":"Herrero", "id":587790042844364801},\
+            {"name":"Irrompible", "id":601115502378745868},{"name":"Cruz de Riven", "id":601115840430997524},\
+            {"name":"Rompemaldiciones", "id":601115841635024929},{"name":"Sombra", "id":601115984593420308}]
+        roles_list = []
+
+        my_server = discord.utils.get(client.guilds)
+        for rol in my_server.roles:
+            for part in roles_to_remove:
+                if rol.id == part["id"]:
+                    roles_list.append(rol)
+        
+        #print(roles_list)
+
+        for idx, i in enumerate(my_server.members):
+            #if  i.id == 376055309657047040:
+                #print(i.name)
+            if idx % 100 == 0:
+                    await ctx.message.channel.send( "**Voy **"+str(idx)+"/"+str(len(my_server.members)))
+            for deleting_rol in roles_list:
+                await i.remove_roles(deleting_rol)
+                await asyncio.sleep(0.01)
+
+        t_stop = time.perf_counter()
+        await ctx.message.channel.send( "**Finalizada el reset de roles, tardé ... %.1f [min]!**"% ((t_stop-t_start)/60))
+        # USER DIR
+        #['activities', 'activity', 'add_roles', 'avatar', 'avatar_url', 'avatar_url_as', 'ban', \
+        # 'block', 'bot', 'color', 'colour', 'create_dm', 'created_at', 'default_avatar', 'default_avatar_url', \
+        # 'desktop_status', 'discriminator', 'display_name', 'dm_channel', 'edit', 'fetch_message', 'guild', \
+        # 'guild_permissions', 'history', 'id', 'is_avatar_animated', 'is_blocked', 'is_friend', 'is_on_mobile',\
+        #  'joined_at', 'kick', 'mention', 'mentioned_in', 'mobile_status', 'move_to', 'mutual_friends', 'name',\
+        #  'nick', 'permissions_in', 'pins', 'premium_since', 'profile', 'relationship', 'remove_friend', \
+        # 'remove_roles', 'roles', 'send', 'send_friend_request', 'status', 'top_role', 'trigger_typing', 'typing', \
+        # 'unban', 'unblock', 'voice', 'web_status']
+
+        #Base role New Ligght id 587790064256417802
+        #print(type(my_server.members))
+    else:
+        await ctx.message.channel.send( ":no_entry: **No tenés permisos para ejecutar este comando**")
+
+
 #######################################################################
 ################################# MUSIC & Sound #######################
 #######################################################################
@@ -1571,88 +1669,8 @@ async def testing(ctx):
     #4 Heroku
     fs = FailSafe(BUNGIE_API_KEY)        
     #END Heroku
-    await ctx.message.channel.send( "**Aguantame la mecha :bomb: ... que estoy reseteando los roles de todos los del discord. **")
-    t_start = time.perf_counter()
-    # CLIENT DIR
-    #['_PREMIUM_GUILD_LIMITS', '__class__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', \
-    # '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__',\
-    #  '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__',\
-    #  '__slots__', '__str__', '__subclasshook__', '_add_channel', '_add_member', '_add_role', '_channels', '_create_channel',\
-    #  '_default_role', '_from_data', '_large', '_member_count', '_members', '_remove_channel', '_remove_member', \
-    # '_remove_role', '_roles', '_state', '_sync', '_system_channel_flags', '_system_channel_id', '_update_voice_state', \
-    # '_voice_state_for', '_voice_states',\
-    #
-    #  'ack', 'afk_channel', 'afk_timeout', 'audit_logs', 'ban', 'banner', 'banner_url', 'banner_url_as',\
-    #  'bans', 'bitrate_limit', 'by_category', 'categories', 'channels', 'chunked', 'create_category', \
-    # 'create_category_channel', 'create_custom_emoji', 'create_role', 'create_text_channel', 'create_voice_channel',\
-    #  'created_at', 'default_notifications', 'default_role', 'delete', 'description', 'edit', 'emoji_limit', 'emojis',\
-    #  'estimate_pruned_members', 'explicit_content_filter', 'features', 'fetch_ban', 'fetch_channels', 'fetch_emoji',\
-    #  'fetch_emojis', 'fetch_member', 'filesize_limit', 'get_channel', 'get_member', 'get_member_named', 'get_role',\
-    #  'icon', 'icon_url', 'icon_url_as', 'id', 'invites', 'is_icon_animated', 'kick', 'large', 'leave', 'max_members', \
-    # 'max_presences', 'me', 'member_count', 'members', 'mfa_level', 'name', 'owner', 'owner_id', 'premium_subscribers',\
-    #  'premium_subscription_count', 'premium_tier', 'prune_members', 'region', 'roles', 'shard_id', 'splash', \
-    # 'splash_url', 'splash_url_as', 'system_channel', 'system_channel_flags', 'text_channels', 'unavailable',\
-    #  'unban', 'vanity_invite', 'verification_level', 'voice_channels', 'voice_client', 'webhooks', 'widget']
+    pass
 
-    #(I) Nueva Luz 587790064256417802
-    #(II) Caminante 587790059328110603
-    #(III) Cronista 587790054177636362
-    #(IV) Dredgen 587790049282752512
-    #(V) Intrepido 587790044971008040
-    #(VI) Herrero 587790042844364801
-    #(VII) Irrompible 601115502378745868
-    #(VIII) Cruz de Riven 601115840430997524
-    #(IX) Rompemaldiciones 601115841635024929
-    #(X) Sombra 601115984593420308
-
-    #canal_info=None
-    roles_to_remove = [{"name":"Caminante", "id":587790059328110603},{"name":"Cronista","id":587790054177636362},\
-        {"name":"Dredgen", "id":587790049282752512} ,{"name":"Intrepido", "id":587790044971008040},{"name":"Herrero", "id":587790042844364801},\
-        {"name":"Irrompible", "id":601115502378745868},{"name":"Cruz de Riven", "id":601115840430997524},\
-        {"name":"Rompemaldiciones", "id":601115841635024929},{"name":"Sombra", "id":601115984593420308}]
-    roles_list = []
-
-    my_server = discord.utils.get(client.guilds)
-    #get(guild.roles, name="Jail")
-    for rol in my_server.roles:
-        for part in roles_to_remove:
-            if rol.id == part["id"]:
-                roles_list.append(rol)
-        #if rol.id in roles_to_remove:
-        #    roles_list.append(rol)
-    
-    #print(roles_list)
-
-    for idx, i in enumerate(my_server.members):
-        #if  i.id == 376055309657047040:
-            #print(i.name)
-        #for idx, deleting_rol in enumerate(roles_list):
-        #    print(idx, val)
-        for deleting_rol in roles_list:
-        #for deleting_rol in roles_list:
-            if idx % 20 == 0:
-                await ctx.message.channel.send( "**Voy **"+str(idx)+"/"+str(len(my_server.members)))
-            await i.remove_roles(deleting_rol)
-            await asyncio.sleep(0.01)
-
-    t_stop = time.perf_counter()
-    await ctx.message.channel.send( "**Finalizada el reset de roles, tardé ... %.1f [min]!**"% ((t_stop-t_start)/60))
-    # USER DIR
-    #['activities', 'activity', 'add_roles', 'avatar', 'avatar_url', 'avatar_url_as', 'ban', \
-    # 'block', 'bot', 'color', 'colour', 'create_dm', 'created_at', 'default_avatar', 'default_avatar_url', \
-    # 'desktop_status', 'discriminator', 'display_name', 'dm_channel', 'edit', 'fetch_message', 'guild', \
-    # 'guild_permissions', 'history', 'id', 'is_avatar_animated', 'is_blocked', 'is_friend', 'is_on_mobile',\
-    #  'joined_at', 'kick', 'mention', 'mentioned_in', 'mobile_status', 'move_to', 'mutual_friends', 'name',\
-    #  'nick', 'permissions_in', 'pins', 'premium_since', 'profile', 'relationship', 'remove_friend', \
-    # 'remove_roles', 'roles', 'send', 'send_friend_request', 'status', 'top_role', 'trigger_typing', 'typing', \
-    # 'unban', 'unblock', 'voice', 'web_status']
-    #Base role New Ligght id 587790064256417802
-    #print(type(my_server.members))
-    
-    #role_DJ = discord.utils.get(server.roles, id=custom_dj_role_id)
-    #addroles = [role_DJ]
-    #await client.add_roles(member, *addroles)
-    await asyncio.sleep(0.01)
 
 
 #######################################################################
