@@ -1035,8 +1035,11 @@ async def run_sync(ctx):
     user=my_server.get_member(user_id)
     admin_id = None
     for i in my_server.roles:
+        print(i.name, i.id)
         if "Admin" in i.name:
                     admin_id=i.id
+    print(type(user))
+    print(dir(user))
     if admin_id in [role.id for role in user.roles]:
         #4 tests
         #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
