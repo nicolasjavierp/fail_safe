@@ -1036,14 +1036,12 @@ async def run_sync(ctx):
     admin_ids = []
     for i in my_server.roles:
         if "Admin" in i.name:
-            print(i.name, i.id)
+            #print(i.name, i.id)
             admin_ids.append(i)
     
     member_top_rol = ctx.message.author.top_role
-    print(member_top_rol)
-    print(intersection(admin_ids,member_roles))
 
-    if intersection(admin_ids,member_roles):
+    if member_top_rol in admin_ids:
     #if admin_id in [role.id for role in user.roles]:
         #4 tests
         #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
