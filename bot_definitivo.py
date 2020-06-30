@@ -1033,15 +1033,18 @@ async def run_sync(ctx):
     my_server = discord.utils.get(client.guilds)
     member_roles = ctx.message.author.roles
     
-    admin_ids = []
+    admin_roles = []
     for i in my_server.roles:
         if "Admin" in i.name:
             #print(i.name, i.id)
-            admin_ids.append(i)
+            print(type(i))
+            print(dir(i))
+            admin_roles.append(i)
     
     member_top_rol = ctx.message.author.top_role
-
-    if member_top_rol in admin_ids:
+    print(member_top_rol in admin_roles)
+    
+    if member_top_rol in admin_roles:
     #if admin_id in [role.id for role in user.roles]:
         #4 tests
         #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
