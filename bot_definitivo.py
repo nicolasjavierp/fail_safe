@@ -1032,9 +1032,11 @@ async def xur_info(ctx):
 async def run_sync(ctx):
     my_server = discord.utils.get(client.guilds)
     user_id = ctx.message.author.id
-    user=my_server.fetch_member(user_id)
+    user=await my_server.fetch_member(user_id)
     print("------------------------")
     print(user_id)
+    print(type(user))
+    print(dir(user))
     print(type(ctx.message.author))
     print(dir(ctx.message.author))
     print("------------------------")
