@@ -1031,8 +1031,15 @@ async def xur_info(ctx):
                 pass_ctx=True)
 async def run_sync(ctx):
     my_server = discord.utils.get(client.guilds)
+    print("------------------------")
+    print(type(my_server))
+    print(dir(my_server))
+    print("------------------------")
     user_id = ctx.message.author.id
     user=my_server.get_member(user_id)
+    print("------------------------")
+    print(user_id)
+    print("------------------------")
     admin_id = None
     for i in my_server.roles:
         print(i.name, i.id)
