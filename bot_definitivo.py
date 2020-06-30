@@ -1045,7 +1045,10 @@ async def run_sync(ctx):
     for i in my_server.roles:
         if "Admin" in i.name:
             print(i.name, i.id)
-            admin_ids.append(i.id)
+            admin_ids.append(i)
+            
+    print(intersection(admin_ids,member_roles))
+
     if intersection(admin_ids,member_roles):
     #if admin_id in [role.id for role in user.roles]:
         #4 tests
