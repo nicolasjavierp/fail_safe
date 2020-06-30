@@ -1037,11 +1037,14 @@ async def run_sync(ctx):
             #print(i.name, i.id)
             admin_roles_ids.append(str(i.id))
     
-    member_top_rol_id = str(ctx.message.author.top_role.id)
-    print(member_top_rol_id , admin_roles_ids)
-    print(member_top_rol_id in admin_roles_ids)
+    member_role_ids = []
+    for x in ctx.message.author.roles:
+        member_role_ids.append(str(x.id))            
+    
+    print(member_role_ids , admin_roles_ids)
+    print(len(intersection(member_top_rol_id,admin_roles_ids)))
 
-    if member_top_rol_id in admin_roles_ids:
+    if len(intersection(member_top_rol_id,admin_roles_ids))>0:
     #if admin_id in [role.id for role in user.roles]:
         #4 tests
         #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
