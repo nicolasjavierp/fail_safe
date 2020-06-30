@@ -1030,21 +1030,17 @@ async def xur_info(ctx):
                 aliases=['sync'],
                 pass_ctx=True)
 async def run_sync(ctx):
-    my_server = discord.utils.get(client.guilds)
-    member_roles = ctx.message.author.roles
-    
-    admin_roles = []
+    my_server = discord.utils.get(client.guilds)  
+    admin_roles_ids = []
     for i in my_server.roles:
         if "Admin" in i.name:
             #print(i.name, i.id)
-            print(type(i))
-            print(dir(i))
-            admin_roles.append(i)
+            admin_roles_ids.append(i.id)
     
-    member_top_rol = ctx.message.author.top_role
-    print(member_top_rol in admin_roles)
-    
-    if member_top_rol in admin_roles:
+    member_top_rol_id = ctx.message.author.top_role.id
+    print(member_top_rol.id in admin_roles_ids)
+
+    if member_top_rol in admin_roles_ids:
     #if admin_id in [role.id for role in user.roles]:
         #4 tests
         #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
