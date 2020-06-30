@@ -129,7 +129,7 @@ async def on_message(message):
     await asyncio.sleep(0.01)
     await client.process_commands(message)
 
-
+"""
 @client.event
 async def on_member_join(member):  
     server = member.guild
@@ -144,8 +144,8 @@ async def on_member_join(member):
     addroles = [role_DJ]
     await client.add_roles(member, *addroles)
     await asyncio.sleep(0.01)
-
-
+"""
+"""
 @client.event
 async def on_reaction_add(reaction, user):
     pass
@@ -157,7 +157,7 @@ async def on_reaction_add(reaction, user):
     #await private_channel.send(channel,'{} agregó {} al mensaje: {}'.format(user.name, reaction.emoji, reaction.message.content))
     #if "prestigio" in channel.name:
     #    print(dir(reaction))
-
+"""
 
 @client.event
 async def on_member_remove(member):
