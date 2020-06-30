@@ -1041,7 +1041,8 @@ async def run_sync(ctx):
     member_role_ids = []
     for x in ctx.message.author.roles:
         print(type(x))
-        print(x)
+        print(x.name)
+        print(x.id)
         member_role_ids.append(str(x.id))            
     
     print(member_role_ids , admin_roles_ids)
