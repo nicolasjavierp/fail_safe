@@ -1033,12 +1033,15 @@ async def run_sync(ctx):
     my_server = discord.utils.get(client.guilds)  
     admin_roles_ids = []
     for i in my_server.roles:
+        print(i.name, i.id)
         if "Admin" in i.name:
             #print(i.name, i.id)
             admin_roles_ids.append(str(i.id))
     
     member_role_ids = []
     for x in ctx.message.author.roles:
+        print(type(x))
+        print(x)
         member_role_ids.append(str(x.id))            
     
     print(member_role_ids , admin_roles_ids)
