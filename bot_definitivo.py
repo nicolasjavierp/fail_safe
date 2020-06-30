@@ -1039,7 +1039,7 @@ async def run_sync(ctx):
     for i in my_server.roles:
         if "Admin" in i.name:
             admin_id=i.id
-            print(i.name, i.id)
+            #print(i.name, i.id)
             admin_privileges=True
     
     if admin_privileges:
