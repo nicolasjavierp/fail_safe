@@ -1031,22 +1031,16 @@ async def xur_info(ctx):
                 pass_ctx=True)
 async def run_sync(ctx):
     my_server = discord.utils.get(client.guilds)
-    user_id = ctx.message.author.id
-    user=my_server.get_member(user_id)
-    print("------------------------")
-    print(user_id)
-    print(type(ctx.message.author))
-    print(dir(ctx.message.author))
-    print(ctx.message.author.id)
-    print(ctx.message.author.roles)
     member_roles = ctx.message.author.roles
-    print("------------------------")
+    
     admin_ids = []
     for i in my_server.roles:
         if "Admin" in i.name:
             print(i.name, i.id)
             admin_ids.append(i)
-            
+    
+    member_top_rol = ctx.message.author.top_role
+    print(member_top_rol)
     print(intersection(admin_ids,member_roles))
 
     if intersection(admin_ids,member_roles):
