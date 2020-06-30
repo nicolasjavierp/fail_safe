@@ -1035,8 +1035,8 @@ async def run_sync(ctx):
     user=my_server.fetch_member(user_id)
     print("------------------------")
     print(user_id)
-    print(type(user))
-    print(dir(user))
+    print(type(ctx.message.author))
+    print(dir(ctx.message.author))
     print("------------------------")
     admin_id = None
     for i in my_server.roles:
