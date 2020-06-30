@@ -1031,22 +1031,19 @@ async def xur_info(ctx):
                 pass_ctx=True)
 async def run_sync(ctx):
     my_server = discord.utils.get(client.guilds)
-    print("------------------------")
-    print(type(my_server))
-    print(dir(my_server))
-    print("------------------------")
     user_id = ctx.message.author.id
-    user=my_server.get_member(user_id)
+    user=my_server.fetch_member(user_id)
     print("------------------------")
     print(user_id)
+    print(type(user))
+    print(dir(user))
     print("------------------------")
     admin_id = None
     for i in my_server.roles:
-        print(i.name, i.id)
         if "Admin" in i.name:
-                    admin_id=i.id
-    print(type(user))
-    print(dir(user))
+            print(i.name, i.id)
+            admin_id=i.id
+    
     if admin_id in [role.id for role in user.roles]:
         #4 tests
         #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
