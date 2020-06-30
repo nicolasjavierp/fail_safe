@@ -39,6 +39,7 @@ client.remove_command('help')
 players = {}
 my_queues = {}
 discord_admin_ids = {"javu":376055309657047040,"kernell":198516601497059328, "sonker":219539830055501825, "elenita":239122012767911936, "john":325898163518963712}
+admin_ids = {"720685042442960916","720659736412028939"} #Depende del discord server
 
 #######################################################################
 ################## EVENTS  ############################################
@@ -1031,24 +1032,17 @@ async def xur_info(ctx):
                 pass_ctx=True)
 async def run_sync(ctx):
     my_server = discord.utils.get(client.guilds)  
-    admin_roles_ids = []
+    
+    user_id = ctx.message.author.id
+    user=my_server.get_member(user_id)
+    admin_privileges=False
     for i in my_server.roles:
-        print(i.name, i.id)
         if "Admin" in i.name:
+            admin_id=i.id
             #print(i.name, i.id)
-            admin_roles_ids.append(str(i.id))
+            admin_privileges=True
     
-    member_role_ids = []
-    for x in ctx.message.author.roles:
-        print(type(x))
-        print(x.name)
-        print(x.id)
-        member_role_ids.append(str(x.id))            
-    
-    print(member_role_ids , admin_roles_ids)
-    print(len(intersection(member_role_ids,admin_roles_ids)))
-
-    if len(intersection(member_role_ids,admin_roles_ids))>0:
+    if admin_privileges:
     #if admin_id in [role.id for role in user.roles]:
         #4 tests
         #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
