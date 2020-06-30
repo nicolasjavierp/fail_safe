@@ -158,14 +158,14 @@ async def on_reaction_add(reaction, user):
     #if "prestigio" in channel.name:
     #    print(dir(reaction))
 """
-
+"""
 @client.event
 async def on_member_remove(member):
     #print("Someone Left!!")
     server = member.guild
     print("Bye Bye {0} !".format(member.name))
     await asyncio.sleep(0.01)
-
+"""
 
 #######################################################################
 ################## COMMON COMMANDS  ###################################
@@ -1035,9 +1035,10 @@ async def run_sync(ctx):
     for i in my_server.roles:
         if "Admin" in i.name:
             #print(i.name, i.id)
-            admin_roles_ids.append(i.id)
+            admin_roles_ids.append(str(i.id))
     
-    member_top_rol_id = ctx.message.author.top_role.id
+    member_top_rol_id = str(ctx.message.author.top_role.id)
+    print(member_top_rol_id , admin_roles_ids)
     print(member_top_rol_id in admin_roles_ids)
 
     if member_top_rol_id in admin_roles_ids:
