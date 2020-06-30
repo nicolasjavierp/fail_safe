@@ -388,3 +388,8 @@ def get_random_lore():
             return None,None,None
     else:
         return None,None,None
+
+
+def intersection(lst1, lst2): 
+    lst3 = [value for value in lst1 if value in lst2] 
+    return lst3 
