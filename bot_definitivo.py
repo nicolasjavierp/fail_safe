@@ -1032,14 +1032,14 @@ async def xur_info(ctx):
                 pass_ctx=True)
 async def run_sync(ctx):
     my_server = discord.utils.get(client.guilds)  
-    
+
     user_id = ctx.message.author.id
     user=my_server.get_member(user_id)
     admin_privileges=False
     for i in my_server.roles:
         if "Admin" in i.name:
             admin_id=i.id
-            #print(i.name, i.id)
+            print(i.name, i.id)
             admin_privileges=True
     
     if admin_privileges:
@@ -1105,7 +1105,7 @@ async def run_sync(ctx):
         await ctx.message.channel.send( ":no_entry: **No tenés permisos para ejecutar este comando**")
     await asyncio.sleep(0.01)
 
-
+"""
 @client.command(name='Poblacion',
                 description="Indica los integrantes de discord",
                 brief="poblacion",
@@ -1144,7 +1144,7 @@ async def poblacion(ctx):
     else:
         await ctx.message.channel.send( ":no_entry: **No tenés permisos para ejecutar este comando**")
     await asyncio.sleep(0.01)
-
+"""
 
 @client.command(name='Inactivos',
                 description="Expone el listado de inactivos en discord",
@@ -1254,16 +1254,17 @@ async def reseteo_de_roles(ctx):
         # 'splash_url', 'splash_url_as', 'system_channel', 'system_channel_flags', 'text_channels', 'unavailable',\
         #  'unban', 'vanity_invite', 'verification_level', 'voice_channels', 'voice_client', 'webhooks', 'widget']
 
-        #(I) Nueva Luz 587790064256417802
-        #(II) Caminante 587790059328110603
-        #(III) Cronista 587790054177636362
-        #(IV) Dredgen 587790049282752512
-        #(V) Intrepido 587790044971008040
-        #(VI) Herrero 587790042844364801
-        #(VII) Irrompible 601115502378745868
-        #(VIII) Cruz de Riven 601115840430997524
-        #(IX) Rompemaldiciones 601115841635024929
-        #(X) Sombra 601115984593420308
+        # (I) Nueva Luz 587790064256417802
+        # (II) Caminante 587790059328110603
+        # (III) Cronista 587790054177636362
+        # (IV) Dredgen 587790049282752512
+        # (V) Intrepido 587790044971008040
+        # (VI) Herrero 587790042844364801
+        # (VII) Irrompible 601115502378745868
+        # (VIII) Cruz de Riven 601115840430997524
+        # (IX) Rompemaldiciones 601115841635024929
+        # (X) Sombra 601115984593420308
+
 
         #canal_info=None
         roles_to_remove = [{"name":"Caminante", "id":587790059328110603},{"name":"Cronista","id":587790054177636362},\
