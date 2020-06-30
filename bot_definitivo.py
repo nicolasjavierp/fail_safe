@@ -1042,9 +1042,9 @@ async def run_sync(ctx):
         member_role_ids.append(str(x.id))            
     
     print(member_role_ids , admin_roles_ids)
-    print(len(intersection(member_top_rol_id,admin_roles_ids)))
+    print(len(intersection(member_role_ids,admin_roles_ids)))
 
-    if len(intersection(member_top_rol_id,admin_roles_ids))>0:
+    if len(intersection(member_role_ids,admin_roles_ids))>0:
     #if admin_id in [role.id for role in user.roles]:
         #4 tests
         #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))      #Start Fail_Safe 4tests
