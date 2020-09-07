@@ -997,7 +997,7 @@ async def trials_info(ctx):
 
                 spans = div.find_all('span', attrs={'div class':'rewards-container'})
                 for span in spans:
-                    print span.string
+                    print(span.string)
                 #content = str(div)
                 
             else:
