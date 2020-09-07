@@ -998,11 +998,9 @@ async def trials_info(ctx):
                 location = [i.text for i in soup.findAll('span', {'class': 'map-name'})]
                 location_content = str(location)
                 print(location_content)
-                wins = soup.select('div.rewards-container')
-                for span in wins.find_all('span'):
-                    print(span)
-                #wins_content = str(wins)
-                #print(wins_content)
+                #print("==================")
+                #for i in div.attrs:
+                #    print(i)
                 print("==================")
                 l = [(div.contents, span.text)
                 for div in soup.select('div.league-data')
