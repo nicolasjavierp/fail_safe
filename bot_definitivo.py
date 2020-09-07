@@ -1004,10 +1004,11 @@ async def trials_info(ctx):
                 print("==================")
                 for span in trials_rewards_div.findAll('span'):
                     print("SPAN:",span.contents)
-                    print(span)
+                    test = map(lambda s: s.strip(), span.contents)
+                    print(test)
                     #for data_span in span.find_all(attrs={"data-id": True}):
-                    for data_span in span.find_all('span'):
-                        print("KEY:", data_span.contents) #KEY
+                    #for data_span in span.find_all('span'):
+                        #print("KEY:", data_span.contents) #KEY
                         print("/////////////// NEXT")
                 print("==================")
                 #content = str(trials_div)
