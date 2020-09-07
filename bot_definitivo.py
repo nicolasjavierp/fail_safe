@@ -1004,7 +1004,7 @@ async def trials_info(ctx):
                 print("==================")
                 for i in trials_rewards_div.findAll('span'):
                     print(i)
-                    print("/////////////// NEXT"")
+                    print("/////////////// NEXT")
                 print("==================")
                 #content = str(trials_div)
 
