@@ -11,6 +11,7 @@ import discord
 import re
 import json
 import urllib.request
+from urllib.request import urlopen
 from datetime import datetime
 from datetime import timedelta 
 from datetime import date 
@@ -949,6 +950,47 @@ async def xur_info(ctx):
                 await private_channel.send(embed=embed)
         else:
             embed = discord.Embed(title=":x: No tengo la info todavía! Intenta mas tarde ...", description="¯\\_(ツ)_/¯", color=0x00ff00)
+            await private_channel.send(user, embed=embed)
+    else:
+        embed = discord.Embed(title=":x: Servidores de Destiny estan deshabilitados! Intenta mas tarde ...", description="¯\\_(ツ)_/¯", color=0x00ff00)
+        await private_channel.send(user, embed=embed)
+
+
+@client.command(name='Trials Info',
+                description="Entrega las recompensas y mapa de Trials en Destiny2 esa semana",
+                brief="Trials Iinfo",
+                aliases=['trials'],
+                pass_ctx=True)
+async def trials_info(ctx):
+    embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
+    await private_channel.send(user, embed=embed)
+    #4 Tests
+    #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
+    #4 Heroku
+    fs = FailSafe(BUNGIE_API_KEY)        
+    #END Heroku
+    #canal_info=None
+    user_id = ctx.message.author.id
+    user=await client.fetch_user(user_id)
+    private_channel = await user.create_dm()
+    await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
+    if await fs.async_isBungieOnline():
+        xur_data = await fs.async_get_Xur_info(XUR_API_KEY)
+        if xur_data:
+            if xur_data['is_here']=='1':
+                embed = discord.Embed(title="Trials" , description="None", color=0x00ff00)
+                await private_channel.send(embed=embed)
+                url = "https://www.light.gg/"   
+                page = urlopen(url)
+                html_bytes = page.read()
+                html = html_bytes.decode("utf-8")
+                print(html)
+            else:
+                msg = "Trials solamente esta desde reset del Viernes al reset del Martes. Proxima aparición será a partir del __reset__ el día "+str(get_last_friday_reset().date()+timedelta(weeks=1))
+                embed = discord.Embed(title="Trials of Saint-14" , description=msg, color=0xff0000)
+                await private_channel.send(embed=embed)
+        else:
+            embed = discord.Embed(title=":x: No esta la info todavía! Intenta mas tarde ...", description="¯\\_(ツ)_/¯", color=0x00ff00)
             await private_channel.send(user, embed=embed)
     else:
         embed = discord.Embed(title=":x: Servidores de Destiny estan deshabilitados! Intenta mas tarde ...", description="¯\\_(ツ)_/¯", color=0x00ff00)

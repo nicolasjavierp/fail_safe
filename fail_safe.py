@@ -135,7 +135,6 @@ class FailSafe(object):
 
     async def async_get_CharactersRaids(self, membership_id, character_id):
         '''
-        get_CharactersRaids
         None: 0
         Story: 2
         Strike: 3
@@ -206,6 +205,14 @@ class FailSafe(object):
         ControlCompetitive: 74
         GambitPrime: 75
         Reckoning: 76
+        Menagerie: 77
+        VexOffensive: 78
+        NightmareHunt: 79
+        Elimination: 80
+        Momentum: 81
+        Dungeon: 82
+        Sundial: 83
+        TrialsOfOsiris: 84
         '''
         site_call = "https://www.bungie.net/platform/Destiny2/3/Account/"+ str(membership_id)+"/Character/"+str(character_id)+"/Stats/Activities/?count=250&mode=4&page=0"
         request = requests.get(site_call,headers={"X-API-Key":self.api_key})
