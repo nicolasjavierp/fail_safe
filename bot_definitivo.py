@@ -1009,7 +1009,7 @@ async def trials_info(ctx):
                     #for data_span in span.find_all(attrs={"data-id": True}):
                     #for data_span in span.find_all('span'):
                         #print("KEY:", data_span.contents) #KEY
-                        print("/////////////// NEXT")
+                    print("/////////////// NEXT")
                 print("==================")
                 #content = str(trials_div)
 
