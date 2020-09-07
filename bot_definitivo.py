@@ -330,8 +330,8 @@ async def informe_semanal(ctx):
         luna_key = luna_key + max_mod_luna
     
     altar_dict={
-        2: ["Escopeta","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/2f61559b7c57894703b6aaa52a44630c.jpg"],
-        0: ["Sniper","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/b990412136d220fd641078418a4903fe.jpg"],
+        0: ["Escopeta","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/2f61559b7c57894703b6aaa52a44630c.jpg"],
+        2: ["Sniper","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/b990412136d220fd641078418a4903fe.jpg"],
         1: ["Lanza_cohetes","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/eaf113dbb5cea03526009e6030b8c8ee.jpg"]
     }
     max_mod_altar=3
@@ -530,9 +530,9 @@ async def informe_lunar(ctx):
         3: ["Fallen Council",""]
     }
     altar_dict={
-        1: ["Escopeta","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/2f61559b7c57894703b6aaa52a44630c.jpg","https://www.light.gg/db/items/2782847179"],
+        0: ["Escopeta","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/2f61559b7c57894703b6aaa52a44630c.jpg","https://www.light.gg/db/items/2782847179"],
         2: ["Francotirador","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/b990412136d220fd641078418a4903fe.jpg","https://www.light.gg/db/items/2164448701"],
-        0: ["Lanzacohetes","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/eaf113dbb5cea03526009e6030b8c8ee.jpg","https://www.light.gg/db/items/3067821200"]
+        1: ["Lanzacohetes","https://cdn.thetrackernetwork.com/destiny/common/destiny2_content/icons/eaf113dbb5cea03526009e6030b8c8ee.jpg","https://www.light.gg/db/items/3067821200"]
     }
     
     max_mod_daily = 3
