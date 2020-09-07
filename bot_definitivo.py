@@ -1003,12 +1003,11 @@ async def trials_info(ctx):
                 trials_rewards_div = soup.find("div", {"class": "rewards-container"})
                 print("==================")
                 for span in trials_rewards_div.findAll('span'):
+                    print("SPAN:",span.contents)
+                    print(span)
                     #for data_span in span.find_all(attrs={"data-id": True}):
                     for data_span in span.find_all('span'):
                         print("KEY:", data_span.contents) #KEY
-                        print(data_span.text)
-                        print("&&")
-                        print(data_span)
                         print("/////////////// NEXT")
                 print("==================")
                 #content = str(trials_div)
