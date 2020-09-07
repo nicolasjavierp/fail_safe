@@ -990,8 +990,6 @@ async def trials_info(ctx):
                 #html = webpage.decode("utf-8")
                 #print(html)
                 soup = BeautifulSoup(url_contents, "html.parser")
-                print(type(soup))
-                print(dir(soup))
                 trials_div = soup.find("div", {"id": "trials-billboard"})
                 print("-----------")
                 print(type(trials_div))
@@ -1001,11 +999,15 @@ async def trials_info(ctx):
                 location_content = str(location)
                 print(location_content)
                 wins = soup.select('div.rewards-container')
-                for span in wins.select('span'):
+                for span in wins.find_all('span'):
                     print(span)
                 #wins_content = str(wins)
                 #print(wins_content)
-
+                print("==================")
+                l = [(div.contents, span.text)
+                for div in soup.select('div.league-data')
+                for span in div.select('span')]
+                print(l)
                 #content = str(trials_div)
 
             else:
