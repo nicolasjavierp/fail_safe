@@ -11,7 +11,7 @@ import discord
 import re
 import json
 import urllib.request
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 from datetime import datetime
 from datetime import timedelta 
 from datetime import date 
