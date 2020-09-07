@@ -23,6 +23,7 @@ import youtube_dl
 import math
 from PIL import Image
 from itertools import cycle
+from bs4 import BeautifulSoup
 
 
 
@@ -985,9 +986,14 @@ async def trials_info(ctx):
                 await private_channel.send(embed=embed)
                 url = "https://www.light.gg/"
                 req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-                webpage = urlopen(req).read()
-                html = webpage.decode("utf-8")
-                print(html)
+                url_contents = urlopen(req).read()
+                #html = webpage.decode("utf-8")
+                #print(html)
+                soup = bs4.BeautifulSoup(url_contents, "html")
+                div = soup.find("div", {"id": "trials-billboard"})
+                content = str(div)
+                print(content[:50])
+                
             else:
                 msg = "Trials solamente esta desde reset del Viernes al reset del Martes. Proxima aparición será a partir del __reset__ el día "+str(get_last_friday_reset().date()+timedelta(weeks=1))
                 embed = discord.Embed(title="Trials of Saint-14" , description=msg, color=0xff0000)
