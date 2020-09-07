@@ -992,13 +992,13 @@ async def trials_info(ctx):
                 soup = BeautifulSoup(url_contents, "html.parser")
                 div = soup.find("div", {"id": "trials-billboard"})
                 location = [i.text for i in soup.findAll('span', {'class': 'map-name'})]
-                content = str(location)
-                print(content)
+                location_content = str(location)
+                print(location_content)
+                
+                wins = [i.text for i in soup.findAll('span', {'class': 'rewards-container'})]
+                wins_content = str(wins)
+                print(wins_content)
 
-                spans = div.find_all('span', attrs={'div class':'rewards-container'})
-                print(str(spans))
-                #for span in spans:
-                #    print(span.string)
                 #content = str(div)
 
             else:
