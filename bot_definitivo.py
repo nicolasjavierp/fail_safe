@@ -191,7 +191,7 @@ async def raid_this_week(ctx):
     if await fs.async_isBungieOnline():
         if len(ctx.message.content)>=4:
             user_steam_tag = ctx.message.content.split(' ',1)[1]
-            embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing por la migracion a Steam, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
+            embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing por la migracion a Steam, ante cualquier inconveniente informar a un admin/mod. Gracias", color=0x00ff00)
             await private_channel.send(embed=embed)
             embed = discord.Embed(title=":warning: Warning" , description="Este comando toma datos directamente de Bungie, que a veces tarda unos minutos en registrar las Raids recientes. Un momento por favor ...", color=0x00ff00)
             await private_channel.send(embed=embed)
@@ -806,7 +806,7 @@ async def destiny_lore(ctx):
                 pass_ctx=True)
 async def xur_info(ctx):
     '''
-    #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
+    #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin/mod. Gracias", color=0x00ff00)
     #await private_channel.send(ctx.message.channel, embed=embed)
     #4 Tests
     #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
@@ -850,7 +850,7 @@ async def xur_info(ctx):
         embed = discord.Embed(title=":x: Servidores de Destiny estan deshabilitados! Intenta mas tarde ...", description="¯\\_(ツ)_/¯", color=0x00ff00)
         await private_channel.send(user, embed=embed)
     '''
-    #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
+    #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin/mod. Gracias", color=0x00ff00)
     #await message.channel.send( embed=embed)
     #4 Tests
     #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
@@ -962,7 +962,10 @@ async def xur_info(ctx):
                 aliases=['trials'],
                 pass_ctx=True)
 async def trials_info(ctx):
-    embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
+    user_id = ctx.message.author.id
+    user=await client.fetch_user(user_id)
+    private_channel = await user.create_dm()
+    embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin/mod. Gracias", color=0x00ff00)
     await private_channel.send(user, embed=embed)
     #4 Tests
     #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
@@ -1257,7 +1260,7 @@ async def inactivos(ctx):
                 aliases=['reset_roles'],
                 pass_ctx=True)
 async def reseteo_de_roles(ctx):
-    #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
+    #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin/mod. Gracias", color=0x00ff00)
     #await message.channel.send( embed=embed)
     my_server = discord.utils.get(client.guilds)
     user_id = ctx.message.author.id
@@ -1711,7 +1714,7 @@ async def intro_elenita(ctx):
                 aliases=['test'],
                 pass_ctx=True)
 async def testing(ctx):
-    #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin. Gracias", color=0x00ff00)
+    #embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin/mod. Gracias", color=0x00ff00)
     #await message.channel.send( embed=embed)
     #4 Tests
     #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
