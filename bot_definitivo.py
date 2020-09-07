@@ -983,10 +983,10 @@ async def trials_info(ctx):
             if xur_data['is_here']=='1':
                 embed = discord.Embed(title="Trials" , description="None", color=0x00ff00)
                 await private_channel.send(embed=embed)
-                url = "https://www.light.gg/"   
-                page = urlopen(url)
-                html_bytes = page.read()
-                html = html_bytes.decode("utf-8")
+                url = "https://www.light.gg/"
+                req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+                webpage = urlopen(req).read()
+                html = webpage.decode("utf-8")
                 print(html)
             else:
                 msg = "Trials solamente esta desde reset del Viernes al reset del Martes. Proxima aparición será a partir del __reset__ el día "+str(get_last_friday_reset().date()+timedelta(weeks=1))
