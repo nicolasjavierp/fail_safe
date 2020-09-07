@@ -1000,15 +1000,20 @@ async def trials_info(ctx):
                 location_content = str(location)
                 print(type(location_content))
                 print(location_content)
+                res_dict = {}
                 trials_rewards_div = soup.find("div", {"class": "rewards-container"})
                 print("==================")
                 for span in trials_rewards_div.findAll('span'):
-                    print("SPAN:",span.contents)
-                    test = map(lambda s: s.strip(), span.contents)
-                    print(test)
+                    print("SPAN:",span.contents, type(span.contents))
+                    for item in span.contents:
+                        if str(item).find("WIN"):
+                            key = str(item)
+                        else:
+                            res_dict[key] = item
                     #for data_span in span.find_all(attrs={"data-id": True}):
                     #for data_span in span.find_all('span'):
                         #print("KEY:", data_span.contents) #KEY
+                    print(res_dict)
                     print("/////////////// NEXT")
                 print("==================")
                 #content = str(trials_div)
