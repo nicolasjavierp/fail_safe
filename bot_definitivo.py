@@ -996,10 +996,11 @@ async def trials_info(ctx):
                 print(content)
 
                 spans = div.find_all('span', attrs={'div class':'rewards-container'})
-                for span in spans:
-                    print(span.string)
+                print(str(spans))
+                #for span in spans:
+                #    print(span.string)
                 #content = str(div)
-                
+
             else:
                 msg = "Trials solamente esta desde reset del Viernes al reset del Martes. Proxima aparición será a partir del __reset__ el día "+str(get_last_friday_reset().date()+timedelta(weeks=1))
                 embed = discord.Embed(title="Trials of Saint-14" , description=msg, color=0x800080)
