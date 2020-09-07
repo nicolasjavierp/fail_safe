@@ -982,26 +982,26 @@ async def trials_info(ctx):
         xur_data = await fs.async_get_Xur_info(XUR_API_KEY)
         if xur_data:
             if xur_data['is_here']=='1':
-                embed = discord.Embed(title="Trials" , description="None", color=0x00ff00)
+                embed = discord.Embed(title="Trials" , description="None", color=0x800080)
                 await private_channel.send(embed=embed)
                 url = "https://www.light.gg/"
                 req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
                 url_contents = urlopen(req).read()
                 #html = webpage.decode("utf-8")
                 #print(html)
-                soup = BeautifulSoup(url_contents, "html")
+                soup = BeautifulSoup(url_contents, "html.parser")
                 div = soup.find("div", {"id": "trials-billboard"})
                 content = str(div)
-                print(content[:50])  
+                print(content)
             else:
                 msg = "Trials solamente esta desde reset del Viernes al reset del Martes. Proxima aparición será a partir del __reset__ el día "+str(get_last_friday_reset().date()+timedelta(weeks=1))
-                embed = discord.Embed(title="Trials of Saint-14" , description=msg, color=0xff0000)
+                embed = discord.Embed(title="Trials of Saint-14" , description=msg, color=0x800080)
                 await private_channel.send(embed=embed)
         else:
-            embed = discord.Embed(title=":x: No esta la info todavía! Intenta mas tarde ...", description="¯\\_(ツ)_/¯", color=0x00ff00)
+            embed = discord.Embed(title=":x: No esta la info todavía! Intenta mas tarde ...", description="¯\\_(ツ)_/¯", color=0x800080)
             await private_channel.send(user, embed=embed)
     else:
-        embed = discord.Embed(title=":x: Servidores de Destiny estan deshabilitados! Intenta mas tarde ...", description="¯\\_(ツ)_/¯", color=0x00ff00)
+        embed = discord.Embed(title=":x: Servidores de Destiny estan deshabilitados! Intenta mas tarde ...", description="¯\\_(ツ)_/¯", color=0x800080)
         await private_channel.send(user, embed=embed)
 
 
