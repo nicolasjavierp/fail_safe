@@ -989,11 +989,10 @@ async def trials_info(ctx):
                 url_contents = urlopen(req).read()
                 #html = webpage.decode("utf-8")
                 #print(html)
-                soup = bs4.BeautifulSoup(url_contents, "html")
+                soup = BeautifulSoup(url_contents, "html")
                 div = soup.find("div", {"id": "trials-billboard"})
                 content = str(div)
-                print(content[:50])
-                
+                print(content[:50])  
             else:
                 msg = "Trials solamente esta desde reset del Viernes al reset del Martes. Proxima aparición será a partir del __reset__ el día "+str(get_last_friday_reset().date()+timedelta(weeks=1))
                 embed = discord.Embed(title="Trials of Saint-14" , description=msg, color=0xff0000)
