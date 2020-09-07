@@ -994,8 +994,8 @@ async def trials_info(ctx):
                 location = [i.text for i in soup.findAll('span', {'class': 'map-name'})]
                 content = str(location)
                 print(content)
-                
-                spans = soup.find_all('span', attrs={'div class':'rewards-container'})
+
+                spans = div.find_all('span', attrs={'div class':'rewards-container'})
                 for span in spans:
                     print span.string
                 #content = str(div)
