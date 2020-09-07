@@ -990,18 +990,23 @@ async def trials_info(ctx):
                 #html = webpage.decode("utf-8")
                 #print(html)
                 soup = BeautifulSoup(url_contents, "html.parser")
-                div = soup.find("div", {"id": "trials-billboard"})
+                print(type(soup))
+                print(dir(soup))
+                trials_div = soup.find("div", {"id": "trials-billboard"})
+                print("-----------")
+                print(type(trials_div))
+                print(dir(trials_div))
+                print("-----------")
                 location = [i.text for i in soup.findAll('span', {'class': 'map-name'})]
                 location_content = str(location)
                 print(location_content)
+                wins = soup.select('div.rewards-container')
+                for span in wins.select('span'):
+                    print(span)
+                #wins_content = str(wins)
+                #print(wins_content)
 
-                wins = [(div.contents[0].strip(), span.text.strip())
-                for div in soup.select('div.rewards-container')
-                for span in div.select('span')]
-                wins_content = str(wins)
-                print(wins_content)
-
-                #content = str(div)
+                #content = str(trials_div)
 
             else:
                 msg = "Trials solamente esta desde reset del Viernes al reset del Martes. Proxima aparición será a partir del __reset__ el día "+str(get_last_friday_reset().date()+timedelta(weeks=1))
