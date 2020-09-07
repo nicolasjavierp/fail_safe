@@ -966,7 +966,7 @@ async def trials_info(ctx):
     user_id = ctx.message.author.id
     user=await client.fetch_user(user_id)
     private_channel = await user.create_dm()
-    embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin/mod. Gracias", color=0x00ff00)
+    embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin/mod. Gracias", color=0x800080)
     await private_channel.send(user, embed=embed)
     #4 Tests
     #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
@@ -991,7 +991,10 @@ async def trials_info(ctx):
                 #print(html)
                 soup = BeautifulSoup(url_contents, "html.parser")
                 div = soup.find("div", {"id": "trials-billboard"})
-                content = str(div)
+                location = [i.text for i in soup.findAll('span', {'class': 'map-name'})]
+                content = str(location)
+                #wins = [i.text for i in soup.findAll('span', {'class': 'map-name'})]
+                #content = str(div)
                 print(content)
             else:
                 msg = "Trials solamente esta desde reset del Viernes al reset del Martes. Proxima aparición será a partir del __reset__ el día "+str(get_last_friday_reset().date()+timedelta(weeks=1))
