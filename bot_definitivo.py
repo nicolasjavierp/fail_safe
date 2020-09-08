@@ -991,10 +991,6 @@ async def trials_info(ctx):
                 #print(html)
                 soup = BeautifulSoup(url_contents, "html.parser")
                 trials_div = soup.find("div", {"id": "trials-billboard"})
-                print("-----------")
-                print(type(trials_div))
-                print(dir(trials_div))
-                print("-----------")
                 #location = [i.text for i in soup.findAll('span', {'class': 'map-name'})]
                 location = [i.text for i in trials_div.findAll('span', {'class': 'map-name'})]
                 location_content = str(location)
@@ -1002,22 +998,22 @@ async def trials_info(ctx):
                 print(location_content)
                 res_dict = {}
                 trials_rewards_div = soup.find("div", {"class": "rewards-container"})
-                print("==================")
                 for span in trials_rewards_div.findAll('span'):
+                    temp_value = []
                     print("SPAN:",span.contents, type(span.contents))
                     for item in span.contents:
-                        if str(item).find("WIN"):
-                            key = str(item)
+                        print("==================")
+                        print(type(item))
+                        print("==================")
+                        if (str(item).find('WIN') != -1):
+                            my_item = map(lambda x: x.replace('<span>','').replace('</span>',''),str(item))
+                            res_dict[my_item] = None
                         else:
-                            res_dict[key] = item
-                    #for data_span in span.find_all(attrs={"data-id": True}):
-                    #for data_span in span.find_all('span'):
-                        #print("KEY:", data_span.contents) #KEY
-                    print(res_dict)
+                            temp_value.append(str(item))
+                    res_dict[my_item] = temp_value                    
                     print("/////////////// NEXT")
-                print("==================")
                 #content = str(trials_div)
-
+                print(res_dict)
             else:
                 msg = "Trials solamente esta desde reset del Viernes al reset del Martes. Proxima aparición será a partir del __reset__ el día "+str(get_last_friday_reset().date()+timedelta(weeks=1))
                 embed = discord.Embed(title="Trials of Saint-14" , description=msg, color=0x800080)
