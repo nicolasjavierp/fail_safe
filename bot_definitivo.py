@@ -1009,14 +1009,15 @@ async def trials_info(ctx):
                         #print(str(item))
                         #print("==================")
                         if isinstance(item, bs4.element.Tag):
-                            #if item['href']!= None:
-                            print("==================")
-                            print(item)
-                            print("==================")
-                            temp_value.append(str(item))
+                            if item.has_attr('href'):
+                                print("==================")
+                                print("Found an item", item)
+                                print("==================")
+                                temp_value.append(str(item))
                         else:
                             if '\n' not in str(item.encode('utf-8')):
                                 key = str(item.encode('utf-8'))
+                                print("Found a Key", str(key))
                     res_dict[key] = temp_value
                     print("/////////////// NEXT")
                 #content = str(trials_div)
