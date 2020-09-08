@@ -1001,7 +1001,7 @@ async def trials_info(ctx):
                 trials_rewards_div = soup.find("div", {"class": "rewards-container"})
                 for span in trials_rewards_div.findAll('span'):
                     #print("SPAN:",span.contents, type(span.contents))
-                    for item in my_span_contents:
+                    for item in span.contents:
                         if isinstance(item, bs4.element.Tag):
                             if item.has_attr('href'):
                                 print("==================")
