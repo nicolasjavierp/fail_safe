@@ -1015,8 +1015,8 @@ async def trials_info(ctx):
                                 print("==================")
                                 temp_value.append(str(item))
                         else:
-                            if '\n' not in item.text:
-                                key = item.text
+                            if '\n' not in str(item.encode('utf-8')):
+                                key = str(item.encode('utf-8'))
                     res_dict[key] = temp_value
                     print("/////////////// NEXT")
                 #content = str(trials_div)
