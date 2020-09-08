@@ -1000,19 +1000,21 @@ async def trials_info(ctx):
                 res_dict = {}
                 trials_rewards_div = soup.find("div", {"class": "rewards-container"})
                 for span in trials_rewards_div.findAll('span'):
-                    #print("SPAN:",span.contents, type(span.contents))
+                    print("SPAN:",span.contents, type(span.contents))
+                    lst = span.contents[::-1]
+                    res_dict = {lst[i]: lst[i + 1] for i in range(0, len(lst), 2)} 
+                    print("==================")
+                    print(res_dict)
+                    print("==================")
                     for item in span.contents:
                         if isinstance(item, bs4.element.Tag):
                             if item.has_attr('href'):
-                                print("==================")
                                 print("Found an item", item)
-                                print("==================")
                                 #temp_value.append(str(item))
                         else:
-                            print("==================")
-                            print(type(item))
-                            print(str(item))
-                            print("==================")
+                            pass
+                            #print(type(item))
+                            #print(str(item))
                         #    print("TEST",str(item))
                         #    print("TEST2",str(item.encode('utf-8')))
                         #    if '\n' not in str(item.encode('utf-8')):
