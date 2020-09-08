@@ -1013,7 +1013,8 @@ async def trials_info(ctx):
                                 print(item)
                                 print("==================")
                                 temp_value.append(str(item))
-                            else:
+                        else:
+                            if '\n' not in item.text:
                                 key = item.text
                     res_dict[key] = temp_value
                     print("/////////////// NEXT")
