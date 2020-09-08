@@ -24,6 +24,7 @@ import math
 from PIL import Image
 from itertools import cycle
 from bs4 import BeautifulSoup
+import bs4
 
 
 
