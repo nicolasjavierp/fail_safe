@@ -1002,23 +1002,26 @@ async def trials_info(ctx):
                 for span in trials_rewards_div.findAll('span'):
                     temp_value = []
                     key = None
+                    my_span_contents = map(lambda s: s.strip(), span.contents)
                     print("SPAN:",span.contents, type(span.contents))
-                    for item in span.contents:
-                        #print("==================")
-                        #print(type(item))
-                        #print(str(item))
-                        #print("==================")
+                    for item in my_span_contents:
+                        print("==================")
+                        print(type(item))
+                        print(str(item))
+                        print("==================")
                         if isinstance(item, bs4.element.Tag):
                             if item.has_attr('href'):
                                 print("==================")
                                 print("Found an item", item)
                                 print("==================")
                                 temp_value.append(str(item))
-                        else:
-                            if '\n' not in str(item.encode('utf-8')):
-                                key = str(item.encode('utf-8'))
-                                print("Found a Key", str(key))
-                    res_dict[key] = temp_value
+                        #else:
+                        #    print("TEST",str(item))
+                        #    print("TEST2",str(item.encode('utf-8')))
+                        #    if '\n' not in str(item.encode('utf-8')):
+                        #        key = str(item.encode('utf-8'))
+                        #        print("Found a Key", str(key))
+                    #res_dict[key] = temp_value
                     print("/////////////// NEXT")
                 #content = str(trials_div)
                 print(res_dict)
