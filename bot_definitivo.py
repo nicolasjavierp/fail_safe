@@ -1002,8 +1002,9 @@ async def trials_info(ctx):
                 for span in trials_rewards_div.findAll('span'):
                     temp_value = []
                     key = None
-                    my_span_contents = map(lambda s: s.strip(), span.contents)
-                    print("SPAN:",span.contents, type(span.contents))
+                    my_span_contents = list(map(lambda s: s.strip(), span.contents))
+                    print("NEW SPAN:",my_span_contents, type(my_span_contents))
+                    #print("SPAN:",span.contents, type(span.contents))
                     for item in my_span_contents:
                         print("==================")
                         print(type(item))
