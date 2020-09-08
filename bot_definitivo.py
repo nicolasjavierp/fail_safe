@@ -1004,10 +1004,11 @@ async def trials_info(ctx):
                     for item in span.contents:
                         print("==================")
                         print(type(item))
+                        print(str(item))
                         print("==================")
                         if (str(item).find('WIN') != -1):
                             my_item = map(lambda x: x.replace('<span>','').replace('</span>',''),str(item))
-                            res_dict[my_item] = None
+                            res_dict[str(my_item)] = None
                         else:
                             temp_value.append(str(item))
                     res_dict[my_item] = temp_value                    
