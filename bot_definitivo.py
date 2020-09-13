@@ -997,16 +997,19 @@ async def trials_info(ctx):
                 print(location_content)
                 res_dict = {}
                 trials_rewards_div = trials_div.find("div", {"class": "rewards-container"})
-                            
+                res_dict = {}
                 for span in trials_rewards_div.findAll('span'):
-                    print("SPAN:",span.contents, type(span.contents))
-                    print("//////////////////////")
+                    #print("SPAN:",span.contents, type(span.contents))
+                    #print("//////////////////////")
                     #lst = span.contents[::-1]
                     #res_dict = {lst[i]: lst[i + 1] for i in range(0, len(lst), 2)} 
                     if len(span.contents)>1:
-                        for item in span.contents:
-                            print(str(item))
-                            print("--")
+                        lst = span.content.pop()
+                        res_dict[span.content[0]]=lst
+                        #for item in span.contents:
+                        #    print(str(item))
+                        #    print("--")
+                print(res_dict)
 
                         #if isinstance(item, bs4.element.Tag):
                             #if item.has_attr('href'):
