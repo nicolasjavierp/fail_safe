@@ -965,6 +965,11 @@ async def xur_info(ctx):
                 aliases=['trials'],
                 pass_ctx=True)
 async def trials_info(ctx):
+    #4 Tests
+    #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
+    #4 Heroku
+    fs = FailSafe(BUNGIE_API_KEY)        
+    #END Heroku
     user_id = ctx.message.author.id
     user=await client.fetch_user(user_id)
     private_channel = await user.create_dm()
