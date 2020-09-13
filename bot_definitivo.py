@@ -1001,14 +1001,14 @@ async def trials_info(ctx):
                 #print(str(trials_rewards_div))
                 for span in trials_rewards_div.findAll('span'):
                     #print(type(span))
-                    print(span.contents)
+                    #print(span.contents)
                     for i in span:
-                        if i is not None:
+                        if i is not None and "WIN" in i.string:
                             #print(type(i.string))
                             s = str(i)
                             s = s.replace("\n","")
                             print(s.strip())
-                            print(type(s))
+                            print("=========")
                     #data_content = json.loads(item.text)
                     #print(data_content)
                 #for span in trials_rewards_div.findAll('span'):
