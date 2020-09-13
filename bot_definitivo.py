@@ -970,15 +970,7 @@ async def trials_info(ctx):
     private_channel = await user.create_dm()
     embed = discord.Embed(title=":warning: Warning" , description="Este comando esta en periodo de beta testing, ante cualquier inconveniente informar a un admin/mod. Gracias", color=0x800080)
     await private_channel.send(user, embed=embed)
-    #4 Tests
-    #fs = FailSafe(load_param_from_config('BUNGIE_API_KEY'))
-    #4 Heroku
-    fs = FailSafe(BUNGIE_API_KEY)        
-    #END Heroku
-    #canal_info=None
-    user_id = ctx.message.author.id
-    user=await client.fetch_user(user_id)
-    private_channel = await user.create_dm()
+
     await ctx.message.channel.send(":white_check_mark: Mensaje directo enviado.")
     if await fs.async_isBungieOnline():
         xur_data = await fs.async_get_Xur_info(XUR_API_KEY)
@@ -996,15 +988,15 @@ async def trials_info(ctx):
                 #location = [i.text for i in soup.findAll('span', {'class': 'map-name'})]
                 location = [i.text for i in trials_div.findAll('span', {'class': 'map-name'})]
                 location_content = str(location)
-                print(type(location_content))
+                #print(type(location_content))
                 print(location_content)
                 res_dict = {}
                 trials_rewards_div = trials_div.find("div", {"class": "rewards-container"})
-                print(type(trials_rewards_div))
-                print(str(trials_rewards_div))
+                #print(type(trials_rewards_div))
+                #print(str(trials_rewards_div))
                 for item in trials_rewards_div.findAll('span',href=True):
-                    print(type(item))
-                    print(item)
+                    #print(type(item))
+                    #print(item)
                     data_content = json.loads(item.text)
                     print(data_content)
                 #for span in trials_rewards_div.findAll('span'):
