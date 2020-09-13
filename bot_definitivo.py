@@ -1003,9 +1003,10 @@ async def trials_info(ctx):
                     print("//////////////////////")
                     #lst = span.contents[::-1]
                     #res_dict = {lst[i]: lst[i + 1] for i in range(0, len(lst), 2)} 
-                    for item in span.contents:
-                        print(str(item))
-                        print("--")
+                    if len(span.contents)>1:
+                        for item in span.contents:
+                            print(str(item))
+                            print("--")
 
                         #if isinstance(item, bs4.element.Tag):
                             #if item.has_attr('href'):
