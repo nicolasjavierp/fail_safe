@@ -1003,8 +1003,10 @@ async def trials_info(ctx):
                     #print("//////////////////////")
                     #lst = span.contents[::-1]
                     #res_dict = {lst[i]: lst[i + 1] for i in range(0, len(lst), 2)} 
-                    if len(span.contents)>1:
+                    if len(span.contents)>1 and span.contents is not None:
+                        print("//////////////////////")
                         lst = span.content.pop()
+                        print("//////////////////////")
                         res_dict[span.content[0]]=lst
                         #for item in span.contents:
                         #    print(str(item))
