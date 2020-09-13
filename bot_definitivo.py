@@ -1003,7 +1003,9 @@ async def trials_info(ctx):
                     #print(type(span))
                     print(span.contents)
                     for i in span:
-                        print(i.string)
+                        if i:
+                            print(type(i.string))
+                            print(i.string)
                     #data_content = json.loads(item.text)
                     #print(data_content)
                 #for span in trials_rewards_div.findAll('span'):
