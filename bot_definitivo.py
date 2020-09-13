@@ -997,27 +997,16 @@ async def trials_info(ctx):
                 print(location_content)
                 res_dict = {}
                 trials_rewards_div = trials_div.find("div", {"class": "rewards-container"})
-                #print(type(trials_rewards_div))
-                #print(str(trials_rewards_div))
-                for span in trials_rewards_div.findAll('span'):
-                    #print(type(span))
-                    #print(span.contents)
-                    for i in span:
-                        s = str(i)
-                        s = s.replace("\n","")
-                        s = s.strip()
-                        if "WIN" in s:
-                            print("s=",s)
-                            print("$$$$$$$$$$$$")
                             
-                #for span in trials_rewards_div.findAll('span'):
-                    #print("SPAN:",span.contents, type(span.contents))
+                for span in trials_rewards_div.findAll('span'):
+                    print("SPAN:",span.contents, type(span.contents))
+                    print("//////////////////////")
                     #lst = span.contents[::-1]
                     #res_dict = {lst[i]: lst[i + 1] for i in range(0, len(lst), 2)} 
-                    #print("==================")
-                    #print(res_dict)
-                    #print("==================")
-                    #for item in span.contents:
+                    for item in span.contents:
+                        print(str(item))
+                        print("--")
+
                         #if isinstance(item, bs4.element.Tag):
                             #if item.has_attr('href'):
                                 #print("Found an item", item)
