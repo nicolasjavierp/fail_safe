@@ -1004,7 +1004,7 @@ async def trials_info(ctx):
                     #print(span.contents)
                     for i in span:
                         if i is not None:
-                            if "WIN" in i.string
+                            if "WIN" in i.string:
                             #print(type(i.string))
                                 s = str(i)
                                 s = s.replace("\n","")
