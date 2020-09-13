@@ -1003,7 +1003,7 @@ async def trials_info(ctx):
                     #print(type(span))
                     #print(span.contents)
                     for i in span:
-                        if type(i) != NoneType:
+                        if isinstance(x, type(None)) == False:
                             if "WIN" in i.string:
                             #print(type(i.string))
                                 s = str(i)
