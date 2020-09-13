@@ -1006,8 +1006,9 @@ async def trials_info(ctx):
                         s = str(i)
                         s = s.replace("\n","")
                         s = s.strip()
-                        print("s=",s)
-                        print("$$$$$$$$$$$$")
+                        if "WIN" in s:
+                            print("s=",s)
+                            print("$$$$$$$$$$$$")
                             
                 #for span in trials_rewards_div.findAll('span'):
                     #print("SPAN:",span.contents, type(span.contents))
