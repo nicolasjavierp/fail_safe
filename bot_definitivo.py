@@ -25,6 +25,7 @@ from PIL import Image
 from itertools import cycle
 from bs4 import BeautifulSoup
 import bs4
+import json
 
 
 
@@ -1004,6 +1005,8 @@ async def trials_info(ctx):
                 for item in trials_rewards_div.findAll('span',href=True):
                     print(type(item))
                     print(item)
+                    data_content = json.loads(item.text)
+                    print(data_content)
                 #for span in trials_rewards_div.findAll('span'):
                     #print("SPAN:",span.contents, type(span.contents))
                     #lst = span.contents[::-1]
