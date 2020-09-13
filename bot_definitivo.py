@@ -999,12 +999,11 @@ async def trials_info(ctx):
                 trials_rewards_div = trials_div.find("div", {"class": "rewards-container"})
                 #print(type(trials_rewards_div))
                 #print(str(trials_rewards_div))
-                for item in trials_rewards_div.findAll('span',href=True):
-                    print(type(item))
-                    print(item)
-                    print("&&&&&&&")
-                    print(type(item.contents))
-                    print(item.contents)
+                for span in trials_rewards_div.findAll('span'):
+                    print(type(span))
+                    print(span.contents)
+                    for i in span:
+                        print(i.text)
                     #data_content = json.loads(item.text)
                     #print(data_content)
                 #for span in trials_rewards_div.findAll('span'):
