@@ -1008,6 +1008,7 @@ async def trials_info(ctx):
                         #lst = span.content.pop()
                         for i in span.contents:
                             print(type(i))
+                            print(i.text)
                         print("//////////////////////")
                         #res_dict[span.content[0]]=lst
                         #for item in span.contents:
