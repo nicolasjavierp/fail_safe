@@ -986,8 +986,8 @@ async def trials_info(ctx):
                 url = "https://www.light.gg/"
                 req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
                 print(dir(req))
-                if req.status_code != 200:
-                    
+                print(req.headers)
+                if req.status_code != 200: 
                     url_contents = urlopen(req).read()
                     #html = webpage.decode("utf-8")
                     #print(html)
