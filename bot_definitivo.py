@@ -998,9 +998,11 @@ async def trials_info(ctx):
                 res_dict = {}
                 trials_rewards_div = trials_div.find("div", {"class": "rewards-container"})
                 for child in soup.find("div", {"class": "rewards-container"}).children:
-                    if child.name == 'div':
-                        data_content = json.loads(child.text)
-                        print(data_content["span"])
+                    #if child.name == 'div':
+                    data_content = json.loads(child.text)
+                    print(type(data_content))
+                    print(data_content)
+
                 print("&&&&&&&&&&&&&&&&&&&&&&&&&&")
                 res_dict = {}
                 for span in trials_rewards_div.findAll('span'):
