@@ -985,65 +985,61 @@ async def trials_info(ctx):
                 await private_channel.send(embed=embed)
                 url = "https://www.light.gg/"
                 req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-                print(dir(req))
-                print(req.headers)
-                if req.status_code != 200: 
-                    url_contents = urlopen(req).read()
-                    #html = webpage.decode("utf-8")
-                    #print(html)
-                    soup = BeautifulSoup(url_contents, "html.parser")
-                    trials_div = soup.find("div", {"id": "trials-billboard"})
-                    #location = [i.text for i in soup.findAll('span', {'class': 'map-name'})]
-                    location = [i.text for i in trials_div.findAll('span', {'class': 'map-name'})]
-                    location_content = str(location)
-                    #print(type(location_content))
-                    print(location_content)
-                    res_dict = {}
-                    trials_rewards_div = trials_div.find("div", {"class": "rewards-container"})
-                    res_dict = {}
-                    for span in trials_rewards_div.findAll('span'):
-                        #print("SPAN:",span.contents, type(span.contents))
-                        #print("//////////////////////")
-                        #div = soup.find("div", {"class": "account-places"})
-                        #text = div.div.ul.li.find_next_sibling("li").get_text()
-                        #print(text)
-                        for sub_span in span:
-                            print(type(sub_span))
-                            print(str(sub_span))
+                url_contents = urlopen(req).read()
+                print(type(url_contents))
+                print(url_contents)
+                #html = webpage.decode("utf-8")
+                #print(html)
+                soup = BeautifulSoup(url_contents, "html.parser")
+                trials_div = soup.find("div", {"id": "trials-billboard"})
+                #location = [i.text for i in soup.findAll('span', {'class': 'map-name'})]
+                location = [i.text for i in trials_div.findAll('span', {'class': 'map-name'})]
+                location_content = str(location)
+                #print(type(location_content))
+                print(location_content)
+                res_dict = {}
+                trials_rewards_div = trials_div.find("div", {"class": "rewards-container"})
+                res_dict = {}
+                for span in trials_rewards_div.findAll('span'):
+                    #print("SPAN:",span.contents, type(span.contents))
+                    #print("//////////////////////")
+                    #div = soup.find("div", {"class": "account-places"})
+                    #text = div.div.ul.li.find_next_sibling("li").get_text()
+                    #print(text)
+                    for sub_span in span:
+                        print(type(sub_span))
+                        print(str(sub_span))
 
-                        if len(span.contents)>1: #and span.contents is not None:
-                            print("//////////////////////")
-                            #lst = span.content.pop()
-                            for i in span.contents:
-                                print(type(i))
-                                print(str(i.encode('utf-8')))
-                            print("//////////////////////")
-                            #res_dict[span.content[0]]=lst
-                            #for item in span.contents:
-                            #    print(str(item))
-                            #    print("--")
-                    print(res_dict)
-                else:
-                    embed = discord.Embed(title=":x: Servicio No disponible! Intenta mas tarde ...", description="¯\\_(ツ)_/¯", color=0x800080)
-                    await private_channel.send(user, embed=embed)
+                    if len(span.contents)>1: #and span.contents is not None:
+                        print("//////////////////////")
+                        #lst = span.content.pop()
+                        for i in span.contents:
+                            print(type(i))
+                            print(str(i.encode('utf-8')))
+                        print("//////////////////////")
+                        #res_dict[span.content[0]]=lst
+                        #for item in span.contents:
+                        #    print(str(item))
+                        #    print("--")
+                print(res_dict)
 
-                            #if isinstance(item, bs4.element.Tag):
-                                #if item.has_attr('href'):
-                                    #print("Found an item", item)
-                                    #temp_value.append(str(item))
-                            #else:
-                                #pass
-                                #print(type(item))
-                                #print(str(item))
-                            #    print("TEST",str(item))
-                            #    print("TEST2",str(item.encode('utf-8')))
-                            #    if '\n' not in str(item.encode('utf-8')):
-                            #        key = str(item.encode('utf-8'))
-                            #        print("Found a Key", str(key))
-                        #res_dict[key] = temp_value
-                        #print("/////////////// NEXT")
-                    #content = str(trials_div)
-                    #print(res_dict)
+                        #if isinstance(item, bs4.element.Tag):
+                            #if item.has_attr('href'):
+                                #print("Found an item", item)
+                                #temp_value.append(str(item))
+                        #else:
+                            #pass
+                            #print(type(item))
+                            #print(str(item))
+                        #    print("TEST",str(item))
+                        #    print("TEST2",str(item.encode('utf-8')))
+                        #    if '\n' not in str(item.encode('utf-8')):
+                        #        key = str(item.encode('utf-8'))
+                        #        print("Found a Key", str(key))
+                    #res_dict[key] = temp_value
+                    #print("/////////////// NEXT")
+                #content = str(trials_div)
+                #print(res_dict)
             else:
                 msg = "Trials solamente esta desde reset del Viernes al reset del Martes. Proxima aparición será a partir del __reset__ el día "+str(get_last_friday_reset().date()+timedelta(weeks=1))
                 embed = discord.Embed(title="Trials of Saint-14" , description=msg, color=0x800080)
