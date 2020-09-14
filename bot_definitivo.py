@@ -1005,8 +1005,9 @@ async def trials_info(ctx):
                     #text = div.div.ul.li.find_next_sibling("li").get_text()
                     #print(text)
                     for sub_span in span:
-                        print(sub_span.text)
-                    
+                        print(type(sub_span))
+                        print(str(sub_span))
+
                     if len(span.contents)>1: #and span.contents is not None:
                         print("//////////////////////")
                         #lst = span.content.pop()
