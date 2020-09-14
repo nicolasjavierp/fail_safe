@@ -997,18 +997,24 @@ async def trials_info(ctx):
                 print(location_content)
                 res_dict = {}
                 trials_rewards_div = trials_div.find("div", {"class": "rewards-container"})
+                for child in soup.find("div", {"class": "rewards-container"}).children:
+                    if child.name == 'div':
+                        data_content = json.loads(child.text)
+                        print(data_content["span"])
+                print("&&&&&&&&&&&&&&&&&&&&&&&&&&")
                 res_dict = {}
                 for span in trials_rewards_div.findAll('span'):
                     #print("SPAN:",span.contents, type(span.contents))
                     #print("//////////////////////")
-                    #lst = span.contents[::-1]
-                    #res_dict = {lst[i]: lst[i + 1] for i in range(0, len(lst), 2)} 
+                    #div = soup.find("div", {"class": "account-places"})
+                    #text = div.div.ul.li.find_next_sibling("li").get_text()
+                    #print(text)
                     if len(span.contents)>1: #and span.contents is not None:
                         print("//////////////////////")
                         #lst = span.content.pop()
                         for i in span.contents:
                             print(type(i))
-                            print(i.text)
+                            print(i.get_text())
                         print("//////////////////////")
                         #res_dict[span.content[0]]=lst
                         #for item in span.contents:
