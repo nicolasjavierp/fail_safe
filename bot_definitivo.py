@@ -999,7 +999,7 @@ async def trials_info(ctx):
                 trials_rewards_div = trials_div.find("div", {"class": "rewards-container"})
                 for child in soup.find("div", {"class": "rewards-container"}).children:
                     #if child.name == 'div':
-                    data_content = json.loads(child.text)
+                    data_content = json.loads(str(child.encode('utf-8')))
                     print(type(data_content))
                     print(data_content)
 
