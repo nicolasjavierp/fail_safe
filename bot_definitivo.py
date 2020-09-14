@@ -1004,6 +1004,9 @@ async def trials_info(ctx):
                     #div = soup.find("div", {"class": "account-places"})
                     #text = div.div.ul.li.find_next_sibling("li").get_text()
                     #print(text)
+                    for sub_span in span:
+                        print(sub_span.text)
+                    
                     if len(span.contents)>1: #and span.contents is not None:
                         print("//////////////////////")
                         #lst = span.content.pop()
