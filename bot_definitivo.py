@@ -985,6 +985,7 @@ async def trials_info(ctx):
                 await private_channel.send(embed=embed)
                 url = "https://www.light.gg/"
                 req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+                print(dir(req))
                 if req.status_code != 200:
                     
                     url_contents = urlopen(req).read()
