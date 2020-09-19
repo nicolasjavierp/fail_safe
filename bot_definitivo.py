@@ -1009,7 +1009,6 @@ async def trials_info(ctx):
                     for sub_span in span:
                         print(type(sub_span))
                         print(str(sub_span))
-
                     if len(span.contents)>1: #and span.contents is not None:
                         print("//////////////////////")
                         #lst = span.content.pop()
