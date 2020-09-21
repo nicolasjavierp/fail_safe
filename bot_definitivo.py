@@ -1002,25 +1002,24 @@ async def trials_info(ctx):
                 res_dict = {}
                 for span in trials_rewards_div.findAll('span'):
                     #print("SPAN:",span.contents, type(span.contents))
-                    #print("//////////////////////")
-                    #div = soup.find("div", {"class": "account-places"})
-                    #text = div.div.ul.li.find_next_sibling("li").get_text()
-                    #print(text)
-                    for sub_span in span:
-                        print(type(sub_span))
-                        print(str(sub_span))
                     if len(span.contents)>1: #and span.contents is not None:
                         print("//////////////////////")
                         #lst = span.content.pop()
                         for i in span.contents:
                             print(type(i))
-                            print(str(i.encode('utf-8')))
+                            no_newline_i = str(i.encode('utf-8'))
+                            no_newline_i = no_newline_i.strip('\t\r\n')
+                            print(no_newline_i)
+                            if not i.has_attr('href'):
+                                no_newline_i = str(i.encode('utf-8'))
+                                no_newline_i = no_newline_i.strip('\t\r\n')
+                                res_dict[no_newline_i]=None
                         print("//////////////////////")
                         #res_dict[span.content[0]]=lst
                         #for item in span.contents:
                         #    print(str(item))
                         #    print("--")
-                print(res_dict)
+                print("RES=", res_dict)
 
                         #if isinstance(item, bs4.element.Tag):
                             #if item.has_attr('href'):
