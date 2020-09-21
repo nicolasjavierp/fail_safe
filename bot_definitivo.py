@@ -1006,15 +1006,13 @@ async def trials_info(ctx):
                     if len(span.contents)>1: #and span.contents is not None:
                         print("//////////////////////")
                         #lst = span.content.pop()
-                        for i in span.contents:
-                            print(type(i))
-                            no_newline_i = str(i.encode('utf-8'))
-                            no_newline_i = no_newline_i.strip('\t\r\n')
-                            print(no_newline_i)
-                            if isinstance(i, Tag) and not i.has_attr('href'):
-                                no_newline_i = str(i.encode('utf-8'))
-                                no_newline_i = no_newline_i.strip('\t\r\n')
-                                res_dict[no_newline_i]=None
+                        for sub_span in span.contents:
+                            print(type(sub_span))
+                            no_newline_sub_span = str(sub_span.encode('utf-8'))
+                            no_newline_sub_span = no_newline_sub_span.strip('\t\r\n')
+                            print(no_newline_sub_span)
+                            if isinstance(sub_span, Tag) and not sub_span.has_attr('href'):
+                                res_dict[sub_span.name]=None
                         print("//////////////////////")
                         #res_dict[span.content[0]]=lst
                         #for item in span.contents:
