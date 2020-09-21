@@ -1012,6 +1012,7 @@ async def trials_info(ctx):
                             no_newline_sub_span = no_newline_sub_span.strip('\t\r\n')
                             print(no_newline_sub_span)
                             if isinstance(sub_span, Tag) and not sub_span.has_attr('href'):
+                                print("TAG_DIR:", dir(sub_span))
                                 res_dict[sub_span.name]=None
                         print("//////////////////////")
                         #res_dict[span.content[0]]=lst
