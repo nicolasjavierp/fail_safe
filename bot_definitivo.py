@@ -23,7 +23,7 @@ import youtube_dl
 import math
 from PIL import Image
 from itertools import cycle
-from bs4 import BeautifulSoup
+from bs4 import Tag, NavigableString, BeautifulSoup
 import bs4
 import json
 
@@ -987,7 +987,7 @@ async def trials_info(ctx):
                 req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
                 url_contents = urlopen(req).read()
                 print(type(url_contents))
-                print(url_contents)
+                #print(url_contents)
                 #html = webpage.decode("utf-8")
                 #print(html)
                 soup = BeautifulSoup(url_contents, "html.parser")
@@ -998,8 +998,9 @@ async def trials_info(ctx):
                 #print(type(location_content))
                 print(location_content)
                 res_dict = {}
+                trials_rewards_div = [i.text for i in trials_div.findAll('div', {"class": "rewards-container"})]
+                print("Rewards:", trials_rewards_div)
                 trials_rewards_div = trials_div.find("div", {"class": "rewards-container"})
-                res_dict = {}
                 for span in trials_rewards_div.findAll('span'):
                     #print("SPAN:",span.contents, type(span.contents))
                     if len(span.contents)>1: #and span.contents is not None:
@@ -1010,7 +1011,7 @@ async def trials_info(ctx):
                             no_newline_i = str(i.encode('utf-8'))
                             no_newline_i = no_newline_i.strip('\t\r\n')
                             print(no_newline_i)
-                            if not i.has_attr('href'):
+                            if isinstance(i, Tag) and not i.has_attr('href'):
                                 no_newline_i = str(i.encode('utf-8'))
                                 no_newline_i = no_newline_i.strip('\t\r\n')
                                 res_dict[no_newline_i]=None
