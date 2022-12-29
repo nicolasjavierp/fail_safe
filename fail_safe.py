@@ -29,7 +29,7 @@ class FailSafe(object):
         self.api_key = api_key
         self.blacklist = []
         #self.our_clans = [(2943900, "Escuadra 2"), (3084439, "Escuadra 3"), (3111393, "Escuadra 4"), (3144839,"Escuadra 5"), (3635441,"Escuadra 6")]
-        self.our_clans = [(3635441,"REVENANTS Beta"), (2943900, "REVENANTS Lambda"), (3989167, "REVENANTS Omega")]
+        self.our_clans = [(2943900, "Escuadra 2")]
         #self.our_clans = [(2943900, "REVENANTS Lambda")] # for tests
         self.error_members = {}
         self.error_members = set()
